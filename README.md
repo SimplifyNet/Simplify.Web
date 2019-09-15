@@ -1,6 +1,6 @@
 # Simplify.Web
 
-![Simplify](https://raw.githubusercontent.com/i4004/Simplify.Web/master/Images/IconMedium.png)
+![Simplify](https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb128x128.png)
 
 Simplify.Web is a lightweight and fast server-side .NET web-framework based on MVC and OWIN patterns for building HTTP based web-applications, RESTful APIs etc.
 
@@ -15,8 +15,6 @@ It can be hosted:
 * The same way as an ApsNetCore MVC application (On IIS, or as a console application)
 * Inside a windows service
 
-_This project is a continuator of [AcspNet web-framework](https://github.com/i4004/AcspNet)_
-
 ## Package status
 
 | Latest version | [![Nuget version](http://img.shields.io/badge/nuget-v2.2-blue.svg)](https://www.nuget.org/packages/Simplify.Web/) |
@@ -25,7 +23,7 @@ _This project is a continuator of [AcspNet web-framework](https://github.com/i40
 
 ## Issues
 
-[![Issues board](https://dxssrr2j0sq4w.cloudfront.net/3.2.0/img/external/zenhub-badge.svg)](https://app.zenhub.com/workspaces/simplify-5ce3859397ab7c51aa180635/board?repos=17025953,51341283,66346856,66425973,66536426)
+[![Issues board](https://dxssrr2j0sq4w.cloudfront.net/3.2.0/img/external/zenhub-badge.svg)](https://app.zenhub.com/workspaces/simplify-5d7dd300da4a88000107f7e5/board?repos=208544410,208543783,208544195,208544168,208544390,208544370,208543999)
 
 ## Build status
 
@@ -40,11 +38,11 @@ _This project is a continuator of [AcspNet web-framework](https://github.com/i40
 * Can be used as an API backend only with front-end frameworks
 * Based on MVC and MVVM patterns
 * Lightweight & Fast
-* Uses switchable IOC container for itself and controllers, views constructor injection ([Simplify.DI](https://github.com/i4004/Simplify/wiki/Simplify.DI))
+* Uses switchable IOC container for itself and controllers, views constructor injection ([Simplify.DI](https://github.com/SimplifyNet/Simplify/wiki/Simplify.DI))
 * Support async controllers
 * Supports controllers which can be run on any request
 * Localization-friendly (supports templates, strings and data files localization by default)
-* Uses fast templates engine ([Simplify.Templates](https://github.com/i4004/Simplify/wiki/Simplify.Templates))
+* Uses fast templates engine ([Simplify.Templates](https://github.com/SimplifyNet/Simplify/wiki/Simplify.Templates))
 * Mocking-friendly
 * Mono-friendly
 
@@ -73,7 +71,7 @@ dotnet new sweb.angular -n HelloWorldApplication
 
 Then just run project via F5 (it will download all required nuget and npm packages at first build).
 
-## [Detailed documentation](https://github.com/i4004/Simplify.Web/wiki)
+## [Detailed documentation](https://github.com/SimplifyNet/Simplify.Web/wiki)
 
 ### API outgoing JSON controller example
 
@@ -208,10 +206,10 @@ There are many ways in which you can participate in the project. Like most open-
 
 Additional extensions to Simplify.Web live in their own repositories on GitHub. For example:
 
-* [Simplify.Web.Json](https://github.com/i4004/Simplify.Web.Json) - JSON serialization/deserialization
-* [Simplify.Web.Multipart](https://github.com/i4004/Simplify.Web.Multipart) - multipart form model binder
-* [Simplify.Web.MessageBox](https://github.com/i4004/Simplify.Web.MessageBox) - non-interactive server side message box
-* [Simplify.Web.Templates](https://github.com/i4004/Simplify.Web.Templates) - Visual studio project templates
+* [Simplify.Web.Json](https://github.com/SimplifyNet/Simplify.Web.Json) - JSON serialization/deserialization
+* [Simplify.Web.Multipart](https://github.com/SimplifyNet/Simplify.Web.Multipart) - multipart form model binder
+* [Simplify.Web.MessageBox](https://github.com/SimplifyNet/Simplify.Web.MessageBox) - non-interactive server side message box
+* [Simplify.Web.Templates](https://github.com/SimplifyNet/Simplify.Web.Templates) - Visual studio project templates
 
 ## License
 
