@@ -6,19 +6,19 @@ Simplify.Web is a lightweight and fast server-side .NET web-framework based on M
 
 It can be used as:
 
-* An API backend framework
-* As a mix of API backend + some SPA front end like Angular
-* As an old way backend generated web-site
+- An API backend framework
+- As a mix of API backend + some SPA front end like Angular
+- As an old way backend generated web-site
 
 It can be hosted:
 
-* The same way as an ApsNetCore MVC application (On IIS, or as a console application)
-* Inside a windows service
+- The same way as an ApsNetCore MVC application (On IIS, or as a console application)
+- Inside a windows service
 
 ## Package status
 
-| Latest version | [![Nuget version](http://img.shields.io/badge/nuget-v2.2-blue.svg)](https://www.nuget.org/packages/Simplify.Web/) |
-| :------ | :------: |
+| Latest version   |                         [![Nuget version](http://img.shields.io/badge/nuget-v2.3-blue.svg)](https://www.nuget.org/packages/Simplify.Web/)                          |
+| :--------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | **Dependencies** | [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/nuget/Simplify.Web.svg)](https://libraries.io/nuget/Simplify.Web) |
 
 ## Issues
@@ -27,24 +27,24 @@ It can be hosted:
 
 ## Build status
 
-| Branch | Status |
-| :------ | :------ |
-| **master** | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/sln1ciuam2hobsv4/branch/master?svg=true)](https://ci.appveyor.com/project/i4004/simplify-web/branch/master) |
+| Branch      | Status                                                                                                                                                                              |
+| :---------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **master**  | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/sln1ciuam2hobsv4/branch/master?svg=true)](https://ci.appveyor.com/project/i4004/simplify-web/branch/master)   |
 | **develop** | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/sln1ciuam2hobsv4/branch/develop?svg=true)](https://ci.appveyor.com/project/i4004/simplify-web/branch/develop) |
 
 ## Main features
 
-* Comes as Microsoft.AspNetCore OWIN middleware
-* Can be used as an API backend only with front-end frameworks
-* Based on MVC and MVVM patterns
-* Lightweight & Fast
-* Uses switchable IOC container for itself and controllers, views constructor injection ([Simplify.DI](https://github.com/SimplifyNet/Simplify/wiki/Simplify.DI))
-* Support async controllers
-* Supports controllers which can be run on any request
-* Localization-friendly (supports templates, strings and data files localization by default)
-* Uses fast templates engine ([Simplify.Templates](https://github.com/SimplifyNet/Simplify/wiki/Simplify.Templates))
-* Mocking-friendly
-* Mono-friendly
+- Comes as Microsoft.AspNetCore OWIN middleware
+- Can be used as an API backend only with front-end frameworks
+- Based on MVC and MVVM patterns
+- Lightweight & Fast
+- Uses switchable IOC container for itself and controllers, views constructor injection ([Simplify.DI](https://github.com/SimplifyNet/Simplify/wiki/Simplify.DI))
+- Support async controllers
+- Supports controllers which can be run on any request
+- Localization-friendly (supports templates, strings and data files localization by default)
+- Uses fast templates engine ([Simplify.Templates](https://github.com/SimplifyNet/Simplify/wiki/Simplify.Templates))
+- Mocking-friendly
+- Mono-friendly
 
 ## Quick start
 
@@ -56,11 +56,11 @@ Installing a templates package:
 dotnet new -i Simplify.Web.Templates
 ```
 
-| Template | Short Name |
-| :------ | :------ |
-| Angular template | sweb.angular |
-| Api template | sweb.api |
-| Minimal template | sweb.minimal |
+| Template                            | Short Name              |
+| :---------------------------------- | :---------------------- |
+| Angular template                    | sweb.angular            |
+| Api template                        | sweb.api                |
+| Minimal template                    | sweb.minimal            |
 | Windows service hosted api template | sweb.api.windowsservice |
 
 Use the short name to create a project based on selected template:
@@ -193,23 +193,23 @@ public class LoggedUserPanelView : View
 
 There are many ways in which you can participate in the project. Like most open-source software projects, contributing code is just one of many outlets where you can help improve. Some of the things that you could help out with are:
 
-* Documentation (both code and features)
-* Bug reports
-* Bug fixes
-* Feature requests
-* Feature implementations
-* Test coverage
-* Code quality
-* Sample applications
+- Documentation (both code and features)
+- Bug reports
+- Bug fixes
+- Feature requests
+- Feature implementations
+- Test coverage
+- Code quality
+- Sample applications
 
 ## Related Projects
 
 Additional extensions to Simplify.Web live in their own repositories on GitHub. For example:
 
-* [Simplify.Web.Json](https://github.com/SimplifyNet/Simplify.Web.Json) - JSON serialization/deserialization
-* [Simplify.Web.Multipart](https://github.com/SimplifyNet/Simplify.Web.Multipart) - multipart form model binder
-* [Simplify.Web.MessageBox](https://github.com/SimplifyNet/Simplify.Web.MessageBox) - non-interactive server side message box
-* [Simplify.Web.Templates](https://github.com/SimplifyNet/Simplify.Web.Templates) - Visual studio project templates
+- [Simplify.Web.Json](https://github.com/SimplifyNet/Simplify.Web.Json) - JSON serialization/deserialization
+- [Simplify.Web.Multipart](https://github.com/SimplifyNet/Simplify.Web.Multipart) - multipart form model binder
+- [Simplify.Web.MessageBox](https://github.com/SimplifyNet/Simplify.Web.MessageBox) - non-interactive server side message box
+- [Simplify.Web.Templates](https://github.com/SimplifyNet/Simplify.Web.Templates) - Visual studio project templates
 
 ## License
 
