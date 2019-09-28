@@ -6,7 +6,7 @@ namespace Simplify.Web.Modules.Data
 	/// <summary>
 	/// Represents web-site master page data collector
 	/// </summary>
-	public interface IDataCollector : IHideObjectMembers
+	public interface IDataCollector
 	{
 		/// <summary>
 		/// Gets the name of the title variable.

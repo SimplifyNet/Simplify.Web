@@ -6,7 +6,7 @@ namespace Simplify.Web.Modules.Data
 	/// <summary>
 	/// Represent web-site text templates loader
 	/// </summary>
-	public interface ITemplateFactory : IHideObjectMembers
+	public interface ITemplateFactory
 	{
 		/// <summary>
 		/// Setups the template factory.
