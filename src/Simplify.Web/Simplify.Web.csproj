@@ -5,14 +5,19 @@
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>1.5</Version>
+		<Version>1.6</Version>
 		<PackageProjectUrl>https://github.com/i4004/Simplify.Web</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/i4004/Simplify.Web/master/Images/Icon.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/i4004/Simplify.Web</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
-			* Upgrade to Simplify.DI 3.0
+			Updates
+			* Upgrade to Simplify.DI 4.0
+			* Upgrade to Simplify.Templates 1.5.2
+			Other
+			* Internal upgrade to Simplify.String.Sources 1.2.0
+			* Internal upgrade to Simplify.Xml.Sources 1.1.0
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
@@ -32,10 +37,10 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Owin" Version="4.0.1" />
 		<PackageReference Include="Owin" Version="1.0" />
-		<PackageReference Include="Simplify.DI" Version="3.0.0" />
+		<PackageReference Include="Simplify.DI" Version="4.0.0" />
 		<PackageReference Include="Simplify.String.Sources" Version="1.2.0" PrivateAssets="All" />
-		<PackageReference Include="Simplify.System.Sources" Version="1.1.0" PrivateAssets="All" />
-		<PackageReference Include="Simplify.Templates" Version="1.5.1" />
-		<PackageReference Include="Simplify.Xml.Sources" Version="1.0.4" PrivateAssets="All" />
+		<PackageReference Include="Simplify.System.Sources" Version="1.2.0" PrivateAssets="All" />
+		<PackageReference Include="Simplify.Templates" Version="1.5.2" />
+		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />
 	</ItemGroup>
 </Project>
