@@ -1,19 +1,16 @@
 ﻿<div class="container" style="max-width: 400px">
-	<form class="form-horizontal" method="post" id="Form"
-		  data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-		  data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-		  data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
-		  data-bv-submitbuttons='button[type="submit"]'>
+	<form class="form-horizontal" method="post" id="Form" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+		data-bv-feedbackicons-invalid="glyphicon glyphicon-remove" data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+		data-bv-submitbuttons='button[type="submit"]'>
 		<div class="form-group">
 			{Message}
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" name="UserName" placeholder="User name" value="{UserName}"
-				   required data-bv-notempty-message="{UserNameNotEmptyMessage}" />
+			<input type="text" class="form-control" name="UserName" placeholder="User name" value="{UserName}" required
+				data-bv-notempty-message="{UserNameNotEmptyMessage}" />
 		</div>
 		<div class="form-group">
-			<input type="Password" class="form-control" name="Password" placeholder="Password"
-				   required data-bv-notempty-message="{PasswordNotEmptyMessage}" />
+			<input type="Password" class="form-control" name="Password" placeholder="Password" required data-bv-notempty-message="{PasswordNotEmptyMessage}" />
 		</div>
 		<div class="form-group">
 			<label><input type="checkbox" name="RememberMe" {RememberMe} /> Remember me</label>
@@ -27,10 +24,3 @@
 		</div>
 	</form>
 </div>
-
-<script type="text/javascript">
-	$(document).ready(function ()
-	{
-		$("#Form").bootstrapValidator();
-	});
-</script>
