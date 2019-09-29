@@ -39,7 +39,7 @@ It can be hosted:
 
 ## Quick start
 
-There is a templates package available at nuget.org for Simplify.Web. It contains a couple of templates which can be a good starting point for your application.
+There is a [templates package](https://github.com/SimplifyNet/Simplify.Web.Templates) available at nuget.org for Simplify.Web. It contains a couple of templates which can be a good starting point for your application.
 
 Installing a templates package:
 
