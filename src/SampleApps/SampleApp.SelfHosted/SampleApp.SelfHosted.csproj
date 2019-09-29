@@ -12,7 +12,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="bootstrap" Version="3.3.7" PrivateAssets="All" />
-		<PackageReference Include="jQuery" Version="3.1.0" PrivateAssets="All" />
+		<PackageReference Include="jQuery" Version="3.4.1" PrivateAssets="All" />
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
 	<ItemGroup>
