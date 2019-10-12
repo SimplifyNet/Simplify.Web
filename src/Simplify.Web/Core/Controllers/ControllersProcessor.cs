@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
+using Simplify.Web.Meta;
 
 namespace Simplify.Web.Core.Controllers
 {
@@ -34,13 +34,13 @@ namespace Simplify.Web.Core.Controllers
 		{
 			var atleastOneNonAnyPageControllerMatched = false;
 
-			foreach (var metaData in _agent.GetStandardControllersMetaData())
+			foreach (var controller in _agent.GetStandardControllersMetaData())
 			{
-				var matcherResult = _agent.MatchControllerRoute(metaData, context.Request.Path.Value, context.Request.Method);
+				var matcherResult = _agent.MatchControllerRoute(controller, context.Request.Path.Value, context.Request.Method);
 
 				if (matcherResult == null || !matcherResult.Success) continue;
 
-				var securityResult = _agent.IsSecurityRulesViolated(metaData, context.User);
+				var securityResult = _agent.IsSecurityRulesViolated(controller, context.User);
 
 				if (securityResult == SecurityRuleCheckResult.NotAuthenticated)
 					return ControllersProcessorResult.Http401;
@@ -48,12 +48,12 @@ namespace Simplify.Web.Core.Controllers
 				if (securityResult == SecurityRuleCheckResult.Forbidden)
 					return ProcessForbiddenSecurityRule(resolver, context);
 
-				var result = ProcessController(metaData.ControllerType, resolver, context, matcherResult.RouteParameters);
+				var result = ProcessController(controller, resolver, context, matcherResult.RouteParameters);
 
 				if (result != ControllersProcessorResult.Ok)
 					return result;
 
-				if (!_agent.IsAnyPageController(metaData))
+				if (!_agent.IsAnyPageController(controller))
 					atleastOneNonAnyPageControllerMatched = true;
 			}
 
@@ -67,7 +67,7 @@ namespace Simplify.Web.Core.Controllers
 			return ProcessAsyncControllersResponses(resolver);
 		}
 
-		private ControllersProcessorResult ProcessController(Type controllerType, IDIResolver resolver, HttpContext context, dynamic routeParameters)
+		private ControllersProcessorResult ProcessController(IControllerMetaData controllerType, IDIResolver resolver, HttpContext context, dynamic routeParameters)
 		{
 			var result = _controllerExecutor.Execute(controllerType, resolver, context, routeParameters);
 
@@ -87,7 +87,7 @@ namespace Simplify.Web.Core.Controllers
 			if (http404Controller == null)
 				return ControllersProcessorResult.Http404;
 
-			var handlerControllerResult = _controllerExecutor.Execute(http404Controller.ControllerType, resolver, context);
+			var handlerControllerResult = _controllerExecutor.Execute(http404Controller, resolver, context);
 
 			if (handlerControllerResult == ControllerResponseResult.RawOutput)
 				return ControllersProcessorResult.RawOutput;
@@ -119,7 +119,7 @@ namespace Simplify.Web.Core.Controllers
 			if (http403Controller == null)
 				return ControllersProcessorResult.Http403;
 
-			var handlerControllerResult = _controllerExecutor.Execute(http403Controller.ControllerType, resolver, context);
+			var handlerControllerResult = _controllerExecutor.Execute(http403Controller, resolver, context);
 
 			if (handlerControllerResult == ControllerResponseResult.RawOutput)
 				return ControllersProcessorResult.RawOutput;

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution.Building;
+using Simplify.Web.Meta;
 
 namespace Simplify.Web.Core.Controllers.Execution
 {
@@ -31,27 +31,27 @@ namespace Simplify.Web.Core.Controllers.Execution
 		/// <summary>
 		/// Creates and executes the specified controller.
 		/// </summary>
-		/// <param name="controllerType">Type of the controller.</param>
+		/// <param name="controllerMetaData">Type of the controller.</param>
 		/// <param name="resolver">The DI container resolver.</param>
 		/// <param name="context">The context.</param>
 		/// <param name="routeParameters">The route parameters.</param>
 		/// <returns></returns>
-		public ControllerResponseResult Execute(Type controllerType, IDIResolver resolver, HttpContext context,
+		public ControllerResponseResult Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
 			dynamic routeParameters = null)
 		{
-			ControllerBase controller = _controllerFactory.CreateController(controllerType, resolver, context, routeParameters);
+			var controller = _controllerFactory.CreateController(controllerMetaData.ControllerType, resolver, context, routeParameters);
 
-			var syncController = controller as SyncControllerBase;
-
-			if (syncController != null)
-				return ProcessControllerResponse(syncController.Invoke(), resolver);
-
-			var asyncController = controller as AsyncControllerBase;
-
-			if (asyncController != null)
+			switch (controller)
 			{
-				var task = asyncController.Invoke();
-				_controllersResponses.Add(task);
+				case SyncControllerBase syncController:
+					return ProcessControllerResponse(syncController.Invoke(), resolver);
+
+				case AsyncControllerBase asyncController:
+					{
+						var task = asyncController.Invoke();
+						_controllersResponses.Add(task);
+						break;
+					}
 			}
 
 			return ControllerResponseResult.Default;
