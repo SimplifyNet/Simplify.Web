@@ -9,6 +9,7 @@ namespace SampleApp.WindowsServiceHosted.Setup
 		{
 			DIContainer.Current.Register<WebApplicationStartup>();
 
+			// Manual Simplify.Web bootstrapper registration
 			DIContainer.Current.RegisterSimplifyWeb();
 		}
 	}
