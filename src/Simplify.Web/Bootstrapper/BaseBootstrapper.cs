@@ -18,7 +18,6 @@ using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
 using Simplify.Web.Routing;
 using Simplify.Web.Settings;
-using Environment = Simplify.Web.Modules.Environment;
 
 namespace Simplify.Web.Bootstrapper
 {
@@ -98,12 +97,12 @@ namespace Simplify.Web.Bootstrapper
 			foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
 				.Where(controllerMetaData => ignoredTypes.All(x => x != controllerMetaData.ControllerType)))
 			{
-				DIContainer.Current.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
+				BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
 			}
 
 			// Registering views types
 			foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => ignoredTypes.All(x => x != viewType)))
-				DIContainer.Current.Register(viewType, LifetimeType.Transient);
+				BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
 		}
 
 		private static IEnumerable<Type> GetIgnoredTypes()
@@ -485,7 +484,7 @@ namespace Simplify.Web.Bootstrapper
 				.AddJsonFile("appsettings.json", true)
 				.AddJsonFile($"appsettings.{environmentName}.json", true);
 
-			DIContainer.Current.Register<IConfiguration>(p => builder.Build(), LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IConfiguration>(p => builder.Build(), LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -493,7 +492,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersMetaStore()
 		{
-			DIContainer.Current.Register(p => ControllersMetaStore.Current, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register(p => ControllersMetaStore.Current, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -501,7 +500,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterViewsMetaStore()
 		{
-			DIContainer.Current.Register(p => ViewsMetaStore.Current, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register(p => ViewsMetaStore.Current, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -509,7 +508,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterSimplifyWebSettings()
 		{
-			DIContainer.Current.Register<ISimplifyWebSettings>(SimplifyWebSettingsType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<ISimplifyWebSettings>(SimplifyWebSettingsType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -517,7 +516,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterViewFactory()
 		{
-			DIContainer.Current.Register<IViewFactory>(ViewFactoryType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IViewFactory>(ViewFactoryType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -525,7 +524,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerFactory()
 		{
-			DIContainer.Current.Register<IControllerFactory>(ControllerFactoryType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllerFactory>(ControllerFactoryType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -533,7 +532,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerPathParser()
 		{
-			DIContainer.Current.Register<IControllerPathParser>(ControllerPathParser, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllerPathParser>(ControllerPathParser, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -541,7 +540,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterRouteMatcher()
 		{
-			DIContainer.Current.Register<IRouteMatcher>(RouteMatcherType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IRouteMatcher>(RouteMatcherType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -549,7 +548,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersAgent()
 		{
-			DIContainer.Current.Register<IControllersAgent>(ControllersAgentType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllersAgent>(ControllersAgentType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -557,7 +556,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerResponseBuilder()
 		{
-			DIContainer.Current.Register<IControllerResponseBuilder>(ControllerResponseBuilderType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllerResponseBuilder>(ControllerResponseBuilderType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -565,7 +564,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerExecutor()
 		{
-			DIContainer.Current.Register<IControllerExecutor>(ControllerExecutorType);
+			BootstrapperFactory.ContainerProvider.Register<IControllerExecutor>(ControllerExecutorType);
 		}
 
 		/// <summary>
@@ -573,7 +572,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersProcessor()
 		{
-			DIContainer.Current.Register<IControllersProcessor>(ControllersProcessorType);
+			BootstrapperFactory.ContainerProvider.Register<IControllersProcessor>(ControllersProcessorType);
 		}
 
 		/// <summary>
@@ -581,8 +580,8 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterEnvironment()
 		{
-			DIContainer.Current.Register<IEnvironment>(
-				p => new Environment(AppDomain.CurrentDomain.BaseDirectory, p.Resolve<ISimplifyWebSettings>()));
+			BootstrapperFactory.ContainerProvider.Register<IEnvironment>(
+				p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory, p.Resolve<ISimplifyWebSettings>()));
 		}
 
 		/// <summary>
@@ -590,7 +589,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterLanguageManagerProvider()
 		{
-			DIContainer.Current.Register<ILanguageManagerProvider>(p => new LanguageManagerProvider(p.Resolve<ISimplifyWebSettings>()));
+			BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(p => new LanguageManagerProvider(p.Resolve<ISimplifyWebSettings>()));
 		}
 
 		/// <summary>
@@ -598,7 +597,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterTemplateFactory()
 		{
-			DIContainer.Current.Register<ITemplateFactory>(
+			BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(
 				p =>
 				{
 					var settings = p.Resolve<ISimplifyWebSettings>();
@@ -613,7 +612,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterFileReader()
 		{
-			DIContainer.Current.Register<IFileReader>(
+			BootstrapperFactory.ContainerProvider.Register<IFileReader>(
 				p =>
 				{
 					var settings = p.Resolve<ISimplifyWebSettings>();
@@ -628,7 +627,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStringTable()
 		{
-			DIContainer.Current.Register<IStringTable>(
+			BootstrapperFactory.ContainerProvider.Register<IStringTable>(
 				p =>
 				{
 					var settings = p.Resolve<ISimplifyWebSettings>();
@@ -642,7 +641,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterDataCollector()
 		{
-			DIContainer.Current.Register<IDataCollector>(p =>
+			BootstrapperFactory.ContainerProvider.Register<IDataCollector>(p =>
 			{
 				var settings = p.Resolve<ISimplifyWebSettings>();
 
@@ -655,7 +654,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterListsGenerator()
 		{
-			DIContainer.Current.Register<IListsGenerator>(ListsGeneratorType);
+			BootstrapperFactory.ContainerProvider.Register<IListsGenerator>(ListsGeneratorType);
 		}
 
 		/// <summary>
@@ -663,7 +662,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStringTableItemsSetter()
 		{
-			DIContainer.Current.Register<IStringTableItemsSetter>(StringTableItemsSetterType);
+			BootstrapperFactory.ContainerProvider.Register<IStringTableItemsSetter>(StringTableItemsSetterType);
 		}
 
 		/// <summary>
@@ -671,7 +670,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterPageBuilder()
 		{
-			DIContainer.Current.Register<IPageBuilder>(PageBuilderType);
+			BootstrapperFactory.ContainerProvider.Register<IPageBuilder>(PageBuilderType);
 		}
 
 		/// <summary>
@@ -679,7 +678,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterResponseWriter()
 		{
-			DIContainer.Current.Register<IResponseWriter>(ResponseWriterType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IResponseWriter>(ResponseWriterType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -687,7 +686,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterPageProcessor()
 		{
-			DIContainer.Current.Register<IPageProcessor>(PageProcessorType);
+			BootstrapperFactory.ContainerProvider.Register<IPageProcessor>(PageProcessorType);
 		}
 
 		/// <summary>
@@ -695,7 +694,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersRequestHandler()
 		{
-			DIContainer.Current.Register<IControllersRequestHandler>(ControllersRequestHandlerType);
+			BootstrapperFactory.ContainerProvider.Register<IControllersRequestHandler>(ControllersRequestHandlerType);
 		}
 
 		/// <summary>
@@ -703,7 +702,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStaticFileResponseFactory()
 		{
-			DIContainer.Current.Register<IStaticFileResponseFactory>(StaticFileResponseFactoryType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IStaticFileResponseFactory>(StaticFileResponseFactoryType, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -711,7 +710,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStaticFileHandler()
 		{
-			DIContainer.Current.Register<IStaticFileHandler>(
+			BootstrapperFactory.ContainerProvider.Register<IStaticFileHandler>(
 				p =>
 					new StaticFileHandler(p.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
 						p.Resolve<IEnvironment>().SitePhysicalPath));
@@ -722,7 +721,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStaticFilesRequestHandler()
 		{
-			DIContainer.Current.Register<IStaticFilesRequestHandler>(StaticFilesRequestHandlerType);
+			BootstrapperFactory.ContainerProvider.Register<IStaticFilesRequestHandler>(StaticFilesRequestHandlerType);
 		}
 
 		/// <summary>
@@ -730,7 +729,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterRequestHandler()
 		{
-			DIContainer.Current.Register<IRequestHandler>(
+			BootstrapperFactory.ContainerProvider.Register<IRequestHandler>(
 				p =>
 					new RequestHandler(p.Resolve<IControllersRequestHandler>(),
 						p.Resolve<IStaticFilesRequestHandler>(), p.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
@@ -741,7 +740,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStopwatchProvider()
 		{
-			DIContainer.Current.Register<IStopwatchProvider>(StopwatchProviderType);
+			BootstrapperFactory.ContainerProvider.Register<IStopwatchProvider>(StopwatchProviderType);
 		}
 
 		/// <summary>
@@ -749,7 +748,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterContextVariablesSetter()
 		{
-			DIContainer.Current.Register<IContextVariablesSetter>(
+			BootstrapperFactory.ContainerProvider.Register<IContextVariablesSetter>(
 				p =>
 					new ContextVariablesSetter(p.Resolve<IDataCollector>(), p.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
 		}
@@ -759,7 +758,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterWebContextProvider()
 		{
-			DIContainer.Current.Register<IWebContextProvider>(WebContextProviderType);
+			BootstrapperFactory.ContainerProvider.Register<IWebContextProvider>(WebContextProviderType);
 		}
 
 		/// <summary>
@@ -767,7 +766,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterRedirector()
 		{
-			DIContainer.Current.Register<IRedirector>(p => new Redirector(p.Resolve<IWebContextProvider>().Get()));
+			BootstrapperFactory.ContainerProvider.Register<IRedirector>(p => new Redirector(p.Resolve<IWebContextProvider>().Get()));
 		}
 
 		/// <summary>
@@ -775,7 +774,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterModelHandler()
 		{
-			DIContainer.Current.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
+			BootstrapperFactory.ContainerProvider.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
 		}
 
 		#endregion Bootstrapper types registration

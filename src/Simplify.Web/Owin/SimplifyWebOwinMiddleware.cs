@@ -4,6 +4,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Simplify.DI;
+using Simplify.Web.Bootstrapper;
 using Simplify.Web.Core;
 using Simplify.Web.Diagnostics;
 using Simplify.Web.Modules;
@@ -45,7 +46,7 @@ namespace Simplify.Web.Owin
 		/// <returns></returns>
 		public static RequestHandlingResult Invoke(HttpContext context)
 		{
-			using (var scope = DIContainer.Current.BeginLifetimeScope())
+			using (var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope())
 			{
 				try
 				{
