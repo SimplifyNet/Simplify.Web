@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Core;
 using Simplify.Web.Core.PageAssembly;
+using Simplify.Web.Diagnostics;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 

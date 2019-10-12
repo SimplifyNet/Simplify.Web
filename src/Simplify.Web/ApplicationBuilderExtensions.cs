@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Simplify.Web.Bootstrapper;
 using Simplify.Web.Core;
-using System;
+using Simplify.Web.RequestPipeline;
 
-namespace Simplify.Web.Owin
+namespace Simplify.Web
 {
 	/// <summary>
 	/// IApplicationBuilder Simplify.Web extensions
@@ -33,7 +34,7 @@ namespace Simplify.Web.Owin
 			}
 			catch (Exception e)
 			{
-				SimplifyWebOwinMiddleware.ProcessOnException(e);
+				SimplifyWebRequestMiddleware.ProcessOnException(e);
 
 				throw;
 			}
@@ -56,7 +57,7 @@ namespace Simplify.Web.Owin
 			}
 			catch (Exception e)
 			{
-				SimplifyWebOwinMiddleware.ProcessOnException(e);
+				SimplifyWebRequestMiddleware.ProcessOnException(e);
 
 				throw;
 			}
@@ -80,7 +81,7 @@ namespace Simplify.Web.Owin
 			}
 			catch (Exception e)
 			{
-				SimplifyWebOwinMiddleware.ProcessOnException(e);
+				SimplifyWebRequestMiddleware.ProcessOnException(e);
 
 				throw;
 			}
@@ -103,7 +104,7 @@ namespace Simplify.Web.Owin
 			}
 			catch (Exception e)
 			{
-				SimplifyWebOwinMiddleware.ProcessOnException(e);
+				SimplifyWebRequestMiddleware.ProcessOnException(e);
 
 				throw;
 			}
@@ -113,7 +114,7 @@ namespace Simplify.Web.Owin
 		{
 			builder.Use(async (context, next) =>
 			{
-				var result = SimplifyWebOwinMiddleware.Invoke(context);
+				var result = SimplifyWebRequestMiddleware.Invoke(context);
 
 				await result.Task;
 
@@ -124,7 +125,7 @@ namespace Simplify.Web.Owin
 
 		private static void RegisterAsTerminal(IApplicationBuilder builder)
 		{
-			builder.Run(async (context) => await SimplifyWebOwinMiddleware.Invoke(context).Task);
+			builder.Run(async (context) => await SimplifyWebRequestMiddleware.Invoke(context).Task);
 		}
 	}
 }

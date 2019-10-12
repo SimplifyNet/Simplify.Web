@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Simplify.Web.Core
+namespace Simplify.Web.Diagnostics
 {
 	/// <summary>
 	/// Provides stopwatch provider

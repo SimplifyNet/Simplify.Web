@@ -2,12 +2,12 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Owin
+namespace Simplify.Web.Util
 {
 	/// <summary>
 	/// Provides OWIN and HTTP related utility functions
 	/// </summary>
-	public static class OwinHttpRequestHelper
+	public static class HttpRequestUtil
 	{
 		/// <summary>
 		/// Gets If-Modified-Since time header from headers collection.

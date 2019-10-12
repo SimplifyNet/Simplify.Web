@@ -2,7 +2,6 @@
 using Simplify.DI;
 using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Modules;
-using Simplify.Web.Owin;
 
 namespace Simplify.Web.Core.Controllers
 {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Hosting;
-using Simplify.Web.Owin;
+using Simplify.Web;
 
 namespace SampleApp.Vue
 {
