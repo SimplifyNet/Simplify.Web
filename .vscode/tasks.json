@@ -12,12 +12,12 @@
 		"problemMatcher": "$msCompile"
 	},
 	{
-		"label": "Build SelfHosted Example",
+		"label": "Build Classic Example",
 		"command": "dotnet",
 		"type": "process",
 		"args": [
 			"build",
-			"${workspaceFolder}/src/SampleApps/SampleApp.SelfHosted/SampleApp.SelfHosted.csproj"
+			"${workspaceFolder}/src/SampleApps/SampleApp.Classic/SampleApp.Classic.csproj"
 		],
 		"problemMatcher": "$msCompile"
 	},

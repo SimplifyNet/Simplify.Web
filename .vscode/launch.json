@@ -15,12 +15,12 @@
 		}
 	},
 	{
-		"name": "SampleApp.SelfHosted Launch",
+		"name": "SampleApp.Classic Launch",
 		"type": "coreclr",
 		"request": "launch",
-		"preLaunchTask": "Build SelfHosted Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.SelfHosted/bin/Debug/netcoreapp3.0/SampleApp.SelfHosted.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.SelfHosted",
+		"preLaunchTask": "Build Classic Example",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.0/SampleApp.Classic.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":
 		{
