@@ -7,7 +7,7 @@
 		"type": "process",
 		"args": [
 			"build",
-			"${workspaceFolder}/src/Examples/Simplify.Web.Examples.Kestrel/Simplify.Web.Examples.Kestrel.csproj"
+			"${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/SampleApp.Kestrel.csproj"
 		],
 		"problemMatcher": "$msCompile"
 	},
@@ -17,7 +17,7 @@
 		"type": "process",
 		"args": [
 			"build",
-			"${workspaceFolder}/src/Examples/Simplify.Web.Examples.SelfHosted/Simplify.Web.Examples.SelfHosted.csproj"
+			"${workspaceFolder}/src/SampleApps/SampleApp.SelfHosted/SampleApp.SelfHosted.csproj"
 		],
 		"problemMatcher": "$msCompile"
 	},

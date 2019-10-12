@@ -2,12 +2,12 @@
 	"version": "0.2.0",
 	"configurations": [
 	{
-		"name": "Simplify.Web.Examples.Kestrel Launch",
+		"name": "SampleApp.Kestrel Launch",
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Kestrel Example",
-		"program": "${workspaceFolder}/src/Examples/Simplify.Web.Examples.Kestrel/bin/Debug/netcoreapp2.1/Simplify.Web.Examples.Kestrel.dll",
-		"cwd": "${workspaceFolder}/src/Examples/Simplify.Web.Examples.Kestrel",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.0/SampleApp.Kestrel.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":
 		{
@@ -15,22 +15,16 @@
 		}
 	},
 	{
-		"name": "Simplify.Web.Examples.SelfHosted Launch",
+		"name": "SampleApp.SelfHosted Launch",
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build SelfHosted Example",
-		"program": "${workspaceFolder}/src/Examples/Simplify.Web.Examples.SelfHosted/bin/Debug/netcoreapp2.1/Simplify.Web.Examples.SelfHosted.dll",
-		"cwd": "${workspaceFolder}/src/Examples/Simplify.Web.Examples.SelfHosted",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.SelfHosted/bin/Debug/netcoreapp3.0/SampleApp.SelfHosted.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.SelfHosted",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":
 		{
 			"ASPNETCORE_ENVIRONMENT": "Development"
 		}
-	},
-	{
-		"name": ".NET Core Attach",
-		"type": "coreclr",
-		"request": "attach",
-		"processId": "${command:pickProcess}"
 	}]
 }
