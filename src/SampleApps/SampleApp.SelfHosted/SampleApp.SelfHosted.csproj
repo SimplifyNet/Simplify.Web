@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web" InitialTargets="BeforeBuild">
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="BeforeBuild">
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.0</TargetFramework>
 		<Authors>Alexander Krylkov</Authors>
@@ -6,9 +6,11 @@
 		<Description>Simplify.Web self hosted example</Description>
 		<Copyright>Licensed under LGPL</Copyright>
 		<Version>1.1</Version>
+		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
+		<PackageReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
 	</ItemGroup>
 	<ItemGroup>
