@@ -11,11 +11,13 @@ namespace Simplify.Web.Bootstrapper
 		/// Registers Simplify.Web types and controllers and use this container as current for Simplify.Web.
 		/// </summary>
 		/// <param name="containerProvider">The container provider.</param>
-		public static void RegisterSimplifyWeb(this IDIContainerProvider containerProvider)
+		public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider)
 		{
 			BootstrapperFactory.ContainerProvider = containerProvider;
 
 			BootstrapperFactory.CreateBootstrapper().Register();
+
+			return containerProvider;
 		}
 	}
 }
