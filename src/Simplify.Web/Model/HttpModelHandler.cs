@@ -54,7 +54,7 @@ namespace Simplify.Web.Model
 		};
 
 		/// <summary>
-		/// Registers the model binder.
+		/// Adds the model binder into model binders list, this type should be registered in Simplify.DI container.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public static void RegisterModelBinder<T>()
@@ -64,7 +64,7 @@ namespace Simplify.Web.Model
 		}
 
 		/// <summary>
-		/// Registers the model validator.
+		/// Adds the model validator into model validators list, this type should be registered in Simplify.DI container.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public static void RegisterModelValidator<T>()
