@@ -12,21 +12,6 @@ namespace Simplify.Web.ModelBinding
 	/// </summary>
 	public class HttpModelHandler : IModelHandler
 	{
-		private static readonly IList<Type> ModelBindersTypesInstance = new List<Type>
-		{
-			// Default model binders
-
-			typeof (HttpQueryModelBinder),
-			typeof (HttpFormModelBinder)
-		};
-
-		private static readonly IList<Type> ModelValidatorsTypesInstance = new List<Type>
-		{
-			// Default model validators
-
-			typeof (ObjectPropertiesValidator)
-		};
-
 		private readonly IWebContext _context;
 
 		/// <summary>
@@ -45,7 +30,13 @@ namespace Simplify.Web.ModelBinding
 		/// The model binders types.
 		/// </value>
 		// ReSharper disable once ConvertToAutoProperty
-		public static IList<Type> ModelBindersTypes => ModelBindersTypesInstance;
+		public static IList<Type> ModelBindersTypes { get; } = new List<Type>
+		{
+			// Default model binders
+
+			typeof (HttpQueryModelBinder),
+			typeof (HttpFormModelBinder)
+		};
 
 		/// <summary>
 		/// Gets the model validators types.
@@ -54,7 +45,12 @@ namespace Simplify.Web.ModelBinding
 		/// The model validators types.
 		/// </value>
 		// ReSharper disable once ConvertToAutoProperty
-		public static IList<Type> ModelValidatorsTypes => ModelValidatorsTypesInstance;
+		public static IList<Type> ModelValidatorsTypes { get; } = new List<Type>
+		{
+			// Default model validators
+
+			typeof (ObjectPropertiesValidator)
+		};
 
 		/// <summary>
 		/// Registers the model binder.
@@ -90,15 +86,21 @@ namespace Simplify.Web.ModelBinding
 			{
 				binder.Bind(args);
 
-				if (!args.IsBinded) continue;
+				if (!args.IsBinded)
+					continue;
 
-				foreach (var validator in ModelValidatorsTypes.Select(x => (IModelValidator)Activator.CreateInstance(x)))
-					validator.Validate(args.Model);
+				Validate(args);
 
 				return args.Model;
 			}
 
 			throw new ModelBindingException($"Unrecognized request content type for binding: {_context.Request.ContentType}");
+		}
+
+		private static void Validate<T>(ModelBinderEventArgs<T> args)
+		{
+			foreach (var validator in ModelValidatorsTypes.Select(x => (IModelValidator)Activator.CreateInstance(x)))
+				validator.Validate(args.Model);
 		}
 	}
 }
