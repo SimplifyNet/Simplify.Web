@@ -17,6 +17,6 @@ namespace Simplify.Web
 		/// <value>
 		/// The current request model.
 		/// </value>
-		public virtual T Model => _model ?? (_model = Resolver.Resolve<IModelHandler>().Process<T>());
+		public virtual T Model => _model ?? (_model = Resolver.Resolve<IModelHandler>().Process<T>(Resolver));
 	}
 }

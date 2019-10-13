@@ -14,6 +14,8 @@ using Simplify.Web.Core.Views;
 using Simplify.Web.Diagnostics;
 using Simplify.Web.Meta;
 using Simplify.Web.Model;
+using Simplify.Web.Model.Binding;
+using Simplify.Web.Model.Validation;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
@@ -91,6 +93,8 @@ namespace Simplify.Web.Bootstrapper
 			RegisterWebContextProvider();
 			RegisterRedirector();
 			RegisterModelHandler();
+			RegisterDefaultModelBinders();
+			RegisterDefaultModelValidators();
 
 			var ignoredTypes = GetIgnoredTypes();
 
@@ -776,6 +780,23 @@ namespace Simplify.Web.Bootstrapper
 		public virtual void RegisterModelHandler()
 		{
 			BootstrapperFactory.ContainerProvider.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
+		}
+
+		/// <summary>
+		/// Registers the default model binders.
+		/// </summary>
+		public virtual void RegisterDefaultModelBinders()
+		{
+			BootstrapperFactory.ContainerProvider.Register<HttpQueryModelBinder>(LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<HttpFormModelBinder>(LifetimeType.Singleton);
+		}
+
+		/// <summary>
+		/// Registers the default model validators.
+		/// </summary>
+		public virtual void RegisterDefaultModelValidators()
+		{
+			BootstrapperFactory.ContainerProvider.Register<ObjectPropertiesValidator>(LifetimeType.Singleton);
 		}
 
 		#endregion Bootstrapper types registration

@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Model
+﻿using Simplify.DI;
+
+namespace Simplify.Web.Model
 {
 	/// <summary>
 	/// Represent model handler
@@ -9,7 +11,8 @@
 		/// Parses model and validates it
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="resolver">The resolver.</param>
 		/// <returns></returns>
-		T Process<T>();
+		T Process<T>(IDIResolver resolver);
 	}
 }

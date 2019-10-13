@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Simplify.DI;
 using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Validation;
 using Simplify.Web.Modules;
@@ -76,20 +77,21 @@ namespace Simplify.Web.Model
 		/// Parses object from HTTP data and validates it
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="resolver">The resolver.</param>
 		/// <returns></returns>
-		/// <exception cref="ModelBindingException"></exception>
-		public T Process<T>()
+		/// <exception cref="ModelBindingException">Unrecognized request content type for binding: {_context.Request.ContentType}</exception>
+		public T Process<T>(IDIResolver resolver)
 		{
 			var args = new ModelBinderEventArgs<T>(_context);
 
-			foreach (var binder in ModelBindersTypes.Select(binderType => (IModelBinder)Activator.CreateInstance(binderType)))
+			foreach (var binder in ModelBindersTypes.Select(binderType => (IModelBinder)resolver.Resolve(binderType)))
 			{
 				binder.Bind(args);
 
 				if (!args.IsBinded)
 					continue;
 
-				Validate(args);
+				Validate(args, resolver);
 
 				return args.Model;
 			}
@@ -97,9 +99,9 @@ namespace Simplify.Web.Model
 			throw new ModelBindingException($"Unrecognized request content type for binding: {_context.Request.ContentType}");
 		}
 
-		private static void Validate<T>(ModelBinderEventArgs<T> args)
+		private static void Validate<T>(ModelBinderEventArgs<T> args, IDIResolver resolver)
 		{
-			foreach (var validator in ModelValidatorsTypes.Select(x => (IModelValidator)Activator.CreateInstance(x)))
+			foreach (var validator in ModelValidatorsTypes.Select(x => (IModelValidator)resolver.Resolve(x)))
 				validator.Validate(args.Model);
 		}
 	}
