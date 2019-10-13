@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Simplify.Web.ModelBinding.Attributes;
+using Simplify.Web.Model.Validation.Attributes;
 
 namespace Simplify.Web.Tests.TestEntities
 {

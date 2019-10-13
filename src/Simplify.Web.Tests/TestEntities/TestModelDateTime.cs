@@ -1,5 +1,5 @@
 ﻿using System;
-using Simplify.Web.ModelBinding.Attributes;
+using Simplify.Web.Model.Binding.Attributes;
 
 namespace Simplify.Web.Tests.TestEntities
 {

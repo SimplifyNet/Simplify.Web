@@ -13,7 +13,7 @@ using Simplify.Web.Core.StaticFiles;
 using Simplify.Web.Core.Views;
 using Simplify.Web.Diagnostics;
 using Simplify.Web.Meta;
-using Simplify.Web.ModelBinding;
+using Simplify.Web.Model;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;

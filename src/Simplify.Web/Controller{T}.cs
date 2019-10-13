@@ -1,5 +1,5 @@
 ﻿using Simplify.DI;
-using Simplify.Web.ModelBinding;
+using Simplify.Web.Model;
 
 namespace Simplify.Web
 {
