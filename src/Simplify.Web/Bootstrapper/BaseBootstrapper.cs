@@ -426,7 +426,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterDefaultModelValidators()
 		{
-			BootstrapperFactory.ContainerProvider.Register<ObjectPropertiesValidator>(LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<ValidationAttributesExecutor>(LifetimeType.Singleton);
 		}
 
 		#endregion Bootstrapper types registration

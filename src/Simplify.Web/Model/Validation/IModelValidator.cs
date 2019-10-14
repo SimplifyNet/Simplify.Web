@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Model.Validation
+﻿using Simplify.DI;
+
+namespace Simplify.Web.Model.Validation
 {
 	/// <summary>
 	/// Represent model validator
@@ -10,6 +12,7 @@
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="model">The model.</param>
-		void Validate<T>(T model);
+		/// <param name="resolver">The resolver.</param>
+		void Validate<T>(T model, IDIResolver resolver);
 	}
 }

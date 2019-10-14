@@ -50,7 +50,7 @@ namespace Simplify.Web.Model
 		{
 			// Default model validators
 
-			typeof (ObjectPropertiesValidator)
+			typeof (ValidationAttributesExecutor)
 		};
 
 		/// <summary>
@@ -102,7 +102,7 @@ namespace Simplify.Web.Model
 		private static void Validate<T>(ModelBinderEventArgs<T> args, IDIResolver resolver)
 		{
 			foreach (var validator in ModelValidatorsTypes.Select(x => (IModelValidator)resolver.Resolve(x)))
-				validator.Validate(args.Model);
+				validator.Validate(args.Model, resolver);
 		}
 	}
 }
