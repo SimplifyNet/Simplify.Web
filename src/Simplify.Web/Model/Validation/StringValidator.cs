@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Text.RegularExpressions;
-using Simplify.String;
 using Simplify.Web.Model.Validation.Attributes;
 
 namespace Simplify.Web.Model.Validation
@@ -37,14 +36,6 @@ namespace Simplify.Web.Model.Validation
 				if (string.IsNullOrEmpty(value) || value.Length > maxLength)
 					throw new ModelValidationException(
 						$"Property '{propertyInfo.Name}' required maximum length is '{maxLength}', actual value: '{value}'");
-			}
-
-			attributes = propertyInfo.GetCustomAttributes(typeof(EMailAttribute), false);
-
-			if (attributes.Length > 0)
-			{
-				if (!StringHelper.ValidateEMail(value))
-					throw new ModelValidationException($"Property '{propertyInfo.Name}' should be an email, actual value: '{value}'");
 			}
 
 			attributes = propertyInfo.GetCustomAttributes(typeof(RegexAttribute), false);
