@@ -29,9 +29,9 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		/// Perform validation attribute test
 		/// </summary>
 		/// <param name="value">The value.</param>
-		/// <param name="expectedKExceptionMessage">The expected message.</param>
+		/// <param name="expectedExceptionMessage">The expected message.</param>
 		/// <param name="customAttribute">The custom attribute.</param>
-		protected void TestAttribute(object value, string expectedKExceptionMessage, ValidationAttribute customAttribute = null)
+		protected void TestAttribute(object value, string expectedExceptionMessage, ValidationAttribute customAttribute = null)
 		{
 			// Act
 
@@ -40,7 +40,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 				: Assert.Throws<ModelValidationException>(() => Attr.Validate(value, PropertyInfo, Resolver));
 
 			// Assert
-			Assert.AreEqual(expectedKExceptionMessage, ex.Message);
+			Assert.AreEqual(expectedExceptionMessage, ex.Message);
 		}
 	}
 }

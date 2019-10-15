@@ -22,24 +22,28 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		[Test]
 		public void Validate_NotNullReference_NoExceptions()
 		{
+			// Act & Assert
 			TestAttributeForValidValue(new object());
 		}
 
 		[Test]
 		public void Validate_DefaultInt_NoExceptions()
 		{
+			// Act & Assert
 			TestAttributeForValidValue(default(int));
 		}
 
 		[Test]
 		public void Validate_NullReference_DefaultModelValidationException()
 		{
+			// Act & Assert
 			TestAttribute(null, _defaultMessage);
 		}
 
 		[Test]
 		public void Validate_DefaultDateTime_DefaultModelValidationException()
 		{
+			// Act & Assert
 			TestAttribute(default(DateTime), _defaultMessage);
 		}
 
@@ -50,6 +54,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 
 			var attr = new RequiredAttribute(_customMessage, false);
 
+			// Act & Assert
 			TestAttribute(default(DateTime), _customMessage, attr);
 		}
 
@@ -62,7 +67,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 			var st = Mock.Of<IStringTable>(x => x.GetItem(It.Is<string>(s => s == "MyKey")) == _customMessage);
 			Resolver = Mock.Of<IDIResolver>(x => x.Resolve(It.Is<Type>(t => t == typeof(IStringTable))) == st);
 
-			// Act
+			// Act & Assert
 			TestAttribute(null, _customMessage, attr);
 		}
 	}
