@@ -4,7 +4,7 @@ using Simplify.Web.Model.Validation;
 namespace Simplify.Web.Tests.Model.Validation
 {
 	[TestFixture]
-	public class ObjectPropertiesValidatorTests
+	public class ValidationAttributesExecutorTests
 	{
 		private ValidationAttributesExecutor _validator;
 
@@ -15,35 +15,6 @@ namespace Simplify.Web.Tests.Model.Validation
 		}
 
 		// TODO refactor
-		//[Test]
-		//public void Validate_RequiredListFieldIsNull_ExceptionThrown()
-		//{
-		//	// Assign
-		//	var model = new TestModelRequired { Prop2 = new List<string>() };
-
-		//	// Act & Assert
-		//	Assert.Throws<ModelValidationException>(() => _validator.Validate(model));
-		//}
-
-		//[Test]
-		//public void Validate_RequiredStringFieldIsNull_ExceptionThrown()
-		//{
-		//	// Assign
-		//	var model = new TestModelRequired { Prop1 = "test" };
-
-		//	// Act & Assert
-		//	Assert.Throws<ModelValidationException>(() => _validator.Validate(model));
-		//}
-
-		//[Test]
-		//public void Validate_RequiredFieldsIsNormal_Ok()
-		//{
-		//	// Assign
-		//	var model = new TestModelRequired { Prop1 = "test", Prop2 = new List<string>(), Prop3 = new TestModelEMail() };
-
-		//	// Act & Assert
-		//	_validator.Validate(model);
-		//}
 
 		//[Test]
 		//public void Validate_UserTypeRequiredFieldIsNullOtherIsOk_ExceptionThrown()
