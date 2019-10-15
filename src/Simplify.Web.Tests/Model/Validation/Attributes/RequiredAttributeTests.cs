@@ -1,83 +1,56 @@
 ﻿using System;
-using System.Reflection;
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Model.Validation;
 using Simplify.Web.Model.Validation.Attributes;
 using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Tests.Model.Validation.Attributes
 {
 	[TestFixture]
-	public class RequiredAttributeTests
+	public class RequiredAttributeTests : AttributesTestBase
 	{
-		private PropertyInfo _propertyInfo;
+		private readonly string _defaultMessage = $"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty";
+		private readonly string _customMessage = "Hello world!";
 
 		[OneTimeSetUp]
-		public void Initialize()
+		public void SetupAttribute()
 		{
-			_propertyInfo = typeof(TestEntityWithProperty).GetProperty(nameof(TestEntityWithProperty.Prop1));
+			Attr = new RequiredAttribute();
 		}
 
 		[Test]
 		public void Validate_NotNullReference_NoExceptions()
 		{
-			// Assign
-			var attr = new RequiredAttribute();
-
-			// Act
-			attr.Validate(new object(), _propertyInfo, null);
+			TestAttributeForValidValue(new object());
 		}
 
 		[Test]
 		public void Validate_DefaultInt_NoExceptions()
 		{
-			// Assign
-			var attr = new RequiredAttribute();
-
-			// Act
-			attr.Validate(default(int), _propertyInfo, null);
+			TestAttributeForValidValue(default(int));
 		}
 
 		[Test]
 		public void Validate_NullReference_DefaultModelValidationException()
 		{
-			// Assign
-			var attr = new RequiredAttribute();
-
-			// Act
-			var ex = Assert.Throws<ModelValidationException>(() => attr.Validate(null, _propertyInfo, null));
-
-			// Assert
-			Assert.That(ex.Message,
-				Does.StartWith($"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty"));
+			TestAttribute(null, _defaultMessage);
 		}
 
 		[Test]
 		public void Validate_DefaultDateTime_DefaultModelValidationException()
 		{
-			// Assign
-			var attr = new RequiredAttribute();
-
-			// Act
-			var ex = Assert.Throws<ModelValidationException>(() => attr.Validate(default(DateTime), _propertyInfo, null));
-
-			// Assert
-			Assert.AreEqual($"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty", ex.Message);
+			TestAttribute(default(DateTime), _defaultMessage);
 		}
 
 		[Test]
 		public void Validate_NullReferenceWithCustomError_ModelValidationExceptionWithCustomError()
 		{
 			// Assign
-			var attr = new RequiredAttribute("Hello world!", false);
 
-			// Act
-			var ex = Assert.Throws<ModelValidationException>(() => attr.Validate(null, _propertyInfo, null));
+			var attr = new RequiredAttribute(_customMessage, false);
 
-			// Assert
-			Assert.AreEqual("Hello world!", ex.Message);
+			TestAttribute(default(DateTime), _customMessage, attr);
 		}
 
 		[Test]
@@ -86,14 +59,11 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 			// Assign
 
 			var attr = new RequiredAttribute("MyKey");
-			var st = Mock.Of<IStringTable>(x => x.GetItem(It.Is<string>(s => s == "MyKey")) == "Hello world!");
-			var resolver = Mock.Of<IDIResolver>(x => x.Resolve(It.Is<Type>(t => t == typeof(IStringTable))) == st);
+			var st = Mock.Of<IStringTable>(x => x.GetItem(It.Is<string>(s => s == "MyKey")) == _customMessage);
+			Resolver = Mock.Of<IDIResolver>(x => x.Resolve(It.Is<Type>(t => t == typeof(IStringTable))) == st);
 
 			// Act
-			var ex = Assert.Throws<ModelValidationException>(() => attr.Validate(null, _propertyInfo, resolver));
-
-			// Assert
-			Assert.AreEqual("Hello world!", ex.Message);
+			TestAttribute(null, _customMessage, attr);
 		}
 	}
 }
