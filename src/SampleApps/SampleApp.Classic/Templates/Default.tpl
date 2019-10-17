@@ -16,7 +16,7 @@
 					<a href="https://github.com/SimplifyNet/Simplify.Web/tree/master/src">Source code</a>
 				</li>
 				<li class="list-group-item">
-					<a href="https://github.com/SimplifyNet/Simplify.Web/tree/master/src/Examples">Example applications</a>
+					<a href="https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps">Example applications</a>
 				</li>
 				<li class="list-group-item">
 					<a href="https://www.nuget.org/packages?q=Simplify.Web">Nuget package and extensions</a>

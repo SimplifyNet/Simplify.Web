@@ -1,5 +1,5 @@
 ﻿using Simplify.DI;
-using Simplify.Web.ModelBinding;
+using Simplify.Web.Model;
 
 namespace Simplify.Web
 {
@@ -17,6 +17,6 @@ namespace Simplify.Web
 		/// <value>
 		/// The current request model.
 		/// </value>
-		public virtual T Model => _model ?? (_model = Resolver.Resolve<IModelHandler>().Process<T>());
+		public virtual T Model => _model ?? (_model = Resolver.Resolve<IModelHandler>().Process<T>(Resolver));
 	}
 }
