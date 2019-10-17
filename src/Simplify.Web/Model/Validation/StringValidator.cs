@@ -18,17 +18,7 @@ namespace Simplify.Web.Model.Validation
 		/// </exception>
 		public static void Validate(string value, PropertyInfo propertyInfo)
 		{
-			var attributes = propertyInfo.GetCustomAttributes(typeof(MinLengthAttribute), false);
-
-			if (attributes.Length > 0)
-			{
-				var minLength = ((MinLengthAttribute)attributes[0]).MinimumPropertyLength;
-				if (string.IsNullOrEmpty(value) || value.Length < minLength)
-					throw new ModelValidationException(
-						$"Property '{propertyInfo.Name}' required minimum length is '{minLength}', actual value: '{value}'");
-			}
-
-			attributes = propertyInfo.GetCustomAttributes(typeof(MaxLengthAttribute), false);
+			var attributes = propertyInfo.GetCustomAttributes(typeof(MaxLengthAttribute), false);
 
 			if (attributes.Length > 0)
 			{

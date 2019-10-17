@@ -8,24 +8,6 @@ namespace Simplify.Web.Tests.Model.Validation
 	public class StringValidatorTests
 	{
 		[Test]
-		public void Validate_MinLengthOk_Ok()
-		{
-			StringValidator.Validate("test", typeof(TestModelMinLength).GetProperties()[0]);
-		}
-
-		[Test]
-		public void Validate_BelowMinLength_ExceptionThrown()
-		{
-			Assert.Throws<ModelValidationException>(() => StringValidator.Validate("a", typeof(TestModelMinLength).GetProperties()[0]));
-		}
-
-		[Test]
-		public void Validate_MinLengthNull_ExceptionThrown()
-		{
-			Assert.Throws<ModelValidationException>(() => StringValidator.Validate(null, typeof(TestModelMinLength).GetProperties()[0]));
-		}
-
-		[Test]
 		public void Validate_MaxLengthOk_Ok()
 		{
 			StringValidator.Validate("a", typeof(TestModelMaxLength).GetProperties()[0]);
