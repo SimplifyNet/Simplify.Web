@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Meta
+﻿#nullable disable
+
+namespace Simplify.Web.Meta
 {
 	/// <summary>
 	/// Provides controller route information

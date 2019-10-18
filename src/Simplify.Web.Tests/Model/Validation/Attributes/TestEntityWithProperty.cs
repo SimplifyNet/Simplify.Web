@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Tests.Model.Validation.Attributes
+﻿#nullable disable
+
+namespace Simplify.Web.Tests.Model.Validation.Attributes
 {
 	public class TestEntityWithProperty
 	{

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Globalization;
 
 namespace Simplify.Web.Model.Binding.Parsers

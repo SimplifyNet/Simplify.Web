@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using Simplify.Templates;
 using Simplify.Web.Modules;
 using Simplify.Web.Responses;

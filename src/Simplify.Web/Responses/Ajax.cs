@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Responses
+﻿#nullable disable
+
+namespace Simplify.Web.Responses
 {
 	/// <summary>
 	/// Provides controller Ajax response (send only specified string to response)

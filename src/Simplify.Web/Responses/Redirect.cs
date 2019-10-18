@@ -1,4 +1,6 @@
-﻿using Simplify.Web.Modules;
+﻿#nullable disable
+
+using Simplify.Web.Modules;
 
 namespace Simplify.Web.Responses
 {

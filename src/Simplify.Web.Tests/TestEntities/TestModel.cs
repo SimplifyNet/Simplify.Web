@@ -1,4 +1,6 @@
-﻿using Simplify.Web.Model.Validation.Attributes;
+﻿#nullable disable
+
+using Simplify.Web.Model.Validation.Attributes;
 
 namespace Simplify.Web.Tests.TestEntities
 {

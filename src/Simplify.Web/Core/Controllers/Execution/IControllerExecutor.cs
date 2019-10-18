@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable disable
+
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Meta;

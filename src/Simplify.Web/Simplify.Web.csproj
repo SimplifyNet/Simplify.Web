@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+		<LangVersion>8.0</LangVersion>
+		<Nullable>enable</Nullable>
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>

@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+		<LangVersion>8.0</LangVersion>
+		<Nullable>enable</Nullable>
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web unit tests</Description>

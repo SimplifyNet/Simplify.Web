@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Tests.TestEntities
+﻿#nullable disable
+
+namespace Simplify.Web.Tests.TestEntities
 {
 	public class TestModelStringsArray
 	{
