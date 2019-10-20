@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Meta
+﻿using System.Collections.Generic;
+
+namespace Simplify.Web.Meta
 {
 	/// <summary>
 	/// Provides controller execution parameters
@@ -8,21 +10,21 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ControllerExecParameters" /> class.
 		/// </summary>
-		/// <param name="routeInfo">The route information.</param>
+		/// <param name="routes">The routes.</param>
 		/// <param name="execPriority">The execute priority.</param>
-		public ControllerExecParameters(ControllerRouteInfo routeInfo = null, int execPriority = 0)
+		public ControllerExecParameters(IDictionary<HttpMethod, string> routes, int execPriority = 0)
 		{
-			RouteInfo = routeInfo;
+			Routes = routes ?? new Dictionary<HttpMethod, string>();
 			RunPriority = execPriority;
 		}
 
 		/// <summary>
-		/// Gets the route information.
+		/// Gets the controller handling routes.
 		/// </summary>
 		/// <value>
-		/// The route information.
+		/// The routes.
 		/// </value>
-		public ControllerRouteInfo RouteInfo { get; private set; }
+		public IDictionary<HttpMethod, string> Routes { get; }
 
 		/// <summary>
 		/// Gets the run priority.
@@ -30,6 +32,6 @@
 		/// <value>
 		/// The run priority.
 		/// </value>
-		public int RunPriority { get; private set; }
+		public int RunPriority { get; }
 	}
 }

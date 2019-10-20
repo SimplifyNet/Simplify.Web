@@ -17,6 +17,6 @@ namespace Simplify.Web.Core.Controllers.Execution.Building
 		/// <param name="context">The context.</param>
 		/// <param name="routeParameters">The route parameters.</param>
 		/// <returns></returns>
-		ControllerBase CreateController(Type controllerType, IDIResolver resolver, HttpContext context, dynamic routeParameters = null);
+		ControllerBase CreateController(Type controllerType, IDIResolver resolver, HttpContext context, dynamic? routeParameters = null);
 	}
 }

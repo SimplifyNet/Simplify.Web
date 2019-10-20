@@ -21,16 +21,16 @@
 		/// <summary>
 		/// Gets or sets a value indicating whether controller is HTTP 400 error handler.
 		/// </summary>
-		public bool Is400Handler { get; private set; }
+		public bool Is400Handler { get; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether controller is HTTP 403 error handler.
 		/// </summary>
-		public bool Is403Handler { get; private set; }
+		public bool Is403Handler { get; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether controller is HTTP 404 error handler.
 		/// </summary>
-		public bool Is404Handler { get; private set; }
+		public bool Is404Handler { get; }
 	}
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
-using Simplify.Web.Attributes.Setup;
 using Simplify.Web.Core;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
@@ -11,45 +10,29 @@ using Simplify.Web.Core.Controllers.Execution.Building;
 using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Core.StaticFiles;
 using Simplify.Web.Core.Views;
+using Simplify.Web.Diagnostics;
 using Simplify.Web.Meta;
-using Simplify.Web.ModelBinding;
+using Simplify.Web.Model;
+using Simplify.Web.Model.Binding;
+using Simplify.Web.Model.Validation;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
 using Simplify.Web.Routing;
 using Simplify.Web.Settings;
-using Environment = Simplify.Web.Modules.Environment;
 
 namespace Simplify.Web.Bootstrapper
 {
 	/// <summary>
 	/// Base and default Simplify.Web bootstrapper
 	/// </summary>
+	// ReSharper disable once ClassTooBig
 	public class BaseBootstrapper
 	{
-		private Type _simplifyWebSettingsType;
-		private Type _viewFactoryType;
-		private Type _controllerFactoryType;
-		private Type _controllerPathParserType;
-		private Type _routeMatcherType;
-		private Type _controllersAgentType;
-		private Type _controllerResponseBuilderType;
-		private Type _controllerExecutorType;
-		private Type _controllersProcessorType;
-		private Type _listsGeneratorType;
-		private Type _stringTableItemsSetterType;
-		private Type _pageBuilderType;
-		private Type _responseWriterType;
-		private Type _pageProcessorType;
-		private Type _controllersRequestHandlerType;
-		private Type _staticFileResponseFactoryType;
-		private Type _staticFilesRequestHandlerType;
-		private Type _stopwatchProviderType;
-		private Type _webContextProviderType;
-
 		/// <summary>
 		/// Registers the types in container.
 		/// </summary>
+		// ReSharper disable once MethodTooLong
 		public void Register()
 		{
 			// Registering non Simplify.Web types
@@ -91,388 +74,39 @@ namespace Simplify.Web.Bootstrapper
 			RegisterWebContextProvider();
 			RegisterRedirector();
 			RegisterModelHandler();
+			RegisterDefaultModelBinders();
+			RegisterDefaultModelValidators();
 
-			var ignoredTypes = GetIgnoredTypes();
+			var typesToIgnore = SimplifyWebTypesFinder.GetTypesToIgnore();
 
-			// Registering controllers types
+			RegisterControllers(typesToIgnore);
+			RegisterViews(typesToIgnore);
+		}
+
+		/// <summary>
+		/// Registers the controllers.
+		/// </summary>
+		/// <param name="typesToIgnore">The types to ignore.</param>
+		public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
+		{
 			foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
-				.Where(controllerMetaData => ignoredTypes.All(x => x != controllerMetaData.ControllerType)))
+				.Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
 			{
-				DIContainer.Current.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
+				BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
 			}
-
-			// Registering views types
-			foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => ignoredTypes.All(x => x != viewType)))
-				DIContainer.Current.Register(viewType, LifetimeType.Transient);
 		}
 
-		private static IEnumerable<Type> GetIgnoredTypes()
+		/// <summary>
+		/// Registers the views.
+		/// </summary>
+		/// <param name="typesToIgnore">The types to ignore.</param>
+		public virtual void RegisterViews(IEnumerable<Type> typesToIgnore)
 		{
-			var typesToIgnore = new List<Type>();
-
-			var ignoreContainingClass = SimplifyWebTypesFinder.GetAllTypes().FirstOrDefault(t => t.IsDefined(typeof(IgnoreTypesRegistrationAttribute), true));
-
-			if (ignoreContainingClass == null)
-				return typesToIgnore;
-
-			var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreTypesRegistrationAttribute), false);
-
-			typesToIgnore.AddRange(((IgnoreTypesRegistrationAttribute)attributes[0]).Types);
-
-			return typesToIgnore;
+			foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => typesToIgnore.All(x => x != viewType)))
+				BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
 		}
 
-		#region Bootstrapper types
-
-		/// <summary>
-		/// Gets the type of the Simplify.Web settings.
-		/// </summary>
-		/// <value>
-		/// The type of the Simplify.Web settings.
-		/// </value>
-		public Type SimplifyWebSettingsType => _simplifyWebSettingsType ?? typeof(SimplifyWebSettings);
-
-		/// <summary>
-		/// Gets the type of the view factory.
-		/// </summary>
-		/// <value>
-		/// The type of the view factory.
-		/// </value>
-		public Type ViewFactoryType => _viewFactoryType ?? typeof(ViewFactory);
-
-		/// <summary>
-		/// Gets the type of the controller factory.
-		/// </summary>
-		/// <value>
-		/// The type of the controller factory.
-		/// </value>
-		public Type ControllerFactoryType => _controllerFactoryType ?? typeof(ControllerFactory);
-
-		/// <summary>
-		/// Gets the controller path parser.
-		/// </summary>
-		/// <value>
-		/// The controller path parser.
-		/// </value>
-		public Type ControllerPathParser => _controllerPathParserType ?? typeof(ControllerPathParser);
-
-		/// <summary>
-		/// Gets the type of the route matcher.
-		/// </summary>
-		/// <value>
-		/// The type of the route matcher.
-		/// </value>
-		public Type RouteMatcherType => _routeMatcherType ?? typeof(RouteMatcher);
-
-		/// <summary>
-		/// Gets the type of the controllers agent.
-		/// </summary>
-		/// <value>
-		/// The type of the controllers agent.
-		/// </value>
-		public Type ControllersAgentType => _controllersAgentType ?? typeof(ControllersAgent);
-
-		/// <summary>
-		/// Gets the type of the controller response builder.
-		/// </summary>
-		/// <value>
-		/// The type of the controller response builder.
-		/// </value>
-		public Type ControllerResponseBuilderType => _controllerResponseBuilderType ?? typeof(ControllerResponseBuilder);
-
-		/// <summary>
-		/// Gets the type of the controller executor.
-		/// </summary>
-		/// <value>
-		/// The type of the controller executor.
-		/// </value>
-		public Type ControllerExecutorType => _controllerExecutorType ?? typeof(ControllerExecutor);
-
-		/// <summary>
-		/// Gets the type of the controllers processor.
-		/// </summary>
-		/// <value>
-		/// The type of the controllers processor.
-		/// </value>
-		public Type ControllersProcessorType => _controllersProcessorType ?? typeof(ControllersProcessor);
-
-		/// <summary>
-		/// Gets the type of the lists generator.
-		/// </summary>
-		/// <value>
-		/// The type of the lists generator.
-		/// </value>
-		public Type ListsGeneratorType => _listsGeneratorType ?? typeof(ListsGenerator);
-
-		/// <summary>
-		/// Gets the type of the string table items setter.
-		/// </summary>
-		/// <value>
-		/// The type of the string table items setter.
-		/// </value>
-		public Type StringTableItemsSetterType => _stringTableItemsSetterType ?? typeof(StringTableItemsSetter);
-
-		/// <summary>
-		/// Gets the type of the page builder.
-		/// </summary>
-		/// <value>
-		/// The type of the page builder.
-		/// </value>
-		public Type PageBuilderType => _pageBuilderType ?? typeof(PageBuilder);
-
-		/// <summary>
-		/// Gets the type of the response writer.
-		/// </summary>
-		/// <value>
-		/// The type of the response writer.
-		/// </value>
-		public Type ResponseWriterType => _responseWriterType ?? typeof(ResponseWriter);
-
-		/// <summary>
-		/// Gets the type of the page processor.
-		/// </summary>
-		/// <value>
-		/// The type of the page processor.
-		/// </value>
-		public Type PageProcessorType => _pageProcessorType ?? typeof(PageProcessor);
-
-		/// <summary>
-		/// Gets the type of the controllers request handler.
-		/// </summary>
-		/// <value>
-		/// The type of the controllers request handler.
-		/// </value>
-		public Type ControllersRequestHandlerType => _controllersRequestHandlerType ?? typeof(ControllersRequestHandler);
-
-		/// <summary>
-		/// Gets the type of the static file response factory.
-		/// </summary>
-		/// <value>
-		/// The type of the static file response factory.
-		/// </value>
-		public Type StaticFileResponseFactoryType => _staticFileResponseFactoryType ?? typeof(StaticFileResponseFactory);
-
-		/// <summary>
-		/// Gets the type of the static files request handler.
-		/// </summary>
-		/// <value>
-		/// The type of the static files request handler.
-		/// </value>
-		public Type StaticFilesRequestHandlerType => _staticFilesRequestHandlerType ?? typeof(StaticFilesRequestHandler);
-
-		/// <summary>
-		/// Gets the type of the stopwatch provider.
-		/// </summary>
-		/// <value>
-		/// The type of the stopwatch provider.
-		/// </value>
-		public Type StopwatchProviderType => _stopwatchProviderType ?? typeof(StopwatchProvider);
-
-		/// <summary>
-		/// Gets the type of the web context provider.
-		/// </summary>
-		/// <value>
-		/// The type of the web context provider.
-		/// </value>
-		public Type WebContextProviderType => _webContextProviderType ?? typeof(WebContextProvider);
-
-		#endregion Bootstrapper types
-
-		#region Bootstrapper types override
-
-		/// <summary>
-		/// Sets the type of the Simplify.Web settings.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetSimplifyWebSettingsType<T>()
-			where T : ISimplifyWebSettings
-		{
-			_simplifyWebSettingsType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the view factory.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetViewFactoryType<T>()
-			where T : IViewFactory
-		{
-			_viewFactoryType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controller factory.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllerFactoryType<T>()
-			where T : IControllerFactory
-		{
-			_controllerFactoryType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controller path parser.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllerPathParserType<T>()
-		where T : IControllerPathParser
-		{
-			_controllerPathParserType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the route matcher.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetRouteMatcherType<T>()
-			where T : IRouteMatcher
-		{
-			_routeMatcherType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controllers agent.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllersAgentType<T>()
-			where T : IControllersAgent
-		{
-			_controllersAgentType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controller response builder.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllerResponseBuilderType<T>()
-			where T : IControllerResponseBuilder
-		{
-			_controllerResponseBuilderType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controller executor.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllerExecutorType<T>()
-			where T : IControllerExecutor
-		{
-			_controllerExecutorType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controllers processor.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllersProcessorType<T>()
-			where T : IControllersProcessor
-		{
-			_controllersProcessorType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the lists generator.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetListsGeneratorType<T>()
-			where T : IListsGenerator
-		{
-			_listsGeneratorType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the string table items setter.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetStringTableItemsSetterType<T>()
-			where T : IStringTableItemsSetter
-		{
-			_stringTableItemsSetterType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the page builder type.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetPageBuilderType<T>()
-			where T : IPageBuilder
-		{
-			_pageBuilderType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the response writer.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetResponseWriterType<T>()
-			where T : IResponseWriter
-		{
-			_responseWriterType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the page processor.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetPageProcessorType<T>()
-			where T : IPageProcessor
-		{
-			_pageProcessorType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the controllers request handler.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetControllersRequestHandlerType<T>()
-			where T : IControllersRequestHandler
-		{
-			_controllersRequestHandlerType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the static file response factory.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetStaticFileResponseFactoryType<T>()
-			where T : IStaticFileResponseFactory
-		{
-			_staticFileResponseFactoryType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the static files request handler.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetStaticFilesRequestHandlerType<T>()
-			where T : IStaticFilesRequestHandler
-		{
-			_staticFilesRequestHandlerType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the type of the stopwatch provider.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetStopwatchProviderType<T>()
-			where T : IStopwatchProvider
-		{
-			_stopwatchProviderType = typeof(T);
-		}
-
-		/// <summary>
-		/// Sets the web context provider.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void SetWebContextProvider<T>()
-			where T : IWebContextProvider
-		{
-			_webContextProviderType = typeof(T);
-		}
-
-		#endregion Bootstrapper types override
-
-		#region Bootstrapper types registration
+		#region Simplify.Web types registration
 
 		/// <summary>
 		/// Registers the configuration.
@@ -485,7 +119,7 @@ namespace Simplify.Web.Bootstrapper
 				.AddJsonFile("appsettings.json", true)
 				.AddJsonFile($"appsettings.{environmentName}.json", true);
 
-			DIContainer.Current.Register<IConfiguration>(p => builder.Build(), LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IConfiguration>(p => builder.Build(), LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -493,7 +127,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersMetaStore()
 		{
-			DIContainer.Current.Register(p => ControllersMetaStore.Current, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register(p => ControllersMetaStore.Current, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -501,7 +135,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterViewsMetaStore()
 		{
-			DIContainer.Current.Register(p => ViewsMetaStore.Current, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register(p => ViewsMetaStore.Current, LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -509,7 +143,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterSimplifyWebSettings()
 		{
-			DIContainer.Current.Register<ISimplifyWebSettings>(SimplifyWebSettingsType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<ISimplifyWebSettings, SimplifyWebSettings>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -517,7 +151,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterViewFactory()
 		{
-			DIContainer.Current.Register<IViewFactory>(ViewFactoryType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IViewFactory, ViewFactory>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -525,7 +159,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerFactory()
 		{
-			DIContainer.Current.Register<IControllerFactory>(ControllerFactoryType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllerFactory, ControllerFactory>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -533,7 +167,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerPathParser()
 		{
-			DIContainer.Current.Register<IControllerPathParser>(ControllerPathParser, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllerPathParser, ControllerPathParser>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -541,7 +175,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterRouteMatcher()
 		{
-			DIContainer.Current.Register<IRouteMatcher>(RouteMatcherType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IRouteMatcher, RouteMatcher>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -549,7 +183,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersAgent()
 		{
-			DIContainer.Current.Register<IControllersAgent>(ControllersAgentType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllersAgent, ControllersAgent>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -557,7 +191,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerResponseBuilder()
 		{
-			DIContainer.Current.Register<IControllerResponseBuilder>(ControllerResponseBuilderType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IControllerResponseBuilder, ControllerResponseBuilder>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -565,7 +199,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllerExecutor()
 		{
-			DIContainer.Current.Register<IControllerExecutor>(ControllerExecutorType);
+			BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>();
 		}
 
 		/// <summary>
@@ -573,7 +207,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersProcessor()
 		{
-			DIContainer.Current.Register<IControllersProcessor>(ControllersProcessorType);
+			BootstrapperFactory.ContainerProvider.Register<IControllersProcessor, ControllersProcessor>();
 		}
 
 		/// <summary>
@@ -581,8 +215,8 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterEnvironment()
 		{
-			DIContainer.Current.Register<IEnvironment>(
-				p => new Environment(AppDomain.CurrentDomain.BaseDirectory, p.Resolve<ISimplifyWebSettings>()));
+			BootstrapperFactory.ContainerProvider.Register<IEnvironment>(
+				p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory, p.Resolve<ISimplifyWebSettings>()));
 		}
 
 		/// <summary>
@@ -590,7 +224,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterLanguageManagerProvider()
 		{
-			DIContainer.Current.Register<ILanguageManagerProvider>(p => new LanguageManagerProvider(p.Resolve<ISimplifyWebSettings>()));
+			BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(p => new LanguageManagerProvider(p.Resolve<ISimplifyWebSettings>()));
 		}
 
 		/// <summary>
@@ -598,7 +232,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterTemplateFactory()
 		{
-			DIContainer.Current.Register<ITemplateFactory>(
+			BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(
 				p =>
 				{
 					var settings = p.Resolve<ISimplifyWebSettings>();
@@ -613,7 +247,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterFileReader()
 		{
-			DIContainer.Current.Register<IFileReader>(
+			BootstrapperFactory.ContainerProvider.Register<IFileReader>(
 				p =>
 				{
 					var settings = p.Resolve<ISimplifyWebSettings>();
@@ -628,7 +262,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStringTable()
 		{
-			DIContainer.Current.Register<IStringTable>(
+			BootstrapperFactory.ContainerProvider.Register<IStringTable>(
 				p =>
 				{
 					var settings = p.Resolve<ISimplifyWebSettings>();
@@ -642,7 +276,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterDataCollector()
 		{
-			DIContainer.Current.Register<IDataCollector>(p =>
+			BootstrapperFactory.ContainerProvider.Register<IDataCollector>(p =>
 			{
 				var settings = p.Resolve<ISimplifyWebSettings>();
 
@@ -655,7 +289,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterListsGenerator()
 		{
-			DIContainer.Current.Register<IListsGenerator>(ListsGeneratorType);
+			BootstrapperFactory.ContainerProvider.Register<IListsGenerator, ListsGenerator>();
 		}
 
 		/// <summary>
@@ -663,7 +297,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStringTableItemsSetter()
 		{
-			DIContainer.Current.Register<IStringTableItemsSetter>(StringTableItemsSetterType);
+			BootstrapperFactory.ContainerProvider.Register<IStringTableItemsSetter, StringTableItemsSetter>();
 		}
 
 		/// <summary>
@@ -671,7 +305,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterPageBuilder()
 		{
-			DIContainer.Current.Register<IPageBuilder>(PageBuilderType);
+			BootstrapperFactory.ContainerProvider.Register<IPageBuilder, PageBuilder>();
 		}
 
 		/// <summary>
@@ -679,7 +313,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterResponseWriter()
 		{
-			DIContainer.Current.Register<IResponseWriter>(ResponseWriterType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IResponseWriter, ResponseWriter>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -687,7 +321,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterPageProcessor()
 		{
-			DIContainer.Current.Register<IPageProcessor>(PageProcessorType);
+			BootstrapperFactory.ContainerProvider.Register<IPageProcessor, PageProcessor>();
 		}
 
 		/// <summary>
@@ -695,7 +329,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterControllersRequestHandler()
 		{
-			DIContainer.Current.Register<IControllersRequestHandler>(ControllersRequestHandlerType);
+			BootstrapperFactory.ContainerProvider.Register<IControllersRequestHandler, ControllersRequestHandler>();
 		}
 
 		/// <summary>
@@ -703,7 +337,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStaticFileResponseFactory()
 		{
-			DIContainer.Current.Register<IStaticFileResponseFactory>(StaticFileResponseFactoryType, LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<IStaticFileResponseFactory, StaticFileResponseFactory>(LifetimeType.Singleton);
 		}
 
 		/// <summary>
@@ -711,7 +345,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStaticFileHandler()
 		{
-			DIContainer.Current.Register<IStaticFileHandler>(
+			BootstrapperFactory.ContainerProvider.Register<IStaticFileHandler>(
 				p =>
 					new StaticFileHandler(p.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
 						p.Resolve<IEnvironment>().SitePhysicalPath));
@@ -722,7 +356,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStaticFilesRequestHandler()
 		{
-			DIContainer.Current.Register<IStaticFilesRequestHandler>(StaticFilesRequestHandlerType);
+			BootstrapperFactory.ContainerProvider.Register<IStaticFilesRequestHandler, StaticFilesRequestHandler>();
 		}
 
 		/// <summary>
@@ -730,7 +364,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterRequestHandler()
 		{
-			DIContainer.Current.Register<IRequestHandler>(
+			BootstrapperFactory.ContainerProvider.Register<IRequestHandler>(
 				p =>
 					new RequestHandler(p.Resolve<IControllersRequestHandler>(),
 						p.Resolve<IStaticFilesRequestHandler>(), p.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
@@ -741,7 +375,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterStopwatchProvider()
 		{
-			DIContainer.Current.Register<IStopwatchProvider>(StopwatchProviderType);
+			BootstrapperFactory.ContainerProvider.Register<IStopwatchProvider, StopwatchProvider>();
 		}
 
 		/// <summary>
@@ -749,7 +383,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterContextVariablesSetter()
 		{
-			DIContainer.Current.Register<IContextVariablesSetter>(
+			BootstrapperFactory.ContainerProvider.Register<IContextVariablesSetter>(
 				p =>
 					new ContextVariablesSetter(p.Resolve<IDataCollector>(), p.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
 		}
@@ -759,7 +393,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterWebContextProvider()
 		{
-			DIContainer.Current.Register<IWebContextProvider>(WebContextProviderType);
+			BootstrapperFactory.ContainerProvider.Register<IWebContextProvider, WebContextProvider>();
 		}
 
 		/// <summary>
@@ -767,7 +401,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterRedirector()
 		{
-			DIContainer.Current.Register<IRedirector>(p => new Redirector(p.Resolve<IWebContextProvider>().Get()));
+			BootstrapperFactory.ContainerProvider.Register<IRedirector>(p => new Redirector(p.Resolve<IWebContextProvider>().Get()));
 		}
 
 		/// <summary>
@@ -775,9 +409,26 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterModelHandler()
 		{
-			DIContainer.Current.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
+			BootstrapperFactory.ContainerProvider.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
 		}
 
-		#endregion Bootstrapper types registration
+		/// <summary>
+		/// Registers the default model binders.
+		/// </summary>
+		public virtual void RegisterDefaultModelBinders()
+		{
+			BootstrapperFactory.ContainerProvider.Register<HttpQueryModelBinder>(LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register<HttpFormModelBinder>(LifetimeType.Singleton);
+		}
+
+		/// <summary>
+		/// Registers the default model validators.
+		/// </summary>
+		public virtual void RegisterDefaultModelValidators()
+		{
+			BootstrapperFactory.ContainerProvider.Register<ValidationAttributesExecutor>(LifetimeType.Singleton);
+		}
+
+		#endregion Simplify.Web types registration
 	}
 }

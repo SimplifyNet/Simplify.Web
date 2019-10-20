@@ -26,6 +26,7 @@ namespace Simplify.Web.Settings
 			LoadDataCollectorSettings(config);
 			LoadStyleSettings(config);
 			LoadOtherSettings(config);
+			LoadStaticFilesSettings(config);
 			LoadEngineBehaviorSettings(config);
 			LoadCacheSettings(config);
 			LoadDiagnosticSettings(config);
@@ -155,12 +156,12 @@ namespace Simplify.Web.Settings
 
 		private void LoadLanguageManagerSettings(IConfiguration config)
 		{
-			var defaultLanguage = config["DefaultLanguage"];
+			var defaultLanguage = config[nameof(DefaultLanguage)];
 
 			if (!string.IsNullOrEmpty(defaultLanguage))
 				DefaultLanguage = defaultLanguage;
 
-			var acceptBrowserLanguage = config["AcceptBrowserLanguage"];
+			var acceptBrowserLanguage = config[nameof(AcceptBrowserLanguage)];
 
 			if (string.IsNullOrEmpty(acceptBrowserLanguage))
 				return;
@@ -171,12 +172,12 @@ namespace Simplify.Web.Settings
 
 		private void LoadTemplatesSettings(IConfiguration config)
 		{
-			var defaultTemplatesPath = config["DefaultTemplatesPath"];
+			var defaultTemplatesPath = config[nameof(DefaultTemplatesPath)];
 
 			if (!string.IsNullOrEmpty(defaultTemplatesPath))
 				DefaultTemplatesPath = defaultTemplatesPath;
 
-			var loadTemplatesFromAssembly = config["LoadTemplatesFromAssembly"];
+			var loadTemplatesFromAssembly = config[nameof(LoadTemplatesFromAssembly)];
 
 			if (!string.IsNullOrEmpty(loadTemplatesFromAssembly))
 			{
@@ -184,7 +185,7 @@ namespace Simplify.Web.Settings
 					LoadTemplatesFromAssembly = buffer;
 			}
 
-			var defaultMasterTemplateFileName = config["DefaultMasterTemplateFileName"];
+			var defaultMasterTemplateFileName = config[nameof(DefaultMasterTemplateFileName)];
 
 			if (!string.IsNullOrEmpty(defaultMasterTemplateFileName))
 				DefaultMasterTemplateFileName = defaultMasterTemplateFileName;
@@ -192,12 +193,12 @@ namespace Simplify.Web.Settings
 
 		private void LoadDataCollectorSettings(IConfiguration config)
 		{
-			var defaultMainContentVariableName = config["DefaultMainContentVariableName"];
+			var defaultMainContentVariableName = config[nameof(DefaultMainContentVariableName)];
 
 			if (!string.IsNullOrEmpty(defaultMainContentVariableName))
 				DefaultMainContentVariableName = defaultMainContentVariableName;
 
-			var defaultTitleVariableName = config["DefaultTitleVariableName"];
+			var defaultTitleVariableName = config[nameof(DefaultTitleVariableName)];
 
 			if (!string.IsNullOrEmpty(defaultTitleVariableName))
 				DefaultTitleVariableName = defaultTitleVariableName;
@@ -205,7 +206,7 @@ namespace Simplify.Web.Settings
 
 		private void LoadStyleSettings(IConfiguration config)
 		{
-			var defaultStyle = config["DefaultStyle"];
+			var defaultStyle = config[nameof(DefaultStyle)];
 
 			if (!string.IsNullOrEmpty(defaultStyle))
 				DefaultStyle = defaultStyle;
@@ -213,31 +214,12 @@ namespace Simplify.Web.Settings
 
 		private void LoadOtherSettings(IConfiguration config)
 		{
-			var dataPath = config["DataPath"];
+			var dataPath = config[nameof(DataPath)];
 
 			if (!string.IsNullOrEmpty(dataPath))
 				DataPath = dataPath;
 
-			var staticFilesEnabled = config["StaticFilesEnabled"];
-
-			if (!string.IsNullOrEmpty(staticFilesEnabled))
-			{
-				if (bool.TryParse(staticFilesEnabled, out var buffer))
-					StaticFilesEnabled = buffer;
-			}
-
-			var staticFilesPaths = config["StaticFilesPaths"];
-
-			if (!string.IsNullOrEmpty(staticFilesPaths))
-			{
-				StaticFilesPaths.Clear();
-				var items = staticFilesPaths.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-				foreach (var item in items)
-					StaticFilesPaths.Add(item);
-			}
-
-			var stringTableFiles = config["StringTableFiles"];
+			var stringTableFiles = config[nameof(StringTableFiles)];
 
 			if (string.IsNullOrEmpty(stringTableFiles))
 				return;
@@ -251,9 +233,31 @@ namespace Simplify.Web.Settings
 			}
 		}
 
+		private void LoadStaticFilesSettings(IConfiguration config)
+		{
+			var staticFilesEnabled = config[nameof(StaticFilesEnabled)];
+
+			if (!string.IsNullOrEmpty(staticFilesEnabled))
+			{
+				if (bool.TryParse(staticFilesEnabled, out var buffer))
+					StaticFilesEnabled = buffer;
+			}
+
+			var staticFilesPaths = config[nameof(StaticFilesPaths)];
+
+			if (!string.IsNullOrEmpty(staticFilesPaths))
+			{
+				StaticFilesPaths.Clear();
+				var items = staticFilesPaths.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+				foreach (var item in items)
+					StaticFilesPaths.Add(item);
+			}
+		}
+
 		private void LoadEngineBehaviorSettings(IConfiguration config)
 		{
-			var disableAutomaticSiteTitleSet = config["DisableAutomaticSiteTitleSet"];
+			var disableAutomaticSiteTitleSet = config[nameof(DisableAutomaticSiteTitleSet)];
 
 			if (!string.IsNullOrEmpty(disableAutomaticSiteTitleSet))
 			{
@@ -261,7 +265,7 @@ namespace Simplify.Web.Settings
 					DisableAutomaticSiteTitleSet = buffer;
 			}
 
-			var hideExceptionDetails = config["HideExceptionDetails"];
+			var hideExceptionDetails = config[nameof(HideExceptionDetails)];
 
 			if (string.IsNullOrEmpty(hideExceptionDetails))
 				return;
@@ -274,7 +278,7 @@ namespace Simplify.Web.Settings
 
 		private void LoadCacheSettings(IConfiguration config)
 		{
-			var templatesMemoryCache = config["TemplatesMemoryCache"];
+			var templatesMemoryCache = config[nameof(TemplatesMemoryCache)];
 
 			if (!string.IsNullOrEmpty(templatesMemoryCache))
 			{
@@ -282,7 +286,7 @@ namespace Simplify.Web.Settings
 					TemplatesMemoryCache = buffer;
 			}
 
-			var stringTableMemoryCache = config["StringTableMemoryCache"];
+			var stringTableMemoryCache = config[nameof(StringTableMemoryCache)];
 
 			if (!string.IsNullOrEmpty(stringTableMemoryCache))
 			{
@@ -290,7 +294,7 @@ namespace Simplify.Web.Settings
 					StringTableMemoryCache = buffer;
 			}
 
-			var disableFileReaderCache = config["DisableFileReaderCache"];
+			var disableFileReaderCache = config[nameof(DisableFileReaderCache)];
 
 			if (string.IsNullOrEmpty(disableFileReaderCache))
 				return;
@@ -303,7 +307,7 @@ namespace Simplify.Web.Settings
 
 		private void LoadDiagnosticSettings(IConfiguration config)
 		{
-			var consoleTracing = config["ConsoleTracing"];
+			var consoleTracing = config[nameof(ConsoleTracing)];
 
 			if (string.IsNullOrEmpty(consoleTracing))
 				return;

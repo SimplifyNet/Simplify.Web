@@ -12,10 +12,12 @@ namespace Simplify.Web.Attributes
 		/// Initializes a new instance of the <see cref="AuthorizeAttribute"/> class.
 		/// </summary>
 		/// <param name="requiredUserRoles">Required user roles.</param>
-		public AuthorizeAttribute(string requiredUserRoles = null)
+		public AuthorizeAttribute(string? requiredUserRoles = null)
 		{
-			if (!string.IsNullOrEmpty(requiredUserRoles))
-				RequiredUserRoles = requiredUserRoles.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			if (requiredUserRoles == null)
+				return;
+
+			RequiredUserRoles = requiredUserRoles.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 		}
 
 		/// <summary>
@@ -33,6 +35,6 @@ namespace Simplify.Web.Attributes
 		/// <value>
 		/// The required user roles.
 		/// </value>
-		public IEnumerable<string> RequiredUserRoles { get; private set; }
+		public IEnumerable<string> RequiredUserRoles { get; } = new List<string>();
 	}
 }

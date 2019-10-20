@@ -1,9 +1,10 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Owin;
 using Simplify.Web.Util;
 
 namespace Simplify.Web.Core.StaticFiles
@@ -39,7 +40,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <exception cref="ArgumentNullException"></exception>
 		public static IFileSystem FileSystem
 		{
-			get => _fileSystemInstance ?? (_fileSystemInstance = new FileSystem());
+			get => _fileSystemInstance ??= new FileSystem();
 			set => _fileSystemInstance = value ?? throw new ArgumentNullException();
 		}
 
@@ -60,7 +61,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <returns></returns>
 		public DateTime? GetIfModifiedSinceTime(IHeaderDictionary headers)
 		{
-			return OwinHttpRequestHelper.GetIfModifiedSinceTime(headers);
+			return HttpRequestUtil.GetIfModifiedSinceTime(headers);
 		}
 
 		/// <summary>
@@ -72,7 +73,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <returns></returns>
 		public bool IsFileCanBeUsedFromCache(string cacheControlHeader, DateTime? ifModifiedSinceHeader, DateTime fileLastModifiedTime)
 		{
-			return !OwinHttpRequestHelper.IsNoCacheRequested(cacheControlHeader) && ifModifiedSinceHeader != null &&
+			return !HttpRequestUtil.IsNoCacheRequested(cacheControlHeader) && ifModifiedSinceHeader != null &&
 				   fileLastModifiedTime <= ifModifiedSinceHeader.Value;
 		}
 
@@ -83,7 +84,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <returns></returns>
 		public string GetRelativeFilePath(HttpRequest request)
 		{
-			return OwinHttpRequestHelper.GetRelativeFilePath(request);
+			return HttpRequestUtil.GetRelativeFilePath(request);
 		}
 
 		/// <summary>

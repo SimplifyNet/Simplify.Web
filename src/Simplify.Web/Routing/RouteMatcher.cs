@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -54,14 +56,14 @@ namespace Simplify.Web.Routing
 					if (currentItem.Name != currentPathItems[i])
 						return new RouteMatchResult();
 				}
-				else if (currentItem is PathParameter)
+				else if (currentItem is PathParameter item)
 				{
-					var value = GetParameterValue((PathParameter)currentItem, currentPathItems[i]);
+					var value = GetParameterValue(item, currentPathItems[i]);
 
 					if (value == null)
 						return new RouteMatchResult();
 
-					routeParameters.Add(currentItem.Name, value);
+					routeParameters.Add(item.Name, value);
 				}
 			}
 
@@ -100,9 +102,7 @@ namespace Simplify.Web.Routing
 
 		private static object GetIntParameterValue(string source)
 		{
-			int buffer;
-
-			if (!int.TryParse(source, out buffer))
+			if (!int.TryParse(source, out var buffer))
 				return null;
 
 			return buffer;
@@ -110,9 +110,7 @@ namespace Simplify.Web.Routing
 
 		private static object GetDecimalParameterValue(string source)
 		{
-			decimal buffer;
-
-			if (!decimal.TryParse(source, out buffer))
+			if (!decimal.TryParse(source, out var buffer))
 				return null;
 
 			return buffer;
@@ -120,9 +118,7 @@ namespace Simplify.Web.Routing
 
 		private static object GetBoolParameterValue(string source)
 		{
-			bool buffer;
-
-			if (!bool.TryParse(source, out buffer))
+			if (!bool.TryParse(source, out var buffer))
 				return null;
 
 			return buffer;

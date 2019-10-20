@@ -23,6 +23,6 @@ namespace Simplify.Web.Attributes.Setup
 		/// <value>
 		/// The types of controllers.
 		/// </value>
-		public Type[] Types { get; private set; }
+		public Type[] Types { get; }
 	}
 }

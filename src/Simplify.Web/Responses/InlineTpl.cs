@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using Simplify.Templates;
 
 namespace Simplify.Web.Responses

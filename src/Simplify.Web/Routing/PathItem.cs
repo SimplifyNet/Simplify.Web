@@ -20,6 +20,6 @@
 		/// <value>
 		/// The name of path item.
 		/// </value>
-		public virtual string Name { get; private set; }
+		public virtual string Name { get; }
 	}
 }

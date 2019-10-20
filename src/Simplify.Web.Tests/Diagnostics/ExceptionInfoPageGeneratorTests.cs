@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using NUnit.Framework;
 using Simplify.Web.Diagnostics;
 

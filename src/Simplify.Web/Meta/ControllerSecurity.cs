@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable disable
+
+using System.Collections.Generic;
 
 namespace Simplify.Web.Meta
 {
@@ -25,7 +27,7 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// <c>true</c> if controller requires authorization; otherwise, <c>false</c>.
 		/// </value>
-		public bool IsAuthorizationRequired { get; private set; }
+		public bool IsAuthorizationRequired { get; }
 
 		/// <summary>
 		/// Gets the required user roles.
@@ -33,6 +35,6 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// The required user roles.
 		/// </value>
-		public IEnumerable<string> RequiredUserRoles { get; private set; }
+		public IEnumerable<string> RequiredUserRoles { get; }
 	}
 }

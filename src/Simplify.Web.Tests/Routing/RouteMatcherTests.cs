@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable disable
+
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Routing;

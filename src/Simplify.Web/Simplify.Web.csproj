@@ -1,24 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+		<LangVersion>8.0</LangVersion>
+		<Nullable>enable</Nullable>
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>2.3</Version>
+		<Version>3.0</Version>
 		<PackageProjectUrl>https://github.com/SimplifyNet/Simplify.Web</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
-			Updates
-			* Upgrade to Simplify.DI 4.0
-			* Upgrade to Simplify.Templates 1.5.2
-			* Microsoft.CSharp 4.6
+			Breaking changes
+			* `HttpModelHandler` Validation/Bidning types now should be regisered in container besides `HttpModelHandler.Register`
+			* Simplfiy.Web types registration simplification, for custom types use respective override methods
+			* `Ajax` attribute renamed to `Content` (#20)
+			New
+			* Custom ViewModel attribute (#14)
+			* Custom error message for validation attributes (#15)
+			* HTTP OPTIONS support for controllers (#21)
+			* `RegisterSimplifyWeb` `IDIContainerProvider` extension method for custom Simplify.Web types registration (#17)
+			* Internal container ambient context (BootstrapperFactory.ContainerProvider) for SImplify.Web usage with default initialization from `DIContainer.Current`
+			* `IControllerExecutor` `IControllerMetaData` instead of only controllerType (#16)
+			* `GetTypesToIgnore` moved to `SimplifyWebTypesFinder`
+			Dependencies Updates
+			* Upgrade to Microsoft.Extensions.Configuration.Json 3.0
+			* Internal upgrade to Simplify.String.Sources 1.2.1, Simplify.System.Sources 1.2.1
 			Other
-			* Internal upgrade to Simplify.String.Sources 1.2.0
-			* Internal upgrade to Simplify.System.Sources 1.2.0
+			* Internal refactoring
+			* C# 8 and Nullable Reference Types enabled (#22)
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
@@ -32,11 +45,11 @@
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
 		<PackageReference Include="Simplify.DI" Version="4.0.0" />
 		<PackageReference Include="Simplify.Templates" Version="1.5.2" />
-		<PackageReference Include="Simplify.String.Sources" Version="1.2.0" PrivateAssets="All" />
-		<PackageReference Include="Simplify.System.Sources" Version="1.2.0" PrivateAssets="All" />
+		<PackageReference Include="Simplify.String.Sources" Version="1.2.1" PrivateAssets="All" />
+		<PackageReference Include="Simplify.System.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />
 	</ItemGroup>
 </Project>

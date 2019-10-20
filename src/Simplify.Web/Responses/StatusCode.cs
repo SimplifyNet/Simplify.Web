@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Responses
+﻿#nullable disable
+
+namespace Simplify.Web.Responses
 {
 	/// <summary>
 	/// Provides controller response with exact status code and optional string data (send only specified string to response or empty body)

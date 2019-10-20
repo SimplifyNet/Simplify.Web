@@ -1,4 +1,6 @@
-﻿using Simplify.Web.ModelBinding.Attributes;
+﻿#nullable disable
+
+using Simplify.Web.Model.Binding.Attributes;
 
 namespace Simplify.Web.Tests.TestEntities
 {

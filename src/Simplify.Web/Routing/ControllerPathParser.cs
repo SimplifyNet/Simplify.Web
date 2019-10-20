@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -32,11 +34,11 @@ namespace Simplify.Web.Routing
 					if (matches.Count == 0)
 						throw new ControllerRouteException("Bad controller path: " + controllerPath);
 
-					var subitem = item.Substring(1, item.Length - 2);
+					var subItem = item.Substring(1, item.Length - 2);
 
-					if (subitem.Contains(":"))
+					if (subItem.Contains(":"))
 					{
-						var parameterData = subitem.Split(':');
+						var parameterData = subItem.Split(':');
 						var type = ParseParameterType(parameterData[1]);
 
 						if (type == null)
@@ -46,7 +48,7 @@ namespace Simplify.Web.Routing
 						pathItems.Add(new PathParameter(parameterData[0], type));
 					}
 					else
-						pathItems.Add(new PathParameter(subitem, typeof(string)));
+						pathItems.Add(new PathParameter(subItem, typeof(string)));
 				}
 				else
 					pathItems.Add(new PathSegment(item));
@@ -57,31 +59,18 @@ namespace Simplify.Web.Routing
 
 		private static Type ParseParameterType(string typeData)
 		{
-			if (typeData == "int")
-				return typeof(int);
-
-			if (typeData == "decimal")
-				return typeof(decimal);
-
-			if (typeData == "bool")
-				return typeof(bool);
-
-			if (typeData == "[]")
-				return typeof(string[]);
-
-			if (typeData == "string[]")
-				return typeof(string[]);
-
-			if (typeData == "int[]")
-				return typeof(int[]);
-
-			if (typeData == "decimal[]")
-				return typeof(decimal[]);
-
-			if (typeData == "bool[]")
-				return typeof(bool[]);
-
-			return null;
+			return typeData switch
+			{
+				"int" => typeof(int),
+				"decimal" => typeof(decimal),
+				"bool" => typeof(bool),
+				"[]" => typeof(string[]),
+				"string[]" => typeof(string[]),
+				"int[]" => typeof(int[]),
+				"decimal[]" => typeof(decimal[]),
+				"bool[]" => typeof(bool[]),
+				_ => null
+			};
 		}
 	}
 }

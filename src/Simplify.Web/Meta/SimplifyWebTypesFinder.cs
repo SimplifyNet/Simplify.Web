@@ -1,7 +1,10 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Simplify.Web.Attributes.Setup;
 
 namespace Simplify.Web.Meta
 {
@@ -30,9 +33,9 @@ namespace Simplify.Web.Meta
 			"Simplify"
 		};
 
-		private static IEnumerable<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ?? (_currentDomainAssemblies = AppDomain.CurrentDomain.GetAssemblies());
+		private static IEnumerable<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ??= AppDomain.CurrentDomain.GetAssemblies();
 
-		private static IEnumerable<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes ?? (_currentDomainAssembliesTypes = GetAssembliesTypes(CurrentDomainAssemblies));
+		private static IEnumerable<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes ??= GetAssembliesTypes(CurrentDomainAssemblies);
 
 		/// <summary>
 		/// Finds the type derived from specified type in current domain assemblies.
@@ -77,6 +80,27 @@ namespace Simplify.Web.Meta
 		public static IList<Type> GetAllTypes()
 		{
 			return CurrentDomainAssembliesTypes.ToList();
+		}
+
+		/// <summary>
+		/// Gets the types to ignore.
+		/// </summary>
+		/// <returns></returns>
+		public static IList<Type> GetTypesToIgnore()
+		{
+			var typesToIgnore = new List<Type>();
+
+			var ignoreContainingClass = GetAllTypes()
+				.FirstOrDefault(t => t.IsDefined(typeof(IgnoreTypesRegistrationAttribute), true));
+
+			if (ignoreContainingClass == null)
+				return typesToIgnore;
+
+			var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreTypesRegistrationAttribute), false);
+
+			typesToIgnore.AddRange(((IgnoreTypesRegistrationAttribute)attributes[0]).Types);
+
+			return typesToIgnore;
 		}
 
 		/// <summary>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +9,7 @@ using NUnit.Framework;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Core.Controllers.Execution.Building;
+using Simplify.Web.Meta;
 using Simplify.Web.Tests.TestEntities;
 
 namespace Simplify.Web.Tests.Core.Controllers.Execution
@@ -45,9 +48,9 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
+						It.IsAny<IDictionary<string, object>>())).Returns(_syncController.Object);
 			// Act
-			var result = _executor.Execute(null, null, null);
+			var result = _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
 
 			// Assert
 
@@ -55,7 +58,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-					It.IsAny<IDictionary<string, Object>>()));
+					It.IsAny<IDictionary<string, object>>()));
 			_syncController.Verify(x => x.Invoke());
 		}
 
@@ -69,9 +72,9 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
+						It.IsAny<IDictionary<string, object>>())).Returns(_syncController.Object);
 			// Act
-			var result = _executor.Execute(null, null, null);
+			var result = _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
 
 			// Assert
 
@@ -79,7 +82,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-					It.IsAny<IDictionary<string, Object>>()));
+					It.IsAny<IDictionary<string, object>>()));
 			_syncController.Verify(x => x.Invoke());
 			_controllerResponse.Setup(x => x.Process());
 		}
@@ -94,9 +97,9 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
+						It.IsAny<IDictionary<string, object>>())).Returns(_syncController.Object);
 			// Act
-			var result = _executor.Execute(null, null, null);
+			var result = _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
 
 			// Assert
 
@@ -104,7 +107,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-					It.IsAny<IDictionary<string, Object>>()));
+					It.IsAny<IDictionary<string, object>>()));
 			_syncController.Verify(x => x.Invoke());
 			_controllerResponse.Setup(x => x.Process());
 		}
@@ -119,9 +122,9 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_asyncController.Object);
+						It.IsAny<IDictionary<string, object>>())).Returns(_asyncController.Object);
 			// Act
-			var result = _executor.Execute(null, null, null);
+			var result = _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
 
 			// Assert
 
@@ -131,7 +134,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Verify(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>()));
+						It.IsAny<IDictionary<string, object>>()));
 
 			// Act & Assert
 
@@ -152,9 +155,9 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncModelController.Object);
+						It.IsAny<IDictionary<string, object>>())).Returns(_syncModelController.Object);
 			// Act
-			var result = _executor.Execute(null, null, null);
+			var result = _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
 
 			// Assert
 
@@ -162,7 +165,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-					It.IsAny<IDictionary<string, Object>>()));
+					It.IsAny<IDictionary<string, object>>()));
 			_syncModelController.Verify(x => x.Invoke());
 			_controllerResponse.Setup(x => x.Process());
 		}
@@ -177,9 +180,9 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_asyncModelController.Object);
+						It.IsAny<IDictionary<string, object>>())).Returns(_asyncModelController.Object);
 			// Act
-			var result = _executor.Execute(null, null, null);
+			var result = _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
 
 			// Assert
 
@@ -189,7 +192,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_controllerFactory.Verify(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
-						It.IsAny<IDictionary<string, Object>>()));
+						It.IsAny<IDictionary<string, object>>()));
 
 			// Act & Assert
 

@@ -43,13 +43,7 @@ namespace Simplify.Web.Modules
 		/// <summary>
 		/// Site current templates directory physical path
 		/// </summary>
-		public string TemplatesPhysicalPath
-		{
-			get
-			{
-				return SitePhysicalPath + TemplatesPath + "/";
-			}
-		}
+		public string TemplatesPhysicalPath => SitePhysicalPath + TemplatesPath + "/";
 
 		/// <summary>
 		/// Gets the data path.
@@ -65,13 +59,7 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The data physical path.
 		/// </value>
-		public string DataPhysicalPath
-		{
-			get
-			{
-				return SitePhysicalPath + DataPath + "/";
-			}
-		}
+		public string DataPhysicalPath => SitePhysicalPath + DataPath + "/";
 
 		/// <summary>
 		/// Site current style

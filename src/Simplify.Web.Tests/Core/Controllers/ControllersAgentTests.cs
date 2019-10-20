@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#nullable disable
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-
-//using Microsoft.AspNet.Identity;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Core.Controllers;
@@ -28,7 +28,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void GetStandardControllersMetaData_StandartControllerAndAll40xControllers_OnlyStandartReturned()
+		public void GetStandardControllersMetaData_StandardControllerAndAll40xControllers_OnlyStandardReturned()
 		{
 			// Assign
 
@@ -52,10 +52,20 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void MatchControllerRoute_NoControllerRouteData_MatchCalled()
+		public void MatchControllerRoute_NoControllerExecParameters_MatchCalled()
 		{
 			// Act
 			_agent.MatchControllerRoute(new ControllerMetaData(null), "/foo", "GET");
+
+			// Assert
+			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/foo"), It.Is<string>(s => s == null)));
+		}
+
+		[Test]
+		public void MatchControllerRoute_NoControllerRouteData_MatchCalled()
+		{
+			// Act
+			_agent.MatchControllerRoute(new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string>())), "/foo", "GET");
 
 			// Assert
 			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/foo"), It.Is<string>(s => s == null)));
@@ -66,7 +76,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			_agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo("/foo"))), "/bar", "GET");
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/foo" } })), "/bar", "GET");
 
 			// Assert
 			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
@@ -77,7 +87,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			_agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, "/foo"))), "/bar", "POST");
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Post, "/foo" } })), "/bar", "POST");
 
 			// Assert
 			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
@@ -88,7 +98,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			_agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, null, "/foo"))), "/bar",
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/foo" } })), "/bar",
 				"PUT");
 
 			// Assert
@@ -100,7 +110,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			_agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, null, null, "/foo"))), "/bar",
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Patch, "/foo" } })), "/bar",
 				"PATCH");
 
 			// Assert
@@ -112,8 +122,20 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			_agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, null, null, null, "/foo"))),
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Delete, "/foo" } })),
 				"/bar", "DELETE");
+
+			// Assert
+			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
+		}
+
+		[Test]
+		public void MatchControllerRoute_OptionsControllerRouteOptionsMethod_MatchCalled()
+		{
+			// Act
+			_agent.MatchControllerRoute(
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Options, "/foo" } })),
+				"/bar", "OPTIONS");
 
 			// Assert
 			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
@@ -124,7 +146,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			var result = _agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, "/foo"))), "/bar", "GET");
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Post, "/foo" } })), "/bar", "GET");
 
 			// Assert
 
@@ -137,7 +159,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Act
 			var result = _agent.MatchControllerRoute(
-				new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo("/foo"))), "/bar", "FOO");
+				new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/foo" } })), "/bar", "FOO");
 
 			// Assert
 
@@ -188,6 +210,16 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
+		public void IsAnyPageController_AnyPageControllerWithEmptyRoutes_True()
+		{
+			// Assign
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(null));
+
+			// Act & Assert
+			Assert.IsTrue(_agent.IsAnyPageController(metaData));
+		}
+
+		[Test]
 		public void IsAnyPageController_404Handler_False()
 		{
 			// Assign
@@ -201,7 +233,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		public void IsAnyPageController_GetRoute_False()
 		{
 			// Assign
-			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo("/")));
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/" } }));
 
 			// Act & Assert
 			Assert.IsFalse(_agent.IsAnyPageController(metaData));
@@ -211,7 +243,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		public void IsAnyPageController_PostRoute_False()
 		{
 			// Assign
-			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, "/")));
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Post, "/" } }));
 
 			// Act & Assert
 			Assert.IsFalse(_agent.IsAnyPageController(metaData));
@@ -221,7 +253,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		public void IsAnyPageController_PutRoute_False()
 		{
 			// Assign
-			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, null, "/")));
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/" } }));
 
 			// Act & Assert
 			Assert.IsFalse(_agent.IsAnyPageController(metaData));
@@ -231,7 +263,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		public void IsAnyPageController_PatchRoute_False()
 		{
 			// Assign
-			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, null, null, "/")));
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Patch, "/" } }));
 
 			// Act & Assert
 			Assert.IsFalse(_agent.IsAnyPageController(metaData));
@@ -241,7 +273,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		public void IsAnyPageController_DeleteRoute_False()
 		{
 			// Assign
-			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new ControllerRouteInfo(null, null, null, null, "/")));
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Delete, "/" } }));
 
 			// Act & Assert
 			Assert.IsFalse(_agent.IsAnyPageController(metaData));
@@ -267,65 +299,62 @@ namespace Simplify.Web.Tests.Core.Controllers
 			Assert.AreEqual(SecurityRuleCheckResult.NotAuthenticated, _agent.IsSecurityRulesViolated(metaData, null));
 		}
 
-		// TODO
-		//[Test]
-		//public void IsSecurityRulesViolated_AuthorizationRequiredAuthorized_Ok()
-		//{
-		//	// Assign
+		[Test]
+		public void IsSecurityRulesViolated_AuthorizationRequiredAuthorized_Ok()
+		{
+			// Assign
 
-		//	var metaData = new ControllerMetaData(null, null, null, new ControllerSecurity(true));
-		//	var claims = new List<Claim>
-		//	{
-		//		new Claim(ClaimTypes.Name, "Foo")
-		//	};
+			var metaData = new ControllerMetaData(null, null, null, new ControllerSecurity(true));
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, "Foo")
+			};
 
-		//	var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-		//	var user = new ClaimsPrincipal(id);
+			var id = new ClaimsIdentity(claims, "test");
+			var user = new ClaimsPrincipal(id);
 
-		//	// Act & Assert
-		//	Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, user));
-		//}
+			// Act & Assert
+			Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, user));
+		}
 
-		// TODO
-		//[Test]
-		//public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedNoGroups_Forbidden()
-		//{
-		//	// Assign
+		[Test]
+		public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedNoGroups_Forbidden()
+		{
+			// Assign
 
-		//	var metaData = new ControllerMetaData(null, null, null,
-		//		new ControllerSecurity(true, new List<string> { "Admin", "User" }));
+			var metaData = new ControllerMetaData(null, null, null,
+				new ControllerSecurity(true, new List<string> { "Admin", "User" }));
 
-		//	var claims = new List<Claim>
-		//	{
-		//		new Claim(ClaimTypes.Name, "Foo")
-		//	};
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, "Foo")
+			};
 
-		//	var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-		//	var user = new ClaimsPrincipal(id);
+			var id = new ClaimsIdentity(claims, "test");
+			var user = new ClaimsPrincipal(id);
 
-		//	// Act & Assert
-		//	Assert.AreEqual(SecurityRuleCheckResult.Forbidden, _agent.IsSecurityRulesViolated(metaData, user));
-		//}
+			// Act & Assert
+			Assert.AreEqual(SecurityRuleCheckResult.Forbidden, _agent.IsSecurityRulesViolated(metaData, user));
+		}
 
-		// TODO
-		//[Test]
-		//public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedNotInGroup_Forbidden()
-		//{
-		//	// Assign
+		[Test]
+		public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedNotInGroup_Forbidden()
+		{
+			// Assign
 
-		//	var metaData = new ControllerMetaData(null, null, null, new ControllerSecurity(true, new List<string> { "Admin" }));
-		//	var claims = new List<Claim>
-		//	{
-		//		new Claim(ClaimTypes.Name, "Foo"),
-		//		new Claim(ClaimTypes.Role, "User")
-		//	};
+			var metaData = new ControllerMetaData(null, null, null, new ControllerSecurity(true, new List<string> { "Admin" }));
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, "Foo"),
+				new Claim(ClaimTypes.Role, "User")
+			};
 
-		//	var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-		//	var user = new ClaimsPrincipal(id);
+			var id = new ClaimsIdentity(claims, "test");
+			var user = new ClaimsPrincipal(id);
 
-		//	// Act & Assert
-		//	Assert.AreEqual(SecurityRuleCheckResult.Forbidden, _agent.IsSecurityRulesViolated(metaData, user));
-		//}
+			// Act & Assert
+			Assert.AreEqual(SecurityRuleCheckResult.Forbidden, _agent.IsSecurityRulesViolated(metaData, user));
+		}
 
 		[Test]
 		public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupNotAuthorized_NotAuthenticated()
@@ -338,25 +367,24 @@ namespace Simplify.Web.Tests.Core.Controllers
 			Assert.AreEqual(SecurityRuleCheckResult.NotAuthenticated, _agent.IsSecurityRulesViolated(metaData, null));
 		}
 
-		// TODO
-		//[Test]
-		//public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedInGroup_Ok()
-		//{
-		//	// Assign
+		[Test]
+		public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedInGroup_Ok()
+		{
+			// Assign
 
-		//	var metaData = new ControllerMetaData(null, null, null, new ControllerSecurity(true, new List<string> { "Admin", "User" }));
-		//	var claims = new List<Claim>
-		//	{
-		//		new Claim(ClaimTypes.Name, "Foo"),
-		//		new Claim(ClaimTypes.Role, "User")
-		//	};
+			var metaData = new ControllerMetaData(null, null, null, new ControllerSecurity(true, new List<string> { "Admin", "User" }));
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, "Foo"),
+				new Claim(ClaimTypes.Role, "User")
+			};
 
-		//	var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-		//	var user = new ClaimsPrincipal(id);
+			var id = new ClaimsIdentity(claims, "test");
+			var user = new ClaimsPrincipal(id);
 
-		//	// Act & Assert
-		//	Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, user));
-		//}
+			// Act & Assert
+			Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, user));
+		}
 
 		[Test]
 		public void IsSecurityRulesViolated_UserExistNotAuthenticatedUser_NotAuthenticated()

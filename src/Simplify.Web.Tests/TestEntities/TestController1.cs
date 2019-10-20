@@ -8,6 +8,7 @@ namespace Simplify.Web.Tests.TestEntities
 	[Put("/testaction2")]
 	[Patch("/testaction3")]
 	[Delete("/testaction4")]
+	[Options("/testaction5")]
 	[Http400]
 	[Http403]
 	[Http404]

@@ -23,6 +23,6 @@ namespace Simplify.Web.Attributes
 		/// <value>
 		/// The priority.
 		/// </value>
-		public int Priority { get; private set; }
+		public int Priority { get; }
 	}
 }
