@@ -23,33 +23,25 @@ namespace Simplify.Web
 		#region Response Wrappers
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Responses.Ajax" /> class.
+		/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 		/// </summary>
-		/// <param name="ajaxData">The ajax data.</param>
+		/// <param name="content">The string content.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
 		/// <param name="contentType">Type of the content.</param>
-		protected Ajax Ajax(string ajaxData, int statusCode = 200, string contentType = null)
+		protected Content Content(string content, int statusCode = 200, string contentType = null)
 		{
-			return new Ajax(ajaxData, statusCode, contentType);
+			return new Content(content, statusCode, contentType);
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Responses.Ajax" /> class.
+		/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 		/// </summary>
-		/// <param name="ajaxData">The ajax data.</param>
-		/// <param name="contentType">Type of the content.</param>
-		protected Ajax Ajax(string ajaxData, string contentType)
+		/// <param name="content">The string content.</param>
+		/// <param name="contentType">>The HTTP response status code.</param>
+		/// <param name="statusCode">The status code.</param>
+		protected Content Content(string content, string contentType, int statusCode = 200)
 		{
-			return new Ajax(ajaxData, contentType);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Responses.Ajax" /> class.
-		/// </summary>
-		/// <param name="statusCode">The HTTP response status code.</param>
-		protected Ajax Ajax(int statusCode = 204)
-		{
-			return new Ajax(statusCode);
+			return new Content(content, contentType, statusCode);
 		}
 
 		/// <summary>

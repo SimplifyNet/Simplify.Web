@@ -3,40 +3,33 @@
 namespace Simplify.Web.Responses
 {
 	/// <summary>
-	/// Provides controller Ajax response (send only specified string to response)
+	/// Provides controller string response
 	/// </summary>
-	public class Ajax : ControllerResponse
+	public class Content : ControllerResponse
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Ajax" /> class.
+		/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 		/// </summary>
-		/// <param name="ajaxData">The ajax data.</param>
+		/// <param name="content">The string content.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
 		/// <param name="contentType">Type of the content.</param>
-		public Ajax(string ajaxData, int statusCode = 200, string contentType = null)
+		public Content(string content, int statusCode = 200, string contentType = null)
 		{
-			AjaxData = ajaxData;
+			StringContent = content;
 			StatusCode = statusCode;
 			ContentType = contentType;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Ajax" /> class.
+		/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 		/// </summary>
-		/// <param name="ajaxData">The ajax data.</param>
-		/// <param name="contentType">Type of the content.</param>
-		public Ajax(string ajaxData, string contentType)
+		/// <param name="content">The string content.</param>
+		/// <param name="contentType">>The HTTP response status code.</param>
+		/// <param name="statusCode">The status code.</param>
+		public Content(string content, string contentType, int statusCode = 200)
 		{
-			AjaxData = ajaxData;
+			StringContent = content;
 			ContentType = contentType;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Ajax" /> class.
-		/// </summary>
-		/// <param name="statusCode">The HTTP response status code.</param>
-		public Ajax(int statusCode = 204)
-		{
 			StatusCode = statusCode;
 		}
 
@@ -46,7 +39,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The ajax data.
 		/// </value>
-		public string AjaxData { get; }
+		public string StringContent { get; }
 
 		/// <summary>
 		/// Gets the type of the content.
@@ -74,8 +67,8 @@ namespace Simplify.Web.Responses
 			if (ContentType != null)
 				Context.Response.ContentType = ContentType;
 
-			if (AjaxData != null)
-				ResponseWriter.Write(AjaxData, Context.Response);
+			if (StringContent != null)
+				ResponseWriter.Write(StringContent, Context.Response);
 
 			return ControllerResponseResult.RawOutput;
 		}

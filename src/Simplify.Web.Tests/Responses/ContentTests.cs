@@ -10,7 +10,7 @@ using Simplify.Web.Responses;
 namespace Simplify.Web.Tests.Responses
 {
 	[TestFixture]
-	public class AjaxTests
+	public class ContentTests
 	{
 		private Mock<IResponseWriter> _responseWriter;
 		private Mock<IWebContext> _context;
@@ -26,13 +26,13 @@ namespace Simplify.Web.Tests.Responses
 		public void Process_NormalData_DataWrittenToResponse()
 		{
 			// Assign
-			var ajax = new Mock<Ajax>("test", 123, "") { CallBase = true };
-			ajax.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
-			ajax.SetupGet(x => x.Context).Returns(_context.Object);
+			var content = new Mock<Content>("test", 123, "") { CallBase = true };
+			content.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
+			content.SetupGet(x => x.Context).Returns(_context.Object);
 			_context.SetupSet(x => x.Response.StatusCode = It.IsAny<int>());
 
 			// Act
-			var result = ajax.Object.Process();
+			var result = content.Object.Process();
 
 			// Assert
 
