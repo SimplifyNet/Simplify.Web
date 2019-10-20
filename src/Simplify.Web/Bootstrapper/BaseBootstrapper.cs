@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
-using Simplify.Web.Attributes.Setup;
 using Simplify.Web.Core;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
@@ -78,7 +77,7 @@ namespace Simplify.Web.Bootstrapper
 			RegisterDefaultModelBinders();
 			RegisterDefaultModelValidators();
 
-			var typesToIgnore = GetTypesToIgnore();
+			var typesToIgnore = SimplifyWebTypesFinder.GetTypesToIgnore();
 
 			RegisterControllers(typesToIgnore);
 			RegisterViews(typesToIgnore);
@@ -105,22 +104,6 @@ namespace Simplify.Web.Bootstrapper
 		{
 			foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => typesToIgnore.All(x => x != viewType)))
 				BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
-		}
-
-		private static IList<Type> GetTypesToIgnore()
-		{
-			var typesToIgnore = new List<Type>();
-
-			var ignoreContainingClass = SimplifyWebTypesFinder.GetAllTypes().FirstOrDefault(t => t.IsDefined(typeof(IgnoreTypesRegistrationAttribute), true));
-
-			if (ignoreContainingClass == null)
-				return typesToIgnore;
-
-			var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreTypesRegistrationAttribute), false);
-
-			typesToIgnore.AddRange(((IgnoreTypesRegistrationAttribute)attributes[0]).Types);
-
-			return typesToIgnore;
 		}
 
 		#region Simplify.Web types registration

@@ -25,6 +25,7 @@
 			* `RegisterSimplifyWeb` `IDIContainerProvider` extension method for custom Simplify.Web types registration (#17)
 			* Internal container ambient context (BootstrapperFactory.ContainerProvider) for SImplify.Web usage with default initialization from `DIContainer.Current`
 			* `IControllerExecutor` `IControllerMetaData` instead of only controllerType (#16)
+			* `GetTypesToIgnore` moved to `SimplifyWebTypesFinder`
 			Dependencies Updates
 			* Upgrade to Microsoft.Extensions.Configuration.Json 3.0
 			* Internal upgrade to Simplify.String.Sources 1.2.1, Simplify.System.Sources 1.2.1
