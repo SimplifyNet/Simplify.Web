@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Meta;
@@ -21,7 +19,7 @@ namespace Simplify.Web.Core.Controllers.Execution
 		/// <param name="routeParameters">The route parameters.</param>
 		/// <returns></returns>
 		ControllerResponseResult Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
-			dynamic routeParameters = null);
+			dynamic? routeParameters = null);
 
 		/// <summary>
 		/// Processes the asynchronous controllers responses.

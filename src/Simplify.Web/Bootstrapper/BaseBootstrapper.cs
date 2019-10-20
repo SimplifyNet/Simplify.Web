@@ -27,11 +27,13 @@ namespace Simplify.Web.Bootstrapper
 	/// <summary>
 	/// Base and default Simplify.Web bootstrapper
 	/// </summary>
+	// ReSharper disable once ClassTooBig
 	public class BaseBootstrapper
 	{
 		/// <summary>
 		/// Registers the types in container.
 		/// </summary>
+		// ReSharper disable once MethodTooLong
 		public void Register()
 		{
 			// Registering non Simplify.Web types
@@ -76,21 +78,36 @@ namespace Simplify.Web.Bootstrapper
 			RegisterDefaultModelBinders();
 			RegisterDefaultModelValidators();
 
-			var ignoredTypes = GetIgnoredTypes();
+			var typesToIgnore = GetTypesToIgnore();
 
-			// Registering controllers types
+			RegisterControllers(typesToIgnore);
+			RegisterViews(typesToIgnore);
+		}
+
+		/// <summary>
+		/// Registers the controllers.
+		/// </summary>
+		/// <param name="typesToIgnore">The types to ignore.</param>
+		public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
+		{
 			foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
-				.Where(controllerMetaData => ignoredTypes.All(x => x != controllerMetaData.ControllerType)))
+				.Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
 			{
 				BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
 			}
+		}
 
-			// Registering views types
-			foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => ignoredTypes.All(x => x != viewType)))
+		/// <summary>
+		/// Registers the views.
+		/// </summary>
+		/// <param name="typesToIgnore">The types to ignore.</param>
+		public virtual void RegisterViews(IEnumerable<Type> typesToIgnore)
+		{
+			foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => typesToIgnore.All(x => x != viewType)))
 				BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
 		}
 
-		private static IEnumerable<Type> GetIgnoredTypes()
+		private static IList<Type> GetTypesToIgnore()
 		{
 			var typesToIgnore = new List<Type>();
 
@@ -106,7 +123,7 @@ namespace Simplify.Web.Bootstrapper
 			return typesToIgnore;
 		}
 
-		#region Bootstrapper types registration
+		#region Simplify.Web types registration
 
 		/// <summary>
 		/// Registers the configuration.
@@ -429,6 +446,6 @@ namespace Simplify.Web.Bootstrapper
 			BootstrapperFactory.ContainerProvider.Register<ValidationAttributesExecutor>(LifetimeType.Singleton);
 		}
 
-		#endregion Bootstrapper types registration
+		#endregion Simplify.Web types registration
 	}
 }

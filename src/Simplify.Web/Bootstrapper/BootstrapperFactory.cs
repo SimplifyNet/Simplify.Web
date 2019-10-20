@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using Simplify.DI;
 using Simplify.Web.Meta;
 
@@ -11,7 +9,7 @@ namespace Simplify.Web.Bootstrapper
 	/// </summary>
 	public static class BootstrapperFactory
 	{
-		private static IDIContainerProvider _containerProvider;
+		private static IDIContainerProvider? _containerProvider;
 
 		/// <summary>
 		/// Gets or sets the container provider used by Simplify.Web.
