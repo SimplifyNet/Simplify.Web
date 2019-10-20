@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Simplify.Web.Attributes;
+using Simplify.Web.Util;
 
 namespace Simplify.Web.Meta
 {
@@ -21,7 +23,7 @@ namespace Simplify.Web.Meta
 			return new ControllerMetaData(controllerType, GetControllerExecParameters(controllerType), GetControllerRole(controllerType), GetControllerSecurity(controllerType));
 		}
 
-		private static ControllerExecParameters GetControllerExecParameters(Type controllerType)
+		private static ControllerExecParameters GetControllerExecParameters(ICustomAttributeProvider controllerType)
 		{
 			var priority = 0;
 
@@ -32,54 +34,27 @@ namespace Simplify.Web.Meta
 
 			var routeInfo = GetControllerRouteInfo(controllerType);
 
-			return routeInfo != null || priority != 0
+			return routeInfo.Count > 0 || priority != 0
 				? new ControllerExecParameters(routeInfo, priority)
 				: null;
 		}
 
-		private static ControllerRouteInfo GetControllerRouteInfo(Type controllerType)
+		private static IDictionary<HttpMethod, string> GetControllerRouteInfo(ICustomAttributeProvider controllerType)
 		{
-			string getRoute = null;
-			string postRoute = null;
-			string putRoute = null;
-			string patchRoute = null;
-			string deleteRoute = null;
+			var routeInfo = new Dictionary<HttpMethod, string>();
 
-			var attributes = controllerType.GetCustomAttributes(typeof(GetAttribute), false);
+			foreach (var item in Relations.HttpMethodToHttpMethodAttributeRelations)
+			{
+				var attributes = controllerType.GetCustomAttributes(item.Value, false);
 
-			if (attributes.Length > 0)
-				getRoute = ((GetAttribute)attributes[0]).Route;
+				if (attributes.Length > 0)
+					routeInfo.Add(item.Key, ((ControllerRouteAttribute)attributes[0]).Route);
+			}
 
-			attributes = controllerType.GetCustomAttributes(typeof(PostAttribute), false);
-
-			if (attributes.Length > 0)
-				postRoute = ((PostAttribute)attributes[0]).Route;
-
-			attributes = controllerType.GetCustomAttributes(typeof(PutAttribute), false);
-
-			if (attributes.Length > 0)
-				putRoute = ((PutAttribute)attributes[0]).Route;
-
-			attributes = controllerType.GetCustomAttributes(typeof(PatchAttribute), false);
-
-			if (attributes.Length > 0)
-				patchRoute = ((PatchAttribute)attributes[0]).Route;
-
-			attributes = controllerType.GetCustomAttributes(typeof(DeleteAttribute), false);
-
-			if (attributes.Length > 0)
-				deleteRoute = ((DeleteAttribute)attributes[0]).Route;
-
-			return !string.IsNullOrEmpty(getRoute)
-				   || !string.IsNullOrEmpty(postRoute)
-				   || !string.IsNullOrEmpty(putRoute)
-				   || !string.IsNullOrEmpty(patchRoute)
-				   || !string.IsNullOrEmpty(deleteRoute)
-				? new ControllerRouteInfo(getRoute, postRoute, putRoute, patchRoute, deleteRoute)
-				: null;
+			return routeInfo;
 		}
 
-		private static ControllerRole GetControllerRole(Type controllerType)
+		private static ControllerRole GetControllerRole(ICustomAttributeProvider controllerType)
 		{
 			var http400 = false;
 			var http403 = false;
@@ -103,7 +78,7 @@ namespace Simplify.Web.Meta
 			return http403 || http404 ? new ControllerRole(http400, http403, http404) : null;
 		}
 
-		private static ControllerSecurity GetControllerSecurity(Type controllerType)
+		private static ControllerSecurity GetControllerSecurity(ICustomAttributeProvider controllerType)
 		{
 			var isAuthorizationRequired = false;
 			IEnumerable<string> requiredUserRoles = null;
