@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Routing
+﻿#nullable disable
+
+namespace Simplify.Web.Routing
 {
 	/// <summary>
 	/// Provides HTTP route matching result
@@ -8,7 +10,7 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RouteMatchResult" /> class.
 		/// </summary>
-		/// <param name="matched">if set to <c>true</c> then it means what matchind was successfull.</param>
+		/// <param name="matched">if set to <c>true</c> then it means what matching was successful.</param>
 		/// <param name="routeParameters">The route parameters.</param>
 		public RouteMatchResult(bool matched = false, dynamic routeParameters = null)
 		{

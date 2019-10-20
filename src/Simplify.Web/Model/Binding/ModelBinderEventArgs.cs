@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using Simplify.Web.Modules;
 
 namespace Simplify.Web.Model.Binding

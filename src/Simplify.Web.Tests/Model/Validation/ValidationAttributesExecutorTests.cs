@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#nullable disable
+
+using NUnit.Framework;
 using Simplify.Web.Model.Validation;
 using Simplify.Web.Tests.Model.Validation.Attributes;
 using Simplify.Web.Tests.TestEntities;

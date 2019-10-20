@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;

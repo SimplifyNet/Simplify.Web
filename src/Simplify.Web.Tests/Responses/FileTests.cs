@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿#nullable disable
+
+using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;

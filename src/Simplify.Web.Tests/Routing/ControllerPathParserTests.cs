@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#nullable disable
+
+using NUnit.Framework;
 using Simplify.Web.Routing;
 
 namespace Simplify.Web.Tests.Routing

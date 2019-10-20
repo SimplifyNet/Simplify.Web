@@ -1,4 +1,6 @@
-﻿using Simplify.Web.Core;
+﻿#nullable disable
+
+using Simplify.Web.Core;
 
 namespace Simplify.Web
 {

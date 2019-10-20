@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿#nullable disable
+
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules
 {
