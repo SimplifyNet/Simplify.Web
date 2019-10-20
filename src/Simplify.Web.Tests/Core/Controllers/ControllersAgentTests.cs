@@ -28,7 +28,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void GetStandardControllersMetaData_StandartControllerAndAll40xControllers_OnlyStandartReturned()
+		public void GetStandardControllersMetaData_StandardControllerAndAll40xControllers_OnlyStandardReturned()
 		{
 			// Assign
 
