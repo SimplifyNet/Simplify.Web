@@ -48,7 +48,7 @@ namespace Simplify.Web.Core.Controllers
 		/// <returns></returns>
 		public IRouteMatchResult MatchControllerRoute(IControllerMetaData controllerMetaData, string sourceRoute, string httpMethod)
 		{
-			if (controllerMetaData.ExecParameters == null)
+			if (controllerMetaData.ExecParameters == null || controllerMetaData.ExecParameters.Routes.Count == 0)
 				return _routeMatcher.Match(sourceRoute, null);
 
 			var item = controllerMetaData.ExecParameters.Routes.FirstOrDefault(x => x.Key == HttpRequestUtil.HttpMethodStringToHttpMethod(httpMethod));

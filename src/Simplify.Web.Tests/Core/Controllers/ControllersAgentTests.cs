@@ -52,10 +52,20 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void MatchControllerRoute_NoControllerRouteData_MatchCalled()
+		public void MatchControllerRoute_NoControllerExecParameters_MatchCalled()
 		{
 			// Act
 			_agent.MatchControllerRoute(new ControllerMetaData(null), "/foo", "GET");
+
+			// Assert
+			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/foo"), It.Is<string>(s => s == null)));
+		}
+
+		[Test]
+		public void MatchControllerRoute_NoControllerRouteData_MatchCalled()
+		{
+			// Act
+			_agent.MatchControllerRoute(new ControllerMetaData(null, new ControllerExecParameters(new Dictionary<HttpMethod, string>())), "/foo", "GET");
 
 			// Assert
 			_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/foo"), It.Is<string>(s => s == null)));
@@ -194,6 +204,16 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			// Assign
 			var metaData = new ControllerMetaData(null);
+
+			// Act & Assert
+			Assert.IsTrue(_agent.IsAnyPageController(metaData));
+		}
+
+		[Test]
+		public void IsAnyPageController_AnyPageControllerWithEmptyRoutes_True()
+		{
+			// Assign
+			var metaData = new ControllerMetaData(null, new ControllerExecParameters(null));
 
 			// Act & Assert
 			Assert.IsTrue(_agent.IsAnyPageController(metaData));
