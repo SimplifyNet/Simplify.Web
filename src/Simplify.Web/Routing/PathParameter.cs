@@ -23,6 +23,6 @@ namespace Simplify.Web.Routing
 		/// <value>
 		/// The type of path parameter.
 		/// </value>
-		public Type Type { get; private set; }
+		public Type Type { get; }
 	}
 }

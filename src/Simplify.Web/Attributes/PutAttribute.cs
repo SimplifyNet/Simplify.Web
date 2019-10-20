@@ -23,6 +23,6 @@ namespace Simplify.Web.Attributes
 		/// <value>
 		/// The route.
 		/// </value>
-		public string Route { get; private set; }
+		public string Route { get; }
 	}
 }

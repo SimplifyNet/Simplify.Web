@@ -24,7 +24,7 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// The route information.
 		/// </value>
-		public ControllerRouteInfo RouteInfo { get; private set; }
+		public ControllerRouteInfo RouteInfo { get; }
 
 		/// <summary>
 		/// Gets the run priority.

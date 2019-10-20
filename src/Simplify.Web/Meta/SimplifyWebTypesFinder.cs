@@ -32,9 +32,9 @@ namespace Simplify.Web.Meta
 			"Simplify"
 		};
 
-		private static IEnumerable<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ?? (_currentDomainAssemblies = AppDomain.CurrentDomain.GetAssemblies());
+		private static IEnumerable<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ??= AppDomain.CurrentDomain.GetAssemblies();
 
-		private static IEnumerable<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes ?? (_currentDomainAssembliesTypes = GetAssembliesTypes(CurrentDomainAssemblies));
+		private static IEnumerable<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes ??= GetAssembliesTypes(CurrentDomainAssemblies);
 
 		/// <summary>
 		/// Finds the type derived from specified type in current domain assemblies.

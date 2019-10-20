@@ -53,7 +53,7 @@ namespace Simplify.Web.Modules.Data.Html
 			var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedHour == -1) : "";
 
 			for (var i = 0; i < 24; i++)
-				data += string.Format("<option value='{0}'{2}>{1}</option>", i, i.ToString("00"), i == selectedHour ? " selected='selected'" : "");
+				data += string.Format("<option value='{0}'{2}>{1:00}</option>", i, i, i == selectedHour ? " selected='selected'" : "");
 
 			return data;
 		}
@@ -69,7 +69,7 @@ namespace Simplify.Web.Modules.Data.Html
 			var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMinute == -1) : "";
 
 			for (var i = 0; i < 60; i++)
-				data += string.Format("<option value='{0}'{2}>{1}</option>", i, i.ToString("00"), i == selectedMinute ? " selected='selected'" : "");
+				data += string.Format("<option value='{0}'{2}>{1:00}</option>", i, i, i == selectedMinute ? " selected='selected'" : "");
 
 			return data;
 		}
@@ -85,7 +85,7 @@ namespace Simplify.Web.Modules.Data.Html
 			var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedDay == -1) : "";
 
 			for (var i = 1; i < 32; i++)
-				data += string.Format("<option value='{0}' {2}>{1}</option>", i, i.ToString("00"), i == selectedDay ? "selected='selected'" : "");
+				data += string.Format("<option value='{0}' {2}>{1:00}</option>", i, i, i == selectedDay ? "selected='selected'" : "");
 
 			return data;
 		}
@@ -103,7 +103,7 @@ namespace Simplify.Web.Modules.Data.Html
 			var month = Convert.ToDateTime("1/1/2010");
 
 			for (var i = 0; i < 12; i++)
-				data += string.Format("<option value='{0}' {2}>{1}</option>", i, month.AddMonths(i).ToString("MMMM"), i == selectedMonth ? "selected='selected'" : "");
+				data += string.Format("<option value='{0}' {2}>{1:MMMM}</option>", i, month.AddMonths(i), i == selectedMonth ? "selected='selected'" : "");
 
 			return data;
 		}
@@ -121,7 +121,7 @@ namespace Simplify.Web.Modules.Data.Html
 			var month = Convert.ToDateTime("1/1/2010");
 
 			for (var i = 0; i < 12; i++)
-				data += string.Format("<option value='{0}' {2}>{1}</option>", i + 1, month.AddMonths(i).ToString("MMMM"), i + 1 == selectedMonth ? "selected='selected'" : "");
+				data += $"<option value='{i + 1}' {(i + 1 == selectedMonth ? "selected='selected'" : "")}>{month.AddMonths(i):MMMM}</option>";
 
 			return data;
 		}
@@ -139,9 +139,9 @@ namespace Simplify.Web.Modules.Data.Html
 		public string GenerateYearsListToPast(int numberOfYears, int selectedYear = -1, bool displayNotSelectedMessage = true, int? currentYear = null)
 		{
 			var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedYear == -1) : "";
-			var currentyear = currentYear ?? DateTime.Now.Year;
+			var year = currentYear ?? DateTime.Now.Year;
 
-			for (var i = currentyear; i >= currentyear - numberOfYears; i--)
+			for (var i = year; i >= year - numberOfYears; i--)
 				data += string.Format("<option value='{0}' {2}>{1}</option>", i, i, i == selectedYear ? "selected='selected'" : "");
 
 			return data;
@@ -158,9 +158,9 @@ namespace Simplify.Web.Modules.Data.Html
 		public string GenerateYearsListToFuture(int numberOfYears, int? currentYear = null)
 		{
 			var data = "";
-			var currentyear = currentYear ?? DateTime.Now.Year;
+			var year = currentYear ?? DateTime.Now.Year;
 
-			for (var i = currentyear; i <= currentyear + numberOfYears; i++)
+			for (var i = year; i <= year + numberOfYears; i++)
 				data += $"<option value='{i}'>{i}</option>";
 
 			return data;

@@ -33,35 +33,34 @@ namespace Simplify.Web.RequestPipeline
 		/// <returns></returns>
 		public static RequestHandlingResult Invoke(HttpContext context)
 		{
-			using (var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope())
+			using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
+
+			try
+			{
+				return scope.StartMeasurements()
+					.Trace(context, OnTrace)
+					.SetupProviders(context)
+					.ProcessRequest(context);
+			}
+			catch (Exception e)
 			{
 				try
 				{
-					return scope.StartMeasurements()
-						.Trace(context, OnTrace)
-						.SetupProviders(context)
-						.ProcessRequest(context);
+					context.Response.StatusCode = 500;
+
+					ProcessOnException(e);
 				}
-				catch (Exception e)
+				catch (Exception exception)
 				{
-					try
-					{
-						context.Response.StatusCode = 500;
-
-						ProcessOnException(e);
-					}
-					catch (Exception exception)
-					{
-						return RequestHandlingResult.HandledResult(
-							context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(exception,
-								scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails)));
-					}
-
-					return
-						RequestHandlingResult.HandledResult(context.Response.WriteAsync(
-							ExceptionInfoPageGenerator.Generate(e,
-								scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails)));
+					return RequestHandlingResult.HandledResult(
+						context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(exception,
+							scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails)));
 				}
+
+				return
+					RequestHandlingResult.HandledResult(context.Response.WriteAsync(
+						ExceptionInfoPageGenerator.Generate(e,
+							scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails)));
 			}
 		}
 

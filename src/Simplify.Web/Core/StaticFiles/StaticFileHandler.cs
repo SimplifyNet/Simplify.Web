@@ -40,7 +40,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <exception cref="ArgumentNullException"></exception>
 		public static IFileSystem FileSystem
 		{
-			get => _fileSystemInstance ?? (_fileSystemInstance = new FileSystem());
+			get => _fileSystemInstance ??= new FileSystem();
 			set => _fileSystemInstance = value ?? throw new ArgumentNullException();
 		}
 

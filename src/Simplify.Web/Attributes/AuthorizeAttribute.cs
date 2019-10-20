@@ -35,6 +35,6 @@ namespace Simplify.Web.Attributes
 		/// <value>
 		/// The required user roles.
 		/// </value>
-		public IEnumerable<string> RequiredUserRoles { get; private set; }
+		public IEnumerable<string> RequiredUserRoles { get; }
 	}
 }

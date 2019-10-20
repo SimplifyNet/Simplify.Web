@@ -32,15 +32,9 @@ namespace Simplify.Web.Meta
 		{
 			get
 			{
-				return _current ?? (_current = new ControllersMetaStore(new ControllerMetaDataFactory()));
+				return _current ??= new ControllersMetaStore(new ControllerMetaDataFactory());
 			}
-			set
-			{
-				if (value == null)
-					throw new ArgumentNullException(nameof(value));
-
-				_current = value;
-			}
+			set => _current = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>

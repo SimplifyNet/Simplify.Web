@@ -77,16 +77,14 @@ namespace Simplify.Web.Model.Binding.Parsers
 		public static bool ParseBool(string value)
 		{
 			if (string.IsNullOrEmpty(value))
-				return default(bool);
+				return default;
 
 			value = value.ToLower();
 
 			if (value == "on")
 				return true;
 
-			bool buffer;
-
-			if (bool.TryParse(value, out buffer))
+			if (bool.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to bool parsing failed, value: '{value}'");
@@ -107,9 +105,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 			if (value == "on")
 				return true;
 
-			bool buffer;
-
-			if (bool.TryParse(value, out buffer))
+			if (bool.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to nullable bool parsing failed, value: '{value}'");
@@ -124,11 +120,9 @@ namespace Simplify.Web.Model.Binding.Parsers
 		public static int ParseInt(string value)
 		{
 			if (string.IsNullOrEmpty(value))
-				return default(int);
+				return default;
 
-			int buffer;
-
-			if (int.TryParse(value, out buffer))
+			if (int.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to int parsing failed, value: '{value}'");
@@ -145,9 +139,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 			if (string.IsNullOrEmpty(value))
 				return null;
 
-			int buffer;
-
-			if (int.TryParse(value, out buffer))
+			if (int.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to nullable int parsing failed, value: '{value}'");
@@ -162,11 +154,9 @@ namespace Simplify.Web.Model.Binding.Parsers
 		public static decimal ParseDecimal(string value)
 		{
 			if (string.IsNullOrEmpty(value))
-				return default(decimal);
+				return default;
 
-			decimal buffer;
-
-			if (decimal.TryParse(value, out buffer))
+			if (decimal.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to decimal parsing failed, value: '{value}'");
@@ -183,9 +173,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 			if (string.IsNullOrEmpty(value))
 				return null;
 
-			decimal buffer;
-
-			if (decimal.TryParse(value, out buffer))
+			if (decimal.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to nullable decimal parsing failed, value: '{value}'");
@@ -200,11 +188,9 @@ namespace Simplify.Web.Model.Binding.Parsers
 		public static long ParseLong(string value)
 		{
 			if (string.IsNullOrEmpty(value))
-				return default(long);
+				return default;
 
-			long buffer;
-
-			if (long.TryParse(value, out buffer))
+			if (long.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to long parsing failed, value: '{value}'");
@@ -221,9 +207,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 			if (string.IsNullOrEmpty(value))
 				return null;
 
-			long buffer;
-
-			if (long.TryParse(value, out buffer))
+			if (long.TryParse(value, out var buffer))
 				return buffer;
 
 			throw new ModelBindingException($"String to nullable long parsing failed, value: '{value}'");
@@ -239,7 +223,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		public static DateTime ParseDateTime(string value, string format = null)
 		{
 			if (string.IsNullOrEmpty(value))
-				return default(DateTime);
+				return default;
 
 			DateTime buffer;
 

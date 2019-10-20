@@ -33,15 +33,15 @@ namespace Simplify.Web.Model.Binding
 		/// <value>
 		/// The context.
 		/// </value>
-		public IWebContext Context { get; private set; }
+		public IWebContext Context { get; }
 
 		/// <summary>
-		/// Gets a value indicating whether model was binded.
+		/// Gets a value indicating whether model was bound.
 		/// </summary>
 		/// <value>
-		/// <c>true</c> if current model was binded; otherwise, <c>false</c>.
+		/// <c>true</c> if current model was bound; otherwise, <c>false</c>.
 		/// </value>
-		public bool IsBinded { get; private set; }
+		public bool IsBound { get; private set; }
 
 		/// <summary>
 		/// Sets current model.
@@ -50,7 +50,7 @@ namespace Simplify.Web.Model.Binding
 		public void SetModel(T model)
 		{
 			Model = model;
-			IsBinded = true;
+			IsBound = true;
 		}
 	}
 }

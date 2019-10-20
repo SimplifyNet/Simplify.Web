@@ -54,7 +54,7 @@ namespace Simplify.Web.Modules.Data
 		/// <exception cref="ArgumentNullException"></exception>
 		public static IFileSystem FileSystem
 		{
-			get => _fileSystemInstance ?? (_fileSystemInstance = new FileSystem());
+			get => _fileSystemInstance ??= new FileSystem();
 
 			set => _fileSystemInstance = value ?? throw new ArgumentNullException();
 		}
@@ -278,10 +278,10 @@ namespace Simplify.Web.Modules.Data
 		{
 			data = null;
 
-			if (!LoadTextFileFromFileSystem(fileName, language, out string internaldata))
+			if (!LoadTextFileFromFileSystem(fileName, language, out var internalData))
 				return false;
 
-			data = XDocument.Parse(internaldata);
+			data = XDocument.Parse(internalData);
 			return true;
 		}
 

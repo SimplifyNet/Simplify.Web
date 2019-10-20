@@ -22,7 +22,7 @@ namespace Simplify.Web.Bootstrapper
 		/// <exception cref="ArgumentNullException">value</exception>
 		public static IDIContainerProvider ContainerProvider
 		{
-			get => _containerProvider ?? (_containerProvider = DIContainer.Current);
+			get => _containerProvider ??= DIContainer.Current;
 			set => _containerProvider = value ?? throw new ArgumentNullException(nameof(value));
 		}
 

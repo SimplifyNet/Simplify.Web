@@ -59,31 +59,18 @@ namespace Simplify.Web.Routing
 
 		private static Type ParseParameterType(string typeData)
 		{
-			if (typeData == "int")
-				return typeof(int);
-
-			if (typeData == "decimal")
-				return typeof(decimal);
-
-			if (typeData == "bool")
-				return typeof(bool);
-
-			if (typeData == "[]")
-				return typeof(string[]);
-
-			if (typeData == "string[]")
-				return typeof(string[]);
-
-			if (typeData == "int[]")
-				return typeof(int[]);
-
-			if (typeData == "decimal[]")
-				return typeof(decimal[]);
-
-			if (typeData == "bool[]")
-				return typeof(bool[]);
-
-			return null;
+			return typeData switch
+			{
+				"int" => typeof(int),
+				"decimal" => typeof(decimal),
+				"bool" => typeof(bool),
+				"[]" => typeof(string[]),
+				"string[]" => typeof(string[]),
+				"int[]" => typeof(int[]),
+				"decimal[]" => typeof(decimal[]),
+				"bool[]" => typeof(bool[]),
+				_ => null
+			};
 		}
 	}
 }

@@ -88,7 +88,7 @@ namespace Simplify.Web.Model
 			{
 				binder.Bind(args);
 
-				if (!args.IsBinded)
+				if (!args.IsBound)
 					continue;
 
 				Validate(args, resolver);
