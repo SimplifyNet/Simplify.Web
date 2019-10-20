@@ -3,6 +3,7 @@
 using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using Simplify.Web.Meta;
 
 namespace Simplify.Web.Util
 {
@@ -45,6 +46,25 @@ namespace Simplify.Web.Util
 		public static string GetRelativeFilePath(HttpRequest request)
 		{
 			return !string.IsNullOrEmpty(request?.Path.Value) ? request.Path.ToString().Substring(1) : "";
+		}
+
+		/// <summary>
+		/// Converts HTTP method string to HTTP method.
+		/// </summary>
+		/// <param name="method">The method.</param>
+		/// <returns></returns>
+		public static HttpMethod HttpMethodStringToHttpMethod(string method)
+		{
+			return method switch
+			{
+				"GET" => HttpMethod.Get,
+				"POST" => HttpMethod.Post,
+				"PUT" => HttpMethod.Put,
+				"PATCH" => HttpMethod.Patch,
+				"DELETE" => HttpMethod.Delete,
+				"OPTIONS" => HttpMethod.Options,
+				_ => HttpMethod.Undefined
+			};
 		}
 	}
 }

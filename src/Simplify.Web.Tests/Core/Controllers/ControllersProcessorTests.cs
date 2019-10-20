@@ -38,7 +38,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_context = new Mock<HttpContext>();
 
 			_metaData = new ControllerMetaData(typeof(TestController1),
-				new ControllerExecParameters(new ControllerRouteInfo("/foo/bar")));
+				new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/foo/bar" } }));
 
 			_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult(true, _routeParameters));
 			_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>

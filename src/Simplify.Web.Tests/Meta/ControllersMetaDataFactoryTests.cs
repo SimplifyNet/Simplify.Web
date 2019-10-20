@@ -22,11 +22,12 @@ namespace Simplify.Web.Tests.Meta
 			// Assert
 
 			Assert.AreEqual("TestController1", metaData.ControllerType.Name);
-			Assert.AreEqual("/testaction", metaData.ExecParameters.RouteInfo.GetRoute);
-			Assert.AreEqual("/testaction1", metaData.ExecParameters.RouteInfo.PostRoute);
-			Assert.AreEqual("/testaction2", metaData.ExecParameters.RouteInfo.PutRoute);
-			Assert.AreEqual("/testaction3", metaData.ExecParameters.RouteInfo.PatchRoute);
-			Assert.AreEqual("/testaction4", metaData.ExecParameters.RouteInfo.DeleteRoute);
+			Assert.AreEqual("/testaction", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Get).Value);
+			Assert.AreEqual("/testaction1", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Post).Value);
+			Assert.AreEqual("/testaction2", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Put).Value);
+			Assert.AreEqual("/testaction3", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Patch).Value);
+			Assert.AreEqual("/testaction4", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Delete).Value);
+			Assert.AreEqual("/testaction5", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Options).Value);
 			Assert.IsTrue(metaData.Role.Is400Handler);
 			Assert.IsTrue(metaData.Role.Is403Handler);
 			Assert.IsTrue(metaData.Role.Is404Handler);

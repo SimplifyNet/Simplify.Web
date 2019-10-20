@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Simplify.Web.Meta;
 using Simplify.Web.Routing;
+using Simplify.Web.Util;
 
 namespace Simplify.Web.Core.Controllers
 {
@@ -47,38 +48,12 @@ namespace Simplify.Web.Core.Controllers
 		/// <returns></returns>
 		public IRouteMatchResult MatchControllerRoute(IControllerMetaData controllerMetaData, string sourceRoute, string httpMethod)
 		{
-			if (controllerMetaData.ExecParameters?.RouteInfo == null)
+			if (controllerMetaData.ExecParameters == null)
 				return _routeMatcher.Match(sourceRoute, null);
 
-			switch (httpMethod)
-			{
-				case "GET":
-					return controllerMetaData.ExecParameters.RouteInfo.GetRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.GetRoute);
+			var item = controllerMetaData.ExecParameters.Routes.FirstOrDefault(x => x.Key == HttpRequestUtil.HttpMethodStringToHttpMethod(httpMethod));
 
-				case "POST":
-					return controllerMetaData.ExecParameters.RouteInfo.PostRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PostRoute);
-
-				case "PUT":
-					return controllerMetaData.ExecParameters.RouteInfo.PutRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PutRoute);
-
-				case "PATCH":
-					return controllerMetaData.ExecParameters.RouteInfo.PatchRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PatchRoute);
-
-				case "DELETE":
-					return controllerMetaData.ExecParameters.RouteInfo.DeleteRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.DeleteRoute);
-			}
-
-			return null;
+			return default(KeyValuePair<HttpMethod, string>).Equals(item) ? null : _routeMatcher.Match(sourceRoute, item.Value);
 		}
 
 		/// <summary>
@@ -117,14 +92,10 @@ namespace Simplify.Web.Core.Controllers
 					|| metaData.Role.Is404Handler)
 					return false;
 
-			if (metaData.ExecParameters?.RouteInfo == null)
+			if (metaData.ExecParameters == null)
 				return true;
 
-			return string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.GetRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PostRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PutRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PatchRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.DeleteRoute);
+			return metaData.ExecParameters.Routes.Count == 0 || metaData.ExecParameters.Routes.All(x => string.IsNullOrEmpty(x.Value));
 		}
 
 		/// <summary>
