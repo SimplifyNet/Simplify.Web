@@ -112,7 +112,7 @@ namespace Simplify.Web.Core.Controllers
 			if (!metaData.Security.IsAuthorizationRequired)
 				return SecurityRuleCheckResult.Ok;
 
-			if (metaData.Security.RequiredUserRoles == null)
+			if (metaData.Security.RequiredUserRoles == null || !metaData.Security.RequiredUserRoles.Any())
 				return user?.Identity == null || !user.Identity.IsAuthenticated ? SecurityRuleCheckResult.NotAuthenticated : SecurityRuleCheckResult.Ok;
 
 			if (user?.Identity == null || !user.Identity.IsAuthenticated)
