@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SampleApp.Classic.Models.Accounts;
@@ -13,9 +14,9 @@ using Simplify.Web.Responses;
 namespace SampleApp.Classic.Controllers.Accounts
 {
 	[Post("login")]
-	public class LoginController : Controller<LoginViewModel>
+	public class LoginController : AsyncController<LoginViewModel>
 	{
-		public override ControllerResponse Invoke()
+		public override async Task<ControllerResponse> Invoke()
 		{
 			if (Model.Password == "1" && Model.UserName == "Foo")
 			{
@@ -26,7 +27,7 @@ namespace SampleApp.Classic.Controllers.Accounts
 
 				var id = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-				Context.Context.SignInAsync(new ClaimsPrincipal(id));
+				await Context.Context.SignInAsync(new ClaimsPrincipal(id));
 
 				return new Redirect(RedirectionType.LoginReturnUrl);
 			}
