@@ -38,12 +38,12 @@ namespace Simplify.Web.Model.Validation.Attributes
 
 			if (value != null)
 			{
-				var objectType = value.GetType();
-
-				if (objectType == typeof(DateTime))
-					objectIsValid = !value.Equals(default(DateTime));
-				else
-					objectIsValid = true;
+				objectIsValid = value switch
+				{
+					DateTime _ => !value.Equals(default(DateTime)),
+					string s => !string.IsNullOrEmpty(s),
+					_ => true
+				};
 			}
 
 			if (objectIsValid)

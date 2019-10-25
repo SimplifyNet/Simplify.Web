@@ -48,6 +48,13 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		}
 
 		[Test]
+		public void Validate_EmptyString_DefaultModelValidationException()
+		{
+			// Act & Assert
+			TestAttribute("", _defaultMessage);
+		}
+
+		[Test]
 		public void Validate_NullReferenceWithCustomError_ModelValidationExceptionWithCustomError()
 		{
 			// Assign
