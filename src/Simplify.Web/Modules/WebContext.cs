@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules
 {
@@ -10,8 +11,11 @@ namespace Simplify.Web.Modules
 	/// </summary>
 	public class WebContext : IWebContext
 	{
-		private readonly Lazy<IFormCollection> _form;
-		private readonly Lazy<string> _requestBody;
+		private readonly SemaphoreSlim _formReadLock = new SemaphoreSlim(1, 1);
+		private readonly SemaphoreSlim _requestBodyReadLock = new SemaphoreSlim(1, 1);
+
+		private IFormCollection _form;
+		private string _requestBody;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WebContext"/> class.
@@ -23,9 +27,6 @@ namespace Simplify.Web.Modules
 			Request = context.Request;
 			Response = context.Response;
 			Query = context.Request.Query;
-
-			_form = new Lazy<IFormCollection>(() => Task.Run(() => context.Request.ReadFormAsync()).Result);
-			_requestBody = new Lazy<string>(() => new StreamReader(Context.Request.Body).ReadToEnd());
 
 			VirtualPath = string.IsNullOrEmpty(Request.PathBase.Value) ? "" : Request.PathBase.Value;
 
@@ -77,7 +78,21 @@ namespace Simplify.Web.Modules
 		/// <summary>
 		/// Gets the form data of post HTTP request.
 		/// </summary>
-		public IFormCollection Form => _form.Value;
+		public IFormCollection Form
+		{
+			get
+			{
+				if (_form != null)
+					return _form;
+
+				ReadFormAsync().Wait();
+
+				if (_form == null)
+					throw new InvalidOperationException("Form is null");
+
+				return _form;
+			}
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether this request is ajax request.
@@ -93,6 +108,62 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The request body.
 		/// </value>
-		public string RequestBody => _requestBody.Value;
+		public string RequestBody
+		{
+			get
+			{
+				if (_requestBody != null)
+					return _requestBody;
+
+				ReadRequestBodyAsync().Wait();
+
+				if (_requestBody == null)
+					throw new InvalidOperationException("Request body is null");
+
+				return _requestBody;
+			}
+		}
+
+		/// <summary>
+		/// Reads the form asynchronously.
+		/// </summary>
+		public async Task ReadFormAsync()
+		{
+			await _formReadLock.WaitAsync();
+
+			if (_form != null)
+				return;
+
+			try
+			{
+				_form = await Context.Request.ReadFormAsync();
+			}
+			finally
+			{
+				_formReadLock.Release();
+			}
+		}
+
+		/// <summary>
+		/// Reads the form asynchronously.
+		/// </summary>
+		public async Task ReadRequestBodyAsync()
+		{
+			await _requestBodyReadLock.WaitAsync();
+
+			if (_requestBody != null)
+				return;
+
+			try
+			{
+				using var reader = new StreamReader(Context.Request.Body);
+
+				_requestBody = await reader.ReadToEndAsync() ?? "";
+			}
+			finally
+			{
+				_requestBodyReadLock.Release();
+			}
+		}
 	}
 }
