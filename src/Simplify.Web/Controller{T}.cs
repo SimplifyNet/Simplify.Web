@@ -1,6 +1,5 @@
 ﻿#nullable disable
 
-using System;
 using System.Threading.Tasks;
 using Simplify.DI;
 using Simplify.Web.Model;
@@ -21,14 +20,25 @@ namespace Simplify.Web
 		/// <value>
 		/// The current request model.
 		/// </value>
-		public virtual T Model => _model ??= Resolver.Resolve<IModelHandler>().Process<T>(Resolver);
+		public virtual T Model
+		{
+			get
+			{
+				if (_model != null)
+					return _model;
+
+				ReadModelAsync().Wait();
+
+				return _model;
+			}
+		}
 
 		/// <summary>
-		/// Reads the model asynchronous.
+		/// Reads the model asynchronously.
 		/// </summary>
-		public virtual Task ReadModelAsync()
+		public virtual async Task ReadModelAsync()
 		{
-			throw new NotImplementedException();
+			_model = await Resolver.Resolve<IModelHandler>().ProcessAsync<T>(Resolver);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Simplify.DI;
 using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Validation;
@@ -74,19 +75,18 @@ namespace Simplify.Web.Model
 		}
 
 		/// <summary>
-		/// Parses object from HTTP data and validates it
+		/// Parses model and validates it asynchronously
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="resolver">The resolver.</param>
 		/// <returns></returns>
-		/// <exception cref="ModelBindingException">Unrecognized request content type for binding: {_context.Request.ContentType}</exception>
-		public T Process<T>(IDIResolver resolver)
+		public async Task<T> ProcessAsync<T>(IDIResolver resolver)
 		{
 			var args = new ModelBinderEventArgs<T>(_context);
 
 			foreach (var binder in ModelBindersTypes.Select(binderType => (IModelBinder)resolver.Resolve(binderType)))
 			{
-				binder.Bind(args);
+				await binder.BindAsync(args);
 
 				if (!args.IsBound)
 					continue;

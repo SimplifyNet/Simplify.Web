@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Model.Binding
+﻿using System.Threading.Tasks;
+
+namespace Simplify.Web.Model.Binding
 {
 	/// <summary>
 	/// Represent model binder
@@ -6,10 +8,10 @@
 	public interface IModelBinder
 	{
 		/// <summary>
-		/// Binds the model.
+		/// Binds the model asynchronously.
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="args">The <see cref="ModelBinderEventArgs{T}"/> instance containing the event data.</param>
-		void Bind<T>(ModelBinderEventArgs<T> args);
+		Task BindAsync<T>(ModelBinderEventArgs<T> args);
 	}
 }
