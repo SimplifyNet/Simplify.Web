@@ -14,8 +14,8 @@ namespace Simplify.Web.Modules
 		private readonly SemaphoreSlim _formReadLock = new SemaphoreSlim(1, 1);
 		private readonly SemaphoreSlim _requestBodyReadLock = new SemaphoreSlim(1, 1);
 
-		private IFormCollection _form;
-		private string _requestBody;
+		private IFormCollection? _form;
+		private string? _requestBody;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WebContext"/> class.
@@ -145,7 +145,7 @@ namespace Simplify.Web.Modules
 		}
 
 		/// <summary>
-		/// Reads the form asynchronously.
+		/// Reads the request body asynchronously.
 		/// </summary>
 		public async Task ReadRequestBodyAsync()
 		{
