@@ -20,9 +20,9 @@ namespace Simplify.Web.Model.Binding
 			if (!args.Context.Request.ContentType.Contains("application/x-www-form-urlencoded"))
 				return;
 
-			var form = await args.Context.Context.Request.ReadFormAsync();
+			await args.Context.ReadFormAsync();
 
-			args.SetModel(ListToModelParser.Parse<T>(form.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value)).ToList()));
+			args.SetModel(ListToModelParser.Parse<T>(args.Context.Form.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value)).ToList()));
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules
 {
@@ -65,5 +66,15 @@ namespace Simplify.Web.Modules
 		/// The request body.
 		/// </value>
 		string RequestBody { get; }
+
+		/// <summary>
+		/// Reads the form asynchronously.
+		/// </summary>
+		Task ReadFormAsync();
+
+		/// <summary>
+		/// Reads the request body asynchronously.
+		/// </summary>
+		Task ReadRequestBodyAsync();
 	}
 }
