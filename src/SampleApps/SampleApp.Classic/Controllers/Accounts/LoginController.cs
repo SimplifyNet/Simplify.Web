@@ -18,6 +18,8 @@ namespace SampleApp.Classic.Controllers.Accounts
 	{
 		public override async Task<ControllerResponse> Invoke()
 		{
+			await ReadModelAsync();
+
 			if (Model.Password == "1" && Model.UserName == "Foo")
 			{
 				var claims = new List<Claim>
