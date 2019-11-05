@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
@@ -78,7 +79,9 @@ namespace Simplify.Web.Core.Controllers.Execution
 
 			_controllerResponseBuilder.BuildControllerResponseProperties(response, resolver);
 
-			return response.Process();
+			// TODO
+			//return response.Process();
+			throw new NotImplementedException();
 		}
 	}
 }

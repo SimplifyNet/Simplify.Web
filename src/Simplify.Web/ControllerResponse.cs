@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Simplify.Web.Core;
 
 namespace Simplify.Web
@@ -20,6 +21,6 @@ namespace Simplify.Web
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public abstract ControllerResponseResult Process();
+		public abstract Task<ControllerResponseResult> ProcessAsync();
 	}
 }

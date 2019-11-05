@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using System;
+using System.Threading.Tasks;
 using Simplify.Templates;
 
 namespace Simplify.Web.Responses
@@ -59,11 +60,11 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override ControllerResponseResult Process()
+		public override Task<ControllerResponseResult> ProcessAsync()
 		{
 			DataCollector.Add(DataCollectorVariableName, Data);
 
-			return ControllerResponseResult.Default;
+			return Task.FromResult(ControllerResponseResult.Default);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Simplify.Templates;
 
 namespace Simplify.Web.Responses
@@ -58,7 +59,7 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override ControllerResponseResult Process()
+		public override Task<ControllerResponseResult> ProcessAsync()
 		{
 			Context.Response.StatusCode = StatusCode;
 
@@ -67,7 +68,7 @@ namespace Simplify.Web.Responses
 			if (!string.IsNullOrEmpty(Title))
 				DataCollector.AddTitle(Title);
 
-			return ControllerResponseResult.Default;
+			return Task.FromResult(ControllerResponseResult.Default);
 		}
 	}
 }
