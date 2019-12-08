@@ -1,7 +1,6 @@
 ﻿#nullable disable
 
 using System;
-using System.IO.Abstractions;
 using System.Xml.Linq;
 using Moq;
 using NUnit.Framework;
@@ -14,12 +13,10 @@ namespace Simplify.Web.Tests.Modules.Data
 	[TestFixture]
 	public class FileReaderTests
 	{
-		private const string DataPath = "C:/WebSites/FooSite/App_Data/";
+		public const string DataPath = "WebSites\\FooSite\\App_Data\\";
 
 		private Mock<ILanguageManagerProvider> _languageManagerProvider;
 		private Mock<ILanguageManager> _languageManager;
-
-		private Mock<IFileSystem> _fs;
 
 		private FileReader _fileReader;
 
@@ -32,48 +29,11 @@ namespace Simplify.Web.Tests.Modules.Data
 			_languageManagerProvider.Setup(x => x.Get()).Returns(_languageManager.Object);
 			_languageManager.SetupGet(x => x.Language).Returns("ru");
 
-			_fs = new Mock<IFileSystem>();
-
-			_fs.Setup(x => x.File.ReadAllText(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.en.xml")))
-				.Returns("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Title\" /></items>");
-
-			// ReSharper disable once StringLiteralTypo
-			_fs.Setup(x => x.File.ReadAllText(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.xml")))
-				.Returns("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Заголовок\" /></items>");
-
-			_fs.Setup(x => x.File.ReadAllText(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.en.txt")))
-				.Returns("Dummy");
-
-			// ReSharper disable once StringLiteralTypo
-			_fs.Setup(x => x.File.ReadAllText(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.txt")))
-				.Returns("Тест");
-
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.en.xml")))
-				.Returns(true);
-
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.xml")))
-				.Returns(true);
-
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.en.txt")))
-				.Returns(true);
-
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.txt")))
-				.Returns(true);
-
-			FileReader.FileSystem = _fs.Object;
-
 			_fileReader = new FileReader(DataPath, "en", _languageManagerProvider.Object);
 			_fileReader.Setup();
 		}
 
 		#region General
-
-		[Test]
-		public void FileSystem_NullsPassed_ArgumentNullExceptionThrown()
-		{
-			// Assert
-			Assert.Throws<ArgumentNullException>(() => FileReader.FileSystem = null);
-		}
 
 		[Test]
 		public void GetFilePath_NullsPassed_ArgumentNullExceptionsThrown()
@@ -97,14 +57,14 @@ namespace Simplify.Web.Tests.Modules.Data
 			_languageManager.SetupGet(x => x.Language).Returns("en");
 
 			// Act & Assert
-			Assert.AreEqual("C:/WebSites/FooSite/App_Data/My.Project/Foo.en.xml", _fileReader.GetFilePath("My.Project/Foo.xml"));
+			Assert.AreEqual(DataPath + "My.Project\\Foo.en.xml", _fileReader.GetFilePath("My.Project\\Foo.xml"));
 		}
 
 		[Test]
 		public void GetFilePath_FileWithoutExtension_PathIsCorrect()
 		{
 			// Act & Assert
-			Assert.AreEqual("C:/WebSites/FooSite/App_Data/MyProject/Foo.en", _fileReader.GetFilePath("MyProject/Foo", "en"));
+			Assert.AreEqual(DataPath + "MyProject\\Foo.en", _fileReader.GetFilePath("MyProject\\Foo", "en"));
 		}
 
 		#endregion GetFilePath
@@ -114,11 +74,8 @@ namespace Simplify.Web.Tests.Modules.Data
 		[Test]
 		public void LoadXDocument_FileNotExist_Null()
 		{
-			// Assign
-			_fs.Setup(x => x.File.Exists(It.IsAny<string>())).Returns(false);
-
 			// Act & Assert
-			Assert.IsNull(_fileReader.LoadTextDocument("Foo.xml"));
+			Assert.IsNull(_fileReader.LoadTextDocument("NotExist.xml"));
 		}
 
 		[Test]
@@ -127,7 +84,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act & Assert
 			Assert.AreEqual(
 				XDocument.Parse(
-					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Заголовок\" /></items>")
+					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
 					.Root.OuterXml(), _fileReader.LoadXDocument("Foo.xml").Root.OuterXml());
 		}
 
@@ -137,20 +94,17 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act & Assert
 			Assert.AreEqual(
 				XDocument.Parse(
-					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Заголовок\" /></items>")
+					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
 					.Root.OuterXml(), _fileReader.LoadXDocument("Foo").Root.OuterXml());
 		}
 
 		[Test]
 		public void LoadXDocument_FileNotExistButDefaultFileExist_DefaultFile()
 		{
-			// Assign
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.xml"))).Returns(false);
-
 			// Act & Assert
 			Assert.AreEqual(XDocument.Parse(
-					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Title\" /></items>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Foo.xml").Root.OuterXml());
+					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>en bar data</data>")
+					.Root.OuterXml(), _fileReader.LoadXDocument("Bar.xml").Root.OuterXml());
 		}
 
 		[Test]
@@ -170,9 +124,8 @@ namespace Simplify.Web.Tests.Modules.Data
 
 			// Assert
 
-			_fs.Verify(x => x.File.ReadAllText(It.IsAny<string>()), Times.Once);
 			Assert.AreEqual(XDocument.Parse(
-					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Заголовок\" /></items>")
+					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
 					.Root.OuterXml(), result.Root.OuterXml());
 		}
 
@@ -181,22 +134,20 @@ namespace Simplify.Web.Tests.Modules.Data
 		{
 			// Assign
 			FileReader.ClearCache();
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.xml"))).Returns(false);
 
 			// Act
 
-			_fileReader.LoadXDocument("Foo.xml", true);
+			_fileReader.LoadXDocument("Bar.xml", true);
 
 			_fileReader = new FileReader(DataPath, "en", _languageManagerProvider.Object);
 			_fileReader.Setup();
 
-			var result = _fileReader.LoadXDocument("Foo.xml", true);
+			var result = _fileReader.LoadXDocument("Bar.xml", true);
 
 			// Assert
 
-			_fs.Verify(x => x.File.ReadAllText(It.IsAny<string>()), Times.Once);
 			Assert.AreEqual(XDocument.Parse(
-					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Title\" /></items>")
+					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>en bar data</data>")
 					.Root.OuterXml(), result.Root.OuterXml());
 		}
 
@@ -207,30 +158,22 @@ namespace Simplify.Web.Tests.Modules.Data
 		[Test]
 		public void LoadTextDocument_FileNotExist_Null()
 		{
-			// Assign
-			_fs.Setup(x => x.File.Exists(It.IsAny<string>())).Returns(false);
-
 			// Act & Assert
-			Assert.IsNull(_fileReader.LoadTextDocument("Foo.txt"));
+			Assert.IsNull(_fileReader.LoadTextDocument("NotExist.txt"));
 		}
 
 		[Test]
 		public void LoadTextDocument_FileExist_Loaded()
 		{
-			// ReSharper disable once StringLiteralTypo
-
 			// Act & Assert
-			Assert.AreEqual("Тест", _fileReader.LoadTextDocument("Foo.txt"));
+			Assert.AreEqual("ru data", _fileReader.LoadTextDocument("Foo.txt"));
 		}
 
 		[Test]
 		public void LoadTextDocument_FileNotExistButDefaultFileExist_DefaultFile()
 		{
-			// Assign
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.txt"))).Returns(false);
-
-			// Act & Assert
-			Assert.AreEqual("Dummy", _fileReader.LoadTextDocument("Foo.txt"));
+	// Act & Assert
+			Assert.AreEqual("en bar data", _fileReader.LoadTextDocument("Bar.txt"));
 		}
 
 		[Test]
@@ -249,11 +192,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			var result = _fileReader.LoadTextDocument("Foo.txt", true);
 
 			// Assert
-
-			_fs.Verify(x => x.File.ReadAllText(It.IsAny<string>()), Times.Once);
-
-			// ReSharper disable once StringLiteralTypo
-			Assert.AreEqual("Тест", result);
+			Assert.AreEqual("ru data", result);
 		}
 
 		[Test]
@@ -261,21 +200,18 @@ namespace Simplify.Web.Tests.Modules.Data
 		{
 			// Assign
 			FileReader.ClearCache();
-			_fs.Setup(x => x.File.Exists(It.Is<string>(d => d == "C:/WebSites/FooSite/App_Data/Foo.ru.txt"))).Returns(false);
-
 			// Act
 
-			_fileReader.LoadTextDocument("Foo.txt", true);
+			_fileReader.LoadTextDocument("Bar.txt", true);
 
 			_fileReader = new FileReader(DataPath, "en", _languageManagerProvider.Object);
 			_fileReader.Setup();
 
-			var result = _fileReader.LoadTextDocument("Foo.txt", true);
+			var result = _fileReader.LoadTextDocument("Bar.txt", true);
 
 			// Assert
 
-			_fs.Verify(x => x.File.ReadAllText(It.IsAny<string>()), Times.Once);
-			Assert.AreEqual("Dummy", result);
+			Assert.AreEqual("en bar data", result);
 		}
 
 		#endregion LoadTextDocument
