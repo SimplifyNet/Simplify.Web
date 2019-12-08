@@ -66,7 +66,9 @@ namespace Simplify.Web.Modules.Data
 			var filePath = !_loadTemplatesFromAssembly ? Path.Combine(_environment.TemplatesPhysicalPath, fileName) : fileName;
 
 			if (!_templatesMemoryCache)
-				return new Template(filePath, _languageManager.Language, _defaultLanguage);
+				return TemplateBuilder.FromFile(filePath)
+					.Localizable(_languageManager.Language, _defaultLanguage)
+					.Build();
 
 			var tpl = TryLoadExistingTemplate(filePath);
 
@@ -81,8 +83,12 @@ namespace Simplify.Web.Modules.Data
 					return tpl;
 
 				tpl = !_loadTemplatesFromAssembly
-					? new Template(filePath, _languageManager.Language, _defaultLanguage)
-					: new Template(Assembly.GetCallingAssembly(), filePath.Replace("/", "."), _languageManager.Language, _defaultLanguage);
+					? TemplateBuilder.FromFile(filePath)
+						.Localizable(_languageManager.Language, _defaultLanguage)
+						.Build()
+					: TemplateBuilder.FromAssembly(filePath, Assembly.GetCallingAssembly())
+						.Localizable(_languageManager.Language, _defaultLanguage)
+						.Build();
 
 				Cache.Add(new KeyValuePair<string, string>(filePath, _languageManager.Language), tpl.Get());
 
@@ -102,13 +108,11 @@ namespace Simplify.Web.Modules.Data
 
 		private ITemplate TryLoadExistingTemplate(string filePath)
 		{
-			// ReSharper disable once InconsistentlySynchronizedField
 			var existingItem = Cache.FirstOrDefault(x => x.Key.Key == filePath && x.Key.Value == _languageManager.Language);
 
-			if (!existingItem.Equals(default(KeyValuePair<KeyValuePair<string, string>, string>)))
-				return new Template(existingItem.Value, _languageManager.Language, false);
-
-			return null;
+			return !existingItem.Equals(default(KeyValuePair<KeyValuePair<string, string>, string>))
+				? TemplateBuilder.FromString(existingItem.Value).Build()
+				: null;
 		}
 	}
 }

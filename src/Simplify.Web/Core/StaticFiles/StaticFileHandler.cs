@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Util;
@@ -15,8 +15,6 @@ namespace Simplify.Web.Core.StaticFiles
 	/// <seealso cref="IStaticFileHandler" />
 	public class StaticFileHandler : IStaticFileHandler
 	{
-		private static IFileSystem _fileSystemInstance;
-
 		private readonly IList<string> _staticFilesPaths;
 		private readonly string _sitePhysicalPath;
 
@@ -32,26 +30,13 @@ namespace Simplify.Web.Core.StaticFiles
 		}
 
 		/// <summary>
-		/// Gets or sets the file system.
-		/// </summary>
-		/// <value>
-		/// The file system.
-		/// </value>
-		/// <exception cref="ArgumentNullException"></exception>
-		public static IFileSystem FileSystem
-		{
-			get => _fileSystemInstance ??= new FileSystem();
-			set => _fileSystemInstance = value ?? throw new ArgumentNullException();
-		}
-
-		/// <summary>
 		/// Determines whether  relative file path is a static file route path.
 		/// </summary>
 		/// <param name="relativeFilePath">The relative file path.</param>
 		/// <returns></returns>
 		public bool IsStaticFileRoutePath(string relativeFilePath)
 		{
-			return _staticFilesPaths.Where(relativeFilePath.ToLower().StartsWith).Any(path => FileSystem.File.Exists(_sitePhysicalPath + relativeFilePath));
+			return _staticFilesPaths.Where(relativeFilePath.ToLower().StartsWith).Any(path => File.Exists(_sitePhysicalPath + relativeFilePath));
 		}
 
 		/// <summary>
@@ -94,7 +79,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <returns></returns>
 		public DateTime GetFileLastModificationTime(string relativeFilePath)
 		{
-			return DateTimeOperations.TrimMilliseconds(FileSystem.File.GetLastWriteTimeUtc(relativeFilePath));
+			return DateTimeOperations.TrimMilliseconds(File.GetLastWriteTimeUtc(relativeFilePath));
 		}
 
 		/// <summary>
@@ -104,7 +89,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <returns></returns>
 		public byte[] GetFileData(string relativeFilePath)
 		{
-			return FileSystem.File.ReadAllBytes(_sitePhysicalPath + relativeFilePath);
+			return File.ReadAllBytes(_sitePhysicalPath + relativeFilePath);
 		}
 	}
 }

@@ -42,7 +42,7 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 			_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IStringTableItemsSetter)))).Returns(_stringTableItemsSetter.Object);
 			_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IEnvironment)))).Returns(_environment.Object);
 
-			_templatesFactory.Setup(x => x.Load(It.IsAny<string>())).Returns(Template.FromString("{Foo}"));
+			_templatesFactory.Setup(x => x.Load(It.IsAny<string>())).Returns(TemplateBuilder.FromString("{Foo}").Build);
 			_dataCollector.SetupGet(x => x.Items).Returns(new Dictionary<string, string> { { "Foo", "Bar" } });
 		}
 

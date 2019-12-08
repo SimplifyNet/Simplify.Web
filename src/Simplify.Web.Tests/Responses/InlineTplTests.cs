@@ -24,7 +24,7 @@ namespace Simplify.Web.Tests.Responses
 		public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
-			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, Template.FromString("")));
+			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, TemplateBuilder.FromString("").Build()));
 		}
 
 		[Test]
@@ -49,7 +49,7 @@ namespace Simplify.Web.Tests.Responses
 		{
 			// Assign
 
-			var tplData = new Mock<InlineTpl>("foo", Template.FromString("test")) { CallBase = true };
+			var tplData = new Mock<InlineTpl>("foo", TemplateBuilder.FromString("test").Build()) { CallBase = true };
 			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 			// Act

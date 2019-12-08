@@ -16,7 +16,7 @@ namespace SampleApp.Classic.Tests.Controllers.Shared
 
 			var c = new Mock<NavbarController> { CallBase = true };
 
-			c.Setup(x => x.TemplateFactory.Load(It.Is<string>(name => name == "Navbar"))).Returns(Template.FromString("Inline Data"));
+			c.Setup(x => x.TemplateFactory.Load(It.Is<string>(name => name == "Navbar"))).Returns(TemplateBuilder.FromString("Inline Data").Build);
 
 			// Act
 			var result = c.Object.Invoke() as InlineTpl;

@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-using Simplify.Templates;
+using Simplify.Templates.Model;
 
 namespace Simplify.Web.Responses
 {

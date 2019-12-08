@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -21,7 +21,6 @@ namespace Simplify.Web.Modules.Data
 
 		private static readonly object Locker = new object();
 
-		private static IFileSystem _fileSystemInstance;
 		private readonly string _dataPhysicalPath;
 		private readonly string _defaultLanguage;
 		private readonly ILanguageManagerProvider _languageManagerProvider;
@@ -43,20 +42,6 @@ namespace Simplify.Web.Modules.Data
 			_defaultLanguage = defaultLanguage;
 			_languageManagerProvider = languageManagerProvider;
 			_disableCache = disableCache;
-		}
-
-		/// <summary>
-		/// Gets or sets the file system.
-		/// </summary>
-		/// <value>
-		/// The file system.
-		/// </value>
-		/// <exception cref="ArgumentNullException"></exception>
-		public static IFileSystem FileSystem
-		{
-			get => _fileSystemInstance ??= new FileSystem();
-
-			set => _fileSystemInstance = value ?? throw new ArgumentNullException();
 		}
 
 		/// <summary>
@@ -248,10 +233,10 @@ namespace Simplify.Web.Modules.Data
 
 			var filePath = GetFilePath(fileName, language);
 
-			if (!FileSystem.File.Exists(filePath))
+			if (!File.Exists(filePath))
 				return false;
 
-			data = FileSystem.File.ReadAllText(filePath);
+			data = File.ReadAllText(filePath);
 			return true;
 		}
 

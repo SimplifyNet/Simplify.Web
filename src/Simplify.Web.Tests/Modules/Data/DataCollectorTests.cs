@@ -82,7 +82,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		public void AddVariableWithTemplate_NormalData_Added()
 		{
 			// Act
-			_dataCollector.Add("Foo", Template.FromString("Bar"));
+			_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
 
 			// Assert
 			Assert.AreEqual("Bar", _dataCollector["Foo"]);
@@ -102,7 +102,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		public void AddMainContentVariableWithTemplate_NormalData_Added()
 		{
 			// Act
-			_dataCollector.Add("Foo", Template.FromString("Bar"));
+			_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
 
 			// Assert
 			Assert.AreEqual("Bar", _dataCollector["Foo"]);
