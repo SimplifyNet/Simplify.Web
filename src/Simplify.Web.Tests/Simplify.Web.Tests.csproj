@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.0</TargetFrameworks>
 		<LangVersion>8.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<Authors>Alexander Krylkov</Authors>
@@ -11,12 +11,6 @@
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Remove="Templates\Test.tpl" />
-	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Templates\Test.tpl" />
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
 		<PackageReference Include="Moq" Version="4.13.1" />
@@ -25,5 +19,16 @@
 		<PackageReference Include="Simplify.Xml" Version="1.1.0" />
 		<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="6.0.38" />
 		<ProjectReference Include="..\Simplify.Web\Simplify.Web.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Templates\Test.tpl" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Templates\Test.tpl" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="WebSites\FooSite\Templates\Foo.tpl">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 </Project>

@@ -47,9 +47,10 @@
 		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
 		<PackageReference Include="Simplify.DI" Version="4.0.0" />
-		<PackageReference Include="Simplify.Templates" Version="1.5.2" />
+		<PackageReference Include="Simplify.Templates" Version="2.0.0-pre01" />
 		<PackageReference Include="Simplify.String.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.System.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />
+		<PackageReference Include="System.IO.Abstractions" Version="6.0.38" />
 	</ItemGroup>
 </Project>

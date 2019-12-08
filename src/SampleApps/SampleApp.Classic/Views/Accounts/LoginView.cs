@@ -1,5 +1,6 @@
 ﻿using SampleApp.Classic.Models.Accounts;
 using Simplify.Templates;
+using Simplify.Templates.Model;
 using Simplify.Web;
 
 namespace SampleApp.Classic.Views.Accounts
