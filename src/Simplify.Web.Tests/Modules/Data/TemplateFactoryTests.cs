@@ -1,13 +1,9 @@
 ﻿#nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.Abstractions;
-using System.IO.Abstractions.TestingHelpers;
 using Moq;
 using NUnit.Framework;
-using Simplify.Templates;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 
@@ -23,18 +19,11 @@ namespace Simplify.Web.Tests.Modules.Data
 		[OneTimeSetUp]
 		public void Initialize()
 		{
-			var dir = Path.Combine("WebSites", "FooSite", "Templates");
-			var file = Path.Combine("WebSites", "FooSite", "Templates", "Foo.tpl");
-
-			var files = new Dictionary<string, MockFileData> { { file, "Dummy data" } };
-
-			Template.FileSystem = new MockFileSystem(files);
-
 			_environment = new Mock<IEnvironment>();
 			_languageManagerProvider = new Mock<ILanguageManagerProvider>();
 			_languageManager = new Mock<ILanguageManager>();
 
-			_environment.SetupGet(x => x.TemplatesPhysicalPath).Returns(dir);
+			_environment.SetupGet(x => x.TemplatesPhysicalPath).Returns("WebSites\\FooSite\\Templates");
 			_languageManagerProvider.Setup(x => x.Get()).Returns(_languageManager.Object);
 			_languageManager.SetupGet(x => x.Language).Returns("en");
 		}
@@ -100,7 +89,8 @@ namespace Simplify.Web.Tests.Modules.Data
 
 			tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en", true);
 			tf.Setup();
-			Template.FileSystem = new Mock<IFileSystem>().Object;
+
+			File.Delete(_environment.Object.TemplatesPhysicalPath + "\\Foo.tpl");
 
 			// Act
 			data = tf.Load("Foo.tpl");
@@ -108,7 +98,6 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Assert
 
 			Assert.AreEqual("Dummy data", data.Get());
-			Assert.AreEqual("en", data.Language);
 		}
 
 		[Test]

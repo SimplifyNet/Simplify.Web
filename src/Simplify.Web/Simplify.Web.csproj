@@ -41,13 +41,13 @@
 		<EmbeddedResource Include="Diagnostics\ExceptionInfoPage.html" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
 		<PackageReference Include="Simplify.DI" Version="4.0.0" />
-		<PackageReference Include="Simplify.Templates" Version="1.5.2" />
+		<PackageReference Include="Simplify.Templates" Version="2.0.0" />
 		<PackageReference Include="Simplify.String.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.System.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />

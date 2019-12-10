@@ -50,7 +50,7 @@ namespace Simplify.Web.Tests.Responses
 		{
 			// Assign
 
-			var tplData = new Mock<Tpl>(Template.FromString("test"), null, 200) { CallBase = true };
+			var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null, 200) { CallBase = true };
 			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
@@ -66,7 +66,7 @@ namespace Simplify.Web.Tests.Responses
 		{
 			// Assign
 
-			var tplData = new Mock<Tpl>(Template.FromString("test"), "foo title", 200) { CallBase = true };
+			var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), "foo title", 200) { CallBase = true };
 			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
