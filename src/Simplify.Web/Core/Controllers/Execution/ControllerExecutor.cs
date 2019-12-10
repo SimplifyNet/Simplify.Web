@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
@@ -37,51 +36,33 @@ namespace Simplify.Web.Core.Controllers.Execution
 		/// <param name="context">The context.</param>
 		/// <param name="routeParameters">The route parameters.</param>
 		/// <returns></returns>
-		public ControllerResponseResult Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
+		public async Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
 			dynamic? routeParameters = null)
 		{
+			ControllerResponse? response = null;
 			var controller = _controllerFactory.CreateController(controllerMetaData.ControllerType, resolver, context, routeParameters);
 
 			switch (controller)
 			{
 				case SyncControllerBase syncController:
-					return ProcessControllerResponse(syncController.Invoke(), resolver);
+					{
+						response = syncController.Invoke();
+						break;
+					}
 
 				case AsyncControllerBase asyncController:
 					{
-						var task = asyncController.Invoke();
-						_controllersResponses.Add(task);
+						response = await asyncController.Invoke();
 						break;
 					}
 			}
 
-			return ControllerResponseResult.Default;
-		}
-
-		/// <summary>
-		/// Processes the asynchronous controllers responses.
-		/// </summary>
-		/// <param name="resolver">The DI container resolver.</param>
-		/// <returns></returns>
-		public IEnumerable<ControllerResponseResult> ProcessAsyncControllersResponses(IDIResolver resolver)
-		{
-			foreach (var task in _controllersResponses)
-			{
-				task.Wait();
-				yield return ProcessControllerResponse(task.Result, resolver);
-			}
-		}
-
-		private ControllerResponseResult ProcessControllerResponse(ControllerResponse response, IDIResolver resolver)
-		{
 			if (response == null)
 				return ControllerResponseResult.Default;
 
 			_controllerResponseBuilder.BuildControllerResponseProperties(response, resolver);
 
-			// TODO
-			//return response.Process();
-			throw new NotImplementedException();
+			return await response.ProcessAsync();
 		}
 	}
 }

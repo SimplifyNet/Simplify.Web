@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Meta;
@@ -18,14 +18,7 @@ namespace Simplify.Web.Core.Controllers.Execution
 		/// <param name="context">The context.</param>
 		/// <param name="routeParameters">The route parameters.</param>
 		/// <returns></returns>
-		ControllerResponseResult Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
+		Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
 			dynamic? routeParameters = null);
-
-		/// <summary>
-		/// Processes the asynchronous controllers responses.
-		/// </summary>
-		/// <param name="resolver">The DI container resolver.</param>
-		/// <returns></returns>
-		IEnumerable<ControllerResponseResult> ProcessAsyncControllersResponses(IDIResolver resolver);
 	}
 }

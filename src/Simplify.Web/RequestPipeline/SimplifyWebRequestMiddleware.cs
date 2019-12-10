@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
@@ -31,13 +32,13 @@ namespace Simplify.Web.RequestPipeline
 		/// </summary>
 		/// <param name="context"></param>
 		/// <returns></returns>
-		public static RequestHandlingResult Invoke(HttpContext context)
+		public static async Task<RequestHandlingStatus> Invoke(HttpContext context)
 		{
 			using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
 
 			try
 			{
-				return scope.StartMeasurements()
+				return await scope.StartMeasurements()
 					.Trace(context, OnTrace)
 					.SetupProviders(context)
 					.ProcessRequest(context);
@@ -52,15 +53,12 @@ namespace Simplify.Web.RequestPipeline
 				}
 				catch (Exception exception)
 				{
-					return RequestHandlingResult.HandledResult(
-						context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(exception,
-							scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails)));
+					await context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(exception, scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails));
+					return RequestHandlingStatus.RequestWasHandled;
 				}
 
-				return
-					RequestHandlingResult.HandledResult(context.Response.WriteAsync(
-						ExceptionInfoPageGenerator.Generate(e,
-							scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails)));
+				await context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(e, scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails));
+				return RequestHandlingStatus.RequestWasHandled;
 			}
 		}
 

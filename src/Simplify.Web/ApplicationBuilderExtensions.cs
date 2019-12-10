@@ -114,18 +114,16 @@ namespace Simplify.Web
 		{
 			builder.Use(async (context, next) =>
 			{
-				var result = SimplifyWebRequestMiddleware.Invoke(context);
+				var result = await SimplifyWebRequestMiddleware.Invoke(context);
 
-				await result.Task;
-
-				if (result.Status == RequestHandlingStatus.RequestWasUnhandled)
+				if (result == RequestHandlingStatus.RequestWasUnhandled)
 					await next.Invoke();
 			});
 		}
 
 		private static void RegisterAsTerminal(IApplicationBuilder builder)
 		{
-			builder.Run(async (context) => await SimplifyWebRequestMiddleware.Invoke(context).Task);
+			builder.Run(async (context) => await SimplifyWebRequestMiddleware.Invoke(context));
 		}
 	}
 }

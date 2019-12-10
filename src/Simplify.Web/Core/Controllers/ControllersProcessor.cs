@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Meta;
@@ -30,7 +31,7 @@ namespace Simplify.Web.Core.Controllers
 		/// <param name="resolver">The DI container resolver.</param>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public ControllersProcessorResult ProcessControllers(IDIResolver resolver, HttpContext context)
+		public async Task<ControllersProcessorResult> ProcessControllers(IDIResolver resolver, HttpContext context)
 		{
 			var atleastOneNonAnyPageControllerMatched = false;
 
@@ -46,9 +47,9 @@ namespace Simplify.Web.Core.Controllers
 					return ControllersProcessorResult.Http401;
 
 				if (securityResult == SecurityRuleCheckResult.Forbidden)
-					return ProcessForbiddenSecurityRule(resolver, context);
+					return await ProcessForbiddenSecurityRule(resolver, context);
 
-				var result = ProcessController(controller, resolver, context, matcherResult.RouteParameters);
+				var result = await ProcessController(controller, resolver, context, matcherResult.RouteParameters);
 
 				if (result != ControllersProcessorResult.Ok)
 					return result;
@@ -59,17 +60,18 @@ namespace Simplify.Web.Core.Controllers
 
 			if (!atleastOneNonAnyPageControllerMatched)
 			{
-				var result = ProcessOnlyAnyPageControllersMatched(resolver, context);
+				var result = await ProcessOnlyAnyPageControllersMatched(resolver, context);
+
 				if (result != ControllersProcessorResult.Ok)
 					return result;
 			}
 
-			return ProcessAsyncControllersResponses(resolver);
+			return ControllersProcessorResult.Ok;
 		}
 
-		private ControllersProcessorResult ProcessController(IControllerMetaData controllerType, IDIResolver resolver, HttpContext context, dynamic routeParameters)
+		private async Task<ControllersProcessorResult> ProcessController(IControllerMetaData controllerType, IDIResolver resolver, HttpContext context, dynamic routeParameters)
 		{
-			var result = _controllerExecutor.Execute(controllerType, resolver, context, routeParameters);
+			var result = await _controllerExecutor.Execute(controllerType, resolver, context, routeParameters);
 
 			if (result == ControllerResponseResult.RawOutput)
 				return ControllersProcessorResult.RawOutput;
@@ -80,14 +82,14 @@ namespace Simplify.Web.Core.Controllers
 			return ControllersProcessorResult.Ok;
 		}
 
-		private ControllersProcessorResult ProcessOnlyAnyPageControllersMatched(IDIResolver resolver, HttpContext context)
+		private async Task<ControllersProcessorResult> ProcessOnlyAnyPageControllersMatched(IDIResolver resolver, HttpContext context)
 		{
 			var http404Controller = _agent.GetHandlerController(HandlerControllerType.Http404Handler);
 
 			if (http404Controller == null)
 				return ControllersProcessorResult.Http404;
 
-			var handlerControllerResult = _controllerExecutor.Execute(http404Controller, resolver, context);
+			var handlerControllerResult = await _controllerExecutor.Execute(http404Controller, resolver, context);
 
 			if (handlerControllerResult == ControllerResponseResult.RawOutput)
 				return ControllersProcessorResult.RawOutput;
@@ -98,28 +100,14 @@ namespace Simplify.Web.Core.Controllers
 			return ControllersProcessorResult.Ok;
 		}
 
-		private ControllersProcessorResult ProcessAsyncControllersResponses(IDIResolver resolver)
-		{
-			foreach (var controllerResponseResult in _controllerExecutor.ProcessAsyncControllersResponses(resolver))
-			{
-				if (controllerResponseResult == ControllerResponseResult.RawOutput)
-					return ControllersProcessorResult.RawOutput;
-
-				if (controllerResponseResult == ControllerResponseResult.Redirect)
-					return ControllersProcessorResult.Redirect;
-			}
-
-			return ControllersProcessorResult.Ok;
-		}
-
-		private ControllersProcessorResult ProcessForbiddenSecurityRule(IDIResolver resolver, HttpContext context)
+		private async Task<ControllersProcessorResult> ProcessForbiddenSecurityRule(IDIResolver resolver, HttpContext context)
 		{
 			var http403Controller = _agent.GetHandlerController(HandlerControllerType.Http403Handler);
 
 			if (http403Controller == null)
 				return ControllersProcessorResult.Http403;
 
-			var handlerControllerResult = _controllerExecutor.Execute(http403Controller, resolver, context);
+			var handlerControllerResult = await _controllerExecutor.Execute(http403Controller, resolver, context);
 
 			if (handlerControllerResult == ControllerResponseResult.RawOutput)
 				return ControllersProcessorResult.RawOutput;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.StaticFiles;
@@ -33,7 +34,7 @@ namespace Simplify.Web.Core
 		/// <param name="resolver">The DI container resolver.</param>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public RequestHandlingResult ProcessRequest(IDIResolver resolver, HttpContext context)
+		public Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context)
 		{
 			return _staticFilesHandling && _staticFilesRequestHandler.IsStaticFileRoutePath(context) ?
 				_staticFilesRequestHandler.ProcessRequest(context) :
