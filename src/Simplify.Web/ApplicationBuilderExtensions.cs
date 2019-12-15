@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Simplify.Web.Bootstrapper;
 using Simplify.Web.Core;
+using Simplify.Web.Core.Controllers;
 using Simplify.Web.RequestPipeline;
 
 namespace Simplify.Web
@@ -12,11 +13,6 @@ namespace Simplify.Web
 	public static class ApplicationBuilderExtensions
 	{
 		/// <summary>
-		/// Gets or sets a value indicating whether Simplify.Web is terminal middleware.
-		/// </summary>
-		public static bool TerminalMiddleware { get; set; } = true;
-
-		/// <summary>
 		/// Performs Simplify.Web bootstrapper registrations and adds Simplify.Web to the OWIN pipeline as a terminal middleware
 		/// </summary>
 		/// <param name="builder">The OWIN builder.</param>
@@ -25,7 +21,7 @@ namespace Simplify.Web
 		{
 			try
 			{
-				TerminalMiddleware = true;
+				ControllersRequestHandler.TerminalMiddleware = true;
 				BootstrapperFactory.CreateBootstrapper().Register();
 
 				RegisterAsTerminal(builder);
@@ -49,7 +45,7 @@ namespace Simplify.Web
 		{
 			try
 			{
-				TerminalMiddleware = true;
+				ControllersRequestHandler.TerminalMiddleware = true;
 
 				RegisterAsTerminal(builder);
 
@@ -72,7 +68,7 @@ namespace Simplify.Web
 		{
 			try
 			{
-				TerminalMiddleware = false;
+				ControllersRequestHandler.TerminalMiddleware = false;
 				BootstrapperFactory.CreateBootstrapper().Register();
 
 				Register(builder);
@@ -96,7 +92,7 @@ namespace Simplify.Web
 		{
 			try
 			{
-				TerminalMiddleware = false;
+				ControllersRequestHandler.TerminalMiddleware = false;
 
 				Register(builder);
 
@@ -123,7 +119,7 @@ namespace Simplify.Web
 
 		private static void RegisterAsTerminal(IApplicationBuilder builder)
 		{
-			builder.Run(async (context) => await SimplifyWebRequestMiddleware.Invoke(context));
+			builder.Run(SimplifyWebRequestMiddleware.Invoke);
 		}
 	}
 }

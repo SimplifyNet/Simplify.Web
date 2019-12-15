@@ -29,6 +29,11 @@ namespace Simplify.Web.Core.Controllers
 		}
 
 		/// <summary>
+		/// Gets or sets a value indicating whether Simplify.Web is terminal middleware.
+		/// </summary>
+		public static bool TerminalMiddleware { get; set; } = true;
+
+		/// <summary>
 		/// Processes the HTTP request for controllers.
 		/// </summary>
 		/// <param name="resolver">THE DI container resolver</param>
@@ -53,7 +58,7 @@ namespace Simplify.Web.Core.Controllers
 					break;
 
 				case ControllersProcessorResult.Http404:
-					if (ApplicationBuilderExtensions.TerminalMiddleware)
+					if (TerminalMiddleware)
 						context.Response.StatusCode = 404;
 					else
 						return RequestHandlingStatus.RequestWasUnhandled;
