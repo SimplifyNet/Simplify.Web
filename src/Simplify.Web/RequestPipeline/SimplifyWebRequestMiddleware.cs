@@ -53,11 +53,12 @@ namespace Simplify.Web.RequestPipeline
 				}
 				catch (Exception exception)
 				{
-					await context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(exception, scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails));
-					return RequestHandlingStatus.RequestWasHandled;
+					e = exception;
 				}
 
-				await context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(e, scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails));
+				await context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(e,
+					scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails));
+
 				return RequestHandlingStatus.RequestWasHandled;
 			}
 		}
