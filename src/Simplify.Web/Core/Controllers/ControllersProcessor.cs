@@ -39,7 +39,8 @@ namespace Simplify.Web.Core.Controllers
 			{
 				var matcherResult = _agent.MatchControllerRoute(controller, context.Request.Path.Value, context.Request.Method);
 
-				if (matcherResult == null || !matcherResult.Success) continue;
+				if (matcherResult == null || !matcherResult.Success)
+					continue;
 
 				var securityResult = _agent.IsSecurityRulesViolated(controller, context.User);
 
