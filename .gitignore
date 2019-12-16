@@ -122,3 +122,6 @@ src/SampleApps/SampleApp.SelfHosted/Styles/*.css
 
 # Node modules
 node_modules/
+
+# Coverage files ignore
+*lcov.info

@@ -35,14 +35,14 @@ namespace SampleApp.Vue.Responses
 		/// Processes this response
 		/// </summary>
 		/// <returns></returns>
-		public override Task<ControllerResponseResult> ProcessAsync()
+		public override async Task<ControllerResponseResult> Process()
 		{
 			Context.Response.ContentType = "application/json";
 			Context.Response.StatusCode = _statusCode;
 
-			ResponseWriter.Write(JsonSerializer.Serialize(_objectToConvert), Context.Response);
+			await ResponseWriter.WriteAsync(JsonSerializer.Serialize(_objectToConvert), Context.Response);
 
-			return Task.FromResult(ControllerResponseResult.RawOutput);
+			return ControllerResponseResult.RawOutput;
 		}
 	}
 }

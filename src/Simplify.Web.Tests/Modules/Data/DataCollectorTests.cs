@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System;
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
@@ -21,14 +22,10 @@ namespace Simplify.Web.Tests.Modules.Data
 		}
 
 		[Test]
-		public void AddVariableWithTest_Nulls_NotInserted()
+		public void AddVariableWithTest_Nulls_ArgumentException()
 		{
-			// Act
-			_dataCollector.Add(null, (string)null);
-
-			// Assert
-			Assert.AreEqual(0, _dataCollector.Items.Count);
-			Assert.IsFalse(_dataCollector.IsDataExist("Foo"));
+			// Act & Assert
+			Assert.Throws<ArgumentException>(() => _dataCollector.Add(null, (string)null));
 		}
 
 		[Test]

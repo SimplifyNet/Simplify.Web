@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;
@@ -19,7 +20,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_RedirectWithUrl_RedirectorRedirectCalled()
+		public async Task Process_RedirectWithUrl_RedirectorRedirectCalled()
 		{
 			// Assign
 
@@ -27,7 +28,7 @@ namespace Simplify.Web.Tests.Responses
 			redirect.SetupGet(x => x.Redirector).Returns(_redirector.Object);
 
 			// Act
-			var result = redirect.Object.Process();
+			var result = await redirect.Object.Process();
 
 			// Assert
 
@@ -36,7 +37,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_RedirectWitRedirectionType_RedirectorRedirectWithRedirectionTypeCalled()
+		public async Task Process_RedirectWitRedirectionType_RedirectorRedirectWithRedirectionTypeCalled()
 		{
 			// Assign
 
@@ -44,7 +45,7 @@ namespace Simplify.Web.Tests.Responses
 			redirect.SetupGet(x => x.Redirector).Returns(_redirector.Object);
 
 			// Act
-			var result = redirect.Object.Process();
+			var result = await redirect.Object.Process();
 
 			// Assert
 

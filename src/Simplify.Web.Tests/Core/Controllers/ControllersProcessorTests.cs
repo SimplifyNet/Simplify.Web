@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -53,13 +54,13 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_NoControllersMatchedNo404Controller_404Returned()
+		public async Task ProcessControllers_NoControllersMatchedNo404Controller_404Returned()
 		{
 			// Assign
 			_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult());
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -71,7 +72,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_NoControllersMatchedButHave404Controller_404ControllerExecuted()
+		public async Task ProcessControllers_NoControllersMatchedButHave404Controller_404ControllerExecuted()
 		{
 			// Assign
 
@@ -81,7 +82,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				.Returns(new ControllerMetaData(typeof(TestController2)));
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -96,7 +97,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_NoControllersMatchedButHave404ControllerRawResult_404ControllerExecutedRawReturned()
+		public async Task ProcessControllers_NoControllersMatchedButHave404ControllerRawResult_404ControllerExecutedRawReturned()
 		{
 			// Assign
 
@@ -108,10 +109,10 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_controllersExecutor.Setup(
 				x =>
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-						It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(ControllerResponseResult.RawOutput);
+						It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(Task.FromResult(ControllerResponseResult.RawOutput));
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -126,7 +127,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_NoControllersMatchedButHave404ControllerRedirect_404ControllerExecutedRedirectReturned()
+		public async Task ProcessControllers_NoControllersMatchedButHave404ControllerRedirect_404ControllerExecutedRedirectReturned()
 		{
 			// Assign
 
@@ -138,10 +139,10 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_controllersExecutor.Setup(
 				x =>
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-						It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(ControllerResponseResult.Redirect);
+						It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(Task.FromResult(ControllerResponseResult.Redirect));
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -156,7 +157,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_OnlyAnyPageControllerMatchedButHave404Controller_404ControllerExecuted()
+		public async Task ProcessControllers_OnlyAnyPageControllerMatchedButHave404Controller_404ControllerExecuted()
 		{
 			// Assign
 
@@ -167,7 +168,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(true);
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -184,18 +185,20 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_StandardControllerMatched_Executed()
+		public async Task ProcessControllers_StandardControllerMatched_Executed()
 		{
 			// Assign
 			_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
 			Assert.AreEqual(ControllersProcessorResult.Ok, result);
+
 			_agent.Verify(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>()));
+
 			_controllersExecutor.Verify(
 				x =>
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
@@ -206,11 +209,12 @@ namespace Simplify.Web.Tests.Core.Controllers
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
 						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)), Times.Never);
 
-			_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()));
+			// Check
+			//_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()));
 		}
 
 		[Test]
-		public void ProcessRequest_StandardControllersOneIsMatchedNull_ExecutedOnce()
+		public async Task ProcessControllers_StandardControllersOneIsMatchedNull_ExecutedOnce()
 		{
 			// Assign
 
@@ -226,7 +230,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			});
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -242,11 +246,12 @@ namespace Simplify.Web.Tests.Core.Controllers
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
 						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)), Times.Never);
 
-			_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()), Times.Once);
+			// Check
+			//_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()), Times.Once);
 		}
 
 		[Test]
-		public void ProcessRequest_StandardControllerMatchedReturnsRawData_ReturnedRawDataSubsequentNotExecuted()
+		public async Task ProcessControllers_StandardControllerMatchedReturnsRawData_ReturnedRawDataSubsequentNotExecuted()
 		{
 			// Assign
 
@@ -260,10 +265,11 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_controllersExecutor.Setup(
 				x =>
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters))).Returns(ControllerResponseResult.RawOutput);
+						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters))).Returns(
+				Task.FromResult(ControllerResponseResult.RawOutput));
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -275,7 +281,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_StandardControllerMatchedReturnsRedirect_ReturnedRedirectSubsequentNotExecuted()
+		public async Task ProcessControllers_StandardControllerMatchedReturnsRedirect_ReturnedRedirectSubsequentNotExecuted()
 		{
 			// Assign
 
@@ -289,10 +295,11 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_controllersExecutor.Setup(
 				x =>
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters))).Returns(ControllerResponseResult.Redirect);
+						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters))).Returns(
+				Task.FromResult(ControllerResponseResult.Redirect));
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -304,67 +311,13 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_StandardAsyncControllerMatchedReturnsRawData_ReturnedRawDataSubsequentExecuted()
-		{
-			// Assign
-
-			_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
-			_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>
-			{
-				_metaData,
-				_metaData
-			});
-
-			_controllersExecutor.Setup(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()))
-				.Returns(new List<ControllerResponseResult> { ControllerResponseResult.RawOutput });
-
-			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
-
-			// Assert
-
-			Assert.AreEqual(ControllersProcessorResult.RawOutput, result);
-			_controllersExecutor.Verify(
-				x =>
-					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters)), Times.Exactly(2));
-		}
-
-		[Test]
-		public void ProcessRequest_StandardAsyncControllerMatchedReturnsRedirect_ReturnedRedirectSubsequentExecuted()
-		{
-			// Assign
-
-			_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
-			_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>
-			{
-				_metaData,
-				_metaData
-			});
-
-			_controllersExecutor.Setup(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()))
-				.Returns(new List<ControllerResponseResult> { ControllerResponseResult.Redirect });
-
-			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
-
-			// Assert
-
-			Assert.AreEqual(ControllersProcessorResult.Redirect, result);
-			_controllersExecutor.Verify(
-				x =>
-					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters)), Times.Exactly(2));
-		}
-
-		[Test]
-		public void ProcessRequest_NotAuthenticated_ReturnedHttp401()
+		public async Task ProcessControllers_NotAuthenticated_ReturnedHttp401()
 		{
 			// Assign
 			_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.NotAuthenticated);
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -373,7 +326,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_ForbiddenHave403Controller_403ControllerExecuted()
+		public async Task ProcessControllers_ForbiddenHave403Controller_403ControllerExecuted()
 		{
 			// Assign
 
@@ -383,7 +336,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				.Returns(new ControllerMetaData(typeof(TestController2)));
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 
@@ -399,13 +352,13 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_ForbiddenNotHave403Controller_Http403Returned()
+		public async Task ProcessControllers_ForbiddenNotHave403Controller_Http403Returned()
 		{
 			// Assign
 			_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.Forbidden);
 
 			// Act
-			var result = _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
 
 			// Assert
 

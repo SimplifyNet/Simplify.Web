@@ -36,7 +36,7 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// Gets the data collector items which will be inserted into master template file.
 		/// </summary>
-		public IDictionary<string, string> Items => new Dictionary<string, string>();
+		public IDictionary<string, string> Items { get; } = new Dictionary<string, string>();
 
 		/// <summary>
 		/// List of data collector items

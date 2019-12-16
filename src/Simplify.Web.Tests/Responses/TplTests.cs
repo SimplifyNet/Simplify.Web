@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_NormalData_DataAddedtoDataCollector()
+		public async Task Process_NormalData_DataAddedToDataCollector()
 		{
 			// Assign
 
@@ -37,7 +38,7 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 			// Act
-			var result = tplData.Object.Process();
+			var result = await tplData.Object.Process();
 
 			// Assert
 
@@ -46,7 +47,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_NormalTemplate_DataAddedtoDataCollector()
+		public async Task Process_NormalTemplate_DataAddedToDataCollector()
 		{
 			// Assign
 
@@ -55,14 +56,14 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 			// Act
-			tplData.Object.Process();
+			await tplData.Object.Process();
 
 			// Assert
 			_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "test")));
 		}
 
 		[Test]
-		public void Process_NormalTemplateAndTitle_DataAndTitleAddedtoDataCollector()
+		public async Task Process_NormalTemplateAndTitle_DataAndTitleAddedToDataCollector()
 		{
 			// Assign
 
@@ -71,7 +72,7 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 			// Act
-			tplData.Object.Process();
+			await tplData.Object.Process();
 
 			// Assert
 
@@ -80,7 +81,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_NormalDataAndTitle_DataAndTitleAddedtoDataCollector()
+		public async Task Process_NormalDataAndTitle_DataAndTitleAddedToDataCollector()
 		{
 			// Assign
 
@@ -89,7 +90,7 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 			// Act
-			tplData.Object.Process();
+			await tplData.Object.Process();
 
 			// Assert
 
@@ -98,7 +99,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_NormalDataAndNullTitle_DataAddedTitleNotAddedtoDataCollector()
+		public async Task Process_NormalDataAndNullTitle_DataAddedTitleNotAddedToDataCollector()
 		{
 			// Assign
 
@@ -107,7 +108,7 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 			// Act
-			tplData.Object.Process();
+			await tplData.Object.Process();
 
 			// Assert
 

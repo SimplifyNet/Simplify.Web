@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using System;
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
@@ -28,7 +29,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void InlineTplProcess_NormalData_DataAddedtoDataCollector()
+		public async Task InlineTplProcess_NormalData_DataAddedtoDataCollector()
 		{
 			// Assign
 
@@ -36,7 +37,7 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 			// Act
-			var result = tplData.Object.Process();
+			var result = await tplData.Object.Process();
 
 			// Assert
 
@@ -45,7 +46,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void InlineTplProcess_NormalTemplate_DataAddedtoDataCollector()
+		public async Task InlineTplProcess_NormalTemplate_DataAddedToDataCollector()
 		{
 			// Assign
 
@@ -53,7 +54,7 @@ namespace Simplify.Web.Tests.Responses
 			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 			// Act
-			tplData.Object.Process();
+			await tplData.Object.Process();
 
 			// Assert
 			_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
