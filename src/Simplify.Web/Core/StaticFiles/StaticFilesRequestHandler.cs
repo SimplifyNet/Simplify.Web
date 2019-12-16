@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Core.StaticFiles
 {
@@ -36,16 +37,18 @@ namespace Simplify.Web.Core.StaticFiles
 		/// </summary>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public RequestHandlingResult ProcessRequest(HttpContext context)
+		public async Task<RequestHandlingStatus> ProcessRequest(HttpContext context)
 		{
 			var relativeFilePath = _fileHandler.GetRelativeFilePath(context.Request);
 			var lastModificationTime = _fileHandler.GetFileLastModificationTime(relativeFilePath);
 			var response = _responseFactory.Create(context.Response);
 
-			return _fileHandler.IsFileCanBeUsedFromCache(context.Request.Headers["Cache-Control"],
-				_fileHandler.GetIfModifiedSinceTime(context.Request.Headers), lastModificationTime)
-				? RequestHandlingResult.HandledResult(response.SendNotModified(lastModificationTime, relativeFilePath))
-				: RequestHandlingResult.HandledResult(response.SendNew(_fileHandler.GetFileData(relativeFilePath), lastModificationTime, relativeFilePath));
+			if (_fileHandler.IsFileCanBeUsedFromCache(context.Request.Headers["Cache-Control"], _fileHandler.GetIfModifiedSinceTime(context.Request.Headers), lastModificationTime))
+				await response.SendNotModified(lastModificationTime, relativeFilePath);
+			else
+				await response.SendNew(_fileHandler.GetFileData(relativeFilePath), lastModificationTime, relativeFilePath);
+
+			return RequestHandlingStatus.RequestWasHandled;
 		}
 	}
 }

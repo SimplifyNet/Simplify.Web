@@ -1,4 +1,4 @@
-﻿#nullable disable
+﻿using System.Threading.Tasks;
 
 namespace Simplify.Web.Responses
 {
@@ -13,7 +13,7 @@ namespace Simplify.Web.Responses
 		/// <param name="statusCode">The HTTP response status code.</param>
 		/// <param name="responseData">The response data.</param>
 		/// <param name="contentType">Type of the content.</param>
-		public StatusCode(int statusCode, string responseData = null, string contentType = null)
+		public StatusCode(int statusCode, string? responseData = null, string? contentType = null)
 		{
 			Code = statusCode;
 			ResponseData = responseData;
@@ -26,7 +26,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The response data.
 		/// </value>
-		public string ResponseData { get; }
+		public string? ResponseData { get; }
 
 		/// <summary>
 		/// Gets the type of the content.
@@ -34,7 +34,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The type of the content.
 		/// </value>
-		public string ContentType { get; }
+		public string? ContentType { get; }
 
 		/// <summary>
 		/// Gets the HTTP response status code.
@@ -47,7 +47,7 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override ControllerResponseResult Process()
+		public override async Task<ControllerResponseResult> ProcessAsync()
 		{
 			Context.Response.StatusCode = Code;
 
@@ -55,7 +55,7 @@ namespace Simplify.Web.Responses
 				Context.Response.ContentType = ContentType;
 
 			if (ResponseData != null)
-				ResponseWriter.Write(ResponseData, Context.Response);
+				await ResponseWriter.WriteAsync(ResponseData, Context.Response);
 
 			return ControllerResponseResult.RawOutput;
 		}

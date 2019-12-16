@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Core.StaticFiles
 {
@@ -19,6 +20,6 @@ namespace Simplify.Web.Core.StaticFiles
 		/// </summary>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		RequestHandlingResult ProcessRequest(HttpContext context);
+		Task<RequestHandlingStatus> ProcessRequest(HttpContext context);
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Modules;
@@ -28,19 +29,24 @@ namespace Simplify.Web.Core.Controllers
 		}
 
 		/// <summary>
+		/// Gets or sets a value indicating whether Simplify.Web is terminal middleware.
+		/// </summary>
+		public static bool TerminalMiddleware { get; set; } = true;
+
+		/// <summary>
 		/// Processes the HTTP request for controllers.
 		/// </summary>
 		/// <param name="resolver">THE DI container resolver</param>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public RequestHandlingResult ProcessRequest(IDIResolver resolver, HttpContext context)
+		public async Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context)
 		{
-			var result = _controllersProcessor.ProcessControllers(resolver, context);
+			var result = await _controllersProcessor.ProcessControllers(resolver, context);
 
 			switch (result)
 			{
 				case ControllersProcessorResult.Ok:
-					return _pageProcessor.ProcessPage(resolver, context);
+					return await _pageProcessor.ProcessPage(resolver, context);
 
 				case ControllersProcessorResult.Http401:
 					context.Response.StatusCode = 401;
@@ -52,14 +58,14 @@ namespace Simplify.Web.Core.Controllers
 					break;
 
 				case ControllersProcessorResult.Http404:
-					if (ApplicationBuilderExtensions.TerminalMiddleware)
+					if (TerminalMiddleware)
 						context.Response.StatusCode = 404;
 					else
-						return RequestHandlingResult.UnhandledResult();
+						return RequestHandlingStatus.RequestWasUnhandled;
 					break;
 			}
 
-			return RequestHandlingResult.HandledResult();
+			return RequestHandlingStatus.RequestWasHandled;
 		}
 	}
 }

@@ -1,6 +1,5 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Simplify.Web.Responses
 {
@@ -16,7 +15,7 @@ namespace Simplify.Web.Responses
 		/// <param name="title">The title.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
 		/// <exception cref="ArgumentNullException"></exception>
-		public StaticTpl(string templateFileName, string title = null, int statusCode = 200)
+		public StaticTpl(string templateFileName, string? title = null, int statusCode = 200)
 		{
 			TemplateFileName = templateFileName ?? throw new ArgumentNullException(nameof(templateFileName));
 			Title = title;
@@ -45,12 +44,12 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The name of the string table title item.
 		/// </value>
-		private string Title { get; }
+		private string? Title { get; }
 
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override ControllerResponseResult Process()
+		public override Task<ControllerResponseResult> ProcessAsync()
 		{
 			Context.Response.StatusCode = StatusCode;
 
@@ -59,7 +58,7 @@ namespace Simplify.Web.Responses
 			if (!string.IsNullOrEmpty(Title))
 				DataCollector.AddTitle(Title);
 
-			return ControllerResponseResult.Default;
+			return Task.FromResult(ControllerResponseResult.Default);
 		}
 	}
 }
