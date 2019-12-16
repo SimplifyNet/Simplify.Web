@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Simplify.Templates;
 
@@ -55,7 +53,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The data.
 		/// </value>
-		public string Data { get; }
+		public string? Data { get; }
 
 		/// <summary>
 		/// Processes this response

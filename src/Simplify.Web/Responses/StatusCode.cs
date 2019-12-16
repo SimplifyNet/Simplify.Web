@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 
-#nullable disable
-
 namespace Simplify.Web.Responses
 {
 	/// <summary>
@@ -15,7 +13,7 @@ namespace Simplify.Web.Responses
 		/// <param name="statusCode">The HTTP response status code.</param>
 		/// <param name="responseData">The response data.</param>
 		/// <param name="contentType">Type of the content.</param>
-		public StatusCode(int statusCode, string responseData = null, string contentType = null)
+		public StatusCode(int statusCode, string? responseData = null, string? contentType = null)
 		{
 			Code = statusCode;
 			ResponseData = responseData;
@@ -28,7 +26,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The response data.
 		/// </value>
-		public string ResponseData { get; }
+		public string? ResponseData { get; }
 
 		/// <summary>
 		/// Gets the type of the content.
@@ -36,7 +34,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The type of the content.
 		/// </value>
-		public string ContentType { get; }
+		public string? ContentType { get; }
 
 		/// <summary>
 		/// Gets the HTTP response status code.

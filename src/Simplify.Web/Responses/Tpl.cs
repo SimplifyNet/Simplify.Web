@@ -1,5 +1,4 @@
-﻿#nullable disable
-
+﻿using System;
 using System.Threading.Tasks;
 using Simplify.Templates;
 
@@ -16,7 +15,7 @@ namespace Simplify.Web.Responses
 		/// <param name="data">The data for main content variable.</param>
 		/// <param name="title">The site title.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
-		public Tpl(string data, string title = null, int statusCode = 200)
+		public Tpl(string data, string? title = null, int statusCode = 200)
 		{
 			Data = data;
 			Title = title;
@@ -29,10 +28,12 @@ namespace Simplify.Web.Responses
 		/// <param name="template">The template.</param>
 		/// <param name="title">The site title.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
-		public Tpl(ITemplate template, string title = null, int statusCode = 200)
+		public Tpl(ITemplate template, string? title = null, int statusCode = 200)
 		{
-			if (template != null)
-				Data = template.Get();
+			if (template == null)
+				throw new ArgumentNullException(nameof(template));
+
+			Data = template.Get();
 
 			Title = title;
 			StatusCode = statusCode;
@@ -46,7 +47,7 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Gets the site title.
 		/// </summary>
-		public string Title { get; }
+		public string? Title { get; }
 
 		/// <summary>
 		/// Gets the HTTP response status code.
