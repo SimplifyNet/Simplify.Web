@@ -37,7 +37,7 @@ namespace Simplify.Web.Core.StaticFiles
 			SetMimeType(fileName);
 
 			_response.StatusCode = 304;
-			return Task.Delay(0);
+			return Task.CompletedTask;
 		}
 
 		/// <summary>

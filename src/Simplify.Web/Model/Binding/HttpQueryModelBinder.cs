@@ -21,7 +21,7 @@ namespace Simplify.Web.Model.Binding
 				args.SetModel(ListToModelParser.Parse<T>(args.Context.Query.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value))
 					.ToList()));
 
-			return Task.Delay(0);
+			return Task.CompletedTask;
 		}
 	}
 }
