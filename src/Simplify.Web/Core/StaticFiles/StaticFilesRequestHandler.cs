@@ -46,7 +46,7 @@ namespace Simplify.Web.Core.StaticFiles
 			if (_fileHandler.IsFileCanBeUsedFromCache(context.Request.Headers["Cache-Control"], _fileHandler.GetIfModifiedSinceTime(context.Request.Headers), lastModificationTime))
 				await response.SendNotModified(lastModificationTime, relativeFilePath);
 			else
-				await response.SendNew(_fileHandler.GetFileData(relativeFilePath), lastModificationTime, relativeFilePath);
+				await response.SendNew(await _fileHandler.GetFileData(relativeFilePath), lastModificationTime, relativeFilePath);
 
 			return RequestHandlingStatus.RequestWasHandled;
 		}
