@@ -27,6 +27,12 @@
 		<EmbeddedResource Include="Templates\Test.tpl" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Update="Templates\Foo.tpl">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Templates\FooAsync.tpl">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="WebSites\FooSite\App_Data\Bar.en.xml">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

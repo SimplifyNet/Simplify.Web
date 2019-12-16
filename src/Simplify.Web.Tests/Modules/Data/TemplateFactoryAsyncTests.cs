@@ -1,17 +1,18 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Tests.Modules.Data
 {
 	[TestFixture]
-	public class TemplateFactoryTests : TemplateFactoryTestsBase
+	public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 	{
-		private const string FileName = "Foo.tpl";
+		private const string FileName = "FooAsync.tpl";
 
 		[Test]
-		public void Load_NullFileName_ArgumentNullExceptionThrown()
+		public void LoadAsync_NullFileName_ArgumentNullExceptionThrown()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
@@ -20,11 +21,14 @@ namespace Simplify.Web.Tests.Modules.Data
 			tf.Setup();
 
 			// Act & Assert
-			Assert.Throws<ArgumentNullException>(() => tf.Load(null));
+			var ex = Assert.Throws<AggregateException>(() => tf.LoadAsync(null).Wait());
+
+			// Assert
+			Assert.AreEqual(typeof(ArgumentNullException), ex.InnerException?.GetType());
 		}
 
 		[Test]
-		public void Load_NoCache_TemplateLoadedCorrectly()
+		public async Task LoadAsync_NoCache_TemplateLoadedCorrectly()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
@@ -32,14 +36,14 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act
 
 			tf.Setup();
-			var data = tf.Load(FileName);
+			var data = await tf.LoadAsync(FileName);
 
 			// Assert
 			Assert.AreEqual("Dummy data", data.Get());
 		}
 
 		[Test]
-		public void Load_NameWithoutTpl_TemplateLoadedCorrectly()
+		public async Task LoadAsync_NameWithoutTpl_TemplateLoadedCorrectly()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
@@ -47,14 +51,14 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act
 
 			tf.Setup();
-			var data = tf.Load("Foo");
+			var data = await tf.LoadAsync("FooAsync");
 
 			// Assert
 			Assert.AreEqual("Dummy data", data.Get());
 		}
 
 		[Test]
-		public void Load_WithCache_TemplateLoadedCorrectly()
+		public async Task LoadAsync_WithCache_TemplateLoadedCorrectly()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
@@ -62,7 +66,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act
 
 			tf.Setup();
-			var data = tf.Load(FileName);
+			var data = await tf.LoadAsync(FileName);
 
 			// Asset
 			Assert.AreEqual("Dummy data", data.Get());
@@ -75,7 +79,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			File.Delete(Environment.Object.TemplatesPhysicalPath + "\\" + FileName);
 
 			// Act
-			data = tf.Load(FileName);
+			data = await tf.LoadAsync(FileName);
 
 			// Assert
 
@@ -83,7 +87,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		}
 
 		[Test]
-		public void Load_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
+		public async Task LoadAsync_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true, true);
@@ -91,7 +95,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act
 
 			tf.Setup();
-			var result = tf.Load("Templates/Test.tpl");
+			var result = await tf.LoadAsync("Templates/Test.tpl");
 
 			// Assert
 			Assert.AreEqual("Hello!", result.Get());
