@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Simplify.Templates;
 
 namespace Simplify.Web.Modules.Data
@@ -10,8 +11,6 @@ namespace Simplify.Web.Modules.Data
 	{
 		private readonly string _mainContentVariableName;
 		private readonly IStringTable _stringTable;
-
-		private readonly IDictionary<string, string> _items = new Dictionary<string, string>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DataCollector"/> class.
@@ -37,24 +36,27 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// Gets the data collector items which will be inserted into master template file.
 		/// </summary>
-		public IDictionary<string, string> Items => _items;
+		public IDictionary<string, string> Items => new Dictionary<string, string>();
 
 		/// <summary>
 		/// List of data collector items
 		/// </summary>
 		/// <param name="key">Item name</param>
 		/// <returns>Data collector item</returns>
-		public string this[string key] => _items[key];
+		public string this[string key] => Items[key];
 
 		/// <summary>
 		/// Set template variable value (all occurrences will be replaced)
 		/// </summary>
 		/// <param name="variableName">Variable name in master template file</param>
 		/// <param name="value">Value to set</param>
-		public void Add(string variableName, string value)
+		public void Add(string variableName, string? value)
 		{
 			if (string.IsNullOrEmpty(variableName))
-				return;
+				throw new ArgumentException("Value cannot be null or empty.", nameof(variableName));
+
+			if (value == null)
+				value = "";
 
 			if (!Items.ContainsKey(variableName))
 			{
@@ -82,7 +84,7 @@ namespace Simplify.Web.Modules.Data
 		/// Set template main content variable value (all occurrences will be replaced)
 		/// </summary>
 		/// <param name="value">Value to set</param>
-		public void Add(string value)
+		public void Add(string? value)
 		{
 			Add(_mainContentVariableName, value);
 		}
@@ -100,7 +102,7 @@ namespace Simplify.Web.Modules.Data
 		/// Set template title variable value (all occurrences will be replaced)
 		/// </summary>
 		/// <param name="value">Value to set</param>
-		public void AddTitle(string value)
+		public void AddTitle(string? value)
 		{
 			Add(TitleVariableName, value);
 		}

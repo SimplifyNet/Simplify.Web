@@ -34,7 +34,7 @@ namespace Simplify.Web.Modules.Data
 		/// <param name="variableName">Variable name in master template file</param>
 		/// <param name="value">Value to set</param>
 		/// <returns></returns>
-		void Add(string variableName, string value);
+		void Add(string variableName, string? value);
 
 		/// <summary>
 		/// Set template variable value with data from template (all occurrences will be replaced)
@@ -48,7 +48,7 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="value">Value to set</param>
 		/// <returns></returns>
-		void Add(string value);
+		void Add(string? value);
 
 		/// <summary>
 		/// Set template main content variable value with data from template (all occurrences will be replaced)
@@ -61,7 +61,7 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="value">Value to set</param>
 		/// <returns></returns>
-		void AddTitle(string value);
+		void AddTitle(string? value);
 
 		/// <summary>
 		/// Set template variable value from StringTable (all occurrences will be replaced)
