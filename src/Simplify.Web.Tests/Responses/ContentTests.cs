@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -23,7 +24,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_NormalData_DataWrittenToResponse()
+		public async Task Process_NormalData_DataWrittenToResponse()
 		{
 			// Assign
 			var content = new Mock<Content>("test", 123, "") { CallBase = true };
@@ -32,11 +33,11 @@ namespace Simplify.Web.Tests.Responses
 			_context.SetupSet(x => x.Response.StatusCode = It.IsAny<int>());
 
 			// Act
-			var result = content.Object.Process();
+			var result = await content.Object.Process();
 
 			// Assert
 
-			_responseWriter.Verify(x => x.Write(It.Is<string>(d => d == "test"), It.IsAny<HttpResponse>()));
+			_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "test"), It.IsAny<HttpResponse>()));
 			_context.VerifySet(x => x.Response.StatusCode = It.Is<int>(code => code == 123));
 			Assert.AreEqual(ControllerResponseResult.RawOutput, result);
 		}

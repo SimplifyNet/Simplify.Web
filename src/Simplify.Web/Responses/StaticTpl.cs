@@ -49,7 +49,7 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override Task<ControllerResponseResult> ProcessAsync()
+		public override Task<ControllerResponseResult> Process()
 		{
 			Context.Response.StatusCode = StatusCode;
 

@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -33,30 +34,30 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_Ok_PageBuiltWithOutput()
+		public async Task ProcessRequest_Ok_PageBuiltWithOutput()
 		{
 			// Assign
-			var handledResult = RequestHandlingResult.HandledResult();
 
-			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(ControllersProcessorResult.Ok);
-			_pageProcessor.Setup(x => x.ProcessPage(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(handledResult);
+			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(Task.FromResult(ControllersProcessorResult.Ok));
+			_pageProcessor.Setup(x => x.ProcessPage(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(Task.FromResult(RequestHandlingStatus.RequestWasHandled));
 
 			// Act
-			var result = _requestHandler.ProcessRequest(null, _context.Object);
+			var result = await _requestHandler.ProcessRequest(null, _context.Object);
 
 			// Assert
-			Assert.AreEqual(handledResult, result);
+			Assert.AreEqual(RequestHandlingStatus.RequestWasHandled, result);
 			_pageProcessor.Verify(x => x.ProcessPage(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>()));
 		}
 
 		[Test]
-		public void ProcessRequest_RawOutput_NoPageBuildsWithOutput()
+		public async Task ProcessRequest_RawOutput_NoPageBuildsWithOutput()
 		{
 			// Assign
-			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(ControllersProcessorResult.RawOutput);
+			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(
+				Task.FromResult(ControllersProcessorResult.RawOutput));
 
 			// Act
-			_requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null, _context.Object);
 
 			// Assert
 
@@ -65,13 +66,14 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_Http401_401StatusCodeSetNoPageBuiltWithOutput()
+		public async Task ProcessRequest_Http401_401StatusCodeSetNoPageBuiltWithOutput()
 		{
 			// Assign
-			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(ControllersProcessorResult.Http401);
+			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(
+				Task.FromResult(ControllersProcessorResult.Http401));
 
 			// Act
-			_requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null, _context.Object);
 
 			// Assert
 
@@ -80,26 +82,27 @@ namespace Simplify.Web.Tests.Core.Controllers
 		}
 
 		[Test]
-		public void ProcessRequest_Http403_403StatusCodeSetNoPageBuiltWithOutput()
+		public async Task ProcessRequest_Http403_403StatusCodeSetNoPageBuiltWithOutput()
 		{
 			// Assign
-			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(ControllersProcessorResult.Http403);
+			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(
+				Task.FromResult(ControllersProcessorResult.Http403));
 
 			// Act
-			_requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null, _context.Object);
 
 			// Assert
 			_context.VerifySet(x => x.Response.StatusCode = It.Is<int>(d => d == 403));
 		}
 
 		[Test]
-		public void ProcessRequest_Http404_404StatusCodeSetNoPageBuiltWithOutput()
+		public async Task ProcessRequest_Http404_404StatusCodeSetNoPageBuiltWithOutput()
 		{
 			// Assign
-			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(ControllersProcessorResult.Http404);
+			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(Task.FromResult(ControllersProcessorResult.Http404));
 
 			// Act
-			_requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null, _context.Object);
 
 			// Assert
 

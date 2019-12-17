@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.System;
+using Simplify.Web.Util;
 
 namespace Simplify.Web.Core.StaticFiles
 {
@@ -37,7 +38,7 @@ namespace Simplify.Web.Core.StaticFiles
 			SetMimeType(fileName);
 
 			_response.StatusCode = 304;
-			return Task.Delay(0);
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -68,12 +69,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <param name="fileName">Name of the file.</param>
 		private void SetMimeType(string fileName)
 		{
-			fileName = fileName.ToLower();
-
-			if (fileName.EndsWith(".css"))
-				_response.ContentType = "text/css";
-			else if (fileName.EndsWith(".js"))
-				_response.ContentType = "text/javascript";
+			_response.ContentType = MimeTypeAssistant.GetMimeTypeByFilePath(fileName);
 		}
 	}
 }

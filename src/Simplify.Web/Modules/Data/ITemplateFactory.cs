@@ -23,8 +23,8 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// Load web-site template from a file asynchronously.
 		/// </summary>
-		/// <param name="filename">The filename.</param>
+		/// <param name="fileName">The file name.</param>
 		/// <returns></returns>
-		Task<ITemplate> LoadAsync(string filename);
+		Task<ITemplate> LoadAsync(string fileName);
 	}
 }

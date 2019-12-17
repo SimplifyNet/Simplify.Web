@@ -58,7 +58,7 @@ namespace Simplify.Web.Responses
 		/// Processes this response
 		/// </summary>
 		/// <returns></returns>
-		public override Task<ControllerResponseResult> ProcessAsync()
+		public override Task<ControllerResponseResult> Process()
 		{
 			if (!string.IsNullOrEmpty(Url))
 				Redirector.Redirect(Url);

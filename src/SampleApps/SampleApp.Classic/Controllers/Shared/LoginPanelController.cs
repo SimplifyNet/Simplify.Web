@@ -11,7 +11,7 @@ namespace SampleApp.Classic.Controllers.Shared
 	{
 		public override async Task<ControllerResponse> Invoke()
 		{
-			return Context.Context.User == null || !Context.Context.User.Identity.IsAuthenticated
+			return !Context.IsAuthenticated
 				? new InlineTpl("LoginPanel", await TemplateFactory.LoadAsync("Shared/LoginPanel/GuestPanel"))
 				: new InlineTpl("LoginPanel", await GetView<LoggedUserPanelView>().Get(Context.Context.User.Identity.Name));
 		}

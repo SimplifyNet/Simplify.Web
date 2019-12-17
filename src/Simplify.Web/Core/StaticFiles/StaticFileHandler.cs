@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Util;
 
@@ -87,9 +88,14 @@ namespace Simplify.Web.Core.StaticFiles
 		/// </summary>
 		/// <param name="relativeFilePath">The relative file path.</param>
 		/// <returns></returns>
-		public byte[] GetFileData(string relativeFilePath)
+		public async Task<byte[]> GetFileData(string relativeFilePath)
 		{
-			return File.ReadAllBytes(_sitePhysicalPath + relativeFilePath);
+			using var stream = File.Open(relativeFilePath, FileMode.Open);
+			var result = new byte[stream.Length];
+
+			await stream.ReadAsync(result, 0, (int)stream.Length);
+
+			return result;
 		}
 	}
 }

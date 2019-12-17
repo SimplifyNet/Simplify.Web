@@ -1,6 +1,8 @@
 ﻿#nullable disable
 
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -199,6 +201,47 @@ namespace Simplify.Web.Tests.Modules
 			// Assert
 
 			Assert.AreEqual("/test", context.Route);
+		}
+
+		[Test]
+		public void IsAuthenticated_UserIsNotNullAndAuthenticated_True()
+		{
+			// Arrange
+
+			_owinContext.SetupGet(x => x.User)
+				.Returns(Mock.Of<ClaimsPrincipal>(f => f.Identity == Mock.Of<IIdentity>(i => i.IsAuthenticated)));
+
+			var context = new WebContext(_owinContext.Object);
+
+			// Act & Assert
+			Assert.IsTrue(context.IsAuthenticated);
+		}
+
+		[Test]
+		public void IsAuthenticated_UserIsNotNullAndNotAuthenticated_False()
+		{
+			// Arrange
+
+			_owinContext.SetupGet(x => x.User)
+				.Returns(Mock.Of<ClaimsPrincipal>(f => f.Identity == Mock.Of<IIdentity>(i => i.IsAuthenticated == false)));
+
+			var context = new WebContext(_owinContext.Object);
+
+			// Act & Assert
+			Assert.IsFalse(context.IsAuthenticated);
+		}
+
+		[Test]
+		public void IsAuthenticated_UserIsNull_False()
+		{
+			// Arrange
+
+			_owinContext.SetupGet(x => x.User).Returns((ClaimsPrincipal)null);
+
+			var context = new WebContext(_owinContext.Object);
+
+			// Act & Assert
+			Assert.IsFalse(context.IsAuthenticated);
 		}
 	}
 }

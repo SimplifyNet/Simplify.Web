@@ -62,7 +62,7 @@ namespace Simplify.Web.Core.Controllers.Execution
 
 			_controllerResponseBuilder.BuildControllerResponseProperties(response, resolver);
 
-			return await response.ProcessAsync();
+			return await response.Process();
 		}
 	}
 }

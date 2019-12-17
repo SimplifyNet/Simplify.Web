@@ -103,6 +103,11 @@ namespace Simplify.Web.Modules
 		public bool IsAjax { get; }
 
 		/// <summary>
+		/// Gets a value indicating whether current request context user is not null and is authenticated.
+		/// </summary>
+		public bool IsAuthenticated => Context.User != null && Context.User.Identity.IsAuthenticated;
+
+		/// <summary>
 		/// Gets or sets the request body.
 		/// </summary>
 		/// <value>

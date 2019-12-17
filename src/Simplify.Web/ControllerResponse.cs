@@ -21,6 +21,6 @@ namespace Simplify.Web
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public abstract Task<ControllerResponseResult> ProcessAsync();
+		public abstract Task<ControllerResponseResult> Process();
 	}
 }
