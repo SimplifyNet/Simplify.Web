@@ -11,8 +11,8 @@ namespace Simplify.Web.Modules
 	/// </summary>
 	public class WebContext : IWebContext
 	{
-		private readonly SemaphoreSlim _formReadLock = new SemaphoreSlim(1, 1);
-		private readonly SemaphoreSlim _requestBodyReadLock = new SemaphoreSlim(1, 1);
+		private readonly SemaphoreSlim _formReadSemaphore = new SemaphoreSlim(1, 1);
+		private readonly SemaphoreSlim _requestBodyReadSemaphore = new SemaphoreSlim(1, 1);
 
 		private IFormCollection? _form;
 		private string? _requestBody;
@@ -134,10 +134,10 @@ namespace Simplify.Web.Modules
 		/// </summary>
 		public async Task ReadFormAsync()
 		{
-			await _formReadLock.WaitAsync();
-
 			if (_form != null)
 				return;
+
+			await _formReadSemaphore.WaitAsync();
 
 			try
 			{
@@ -145,7 +145,7 @@ namespace Simplify.Web.Modules
 			}
 			finally
 			{
-				_formReadLock.Release();
+				_formReadSemaphore.Release();
 			}
 		}
 
@@ -154,10 +154,10 @@ namespace Simplify.Web.Modules
 		/// </summary>
 		public async Task ReadRequestBodyAsync()
 		{
-			await _requestBodyReadLock.WaitAsync();
-
 			if (_requestBody != null)
 				return;
+
+			await _requestBodyReadSemaphore.WaitAsync();
 
 			try
 			{
@@ -167,7 +167,7 @@ namespace Simplify.Web.Modules
 			}
 			finally
 			{
-				_requestBodyReadLock.Release();
+				_requestBodyReadSemaphore.Release();
 			}
 		}
 	}
