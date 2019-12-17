@@ -7,7 +7,7 @@
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>3.0</Version>
+		<Version>4.0-pre01</Version>
 		<PackageProjectUrl>https://github.com/SimplifyNet/Simplify.Web</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
@@ -15,23 +15,21 @@
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
 			Breaking changes
-			* `HttpModelHandler` Validation/Bidning types now should be regisered in container besides `HttpModelHandler.Register`
-			* Simplfiy.Web types registration simplification, for custom types use respective override methods
-			* `Ajax` attribute renamed to `Content` (#20)
+			* Simplify.Web request pipeline asynchronous all the way (Async controllers are now processed the same way as synchronous)
+			* `ControllerResponse` `Process` is now asynchronous (#30)
+			* Upgrade to Simplify.Templates 2 (#40)
 			New
-			* Custom ViewModel attribute (#14)
-			* Custom error message for validation attributes (#15)
-			* HTTP OPTIONS support for controllers (#21)
-			* `RegisterSimplifyWeb` `IDIContainerProvider` extension method for custom Simplify.Web types registration (#17)
-			* Internal container ambient context (BootstrapperFactory.ContainerProvider) for SImplify.Web usage with default initialization from `DIContainer.Current`
-			* `IControllerExecutor` `IControllerMetaData` instead of only controllerType (#16)
-			* `GetTypesToIgnore` moved to `SimplifyWebTypesFinder`
+			* Controllers `Model` asynchronous `ReadModelAsync` method (#27)
+			* `IWebContext.RequestBody` asynchronous `ReadRequestBodyAsync` method (#26)
+			* `IWebContext.Form` asynchronous `ReadFormAsync` method
+			* Static file handler is asynchronous (#31)
+			* IWebContext.IsAuthenticated (#42)
+			* TemplateFactory `LoadAsync` method refactored to correct async
+			Bug fixes
+			* RequiredAttribute is not checking empty strings (#29)
+			* StaticFileResponse is not correctly calculating MIME type by file extension (#34)
 			Dependencies Updates
-			* Upgrade to Microsoft.Extensions.Configuration.Json 3.0
-			* Internal upgrade to Simplify.String.Sources 1.2.1, Simplify.System.Sources 1.2.1
-			Other
-			* Internal refactoring
-			* C# 8 and Nullable Reference Types enabled (#22)
+			* System.IO.Abstractions dependency removed
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
