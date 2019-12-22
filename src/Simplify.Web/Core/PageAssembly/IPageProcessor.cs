@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
 namespace Simplify.Web.Core.PageAssembly
@@ -13,6 +14,6 @@ namespace Simplify.Web.Core.PageAssembly
 		/// </summary>
 		/// <param name="resolver">The DI container resolver.</param>
 		/// <param name="context">The context.</param>
-		RequestHandlingResult ProcessPage(IDIResolver resolver, HttpContext context);
+		Task<RequestHandlingStatus> ProcessPage(IDIResolver resolver, HttpContext context);
 	}
 }

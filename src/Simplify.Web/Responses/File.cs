@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Responses
@@ -60,14 +61,14 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override ControllerResponseResult Process()
+		public override async Task<ControllerResponseResult> Process()
 		{
 			Context.Response.StatusCode = StatusCode;
 
 			Context.Response.Headers.Append("Content-Disposition", "attachment; filename=\"" + OutputFileName + "\"");
 			Context.Response.ContentType = ContentType;
 
-			Context.Response.Body.Write(Data, 0, Data.Length);
+			await Context.Response.Body.WriteAsync(Data, 0, Data.Length);
 
 			return ControllerResponseResult.RawOutput;
 		}

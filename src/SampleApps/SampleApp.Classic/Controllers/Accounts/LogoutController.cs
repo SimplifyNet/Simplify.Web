@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Simplify.Web;
 using Simplify.Web.Attributes;
 using Simplify.Web.Responses;
@@ -6,11 +7,11 @@ using Simplify.Web.Responses;
 namespace SampleApp.Classic.Controllers.Accounts
 {
 	[Get("logout")]
-	public class LogoutController : Controller
+	public class LogoutController : AsyncController
 	{
-		public override ControllerResponse Invoke()
+		public override async Task<ControllerResponse> Invoke()
 		{
-			Context.Context.SignOutAsync().Wait();
+			await Context.Context.SignOutAsync();
 
 			return new Redirect();
 		}

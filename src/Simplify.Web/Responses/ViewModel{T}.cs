@@ -1,6 +1,5 @@
-﻿#nullable disable
-
-using Simplify.Templates;
+﻿using System.Threading.Tasks;
+using Simplify.Templates.Model;
 
 namespace Simplify.Web.Responses
 {
@@ -17,7 +16,7 @@ namespace Simplify.Web.Responses
 		/// <param name="viewModel">The view model.</param>
 		/// <param name="title">The title.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
-		public ViewModel(string templateFileName, T viewModel = null, string title = null, int statusCode = 200)
+		public ViewModel(string templateFileName, T viewModel, string? title = null, int statusCode = 200)
 		{
 			TemplateFileName = templateFileName;
 			Model = viewModel;
@@ -47,7 +46,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The title.
 		/// </value>
-		public string Title { get; set; }
+		public string? Title { get; set; }
 
 		/// <summary>
 		/// Gets the HTTP response status code.
@@ -60,16 +59,19 @@ namespace Simplify.Web.Responses
 		/// <summary>
 		/// Processes this response
 		/// </summary>
-		public override ControllerResponseResult Process()
+		public override Task<ControllerResponseResult> Process()
 		{
 			Context.Response.StatusCode = StatusCode;
 
-			DataCollector.Add(TemplateFactory.Load(TemplateFileName).Model(Model).Set());
+			DataCollector.Add(TemplateFactory
+				.Load(TemplateFileName)
+				.Model(Model)
+				.Set());
 
 			if (!string.IsNullOrEmpty(Title))
 				DataCollector.AddTitle(Title);
 
-			return ControllerResponseResult.Default;
+			return Task.FromResult(ControllerResponseResult.Default);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules
 {
@@ -59,11 +60,26 @@ namespace Simplify.Web.Modules
 		bool IsAjax { get; }
 
 		/// <summary>
+		/// Gets a value indicating whether current request context user is not null and is authenticated.
+		/// </summary>
+		bool IsAuthenticated { get; }
+
+		/// <summary>
 		/// Gets the request body.
 		/// </summary>
 		/// <value>
 		/// The request body.
 		/// </value>
 		string RequestBody { get; }
+
+		/// <summary>
+		/// Reads the form asynchronously.
+		/// </summary>
+		Task ReadFormAsync();
+
+		/// <summary>
+		/// Reads the request body asynchronously.
+		/// </summary>
+		Task ReadRequestBodyAsync();
 	}
 }

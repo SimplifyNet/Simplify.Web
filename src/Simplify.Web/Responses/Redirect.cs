@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Simplify.Web.Modules;
 
 namespace Simplify.Web.Responses
@@ -57,14 +58,14 @@ namespace Simplify.Web.Responses
 		/// Processes this response
 		/// </summary>
 		/// <returns></returns>
-		public override ControllerResponseResult Process()
+		public override Task<ControllerResponseResult> Process()
 		{
 			if (!string.IsNullOrEmpty(Url))
 				Redirector.Redirect(Url);
 			else
 				Redirector.Redirect(RedirectionType, BookmarkName);
 
-			return ControllerResponseResult.Redirect;
+			return Task.FromResult(ControllerResponseResult.Redirect);
 		}
 	}
 }

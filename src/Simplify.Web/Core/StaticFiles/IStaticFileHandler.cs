@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Core.StaticFiles
@@ -50,6 +51,6 @@ namespace Simplify.Web.Core.StaticFiles
 		/// </summary>
 		/// <param name="relativeFilePath">The relative file path.</param>
 		/// <returns></returns>
-		byte[] GetFileData(string relativeFilePath);
+		Task<byte[]> GetFileData(string relativeFilePath);
 	}
 }

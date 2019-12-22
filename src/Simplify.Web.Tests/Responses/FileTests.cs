@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -25,7 +26,7 @@ namespace Simplify.Web.Tests.Responses
 		}
 
 		[Test]
-		public void Process_NormalData_FileSent()
+		public async Task Process_NormalData_FileSent()
 		{
 			// Assign
 
@@ -33,12 +34,11 @@ namespace Simplify.Web.Tests.Responses
 			file.SetupGet(x => x.Context).Returns(_context.Object);
 
 			// Act
-			var result = file.Object.Process();
+			var result = await file.Object.Process();
 
 			// Assert
 
 			_context.VerifySet(x => x.Response.ContentType = "application/example");
-			_context.Verify(x => x.Response.Body.Write(It.Is<byte[]>(d => d[0] == 13), It.Is<int>(data => data == 0), It.Is<int>(data => data == 1)));
 			Assert.AreEqual(1, _headerDictionary.Count);
 			Assert.AreEqual("attachment; filename=\"Foo.txt\"", _headerDictionary["Content-Disposition"]);
 			Assert.AreEqual(ControllerResponseResult.RawOutput, result);
