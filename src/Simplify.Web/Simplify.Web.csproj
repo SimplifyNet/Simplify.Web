@@ -7,29 +7,15 @@
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>4.0</Version>
+		<Version>4.0.1</Version>
 		<PackageProjectUrl>https://github.com/SimplifyNet/Simplify.Web</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
-			Breaking changes
-			* Simplify.Web request pipeline asynchronous all the way (Async controllers are now processed the same way as synchronous)
-			* `ControllerResponse` `Process` is now asynchronous (#30)
-			* Upgrade to Simplify.Templates 2 (#40)
-			New
-			* Controllers `Model` asynchronous `ReadModelAsync` method (#27)
-			* `IWebContext.RequestBody` asynchronous `ReadRequestBodyAsync` method (#26)
-			* `IWebContext.Form` asynchronous `ReadFormAsync` method
-			* Static file handler is asynchronous (#31)
-			* IWebContext.IsAuthenticated (#42)
-			* TemplateFactory `LoadAsync` method refactored to correct async
 			Bug fixes
-			* RequiredAttribute is not checking empty strings (#29)
-			* StaticFileResponse is not correctly calculating MIME type by file extension (#34)
-			Dependencies Updates
-			* System.IO.Abstractions dependency removed
+			* Static file reader permissions change to read (#47)
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
