@@ -90,7 +90,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <returns></returns>
 		public async Task<byte[]> GetFileData(string relativeFilePath)
 		{
-			using var stream = File.Open(relativeFilePath, FileMode.Open);
+			using var stream = File.Open(relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			var result = new byte[stream.Length];
 
 			await stream.ReadAsync(result, 0, (int)stream.Length);
