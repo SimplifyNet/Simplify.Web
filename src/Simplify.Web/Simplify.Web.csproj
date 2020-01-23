@@ -8,7 +8,7 @@
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
 		<Version>4.0.1</Version>
-		<PackageProjectUrl>https://github.com/SimplifyNet/Simplify.Web</PackageProjectUrl>
+		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
