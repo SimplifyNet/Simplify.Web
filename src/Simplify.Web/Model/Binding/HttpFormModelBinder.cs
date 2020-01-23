@@ -17,7 +17,7 @@ namespace Simplify.Web.Model.Binding
 		/// <returns></returns>
 		public async Task BindAsync<T>(ModelBinderEventArgs<T> args)
 		{
-			if (!args.Context.Request.ContentType.Contains("application/x-www-form-urlencoded"))
+			if (args.Context.Request.ContentType == null || !args.Context.Request.ContentType.Contains("application/x-www-form-urlencoded"))
 				return;
 
 			await args.Context.ReadFormAsync();
