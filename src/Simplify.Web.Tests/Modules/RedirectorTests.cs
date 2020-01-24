@@ -1,9 +1,7 @@
 ﻿#nullable disable
 
 using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;
@@ -33,7 +31,7 @@ namespace Simplify.Web.Tests.Modules
 			_context.SetupGet(x => x.SiteUrl).Returns("http://localhost/mywebsite/");
 
 			_context.SetupGet(x => x.Response.Cookies).Returns(_responseCookies.Object);
-			_context.SetupGet(x => x.Request.Cookies).Returns(new RequestCookieCollection(new Dictionary<string, string>()));
+			_context.SetupGet(x => x.Request.Cookies).Returns(Mock.Of<IRequestCookieCollection>());
 		}
 
 		[Test]
@@ -57,8 +55,9 @@ namespace Simplify.Web.Tests.Modules
 		{
 			// Assign
 
-			_context.SetupGet(x => x.Request.Cookies)
-				.Returns(new RequestCookieCollection(new Dictionary<string, string> { { Redirector.RedirectUrlCookieFieldName, "foo" } }));
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.RedirectUrlCookieFieldName)]).Returns("foo");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 			{
@@ -97,8 +96,10 @@ namespace Simplify.Web.Tests.Modules
 		public void Redirect_ToLoginReturnUrl_NotNullOrEmpty_LoginReturnUrl()
 		{
 			// Assign
-			_context.SetupGet(x => x.Request.Cookies)
-				.Returns(new RequestCookieCollection(new Dictionary<string, string> { { Redirector.LoginReturnUrlCookieFieldName, "loginFoo" } }));
+
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.LoginReturnUrlCookieFieldName)]).Returns("loginFoo");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			// Act
 			_redirector.Redirect(RedirectionType.LoginReturnUrl);
@@ -111,8 +112,10 @@ namespace Simplify.Web.Tests.Modules
 		public void Redirect_ToPreviousPageHavePreviousPageUrl_RedirectCalledWithCorrectUrl()
 		{
 			// Arrange
-			_context.SetupGet(x => x.Request.Cookies)
-				.Returns(new RequestCookieCollection(new Dictionary<string, string> { { Redirector.PreviousPageUrlCookieFieldName, "foo" } }));
+
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			// Act
 			_redirector.Redirect(RedirectionType.PreviousPage);
@@ -125,8 +128,10 @@ namespace Simplify.Web.Tests.Modules
 		public void Redirect_ToPreviousPageWithBookmarkHaveUrl_RedirectCalledWithCorrectBookmarkUrl()
 		{
 			// Assign
-			_context.SetupGet(x => x.Request.Cookies)
-				.Returns(new RequestCookieCollection(new Dictionary<string, string> { { Redirector.PreviousPageUrlCookieFieldName, "foo" } }));
+
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			// Act
 			_redirector.Redirect(RedirectionType.PreviousPageWithBookmark, "bar");
@@ -190,8 +195,10 @@ namespace Simplify.Web.Tests.Modules
 		public void GetPreviousPageUrl_Return()
 		{
 			// Assign
-			_context.SetupGet(x => x.Request.Cookies)
-				.Returns(new RequestCookieCollection(new Dictionary<string, string> { { Redirector.PreviousPageUrlCookieFieldName, "foo" } }));
+
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			// Act & Assert
 			Assert.AreEqual("foo", _redirector.PreviousPageUrl);
@@ -201,8 +208,9 @@ namespace Simplify.Web.Tests.Modules
 		public void GetPreviousNavigatedUrl_Return()
 		{
 			// Assign
-			_context.SetupGet(x => x.Request.Cookies)
-				.Returns(new RequestCookieCollection(new Dictionary<string, string> { { Redirector.PreviousNavigatedUrlCookieFieldName, "foo" } }));
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousNavigatedUrlCookieFieldName)]).Returns("foo");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			// Act & Assert
 			Assert.AreEqual("foo", _redirector.PreviousNavigatedUrl);
