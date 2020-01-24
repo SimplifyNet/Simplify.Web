@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;netcoreapp3.0;netstandard2.0;net462</TargetFrameworks>
 		<LangVersion>8.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>4.0.1</Version>
+		<Version>4.0.2</Version>
 		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
-			Bug fixes
-			* Static file reader permissions change to read (#47)
+			Updates
+			* netcoreapp3.1 and netcoreapp3.0 target frameworks added with reference to `Microsoft.AspNetCore.App`
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
@@ -26,14 +26,21 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
 		<PackageReference Include="Simplify.DI" Version="4.0.0" />
 		<PackageReference Include="Simplify.Templates" Version="2.0.0" />
 		<PackageReference Include="Simplify.String.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.System.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' Or '$(TargetFramework)' == 'netcoreapp3.0' ">
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net462' ">
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
 	</ItemGroup>
 </Project>

@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
@@ -30,7 +29,7 @@ namespace Simplify.Web.Tests.Modules
 			_settings.SetupGet(x => x.DefaultLanguage).Returns("en");
 			_responseCookies = new Mock<IResponseCookies>();
 
-			_context.SetupGet(x => x.Request.Cookies).Returns(new RequestCookieCollection(new Dictionary<string, string>()));
+			_context.SetupGet(x => x.Request.Cookies).Returns(Mock.Of<IRequestCookieCollection>());
 			_context.SetupGet(x => x.Response.Cookies).Returns(_responseCookies.Object);
 
 			_languageManager = new LanguageManager(_settings.Object, _context.Object);
@@ -48,8 +47,10 @@ namespace Simplify.Web.Tests.Modules
 		{
 			// Assign
 
-			var cookies = new Dictionary<string, string> { { LanguageManager.CookieLanguageFieldName, "ru" } };
-			_context.SetupGet(x => x.Request.Cookies).Returns(new RequestCookieCollection(cookies));
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("ru");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
+
 			_settings.SetupGet(x => x.DefaultLanguage).Returns("en");
 
 			// Act
@@ -123,8 +124,9 @@ namespace Simplify.Web.Tests.Modules
 		{
 			// Assign
 
-			var cookies = new Dictionary<string, string> { { LanguageManager.CookieLanguageFieldName, "fr" } };
-			_context.SetupGet(x => x.Request.Cookies).Returns(new RequestCookieCollection(cookies));
+			var cookieCollection = new Mock<IRequestCookieCollection>();
+			cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("fr");
+			_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 			_settings.SetupGet(x => x.AcceptBrowserLanguage).Returns(true);
 			var header = new HeaderDictionary(new Dictionary<string, StringValues>());
