@@ -139,6 +139,9 @@ namespace Simplify.Web.Modules
 				case RedirectionType.DefaultPage:
 					Redirect(_context.SiteUrl);
 					break;
+
+				default:
+					throw new ArgumentOutOfRangeException(nameof(redirectionType), redirectionType, null);
 			}
 		}
 
