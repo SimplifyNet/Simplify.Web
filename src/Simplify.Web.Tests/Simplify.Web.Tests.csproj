@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1</TargetFrameworks>
 		<LangVersion>8.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web unit tests</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>2.0</Version>
+		<Version>2.1</Version>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
-		<PackageReference Include="coverlet.msbuild" Version="2.7.0" />
+		<PackageReference Include="coverlet.msbuild" Version="2.8.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
 		<PackageReference Include="Moq" Version="4.13.1" />
 		<PackageReference Include="NUnit" Version="3.12.0" />
-		<PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
 		<PackageReference Include="Simplify.Xml" Version="1.1.0" />
 		<ProjectReference Include="..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
@@ -28,28 +28,28 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="Templates\Foo.tpl">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Templates\FooAsync.tpl">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\App_Data\Bar.en.xml">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\App_Data\Bar.en.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\App_Data\Foo.en.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\App_Data\Foo.en.xml">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\App_Data\Foo.ru.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\App_Data\Foo.ru.xml">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="WebSites\FooSite\Templates\Foo.tpl">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

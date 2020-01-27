@@ -125,3 +125,4 @@ node_modules/
 
 # Coverage files ignore
 *lcov.info
+lcov*.info
