@@ -14,8 +14,10 @@
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
+			New
+			* Authentication redirect middleware added
 			Updates
-			* netcoreapp3.1 and netcoreapp3.0 target frameworks added with reference to `Microsoft.AspNetCore.App`
+			* netcoreapp3.1 and netcoreapp3.0 target frameworks added with reference to `Microsoft.AspNetCore.App` (#52)
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
