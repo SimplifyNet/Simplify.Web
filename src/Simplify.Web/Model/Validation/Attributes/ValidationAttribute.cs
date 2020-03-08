@@ -42,7 +42,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// <param name="value">The object value.</param>
 		/// <param name="propertyInfo">Information about the property containing this attribute.</param>
 		/// <param name="resolver">The objects resolver, useful if you need to retrieve some dependencies to perform validation.</param>
-		public abstract void Validate(object value, PropertyInfo propertyInfo, IDIResolver resolver);
+		public abstract void Validate(object? value, PropertyInfo propertyInfo, IDIResolver resolver);
 
 		/// <summary>
 		/// Throws the custom or string table exception.

@@ -33,7 +33,7 @@ namespace Simplify.Web.Model.Validation
 		/// <param name="propertyInfo">The property information.</param>
 		/// <param name="resolver">The resolver.</param>
 		/// <exception cref="ModelNotSupportedException"></exception>
-		private static void ValidateProperty(object value, PropertyInfo propertyInfo, IDIResolver resolver)
+		private static void ValidateProperty(object? value, PropertyInfo propertyInfo, IDIResolver resolver)
 		{
 			var validationAttributes = propertyInfo.GetCustomAttributes(typeof(ValidationAttribute), true).Cast<ValidationAttribute>();
 

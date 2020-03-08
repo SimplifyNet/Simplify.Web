@@ -216,7 +216,7 @@ namespace Simplify.Web.Bootstrapper
 		public virtual void RegisterEnvironment()
 		{
 			BootstrapperFactory.ContainerProvider.Register<IEnvironment>(
-				p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory, p.Resolve<ISimplifyWebSettings>()));
+				p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", p.Resolve<ISimplifyWebSettings>()));
 		}
 
 		/// <summary>
