@@ -17,7 +17,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 
 			var coll = new List<KeyValuePair<string, string[]>>
 			{
-				default(KeyValuePair<string, string[]>)
+				default
 			};
 
 			// Act
@@ -59,7 +59,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void Parse_DateTimeNormal_Binded()
+		public void Parse_DateTimeNormal_Bind()
 		{
 			// Assign
 
@@ -144,6 +144,23 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 
 			// Act & Assert
 			Assert.Throws<ModelNotSupportedException>(() => ListToModelParser.Parse<TestModelStringsArray>(coll));
+		}
+
+		[Test]
+		public void Parse_DifferentFieldCase_Parsed()
+		{
+			// Assign
+
+			var coll = new List<KeyValuePair<string, string[]>>
+			{
+				new KeyValuePair<string, string[]>("prop1", new string[1] { "test" })
+			};
+
+			// Act
+			var model = ListToModelParser.Parse<TestModel>(coll);
+
+			// Assert
+			Assert.AreEqual("test", model.Prop1);
 		}
 	}
 }

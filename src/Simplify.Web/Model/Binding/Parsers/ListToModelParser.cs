@@ -24,6 +24,8 @@ namespace Simplify.Web.Model.Binding.Parsers
 
 			var obj = Activator.CreateInstance<T>();
 
+			source = LowerCaseRequest(source);
+
 			foreach (var propInfo in type.GetProperties())
 			{
 				var propertyInfo = propInfo;
@@ -31,10 +33,39 @@ namespace Simplify.Web.Model.Binding.Parsers
 				if (IsExcluded(propertyInfo))
 					continue;
 
-				propInfo.SetValue(obj, ParseProperty(propInfo, source.FirstOrDefault(x => x.Key == (GetBindPropertyName(propertyInfo) ?? propertyInfo.Name))));
+				propInfo.SetValue(obj, ParseProperty(propInfo, source.FirstOrDefault(x => x.Key == GetPropertyName(propertyInfo))));
 			}
 
 			return obj;
+		}
+
+		private static IList<KeyValuePair<string, string[]>> LowerCaseRequest(IEnumerable<KeyValuePair<string, string[]>> source)
+		{
+			return source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLower(), x.Value)).ToList();
+		}
+
+		private static string GetPropertyName(MemberInfo propertyInfo)
+		{
+			return (GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLower();
+		}
+
+		private static string GetBindPropertyName(ICustomAttributeProvider propertyInfo)
+		{
+			var attributes = propertyInfo.GetCustomAttributes(typeof(BindPropertyAttribute), false);
+
+			return attributes.Length == 0 ? null : ((BindPropertyAttribute)attributes[0]).FieldName;
+		}
+
+		private static string TryGetFormat(ICustomAttributeProvider propertyInfo)
+		{
+			var attributes = propertyInfo.GetCustomAttributes(typeof(FormatAttribute), false);
+
+			return attributes.Length == 0 ? null : ((FormatAttribute)attributes[0]).Format;
+		}
+
+		private static bool IsExcluded(ICustomAttributeProvider propertyInfo)
+		{
+			return propertyInfo.GetCustomAttributes(typeof(ExcludeAttribute), false).Length != 0;
 		}
 
 		private static object ParseProperty(PropertyInfo propertyInfo, KeyValuePair<string, string[]> keyValuePair)
@@ -45,25 +76,6 @@ namespace Simplify.Web.Model.Binding.Parsers
 			return ArrayToSpecifiedListParser.IsTypeValidForParsing(propertyInfo.PropertyType)
 				? ArrayToSpecifiedListParser.ParseUndefined(keyValuePair.Value, propertyInfo.PropertyType, TryGetFormat(propertyInfo))
 				: StringToSpecifiedObjectParser.ParseUndefined(string.Join(",", keyValuePair.Value), propertyInfo.PropertyType, TryGetFormat(propertyInfo));
-		}
-
-		private static string TryGetFormat(PropertyInfo propertyInfo)
-		{
-			var attributes = propertyInfo.GetCustomAttributes(typeof(FormatAttribute), false);
-
-			return attributes.Length == 0 ? null : ((FormatAttribute)attributes[0]).Format;
-		}
-
-		private static string GetBindPropertyName(PropertyInfo propertyInfo)
-		{
-			var attributes = propertyInfo.GetCustomAttributes(typeof(BindPropertyAttribute), false);
-
-			return attributes.Length == 0 ? null : ((BindPropertyAttribute)attributes[0]).FieldName;
-		}
-
-		private static bool IsExcluded(PropertyInfo propertyInfo)
-		{
-			return propertyInfo.GetCustomAttributes(typeof(ExcludeAttribute), false).Length != 0;
 		}
 	}
 }
