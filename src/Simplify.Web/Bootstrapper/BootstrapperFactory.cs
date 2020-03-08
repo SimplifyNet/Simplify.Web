@@ -31,7 +31,10 @@ namespace Simplify.Web.Bootstrapper
 		public static BaseBootstrapper CreateBootstrapper()
 		{
 			var userBootstrapperType = SimplifyWebTypesFinder.FindTypeDerivedFrom<BaseBootstrapper>();
-			return userBootstrapperType != null ? (BaseBootstrapper)Activator.CreateInstance(userBootstrapperType) : new BaseBootstrapper();
+
+			return userBootstrapperType != null
+				? (BaseBootstrapper)(Activator.CreateInstance(userBootstrapperType) ?? throw new InvalidOperationException())
+				: new BaseBootstrapper();
 		}
 	}
 }
