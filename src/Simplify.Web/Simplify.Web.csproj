@@ -7,7 +7,7 @@
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>4.0.2</Version>
+		<Version>4.1</Version>
 		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
@@ -15,10 +15,12 @@
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
 			New
-			* Authentication redirect middleware added
+			* Added query string model parameters invariant casing support (#54)
 			Updates
-			* netcoreapp3.1 and netcoreapp3.0 target frameworks added with reference to `Microsoft.AspNetCore.App` (#52)
-			* Upgrade to Simplify.DI 4.0.1
+			* Upgrade to Simplify.DI 4.0.2
+			* Upgrade to Microsoft.Extensions.Configuration.Json 3.1.3
+			Bug fixes
+			* BootstrapperFactory possible null pointer fix
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
