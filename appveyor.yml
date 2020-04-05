@@ -14,5 +14,6 @@ before_build:
 build:
   project: src/Simplify.Web.sln
   publish_nuget: true
+  use_snupkg_format: true
   parallel: true
   verbosity: minimal

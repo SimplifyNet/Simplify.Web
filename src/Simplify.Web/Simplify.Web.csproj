@@ -10,8 +10,7 @@
 		<Version>4.1</Version>
 		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
-		<RepositoryUrl>https://github.com/SimplifyNet/Simplify.Web</RepositoryUrl>
-		<RepositoryType>GIT</RepositoryType>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
 			New
@@ -23,6 +22,9 @@
 			* BootstrapperFactory possible null pointer fix
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>

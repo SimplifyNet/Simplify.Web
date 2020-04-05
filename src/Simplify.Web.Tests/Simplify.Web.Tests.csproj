@@ -8,7 +8,6 @@
 		<Description>Simplify.Web unit tests</Description>
 		<Copyright>Licensed under LGPL</Copyright>
 		<Version>2.1.1</Version>
-		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
