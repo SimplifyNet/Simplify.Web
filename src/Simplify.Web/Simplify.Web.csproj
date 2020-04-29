@@ -7,19 +7,15 @@
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>4.1</Version>
+		<Version>4.1.1</Version>
 		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
-			New
-			* Added query string model parameters invariant casing support (#54)
 			Updates
-			* Upgrade to Simplify.DI 4.0.2
-			* Upgrade to Microsoft.Extensions.Configuration.Json 3.1.3
-			Bug fixes
-			* BootstrapperFactory possible null pointer fix
+			* Upgrade to Simplify.DI 4.0.3
+			* Internal upgrade to Simplify.Xml.Sources 1.1.1
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
