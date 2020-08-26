@@ -50,6 +50,11 @@ namespace Simplify.Web.Modules
 		void SetLoginReturnUrlFromCurrentUri();
 
 		/// <summary>
+		/// Sets the previous page URL to current page.
+		/// </summary>
+		void SetPreviousPageUrlToCurrentPage();
+
+		/// <summary>
 		/// Navigates the client by specifying redirection type.
 		/// </summary>
 		/// <param name="redirectionType">Type of the redirection.</param>

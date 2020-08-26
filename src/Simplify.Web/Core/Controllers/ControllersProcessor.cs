@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Meta;
+using Simplify.Web.Modules;
 
 namespace Simplify.Web.Core.Controllers
 {
@@ -13,16 +14,18 @@ namespace Simplify.Web.Core.Controllers
 	{
 		private readonly IControllersAgent _agent;
 		private readonly IControllerExecutor _controllerExecutor;
+		private readonly IRedirector _redirector;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ControllersProcessor" /> class.
 		/// </summary>
 		/// <param name="controllersAgent">The controllers agent.</param>
 		/// <param name="controllerExecutor">The controller executor.</param>
-		public ControllersProcessor(IControllersAgent controllersAgent, IControllerExecutor controllerExecutor)
+		public ControllersProcessor(IControllersAgent controllersAgent, IControllerExecutor controllerExecutor, IRedirector redirector)
 		{
 			_agent = controllersAgent;
 			_controllerExecutor = controllerExecutor;
+			_redirector = redirector;
 		}
 
 		/// <summary>
@@ -66,6 +69,8 @@ namespace Simplify.Web.Core.Controllers
 				if (result != ControllersProcessorResult.Ok)
 					return result;
 			}
+			else
+				_redirector.SetPreviousPageUrlToCurrentPage();
 
 			return ControllersProcessorResult.Ok;
 		}

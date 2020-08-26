@@ -106,6 +106,14 @@ namespace Simplify.Web.Modules
 		}
 
 		/// <summary>
+		/// Sets the previous page URL to current page.
+		/// </summary>
+		public void SetPreviousPageUrlToCurrentPage()
+		{
+			PreviousPageUrl = _context.Request.GetEncodedUrl();
+		}
+
+		/// <summary>
 		/// Navigates the client by specifying redirection type.
 		/// </summary>
 		/// <param name="redirectionType">Type of the redirection.</param>
