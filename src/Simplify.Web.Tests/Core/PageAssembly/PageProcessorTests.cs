@@ -6,7 +6,6 @@ using NUnit.Framework;
 using Simplify.DI;
 using Simplify.Web.Core;
 using Simplify.Web.Core.PageAssembly;
-using Simplify.Web.Modules;
 
 namespace Simplify.Web.Tests.Core.PageAssembly
 {
@@ -16,7 +15,6 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 		private PageProcessor _processor;
 		private Mock<IPageBuilder> _pageBuilder;
 		private Mock<IResponseWriter> _responseWriter;
-		private Mock<IRedirector> _redirector;
 
 		private Mock<HttpContext> _context;
 
@@ -25,8 +23,7 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 		{
 			_pageBuilder = new Mock<IPageBuilder>();
 			_responseWriter = new Mock<IResponseWriter>();
-			_redirector = new Mock<IRedirector>();
-			_processor = new PageProcessor(_pageBuilder.Object, _responseWriter.Object, _redirector.Object);
+			_processor = new PageProcessor(_pageBuilder.Object, _responseWriter.Object);
 
 			_context = new Mock<HttpContext>();
 
@@ -50,7 +47,6 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 
 			_pageBuilder.Verify(x => x.Build(It.IsAny<IDIContainerProvider>()));
 			_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "Foo"), It.Is<HttpResponse>(d => d == _context.Object.Response)));
-			_redirector.VerifySet(x => x.PreviousPageUrl = It.Is<string>(d => d == "http://localhost:8080/test"));
 			_context.VerifySet(x => x.Response.ContentType = It.Is<string>(s => s == "text/html"));
 		}
 	}

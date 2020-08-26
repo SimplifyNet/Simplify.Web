@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Simplify.DI;
-using Simplify.Web.Modules;
 
 namespace Simplify.Web.Core.PageAssembly
 {
@@ -13,19 +11,16 @@ namespace Simplify.Web.Core.PageAssembly
 	{
 		private readonly IPageBuilder _pageBuilder;
 		private readonly IResponseWriter _responseWriter;
-		private readonly IRedirector _redirector;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PageProcessor"/> class.
 		/// </summary>
 		/// <param name="pageBuilder">The page builder.</param>
 		/// <param name="responseWriter">The response writer.</param>
-		/// <param name="redirector">The redirector.</param>
-		public PageProcessor(IPageBuilder pageBuilder, IResponseWriter responseWriter, IRedirector redirector)
+		public PageProcessor(IPageBuilder pageBuilder, IResponseWriter responseWriter)
 		{
 			_pageBuilder = pageBuilder;
 			_responseWriter = responseWriter;
-			_redirector = redirector;
 		}
 
 		/// <summary>
@@ -36,7 +31,6 @@ namespace Simplify.Web.Core.PageAssembly
 		public async Task<RequestHandlingStatus> ProcessPage(IDIResolver resolver, HttpContext context)
 		{
 			context.Response.ContentType = "text/html";
-			_redirector.PreviousPageUrl = context.Request.GetEncodedUrl();
 
 			await _responseWriter.WriteAsync(_pageBuilder.Build(resolver), context.Response);
 

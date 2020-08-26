@@ -12,6 +12,7 @@ using Simplify.DI;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Meta;
+using Simplify.Web.Modules;
 using Simplify.Web.Routing;
 using Simplify.Web.Tests.TestEntities;
 
@@ -25,6 +26,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 		private ControllersProcessor _processor;
 		private Mock<IControllersAgent> _agent;
 		private Mock<IControllerExecutor> _controllersExecutor;
+		private Mock<IRedirector> _redirector;
 		private Mock<HttpContext> _context;
 
 		private ControllerMetaData _metaData;
@@ -34,7 +36,8 @@ namespace Simplify.Web.Tests.Core.Controllers
 		{
 			_agent = new Mock<IControllersAgent>();
 			_controllersExecutor = new Mock<IControllerExecutor>();
-			_processor = new ControllersProcessor(_agent.Object, _controllersExecutor.Object);
+			_redirector = new Mock<IRedirector>();
+			_processor = new ControllersProcessor(_agent.Object, _controllersExecutor.Object, _redirector.Object);
 
 			_context = new Mock<HttpContext>();
 
@@ -49,6 +52,10 @@ namespace Simplify.Web.Tests.Core.Controllers
 
 			_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.Ok);
 
+			// Setup current URL
+
+			_context.SetupGet(x => x.Request.Scheme).Returns("http");
+			_context.SetupGet(x => x.Request.Host).Returns(new HostString("localhost", 8080));
 			_context.SetupGet(x => x.Request.Path).Returns(new PathString("/foo/bar"));
 			_context.SetupGet(x => x.Request.Method).Returns("GET");
 		}
@@ -94,6 +101,8 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_controllersExecutor.Verify(x =>
 				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
 					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
+
+			_redirector.VerifySet(x => x.PreviousPageUrl = It.IsAny<string>(), Times.Never);
 		}
 
 		[Test]
@@ -208,6 +217,8 @@ namespace Simplify.Web.Tests.Core.Controllers
 				x =>
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
 						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)), Times.Never);
+
+			_redirector.Verify(x => x.SetPreviousPageUrlToCurrentPage());
 
 			// Check
 			//_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()));
@@ -349,6 +360,8 @@ namespace Simplify.Web.Tests.Core.Controllers
 					x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
 						It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
 			_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>()));
+
+			_redirector.VerifySet(x => x.PreviousPageUrl = It.IsAny<string>(), Times.Never);
 		}
 
 		[Test]
