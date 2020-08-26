@@ -7,15 +7,16 @@
 		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>4.1.1</Version>
+		<Version>4.1.2</Version>
 		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/SimplifyNet/Images/master/LogoWeb32x32.png</PackageIconUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
+			Bug Fixes
+			* Disable setting PreviousPageUrl on 403, 404 controllers (#90)
 			Updates
-			* Upgrade to Simplify.DI 4.0.3
-			* Internal upgrade to Simplify.Xml.Sources 1.1.1
+			* Upgrade to Simplify.DI 4.0.7
 		</PackageReleaseNotes>
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
