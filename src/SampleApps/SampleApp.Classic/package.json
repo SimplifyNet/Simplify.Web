@@ -2,15 +2,12 @@
 	"name": "sampleapp.selfhosted",
 	"version": "1.0.0",
 	"description": "",
-	"dependencies":
-	{},
-	"devDependencies":
-	{
+	"dependencies": {},
+	"devDependencies": {
 		"bootstrap": "^3.4.1",
-		"jquery": "^3.4.1"
+		"jquery": "^3.5.1"
 	},
-	"scripts":
-	{
+	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
