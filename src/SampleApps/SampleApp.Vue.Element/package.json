@@ -2,29 +2,29 @@
 	"name": "element-starter",
 	"private": true,
 	"dependencies": {
-		"element-ui": "^2.3.4",
-		"vue": "^2.5.16"
+		"element-ui": "^2.13.2",
+		"vue": "^2.6.12"
 	},
 	"devDependencies": {
 		"aspnet-webpack": "^2.0.1",
 		"autoprefixer": "^6.6.0",
+		"awesome-typescript-loader": "^3.0.0",
 		"babel-core": "^6.24.1",
 		"babel-loader": "^6.4.0",
 		"babel-preset-vue-app": "^1.2.0",
 		"css-loader": "^0.27.0",
+		"extract-text-webpack-plugin": "^2.0.0-rc.3",
 		"file-loader": "^0.10.1",
 		"html-webpack-plugin": "^2.24.1",
 		"postcss-loader": "^1.3.3",
-		"rimraf": "^2.5.4",
+		"rimraf": "^2.7.1",
 		"style-loader": "^0.13.2",
+		"typescript": "^2.2.1",
 		"url-loader": "^0.5.8",
 		"vue-loader": "^13.3.0",
 		"vue-router": "^2.3.0",
-		"vue-template-compiler": "^2.5.16",
+		"vue-template-compiler": "^2.6.12",
 		"webpack": "^2.4.1",
-		"webpack-hot-middleware": "^2.12.2",
-		"extract-text-webpack-plugin": "^2.0.0-rc",
-		"typescript": "^2.2.1",
-		"awesome-typescript-loader": "^3.0.0"
+		"webpack-hot-middleware": "^2.25.0"
 	}
 }
