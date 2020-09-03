@@ -1,11 +1,13 @@
 {
 	"name": "element-starter",
 	"private": true,
-	"dependencies": {
+	"dependencies":
+	{
 		"element-ui": "^2.3.4",
 		"vue": "^2.5.16"
 	},
-	"devDependencies": {
+	"devDependencies":
+	{
 		"aspnet-webpack": "^2.0.1",
 		"autoprefixer": "^6.6.0",
 		"babel-core": "^6.24.1",
