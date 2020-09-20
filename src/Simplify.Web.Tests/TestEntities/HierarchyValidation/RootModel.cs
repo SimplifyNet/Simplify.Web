@@ -8,5 +8,7 @@ namespace Simplify.Web.Tests.TestEntities.HierarchyValidation
 	{
 		[Required]
 		public ChildModel CustomType { get; set; }
+
+		public int TestInt { get; set; }
 	}
 }
