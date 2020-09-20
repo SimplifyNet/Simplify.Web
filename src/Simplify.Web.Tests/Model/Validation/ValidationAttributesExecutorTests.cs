@@ -54,7 +54,7 @@ namespace Simplify.Web.Tests.Model.Validation
 
 			// Assert
 			Assert.That(ex.Message,
-				Does.StartWith($"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty"));
+				Does.StartWith($"Required property '{nameof(SubChildModel.BuiltInType)}' is null or empty"));
 		}
 	}
 }

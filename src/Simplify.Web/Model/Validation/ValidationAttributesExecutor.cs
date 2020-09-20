@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Simplify.DI;
 using Simplify.Web.Model.Binding;
@@ -20,10 +21,22 @@ namespace Simplify.Web.Model.Validation
 		/// <exception cref="ModelValidationException"></exception>
 		public void Validate<T>(T model, IDIResolver resolver)
 		{
-			var type = typeof(T);
+			Validate(typeof(T), model, resolver);
+		}
 
-			foreach (var item in type.GetProperties())
-				ValidateProperty(item.GetValue(model), item, resolver);
+		private static void Validate(Type type, object? value, IDIResolver resolver)
+		{
+			var properties = type.GetProperties();
+
+			foreach (var item in properties)
+			{
+				var currentItemValue = item.GetValue(value);
+
+				ValidateProperty(currentItemValue, item, resolver);
+
+				if (currentItemValue != default)
+					Validate(item.PropertyType, currentItemValue, resolver);
+			}
 		}
 
 		/// <summary>
