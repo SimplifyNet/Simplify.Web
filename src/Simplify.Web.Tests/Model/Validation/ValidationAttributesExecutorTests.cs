@@ -4,7 +4,8 @@ using NUnit.Framework;
 using Simplify.Web.Model.Validation;
 using Simplify.Web.Tests.Model.Validation.Attributes;
 using Simplify.Web.Tests.TestEntities;
-using Simplify.Web.Tests.TestEntities.HierarchyValidation;
+using Simplify.Web.Tests.TestEntities.Inheritance;
+using Simplify.Web.Tests.TestEntities.Nesting;
 
 namespace Simplify.Web.Tests.Model.Validation
 {
@@ -35,17 +36,16 @@ namespace Simplify.Web.Tests.Model.Validation
 		}
 
 		[Test]
-		public void Validate_HierarchicalModel_NestedNullAttributeException()
+		public void Validate_NestedProperties_NestedNullAttributeException()
 		{
 			// Arrange
-			var model = new RootModel
+			var model = new NestingRootModel
 			{
-				//BuiltInType = "test",
-				CustomType = new ChildModel
+				NestedProperty = new NestedModel
 				{
-					//BuiltInType = "test",
-					CustomType = new SubChildModel()
-				}
+					NestedProperty = new SubNestedModel()
+				},
+				TestInt = 1
 			};
 
 			// Act
@@ -54,7 +54,24 @@ namespace Simplify.Web.Tests.Model.Validation
 
 			// Assert
 			Assert.That(ex.Message,
-				Does.StartWith($"Required property '{nameof(SubChildModel.BuiltInType)}' is null or empty"));
+				Does.StartWith($"Required property '{nameof(SubNestedModel.BuiltInType)}' is null or empty"));
+		}
+
+		[Test]
+		public void Validate_InheritedProperty_NestedNullAttributeException()
+		{
+			// Arrange
+			var model = new InheritanceRootModel
+			{
+				NestedProperty = new BaseNestedModel()
+			};
+
+			// Act
+			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null));
+
+			// Assert
+			Assert.That(ex.Message,
+				Does.StartWith($"Required property '{nameof(BaseNestedModel.BuiltInType)}' is null or empty"));
 		}
 	}
 }

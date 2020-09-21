@@ -28,6 +28,9 @@ namespace Simplify.Web.Model.Validation
 		{
 			var properties = type.GetProperties();
 
+			if (type.BaseType != null && type.BaseType != typeof(object))
+				Validate(type.BaseType, value, resolver);
+
 			foreach (var item in properties)
 			{
 				var currentItemValue = item.GetValue(value);

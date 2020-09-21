@@ -1,8 +1,8 @@
 ﻿using Simplify.Web.Model.Validation.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities.HierarchyValidation
+namespace Simplify.Web.Tests.TestEntities.Nesting
 {
-	public interface ISubChildModel
+	public interface ISubNestedModel
 	{
 		[Required]
 		string BuiltInType { get; set; }
