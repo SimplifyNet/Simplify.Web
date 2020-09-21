@@ -15,8 +15,8 @@
 		<PackageReleaseNotes>
 			New Features
 			* Nested propetties validation (#94)
-			* Inherited propetties validation (#95)
-			* Nested/Inherited properties validaton toggle
+			* Inherited properties validation (#95)
+			* Nested/Inherited properties validation toggle
 			Updates
 			* Upgrade to Microsoft.Extensions.Configuration.Json 3.1.8
 		</PackageReleaseNotes>
