@@ -53,6 +53,11 @@ namespace Simplify.Web.Model.Validation
 				attribute.Validate(value, propertyInfo, resolver);
 		}
 
+		private static bool IsSystemType(Type type)
+		{
+			return type.Namespace?.StartsWith("System") ?? false;
+		}
+
 		private void Validate(Type type, object? value, IDIResolver resolver)
 		{
 			if (Nesting)
@@ -68,11 +73,6 @@ namespace Simplify.Web.Model.Validation
 				if (Nesting && currentItemValue != default && !IsSystemType(item.PropertyType))
 					Validate(item.PropertyType, currentItemValue, resolver);
 			}
-		}
-
-		private bool IsSystemType(Type type)
-		{
-			return type.Namespace?.StartsWith("System") ?? false;
 		}
 	}
 }
