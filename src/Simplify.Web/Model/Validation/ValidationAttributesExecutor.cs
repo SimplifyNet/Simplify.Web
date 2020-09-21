@@ -13,6 +13,20 @@ namespace Simplify.Web.Model.Validation
 	public class ValidationAttributesExecutor : IModelValidator
 	{
 		/// <summary>
+		/// Initializes a new instance of the <see cref="ValidationAttributesExecutor"/> class.
+		/// </summary>
+		/// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.</param>
+		public ValidationAttributesExecutor(bool nesting = true)
+		{
+			Nesting = nesting;
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.
+		/// </summary>
+		public bool Nesting { get; }
+
+		/// <summary>
 		/// Validates the specified model.
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
@@ -22,21 +36,6 @@ namespace Simplify.Web.Model.Validation
 		public void Validate<T>(T model, IDIResolver resolver)
 		{
 			Validate(typeof(T), model, resolver);
-		}
-
-		private static void Validate(Type type, object? value, IDIResolver resolver)
-		{
-			var properties = type.GetProperties();
-
-			foreach (var item in properties)
-			{
-				var currentItemValue = item.GetValue(value);
-
-				ValidateProperty(currentItemValue, item, resolver);
-
-				if (currentItemValue != default)
-					Validate(item.PropertyType, currentItemValue, resolver);
-			}
 		}
 
 		/// <summary>
@@ -52,6 +51,23 @@ namespace Simplify.Web.Model.Validation
 
 			foreach (var attribute in validationAttributes)
 				attribute.Validate(value, propertyInfo, resolver);
+		}
+
+		private void Validate(Type type, object? value, IDIResolver resolver)
+		{
+			if (Nesting)
+				if (type.BaseType != null && type.BaseType != typeof(object))
+					Validate(type.BaseType, value, resolver);
+
+			foreach (var item in type.GetProperties())
+			{
+				var currentItemValue = item.GetValue(value);
+
+				ValidateProperty(currentItemValue, item, resolver);
+
+				if (Nesting && currentItemValue != default)
+					Validate(item.PropertyType, currentItemValue, resolver);
+			}
 		}
 	}
 }
