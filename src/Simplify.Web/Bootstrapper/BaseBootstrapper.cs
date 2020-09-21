@@ -426,7 +426,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterDefaultModelValidators()
 		{
-			BootstrapperFactory.ContainerProvider.Register<ValidationAttributesExecutor>(LifetimeType.Singleton);
+			BootstrapperFactory.ContainerProvider.Register(r => new ValidationAttributesExecutor(), LifetimeType.Singleton);
 		}
 
 		#endregion Simplify.Web types registration
