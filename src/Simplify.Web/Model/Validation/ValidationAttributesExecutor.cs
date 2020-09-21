@@ -56,7 +56,7 @@ namespace Simplify.Web.Model.Validation
 		private void Validate(Type type, object? value, IDIResolver resolver)
 		{
 			if (Nesting)
-				if (type.BaseType != null && type.BaseType != typeof(object))
+				if (type.BaseType != null && type.BaseType != typeof(object) && !IsSystemType(type.BaseType))
 					Validate(type.BaseType, value, resolver);
 
 			foreach (var item in type.GetProperties())
@@ -65,9 +65,14 @@ namespace Simplify.Web.Model.Validation
 
 				ValidateProperty(currentItemValue, item, resolver);
 
-				if (Nesting && currentItemValue != default)
+				if (Nesting && currentItemValue != default && !IsSystemType(item.PropertyType))
 					Validate(item.PropertyType, currentItemValue, resolver);
 			}
+		}
+
+		private bool IsSystemType(Type type)
+		{
+			return type.Namespace?.StartsWith("System") ?? false;
 		}
 	}
 }

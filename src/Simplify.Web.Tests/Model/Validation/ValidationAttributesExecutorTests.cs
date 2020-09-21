@@ -73,5 +73,19 @@ namespace Simplify.Web.Tests.Model.Validation
 			Assert.That(ex.Message,
 				Does.StartWith($"Required property '{nameof(BaseNestedModel.BuiltInType)}' is null or empty"));
 		}
+
+		[Test]
+		public void Validate_NotNullSystemTypes_NoExceptions()
+		{
+			// Arrange
+			var model = new SystemTypesModel
+			{
+				StringProperty = "test",
+				IntProperty = 23
+			};
+
+			// Act
+			_validator.Validate(model, null);
+		}
 	}
 }
