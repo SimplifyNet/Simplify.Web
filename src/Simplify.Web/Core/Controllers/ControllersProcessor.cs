@@ -21,6 +21,7 @@ namespace Simplify.Web.Core.Controllers
 		/// </summary>
 		/// <param name="controllersAgent">The controllers agent.</param>
 		/// <param name="controllerExecutor">The controller executor.</param>
+		/// <param name="redirector">The redirector.</param>
 		public ControllersProcessor(IControllersAgent controllersAgent, IControllerExecutor controllerExecutor, IRedirector redirector)
 		{
 			_agent = controllersAgent;
