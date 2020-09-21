@@ -14,7 +14,7 @@
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 		<PackageReleaseNotes>
 			New Features
-			* Nested propetties validation (#94)
+			* Nested properties validation (#94)
 			* Inherited properties validation (#95)
 			* Nested/Inherited properties validation toggle
 			Updates
