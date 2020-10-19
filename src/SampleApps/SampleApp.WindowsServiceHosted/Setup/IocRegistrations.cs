@@ -3,14 +3,15 @@ using Simplify.Web.Bootstrapper;
 
 namespace SampleApp.WindowsServiceHosted.Setup
 {
-	public class IocRegistrations
+	public static class IocRegistrations
 	{
-		public static void Register()
+		public static IDIContainerProvider RegisterAll(this IDIContainerProvider container)
 		{
-			DIContainer.Current.Register<WebApplicationStartup>();
-
 			// Manual Simplify.Web bootstrapper registration
-			DIContainer.Current.RegisterSimplifyWeb();
+			container.RegisterSimplifyWeb()
+				.Register<WebApplicationStartup>();
+
+			return container;
 		}
 	}
 }

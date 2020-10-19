@@ -17,22 +17,21 @@ namespace SampleApp.WindowsServiceHosted
 
 			Args = args;
 
-			InitializeContainer();
+			DIContainer.Current.RegisterAll().Verify();
 
-			if (new BasicServiceHandler<WebApplicationStartup>().Start(args))
-				return;
+			using var handler = new BasicServiceHandler<WebApplicationStartup>();
 
-			using (var scope = DIContainer.Current.BeginLifetimeScope())
-				scope.Resolver.Resolve<WebApplicationStartup>().Run();
-
-			Console.ReadLine();
+			if (!handler.Start(args))
+				RunAsAConsoleApplication();
 		}
 
-		private static void InitializeContainer()
+		private static void RunAsAConsoleApplication()
 		{
-			IocRegistrations.Register();
+			using var scope = DIContainer.Current.BeginLifetimeScope();
 
-			DIContainer.Current.Verify();
+			scope.Resolver.Resolve<WebApplicationStartup>().Run();
+
+			Console.ReadLine();
 		}
 	}
 }
