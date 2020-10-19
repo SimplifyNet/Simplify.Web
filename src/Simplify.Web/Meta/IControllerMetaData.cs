@@ -13,17 +13,17 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// The type of the extension.
 		/// </value>
-		Type ControllerType { get; }
+		Type? ControllerType { get; }
 
 		/// <summary>
 		/// Gets the controller execute parameters.
 		/// </summary>
-		ControllerExecParameters ExecParameters { get; }
+		ControllerExecParameters? ExecParameters { get; }
 
 		/// <summary>
 		/// Gets the controller role information.
 		/// </summary>
-		ControllerRole Role { get; }
+		ControllerRole? Role { get; }
 
 		/// <summary>
 		/// Gets the controller security information.
@@ -31,6 +31,6 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// The controller security information.
 		/// </value>
-		ControllerSecurity Security { get; }
+		ControllerSecurity? Security { get; }
 	}
 }
