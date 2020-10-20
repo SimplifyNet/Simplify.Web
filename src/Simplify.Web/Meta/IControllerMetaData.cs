@@ -13,7 +13,7 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// The type of the extension.
 		/// </value>
-		Type? ControllerType { get; }
+		Type ControllerType { get; }
 
 		/// <summary>
 		/// Gets the controller execute parameters.

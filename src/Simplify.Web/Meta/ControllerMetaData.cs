@@ -35,12 +35,12 @@ namespace Simplify.Web.Meta
 		/// <summary>
 		/// Gets the controller execute parameters.
 		/// </summary>
-		public ControllerExecParameters ExecParameters { get; }
+		public ControllerExecParameters? ExecParameters { get; }
 
 		/// <summary>
 		/// Gets the controller role information.
 		/// </summary>
-		public ControllerRole Role { get; }
+		public ControllerRole? Role { get; }
 
 		/// <summary>
 		/// Gets the controller security information.
@@ -48,6 +48,6 @@ namespace Simplify.Web.Meta
 		/// <value>
 		/// The controller security information.
 		/// </value>
-		public ControllerSecurity Security { get; }
+		public ControllerSecurity? Security { get; }
 	}
 }
