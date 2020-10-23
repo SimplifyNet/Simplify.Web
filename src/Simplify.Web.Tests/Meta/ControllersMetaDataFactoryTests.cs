@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using Simplify.Web.Meta;
 using Simplify.Web.Tests.TestEntities;
@@ -17,6 +18,10 @@ namespace Simplify.Web.Tests.Meta
 			// Act
 
 			var metaData = factory.CreateControllerMetaData(typeof(TestController1));
+
+			if (metaData.Security == null || metaData.ExecParameters == null || metaData.Role == null)
+				throw new InvalidOperationException();
+
 			var roles = metaData.Security.RequiredUserRoles.ToList();
 
 			// Assert

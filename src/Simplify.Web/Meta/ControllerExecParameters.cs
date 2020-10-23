@@ -12,7 +12,7 @@ namespace Simplify.Web.Meta
 		/// </summary>
 		/// <param name="routes">The routes.</param>
 		/// <param name="execPriority">The execute priority.</param>
-		public ControllerExecParameters(IDictionary<HttpMethod, string> routes, int execPriority = 0)
+		public ControllerExecParameters(IDictionary<HttpMethod, string>? routes, int execPriority = 0)
 		{
 			Routes = routes ?? new Dictionary<HttpMethod, string>();
 			RunPriority = execPriority;

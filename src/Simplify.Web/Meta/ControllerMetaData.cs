@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 
 namespace Simplify.Web.Meta
 {
@@ -16,7 +14,7 @@ namespace Simplify.Web.Meta
 		/// <param name="execParameters">The execute parameters.</param>
 		/// <param name="role">The controller role.</param>
 		/// <param name="security">The security.</param>
-		public ControllerMetaData(Type controllerType, ControllerExecParameters execParameters = null, ControllerRole role = null, ControllerSecurity security = null)
+		public ControllerMetaData(Type controllerType, ControllerExecParameters? execParameters = null, ControllerRole? role = null, ControllerSecurity? security = null)
 		{
 			ControllerType = controllerType;
 			ExecParameters = execParameters;
