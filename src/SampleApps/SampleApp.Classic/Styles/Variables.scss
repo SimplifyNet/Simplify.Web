@@ -1,15 +1,19 @@
-$back-color: #efefef;
+$back-color: #171717;
 $back-color-error: #eee4e4;
 
-$primary-color: #4a73bc;
-$primary-color-active: #4368ac;
+$primary-color: #dc5f33;
+$primary-color-active: #c5562e;
 $primary-color-opposite: white;
 
-$primary-color-text-hover: #3464bc;
+$primary-text-color: #dad8d8;
+$primary-color-text-hover: #c5562e;
 
 $primary-color-colorized-text: #0d85c9;
 
-$primary-border: 1px solid #bcbcbc;
+$primary-border: 1px solid #3a3a3a;
+$primary-active-border: 1px solid #636363;
+
+$secondary-color: #292929;
 
 $no-box-shadow: 0 0;
-$button-border: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #9d9d9d;
+$button-border: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #3a3a3a;

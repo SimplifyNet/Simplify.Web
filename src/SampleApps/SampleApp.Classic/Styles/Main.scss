@@ -1,27 +1,33 @@
-﻿@import 'Header';
-@import 'Navbar';
-@import 'Forms';
-@import 'MessageBox';
+﻿@import "Header";
+@import "Navbar";
+@import "Forms";
+@import "Panels";
+@import "MessageBox";
 
-body
-{
+body {
 	background: $back-color !important;
-	color: #505050 !important;
-	font: 1.6em 'Segoe UI', tahoma, arial, helvetica, sans-serif !important;
+	color: $primary-text-color !important;
+	font: 1.6em "Segoe UI", tahoma, arial, helvetica, sans-serif !important;
 	margin: 1em !important;
 	padding: 0 !important;
 }
 
-.ExecutionTimeFooter
-{
+.ExecutionTimeFooter {
 	border-top: $primary-border;
 	text-align: center;
 	margin-top: 1em;
 	padding-top: 0.3em;
 }
 
-div.Http404MessageBox
-{
+div.Http404MessageBox {
 	color: $primary-color-colorized-text;
 	padding: 4em 2em 4em 2em;
+}
+
+a {
+	color: $primary-color;
+}
+
+a:hover {
+	color: $primary-color-active;
 }

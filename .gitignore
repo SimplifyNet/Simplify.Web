@@ -126,3 +126,8 @@ node_modules/
 # Coverage files ignore
 *lcov.info
 lcov*.info
+
+## CSS exclude except main css file
+src/SampleApps/SampleApp.Classic/Styles/**/*.css
+!src/SampleApps/SampleApp.Classic/Styles/Main.min.css
+
