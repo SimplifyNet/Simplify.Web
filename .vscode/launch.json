@@ -6,7 +6,7 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Kestrel Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.0/SampleApp.Kestrel.dll",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.1/SampleApp.Kestrel.dll",
 		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":
@@ -19,7 +19,7 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Classic Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.0/SampleApp.Classic.dll",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.1/SampleApp.Classic.dll",
 		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":

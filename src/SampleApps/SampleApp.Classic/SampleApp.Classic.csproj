@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="BeforeBuild">
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web self hosted example</Description>
