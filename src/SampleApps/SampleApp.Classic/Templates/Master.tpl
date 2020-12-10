@@ -8,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="{~}/node_modules/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="{~}/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="{~}/styles/Main.min.css" />
+
+	<link rel="shortcut icon" href="{~}/Images/favicon.ico" type="image/x-icon" />
 </head>
 
 <body>
@@ -24,5 +26,4 @@
 
 	<div class="ExecutionTimeFooter">{LabelExecutionTime}: {SV:SiteExecutionTime}</div>
 </body>
-
 </html>
