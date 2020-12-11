@@ -10,14 +10,13 @@
 		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\Simplify.Web.xml</DocumentationFile>
 
-		<Version>4.2.1</Version>
+		<Version>4.2.2</Version>
 		<PackageReleaseNotes>
 			Bug Fixes
-			* IControllerMetaData incorrect fields nullability (#97)
+			* Simplify.Web framework cookies SameSite atrributes set to None with Secured (#111)
 			Updates
-			* Upgrade to Microsoft.Extensions.Configuration.Json 3.1.9
-			* Simplify.System.Sources internal upgrade to 1.2.2
-			* Simplify.Xml.Sources internal upgrade to 1.1.2
+			* Simplify.DI upgrade to 4.0.10
+			* Simplify.System.Sources internal upgrade to 1.3.0
 		</PackageReleaseNotes>
 
 		<Authors>Alexander Krylkov</Authors>
@@ -37,7 +36,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
-		<PackageReference Include="Simplify.DI" Version="4.0.7" />
+		<PackageReference Include="Simplify.DI" Version="4.0.10" />
 		<PackageReference Include="Simplify.Templates" Version="2.0.0" />
 		<PackageReference Include="Simplify.String.Sources" Version="1.2.1" PrivateAssets="All" />
 		<PackageReference Include="Simplify.System.Sources" Version="1.3.0" PrivateAssets="All" />
