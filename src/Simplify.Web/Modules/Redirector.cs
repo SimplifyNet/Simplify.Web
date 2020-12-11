@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Simplify.Web.Modules
@@ -50,7 +51,11 @@ namespace Simplify.Web.Modules
 		public string PreviousPageUrl
 		{
 			get => _context.Request.Cookies[PreviousPageUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value);
+			set => _context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value, new CookieOptions
+			{
+				SameSite = SameSiteMode.None,
+				Secure = true
+			});
 		}
 
 		/// <summary>
@@ -62,7 +67,11 @@ namespace Simplify.Web.Modules
 		public string RedirectUrl
 		{
 			get => _context.Request.Cookies[RedirectUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(RedirectUrlCookieFieldName, value);
+			set => _context.Response.Cookies.Append(RedirectUrlCookieFieldName, value, new CookieOptions
+			{
+				SameSite = SameSiteMode.None,
+				Secure = true
+			});
 		}
 
 		/// <summary>
@@ -74,7 +83,11 @@ namespace Simplify.Web.Modules
 		public string LoginReturnUrl
 		{
 			get => _context.Request.Cookies[LoginReturnUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value);
+			set => _context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value, new CookieOptions
+			{
+				SameSite = SameSiteMode.None,
+				Secure = true
+			});
 		}
 
 		/// <summary>
@@ -86,7 +99,11 @@ namespace Simplify.Web.Modules
 		public string PreviousNavigatedUrl
 		{
 			get => _context.Request.Cookies[PreviousNavigatedUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value);
+			set => _context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value, new CookieOptions
+			{
+				SameSite = SameSiteMode.None,
+				Secure = true
+			});
 		}
 
 		/// <summary>
