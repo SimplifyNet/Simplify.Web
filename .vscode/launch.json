@@ -7,7 +7,7 @@
 		"request": "launch",
 		"preLaunchTask": "Build Kestrel Example",
 		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.1/SampleApp.Kestrel.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.1/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":
 		{
@@ -20,7 +20,7 @@
 		"request": "launch",
 		"preLaunchTask": "Build Classic Example",
 		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.1/SampleApp.Classic.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.1/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"env":
 		{
