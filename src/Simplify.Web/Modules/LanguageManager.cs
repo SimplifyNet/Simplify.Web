@@ -50,7 +50,12 @@ namespace Simplify.Web.Modules
 			if (string.IsNullOrEmpty(language))
 				throw new ArgumentNullException(nameof(language));
 
-			_responseCookies.Append(CookieLanguageFieldName, language, new CookieOptions { Expires = DateTime.Now.AddYears(5) });
+			_responseCookies.Append(CookieLanguageFieldName, language, new CookieOptions
+			{
+				Expires = DateTime.Now.AddYears(5),
+				SameSite = SameSiteMode.None,
+				Secure = true
+			});
 		}
 
 		/// <summary>
