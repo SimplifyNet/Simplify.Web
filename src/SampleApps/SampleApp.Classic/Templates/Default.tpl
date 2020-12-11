@@ -1,5 +1,5 @@
 ﻿<div class="text-center">
-	Hello from OWIN self-hosted console application with HttpListener server!
+	Hello from Kestrel-based console application with backend HTML generation, localization, authentication!
 </div>
 
 <div class="container-fluid">
@@ -16,7 +16,8 @@
 					<a href="https://github.com/SimplifyNet/Simplify.Web/tree/master/src">Source code</a>
 				</li>
 				<li class="list-group-item">
-					<a href="https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps">Example applications</a>
+					<a href="https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps">Example
+						applications</a>
 				</li>
 				<li class="list-group-item">
 					<a href="https://www.nuget.org/packages?q=Simplify.Web">Nuget package and extensions</a>
