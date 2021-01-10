@@ -12,19 +12,33 @@ namespace Simplify.Web.Tests.Modules.Data
 		private const string FileName = "FooAsync.tpl";
 
 		[Test]
-		public void LoadAsync_NullFileName_ArgumentNullExceptionThrown()
+		public async Task LoadAsync_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
+		{
+			// Assign
+			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true, true);
+
+			// Act
+
+			tf.Setup();
+			var result = await tf.LoadAsync("Templates/Test.tpl");
+
+			// Assert
+			Assert.AreEqual("Hello!", result.Get());
+		}
+
+		[Test]
+		public async Task LoadAsync_NameWithoutTpl_TemplateLoadedCorrectly()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 			// Act
-			tf.Setup();
 
-			// Act & Assert
-			var ex = Assert.Throws<AggregateException>(() => tf.LoadAsync(null).Wait());
+			tf.Setup();
+			var data = await tf.LoadAsync("FooAsync");
 
 			// Assert
-			Assert.AreEqual(typeof(ArgumentNullException), ex.InnerException?.GetType());
+			Assert.AreEqual("Dummy data", data.Get());
 		}
 
 		[Test]
@@ -43,18 +57,19 @@ namespace Simplify.Web.Tests.Modules.Data
 		}
 
 		[Test]
-		public async Task LoadAsync_NameWithoutTpl_TemplateLoadedCorrectly()
+		public void LoadAsync_NullFileName_ArgumentNullExceptionThrown()
 		{
 			// Assign
 			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 			// Act
-
 			tf.Setup();
-			var data = await tf.LoadAsync("FooAsync");
+
+			// Act & Assert
+			var ex = Assert.Throws<AggregateException>(() => tf.LoadAsync(null).Wait());
 
 			// Assert
-			Assert.AreEqual("Dummy data", data.Get());
+			Assert.AreEqual(typeof(ArgumentNullException), ex?.InnerException?.GetType());
 		}
 
 		[Test]
@@ -84,21 +99,6 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Assert
 
 			Assert.AreEqual("Dummy data", data.Get());
-		}
-
-		[Test]
-		public async Task LoadAsync_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
-		{
-			// Assign
-			var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true, true);
-
-			// Act
-
-			tf.Setup();
-			var result = await tf.LoadAsync("Templates/Test.tpl");
-
-			// Assert
-			Assert.AreEqual("Hello!", result.Get());
 		}
 	}
 }
