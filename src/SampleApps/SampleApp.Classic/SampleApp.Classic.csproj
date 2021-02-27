@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="BeforeBuild">
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<OutputType>Exe</OutputType>
+		<IsPackable>false</IsPackable>
+
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web self hosted example</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>1.1</Version>
-		<OutputType>Exe</OutputType>
-		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
