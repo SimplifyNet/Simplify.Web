@@ -17,7 +17,7 @@ namespace Simplify.Web.RequestPipeline
 	/// <summary>
 	/// Simplify.Web request execution root
 	/// </summary>
-	public class SimplifyWebRequestMiddleware
+	public static class SimplifyWebRequestMiddleware
 	{
 		/// <summary>
 		/// Occurs when exception occurred and catched by framework.
@@ -58,7 +58,7 @@ namespace Simplify.Web.RequestPipeline
 					e = exception;
 				}
 
-				await context.Response.WriteAsync(GenerateErrorPage(scope, e));
+				await context.WriteErrorResponse(scope, e);
 
 				return RequestHandlingStatus.RequestWasHandled;
 			}
@@ -73,11 +73,21 @@ namespace Simplify.Web.RequestPipeline
 			return true;
 		}
 
-		private static string GenerateErrorPage(ILifetimeScope scope, Exception e)
+		private static async Task WriteErrorResponse(this HttpContext context, ILifetimeScope scope, Exception e)
+		{
+			var webContext = scope.Resolver.Resolve<IWebContextProvider>().Get();
+
+			if (webContext.IsAjax)
+				context.Response.ContentType = "text/plain";
+
+			await context.Response.WriteAsync(scope.GenerateErrorResponse(e, webContext.IsAjax));
+		}
+
+		private static string GenerateErrorResponse(this ILifetimeScope scope, Exception e, bool minimalStyle)
 		{
 			var settings = scope.Resolver.Resolve<ISimplifyWebSettings>();
 
-			return ErrorPageGenerator.Generate(e, settings.HideExceptionDetails, settings.ErrorPageDarkStyle);
+			return ErrorPageGenerator.Generate(e, settings.HideExceptionDetails, settings.ErrorPageDarkStyle, minimalStyle);
 		}
 	}
 }

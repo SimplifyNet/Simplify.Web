@@ -28,6 +28,7 @@
 		<PackageTags>.NET web-framework MVC DI OWIN</PackageTags>
 	</PropertyGroup>
 	<ItemGroup>
+		<EmbeddedResource Include="Diagnostics\Templates\Http500MinimalErrorPage.html" />
 		<EmbeddedResource Include="Diagnostics\Templates\Http500ErrorPageExceptionInfo.html" />
 		<EmbeddedResource Include="Diagnostics\Templates\Http500ErrorPage.html" />
 		<EmbeddedResource Include="Diagnostics\Templates\Styles\Dark.css" />

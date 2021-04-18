@@ -13,8 +13,8 @@ namespace Simplify.Web.Diagnostics
 		/// Builds the detailed exception info.
 		/// </summary>
 		/// <param name="e">The exception.</param>
-		/// <returns></returns>
-		public static string? Build(Exception e)
+		/// <param name="htmlFormatting">if set to <c>true</c> then HTML formatting will be added to text.</param>
+		public static string? Build(Exception e, bool htmlFormatting)
 		{
 			var trace = new StackTrace(e, true);
 
@@ -28,12 +28,18 @@ namespace Simplify.Web.Diagnostics
 				? ""
 				: $"[{fileLineNumber}:{fileColumnNumber}]";
 
-			return
-				$"<b>{positionPrefix} {e.GetType()} : {e.Message}</b>{Environment.NewLine}{trace}{BuildInnerExceptionData(1, e.InnerException)}"
-					.Replace(Environment.NewLine, "<br />");
+			var result = (htmlFormatting ? "<b>" : "")
+				   + $"{positionPrefix} {e.GetType()} : {e.Message}"
+				   + (htmlFormatting ? "</b>" : "")
+				   + $"{Environment.NewLine}{trace}{BuildInnerExceptionData(1, e.InnerException, htmlFormatting)}";
+
+			if (htmlFormatting)
+				result = result.Replace(Environment.NewLine, "<br />");
+
+			return result;
 		}
 
-		private static string? BuildInnerExceptionData(int currentLevel, Exception? e)
+		private static string? BuildInnerExceptionData(int currentLevel, Exception? e, bool htmlFormatting)
 		{
 			if (e == null)
 				return null;
@@ -54,8 +60,10 @@ namespace Simplify.Web.Diagnostics
 				? " " + currentLevel.ToString(CultureInfo.InvariantCulture)
 				: "";
 
-			return
-				$"<br /><b>[Inner Exception{levelText}]{positionPrefix} {e.GetType()} : {e.Message}</b>{Environment.NewLine}{trace}{BuildInnerExceptionData(currentLevel + 1, e.InnerException)}";
+			return (htmlFormatting ? "<br /><b>" : "")
+				   + $"[Inner Exception{levelText}]{positionPrefix} {e.GetType()} : {e.Message}"
+				   + (htmlFormatting ? "</b>" : "")
+				   + $"{Environment.NewLine}{trace}{BuildInnerExceptionData(currentLevel + 1, e.InnerException, htmlFormatting)}";
 		}
 	}
 }

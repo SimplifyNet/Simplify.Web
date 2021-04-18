@@ -10,11 +10,10 @@ namespace Simplify.Web.Diagnostics.Templates
 	public static class Http500ErrorPageBuilder
 	{
 		/// <summary>
-		/// Builds the specified hide exception details.
+		/// Builds the error page.
 		/// </summary>
 		/// <param name="exceptionText">The exception text.</param>
 		/// <param name="darkStyle"><c>true</c> if page style should be in dark colors.</param>
-		/// <returns></returns>
 		public static string Build(string? exceptionText = null, bool darkStyle = false) =>
 			TemplateBuilder.FromCurrentAssembly("Diagnostics.Templates.Http500ErrorPage.html")
 				.Build()
