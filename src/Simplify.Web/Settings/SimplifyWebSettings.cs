@@ -185,10 +185,8 @@ namespace Simplify.Web.Settings
 			var loadTemplatesFromAssembly = config[nameof(LoadTemplatesFromAssembly)];
 
 			if (!string.IsNullOrEmpty(loadTemplatesFromAssembly))
-			{
 				if (bool.TryParse(loadTemplatesFromAssembly, out var buffer))
 					LoadTemplatesFromAssembly = buffer;
-			}
 
 			var defaultMasterTemplateFileName = config[nameof(DefaultMasterTemplateFileName)];
 
@@ -243,10 +241,8 @@ namespace Simplify.Web.Settings
 			var staticFilesEnabled = config[nameof(StaticFilesEnabled)];
 
 			if (!string.IsNullOrEmpty(staticFilesEnabled))
-			{
 				if (bool.TryParse(staticFilesEnabled, out var buffer))
 					StaticFilesEnabled = buffer;
-			}
 
 			var staticFilesPaths = config[nameof(StaticFilesPaths)];
 
@@ -265,30 +261,20 @@ namespace Simplify.Web.Settings
 			var disableAutomaticSiteTitleSet = config[nameof(DisableAutomaticSiteTitleSet)];
 
 			if (!string.IsNullOrEmpty(disableAutomaticSiteTitleSet))
-			{
 				if (bool.TryParse(disableAutomaticSiteTitleSet, out var buffer))
 					DisableAutomaticSiteTitleSet = buffer;
-			}
 
 			var hideExceptionDetails = config[nameof(HideExceptionDetails)];
 
-			if (string.IsNullOrEmpty(hideExceptionDetails))
-				return;
-
-			{
+			if (!string.IsNullOrEmpty(hideExceptionDetails))
 				if (bool.TryParse(hideExceptionDetails, out var buffer))
 					HideExceptionDetails = buffer;
-			}
 
 			var errorPageDarkStyle = config[nameof(ErrorPageDarkStyle)];
 
-			if (string.IsNullOrEmpty(errorPageDarkStyle))
-				return;
-
-			{
+			if (!string.IsNullOrEmpty(errorPageDarkStyle))
 				if (bool.TryParse(errorPageDarkStyle, out var buffer))
 					ErrorPageDarkStyle = buffer;
-			}
 		}
 
 		private void LoadCacheSettings(IConfiguration config)
@@ -296,28 +282,20 @@ namespace Simplify.Web.Settings
 			var templatesMemoryCache = config[nameof(TemplatesMemoryCache)];
 
 			if (!string.IsNullOrEmpty(templatesMemoryCache))
-			{
 				if (bool.TryParse(templatesMemoryCache, out var buffer))
 					TemplatesMemoryCache = buffer;
-			}
 
 			var stringTableMemoryCache = config[nameof(StringTableMemoryCache)];
 
 			if (!string.IsNullOrEmpty(stringTableMemoryCache))
-			{
 				if (bool.TryParse(stringTableMemoryCache, out var buffer))
 					StringTableMemoryCache = buffer;
-			}
 
 			var disableFileReaderCache = config[nameof(DisableFileReaderCache)];
 
-			if (string.IsNullOrEmpty(disableFileReaderCache))
-				return;
-
-			{
+			if (!string.IsNullOrEmpty(disableFileReaderCache))
 				if (bool.TryParse(disableFileReaderCache, out var buffer))
 					DisableFileReaderCache = buffer;
-			}
 		}
 
 		private void LoadDiagnosticSettings(IConfiguration config)
