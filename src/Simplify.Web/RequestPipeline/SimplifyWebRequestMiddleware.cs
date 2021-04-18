@@ -20,7 +20,7 @@ namespace Simplify.Web.RequestPipeline
 	public class SimplifyWebRequestMiddleware
 	{
 		/// <summary>
-		/// Occurs when exception occured and catched by framework.
+		/// Occurs when exception occurred and catched by framework.
 		/// </summary>
 		public static event ExceptionEventHandler OnException;
 
@@ -58,8 +58,7 @@ namespace Simplify.Web.RequestPipeline
 					e = exception;
 				}
 
-				await context.Response.WriteAsync(ExceptionInfoPageGenerator.Generate(e,
-					scope.Resolver.Resolve<ISimplifyWebSettings>().HideExceptionDetails));
+				await context.Response.WriteAsync(GenerateErrorPage(scope, e));
 
 				return RequestHandlingStatus.RequestWasHandled;
 			}
@@ -72,6 +71,13 @@ namespace Simplify.Web.RequestPipeline
 
 			OnException(e);
 			return true;
+		}
+
+		private static string GenerateErrorPage(ILifetimeScope scope, Exception e)
+		{
+			var settings = scope.Resolver.Resolve<ISimplifyWebSettings>();
+
+			return ErrorPageGenerator.Generate(e, settings.HideExceptionDetails);
 		}
 	}
 }

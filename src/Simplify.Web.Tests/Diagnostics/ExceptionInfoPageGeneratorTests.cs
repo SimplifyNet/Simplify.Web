@@ -10,12 +10,6 @@ namespace Simplify.Web.Tests.Diagnostics
 	public class ExceptionInfoPageGeneratorTests
 	{
 		[Test]
-		public void Generate_Null_Null()
-		{
-			Assert.IsNull(ExceptionInfoPageGenerator.Generate(null));
-		}
-
-		[Test]
 		public void Generate_WithInnerException_HtmlPageText()
 		{
 			try
@@ -33,21 +27,21 @@ namespace Simplify.Web.Tests.Diagnostics
 				}
 				catch (Exception ex)
 				{
-					Assert.IsTrue(ExceptionInfoPageGenerator.Generate(ex).Contains("html"));
+					Assert.IsTrue(ErrorPageGenerator.Generate(ex).Contains("html"));
 				}
 			}
 		}
 
 		[Test]
-		public void Generate_ExceptionNoFrames_Null()
+		public void Generate_ExceptionNoFrames_Generated()
 		{
-			Assert.IsNull(ExceptionInfoPageGenerator.Generate(new Exception("test")));
+			Assert.IsNotNull(ErrorPageGenerator.Generate(new Exception("test")));
 		}
 
 		[Test]
 		public void Generate_HideDetails_Null()
 		{
-			Assert.IsTrue(ExceptionInfoPageGenerator.Generate(new Exception("test"), true).Contains("html"));
+			Assert.IsTrue(ErrorPageGenerator.Generate(new Exception("test"), true).Contains("html"));
 		}
 	}
 }

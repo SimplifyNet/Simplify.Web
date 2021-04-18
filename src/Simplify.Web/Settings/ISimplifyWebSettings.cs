@@ -94,9 +94,14 @@ namespace Simplify.Web.Settings
 		bool DisableAutomaticSiteTitleSet { get; }
 
 		/// <summary>
-		/// Gets a value indicating whether exception details should be hide when some unhandled exception occured.
+		/// Gets a value indicating whether exception details on Simplify.Web HTTP 500 error page should be hidden when some unhandled exception occurred.
 		/// </summary>
 		bool HideExceptionDetails { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether Simplify.Web HTTP 500 error page should be displayed in dark style.
+		/// </summary>
+		bool ErrorPageDarkStyle { get; }
 
 		/// <summary>
 		/// Gets a value indicating whether templates memory cache enabled or disabled.
