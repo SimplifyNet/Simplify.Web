@@ -7,6 +7,8 @@ using Simplify.DI;
 using Simplify.Web.Bootstrapper;
 using Simplify.Web.Core;
 using Simplify.Web.Diagnostics;
+using Simplify.Web.Diagnostics.Measurement;
+using Simplify.Web.Diagnostics.Trace;
 using Simplify.Web.Modules;
 using Simplify.Web.Settings;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Diagnostics
+namespace Simplify.Web.Diagnostics.Trace
 {
 	/// <summary>
 	/// HTTP requests trace delegate

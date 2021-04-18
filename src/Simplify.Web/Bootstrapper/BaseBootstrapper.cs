@@ -11,6 +11,7 @@ using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Core.StaticFiles;
 using Simplify.Web.Core.Views;
 using Simplify.Web.Diagnostics;
+using Simplify.Web.Diagnostics.Measurement;
 using Simplify.Web.Meta;
 using Simplify.Web.Model;
 using Simplify.Web.Model.Binding;
