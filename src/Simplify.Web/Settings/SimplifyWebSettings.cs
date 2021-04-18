@@ -8,7 +8,7 @@ namespace Simplify.Web.Settings
 	/// <summary>
 	/// Simplify.Web settings
 	/// </summary>
-	/// <seealso cref="Simplify.Web.Settings.ISimplifyWebSettings" />
+	/// <seealso cref="ISimplifyWebSettings" />
 	public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	{
 		/// <summary>
@@ -121,9 +121,14 @@ namespace Simplify.Web.Settings
 		public bool DisableAutomaticSiteTitleSet { get; private set; }
 
 		/// <summary>
-		/// Gets a value indicating whether exception details should be hide when some unhandled exception occured.
+		/// Gets a value indicating whether exception details should be hide when some unhandled exception occurred.
 		/// </summary>
 		public bool HideExceptionDetails { get; private set; }
+
+		/// <summary>
+		/// Gets a value indicating whether Simplify.Web HTTP 500 error page should be displayed in dark style.
+		/// </summary>
+		public bool ErrorPageDarkStyle { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether templates memory cache enabled or disabled.
@@ -273,6 +278,16 @@ namespace Simplify.Web.Settings
 			{
 				if (bool.TryParse(hideExceptionDetails, out var buffer))
 					HideExceptionDetails = buffer;
+			}
+
+			var errorPageDarkStyle = config[nameof(ErrorPageDarkStyle)];
+
+			if (string.IsNullOrEmpty(errorPageDarkStyle))
+				return;
+
+			{
+				if (bool.TryParse(errorPageDarkStyle, out var buffer))
+					ErrorPageDarkStyle = buffer;
 			}
 		}
 

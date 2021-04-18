@@ -1,16 +1,14 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Diagnostics;
 
-namespace Simplify.Web.Diagnostics
+namespace Simplify.Web.Diagnostics.Measurement
 {
 	/// <summary>
 	/// Provides stopwatch provider
 	/// </summary>
 	public class StopwatchProvider : IStopwatchProvider
 	{
-		private Stopwatch _stopwatch;
+		private Stopwatch? _stopwatch;
 
 		/// <summary>
 		/// Starts the measurement.
@@ -27,6 +25,9 @@ namespace Simplify.Web.Diagnostics
 		/// <returns></returns>
 		public TimeSpan StopAndGetMeasurement()
 		{
+			if (_stopwatch == null)
+				throw new InvalidOperationException("Measurement has not been started");
+
 			_stopwatch.Stop();
 			return _stopwatch.Elapsed;
 		}

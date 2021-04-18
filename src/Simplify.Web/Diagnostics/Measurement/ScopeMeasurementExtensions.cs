@@ -1,6 +1,6 @@
 ﻿using Simplify.DI;
 
-namespace Simplify.Web.Diagnostics
+namespace Simplify.Web.Diagnostics.Measurement
 {
 	/// <summary>
 	/// Provides measurement extensions
