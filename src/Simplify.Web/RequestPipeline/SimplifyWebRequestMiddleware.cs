@@ -78,6 +78,7 @@ namespace Simplify.Web.RequestPipeline
 			var settings = scope.Resolver.Resolve<ISimplifyWebSettings>();
 
 			return ErrorPageGenerator.Generate(e, settings.HideExceptionDetails);
+			return ErrorPageGenerator.Generate(e, settings.HideExceptionDetails, settings.ErrorPageDarkStyle);
 		}
 	}
 }
