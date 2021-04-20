@@ -1,9 +1,7 @@
-﻿#nullable disable
-
-namespace Simplify.Web.Tests.TestEntities
+﻿namespace Simplify.Web.Tests.TestEntities
 {
 	public class TestModelUndefinedType
 	{
-		public TestModelUndefinedType Prop1 { get; set; }
+		public TestModelUndefinedType? Prop1 { get; set; }
 	}
 }

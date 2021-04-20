@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +12,7 @@ namespace Simplify.Web.Tests.Modules
 	[TestFixture]
 	public class WebContextTests
 	{
-		private Mock<HttpContext> _owinContext;
+		private Mock<HttpContext> _owinContext = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -236,7 +234,7 @@ namespace Simplify.Web.Tests.Modules
 		{
 			// Arrange
 
-			_owinContext.SetupGet(x => x.User).Returns((ClaimsPrincipal)null);
+			_owinContext.SetupGet(x => x.User).Returns((ClaimsPrincipal?)null!);
 
 			var context = new WebContext(_owinContext.Object);
 

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Routing;
@@ -10,8 +8,8 @@ namespace Simplify.Web.Tests.Routing
 	[TestFixture]
 	public class RouteMatcherTests
 	{
-		private IRouteMatcher _matcher;
-		private Mock<IControllerPathParser> _controllerPathParser;
+		private IRouteMatcher _matcher = null!;
+		private Mock<IControllerPathParser> _controllerPathParser = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -124,7 +122,7 @@ namespace Simplify.Web.Tests.Routing
 			// Assert
 
 			Assert.IsTrue(result.Success);
-			Assert.AreEqual("testuser", result.RouteParameters.userName);
+			Assert.AreEqual("testuser", result.RouteParameters!.userName);
 		}
 
 		[Test]
@@ -175,7 +173,7 @@ namespace Simplify.Web.Tests.Routing
 			// Assert
 
 			Assert.IsTrue(result.Success);
-			Assert.AreEqual("user", result.RouteParameters.userName);
+			Assert.AreEqual("user", result.RouteParameters!.userName);
 		}
 
 		[Test]
@@ -204,7 +202,7 @@ namespace Simplify.Web.Tests.Routing
 
 			// Assert
 			Assert.IsTrue(result.Success);
-			Assert.AreEqual("foo", result.RouteParameters.test);
+			Assert.AreEqual("foo", result.RouteParameters!.test);
 			Assert.AreEqual("bar", result.RouteParameters.name);
 		}
 
@@ -221,7 +219,7 @@ namespace Simplify.Web.Tests.Routing
 			// Assert
 
 			Assert.IsTrue(result.Success);
-			Assert.AreEqual(15, result.RouteParameters.id);
+			Assert.AreEqual(15, result.RouteParameters!.id);
 		}
 
 		[Test]
@@ -237,7 +235,7 @@ namespace Simplify.Web.Tests.Routing
 			// Assert
 
 			Assert.IsTrue(result.Success);
-			Assert.AreEqual((decimal)15, result.RouteParameters.id);
+			Assert.AreEqual((decimal)15, result.RouteParameters!.id);
 		}
 
 		[Test]
@@ -253,7 +251,7 @@ namespace Simplify.Web.Tests.Routing
 			// Assert
 
 			Assert.IsTrue(result.Success);
-			Assert.AreEqual(true, result.RouteParameters.foo);
+			Assert.AreEqual(true, result.RouteParameters!.foo);
 		}
 
 		[Test]
@@ -270,7 +268,7 @@ namespace Simplify.Web.Tests.Routing
 
 			Assert.IsTrue(result.Success);
 
-			var items = (IList<string>)result.RouteParameters.foo;
+			var items = (IList<string>)result.RouteParameters!.foo;
 
 			Assert.AreEqual(3, items.Count);
 			Assert.AreEqual("hello", items[0]);
@@ -292,7 +290,7 @@ namespace Simplify.Web.Tests.Routing
 
 			Assert.IsTrue(result.Success);
 
-			var items = (IList<int>)result.RouteParameters.foo;
+			var items = (IList<int>)result.RouteParameters!.foo;
 
 			Assert.AreEqual(3, items.Count);
 			Assert.AreEqual(1, items[0]);
@@ -314,7 +312,7 @@ namespace Simplify.Web.Tests.Routing
 
 			Assert.IsTrue(result.Success);
 
-			var items = (IList<decimal>)result.RouteParameters.foo;
+			var items = (IList<decimal>)result.RouteParameters!.foo;
 
 			Assert.AreEqual(3, items.Count);
 			Assert.AreEqual(1, items[0]);
@@ -336,7 +334,7 @@ namespace Simplify.Web.Tests.Routing
 
 			Assert.IsTrue(result.Success);
 
-			var items = (IList<bool>)result.RouteParameters.foo;
+			var items = (IList<bool>)result.RouteParameters!.foo;
 
 			Assert.AreEqual(2, items.Count);
 			Assert.AreEqual(true, items[0]);

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Simplify.Web.Meta
@@ -10,8 +8,8 @@ namespace Simplify.Web.Meta
 	/// </summary>
 	public class ViewsMetaStore : IViewsMetaStore
 	{
-		private static IViewsMetaStore _current;
-		private IList<Type> _viewsTypes;
+		private static IViewsMetaStore? _current;
+		private IList<Type>? _viewsTypes;
 
 		/// <summary>
 		/// Current views meta store

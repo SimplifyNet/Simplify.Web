@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Simplify.Web.Modules;
 
 namespace Simplify.Web.Responses
@@ -24,7 +22,7 @@ namespace Simplify.Web.Responses
 		/// </summary>
 		/// <param name="redirectionType">Type of the navigation.</param>
 		/// <param name="bookmarkName">Name of the bookmark.</param>
-		public Redirect(RedirectionType redirectionType = RedirectionType.DefaultPage, string bookmarkName = null)
+		public Redirect(RedirectionType redirectionType = RedirectionType.DefaultPage, string? bookmarkName = null)
 		{
 			RedirectionType = redirectionType;
 			BookmarkName = bookmarkName;
@@ -44,7 +42,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The name of the bookmark.
 		/// </value>
-		public string BookmarkName { get; }
+		public string? BookmarkName { get; }
 
 		/// <summary>
 		/// Gets the URL.
@@ -52,7 +50,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The URL.
 		/// </value>
-		public string Url { get; }
+		public string Url { get; } = null!;
 
 		/// <summary>
 		/// Processes this response

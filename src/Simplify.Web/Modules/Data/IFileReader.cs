@@ -18,7 +18,7 @@ namespace Simplify.Web.Modules.Data
 		/// <param name="fileName">File name</param>
 		/// <param name="memoryCache">Load file from memory cache if possible.</param>
 		/// <returns>Xml document</returns>
-		XDocument LoadXDocument(string fileName, bool memoryCache = false);
+		XDocument? LoadXDocument(string fileName, bool memoryCache = false);
 
 		/// <summary>
 		/// Load xml document from a file with specific language located in data folder
@@ -27,7 +27,7 @@ namespace Simplify.Web.Modules.Data
 		/// <param name="language">File language</param>
 		/// <param name="memoryCache">Load file from memory cache if possible.</param>
 		/// <returns>Xml document</returns>
-		XDocument LoadXDocument(string fileName, string language, bool memoryCache = false);
+		XDocument? LoadXDocument(string fileName, string language, bool memoryCache = false);
 
 		/// <summary>
 		/// Load text from a file located in data folder
@@ -35,7 +35,7 @@ namespace Simplify.Web.Modules.Data
 		/// <param name="fileName">File name</param>
 		/// <param name="memoryCache">Load file from memory cache if possible.</param>
 		/// <returns>Text from a file</returns>
-		string LoadTextDocument(string fileName, bool memoryCache = false);
+		string? LoadTextDocument(string fileName, bool memoryCache = false);
 
 		/// <summary>
 		/// Load text from a file with specific language located in data folder
@@ -44,6 +44,6 @@ namespace Simplify.Web.Modules.Data
 		/// <param name="language">File language</param>
 		/// <param name="memoryCache">Load file from memory cache if possible.</param>
 		/// <returns>Text from a file</returns>
-		string LoadTextDocument(string fileName, string language, bool memoryCache = false);
+		string? LoadTextDocument(string fileName, string language, bool memoryCache = false);
 	}
 }

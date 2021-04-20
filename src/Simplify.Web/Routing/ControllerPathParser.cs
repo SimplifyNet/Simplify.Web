@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -57,7 +55,7 @@ namespace Simplify.Web.Routing
 			return new ControllerPath(pathItems);
 		}
 
-		private static Type ParseParameterType(string typeData)
+		private static Type? ParseParameterType(string typeData)
 		{
 			return typeData switch
 			{

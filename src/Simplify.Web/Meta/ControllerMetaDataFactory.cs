@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Simplify.Web.Attributes;
@@ -18,12 +16,10 @@ namespace Simplify.Web.Meta
 		/// </summary>
 		/// <param name="controllerType">Type of the controller.</param>
 		/// <returns></returns>
-		public ControllerMetaData CreateControllerMetaData(Type controllerType)
-		{
-			return new ControllerMetaData(controllerType, GetControllerExecParameters(controllerType), GetControllerRole(controllerType), GetControllerSecurity(controllerType));
-		}
+		public ControllerMetaData CreateControllerMetaData(Type controllerType) =>
+			new(controllerType, GetControllerExecParameters(controllerType), GetControllerRole(controllerType), GetControllerSecurity(controllerType));
 
-		private static ControllerExecParameters GetControllerExecParameters(ICustomAttributeProvider controllerType)
+		private static ControllerExecParameters? GetControllerExecParameters(ICustomAttributeProvider controllerType)
 		{
 			var priority = 0;
 
@@ -54,7 +50,7 @@ namespace Simplify.Web.Meta
 			return routeInfo;
 		}
 
-		private static ControllerRole GetControllerRole(ICustomAttributeProvider controllerType)
+		private static ControllerRole? GetControllerRole(ICustomAttributeProvider controllerType)
 		{
 			var http400 = false;
 			var http403 = false;
@@ -78,10 +74,10 @@ namespace Simplify.Web.Meta
 			return http403 || http404 ? new ControllerRole(http400, http403, http404) : null;
 		}
 
-		private static ControllerSecurity GetControllerSecurity(ICustomAttributeProvider controllerType)
+		private static ControllerSecurity? GetControllerSecurity(ICustomAttributeProvider controllerType)
 		{
 			var isAuthorizationRequired = false;
-			IEnumerable<string> requiredUserRoles = null;
+			IEnumerable<string>? requiredUserRoles = null;
 
 			var attributes = controllerType.GetCustomAttributes(typeof(AuthorizeAttribute), false);
 

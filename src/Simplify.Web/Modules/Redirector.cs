@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
@@ -48,10 +46,10 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The previous page url.
 		/// </value>
-		public string PreviousPageUrl
+		public string? PreviousPageUrl
 		{
 			get => _context.Request.Cookies[PreviousPageUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value, new CookieOptions
+			set => _context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value ?? "", new CookieOptions
 			{
 				SameSite = SameSiteMode.None,
 				Secure = true
@@ -64,10 +62,10 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The redirect url.
 		/// </value>
-		public string RedirectUrl
+		public string? RedirectUrl
 		{
 			get => _context.Request.Cookies[RedirectUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(RedirectUrlCookieFieldName, value, new CookieOptions
+			set => _context.Response.Cookies.Append(RedirectUrlCookieFieldName, value ?? "", new CookieOptions
 			{
 				SameSite = SameSiteMode.None,
 				Secure = true
@@ -80,10 +78,10 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The login return URL.
 		/// </value>
-		public string LoginReturnUrl
+		public string? LoginReturnUrl
 		{
 			get => _context.Request.Cookies[LoginReturnUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value, new CookieOptions
+			set => _context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value ?? "", new CookieOptions
 			{
 				SameSite = SameSiteMode.None,
 				Secure = true
@@ -96,10 +94,10 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The previous navigated URL.
 		/// </value>
-		public string PreviousNavigatedUrl
+		public string? PreviousNavigatedUrl
 		{
 			get => _context.Request.Cookies[PreviousNavigatedUrlCookieFieldName];
-			set => _context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value, new CookieOptions
+			set => _context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value ?? "", new CookieOptions
 			{
 				SameSite = SameSiteMode.None,
 				Secure = true
@@ -135,7 +133,7 @@ namespace Simplify.Web.Modules
 		/// </summary>
 		/// <param name="redirectionType">Type of the redirection.</param>
 		/// <param name="bookmarkName">Name of the bookmark.</param>
-		public void Redirect(RedirectionType redirectionType, string bookmarkName = null)
+		public void Redirect(RedirectionType redirectionType, string? bookmarkName = null)
 		{
 			PreviousNavigatedUrl = _context.Request.GetEncodedUrl();
 
@@ -174,7 +172,7 @@ namespace Simplify.Web.Modules
 		/// Redirects the client to specified URL.
 		/// </summary>
 		/// <param name="url">The URL.</param>
-		public void Redirect(string url)
+		public void Redirect(string? url)
 		{
 			if (string.IsNullOrEmpty(url))
 				throw new ArgumentNullException(nameof(url));

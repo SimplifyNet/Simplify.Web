@@ -7,10 +7,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 	public class EMailAttributeTests : AttributesTestBase
 	{
 		[OneTimeSetUp]
-		public void SetupAttribute()
-		{
-			Attr = new EMailAttribute();
-		}
+		public void SetupAttribute() => Attr = new EMailAttribute();
 
 		[Test]
 		public void Validate_ValidEMail_NoExceptions()

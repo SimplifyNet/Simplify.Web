@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;
 
@@ -9,9 +7,9 @@ namespace Simplify.Web.Tests.Modules.Data
 	[TestFixture]
 	public class TemplateFactoryTestsBase
 	{
-		protected Mock<IEnvironment> Environment;
-		protected Mock<ILanguageManagerProvider> LanguageManagerProvider;
-		protected Mock<ILanguageManager> LanguageManager;
+		protected Mock<IEnvironment> Environment = null!;
+		protected Mock<ILanguageManagerProvider> LanguageManagerProvider = null!;
+		protected Mock<ILanguageManager> LanguageManager = null!;
 
 		[OneTimeSetUp]
 		public void Initialize()

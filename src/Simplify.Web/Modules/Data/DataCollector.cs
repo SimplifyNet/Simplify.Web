@@ -50,21 +50,20 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="variableName">Variable name in master template file</param>
 		/// <param name="value">Value to set</param>
-		public void Add(string variableName, string? value)
+		public void Add(string? variableName, string? value)
 		{
 			if (string.IsNullOrEmpty(variableName))
 				throw new ArgumentException("Value cannot be null or empty.", nameof(variableName));
 
-			if (value == null)
-				value = "";
+			value ??= "";
 
-			if (!Items.ContainsKey(variableName))
+			if (!Items.ContainsKey(variableName!))
 			{
-				Items.Add(variableName, value);
+				Items.Add(variableName!, value);
 				return;
 			}
 
-			Items[variableName] += value;
+			Items[variableName!] += value;
 		}
 
 		/// <summary>
@@ -72,7 +71,7 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="variableName">Variable name in master template file</param>
 		/// <param name="template">The template.</param>
-		public void Add(string variableName, ITemplate template)
+		public void Add(string variableName, ITemplate? template)
 		{
 			if (template == null)
 				return;

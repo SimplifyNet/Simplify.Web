@@ -19,6 +19,6 @@
 		/// <value>
 		/// The route parsed parameters.
 		/// </value>
-		dynamic RouteParameters { get; }
+		dynamic? RouteParameters { get; }
 	}
 }

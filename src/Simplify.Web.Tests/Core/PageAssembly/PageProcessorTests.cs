@@ -1,5 +1,4 @@
-﻿#nullable disable
-
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -12,11 +11,11 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 	[TestFixture]
 	public class PageProcessorTests
 	{
-		private PageProcessor _processor;
-		private Mock<IPageBuilder> _pageBuilder;
-		private Mock<IResponseWriter> _responseWriter;
+		private PageProcessor _processor = null!;
+		private Mock<IPageBuilder> _pageBuilder = null!;
+		private Mock<IResponseWriter> _responseWriter = null!;
 
-		private Mock<HttpContext> _context;
+		private Mock<HttpContext> _context = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -31,7 +30,7 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 		}
 
 		[Test]
-		public void Process_Ok_PageBuiltWithOutput()
+		public async Task Process_Ok_PageBuiltWithOutput()
 		{
 			// Assign
 
@@ -41,7 +40,7 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 			_context.SetupGet(x => x.Request.Path).Returns("/test");
 
 			// Act
-			_processor.ProcessPage(null, _context.Object);
+			await _processor.ProcessPage(null!, _context.Object);
 
 			// Assert
 

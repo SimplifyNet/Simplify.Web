@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -15,11 +13,11 @@ namespace Simplify.Web.Tests.Core.Controllers
 	[TestFixture]
 	public class ControllersRequestHandlerTests
 	{
-		private Mock<IControllersProcessor> _controllersProcessor;
-		private Mock<IPageProcessor> _pageProcessor;
-		private Mock<IRedirector> _redirector;
-		private ControllersRequestHandler _requestHandler;
-		private Mock<HttpContext> _context;
+		private Mock<IControllersProcessor> _controllersProcessor = null!;
+		private Mock<IPageProcessor> _pageProcessor = null!;
+		private Mock<IRedirector> _redirector = null!;
+		private ControllersRequestHandler _requestHandler = null!;
+		private Mock<HttpContext> _context = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -42,7 +40,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_pageProcessor.Setup(x => x.ProcessPage(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(Task.FromResult(RequestHandlingStatus.RequestWasHandled));
 
 			// Act
-			var result = await _requestHandler.ProcessRequest(null, _context.Object);
+			var result = await _requestHandler.ProcessRequest(null!, _context.Object);
 
 			// Assert
 			Assert.AreEqual(RequestHandlingStatus.RequestWasHandled, result);
@@ -57,7 +55,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				Task.FromResult(ControllersProcessorResult.RawOutput));
 
 			// Act
-			await _requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null!, _context.Object);
 
 			// Assert
 
@@ -73,7 +71,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				Task.FromResult(ControllersProcessorResult.Http401));
 
 			// Act
-			await _requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null!, _context.Object);
 
 			// Assert
 
@@ -89,7 +87,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				Task.FromResult(ControllersProcessorResult.Http403));
 
 			// Act
-			await _requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null!, _context.Object);
 
 			// Assert
 			_context.VerifySet(x => x.Response.StatusCode = It.Is<int>(d => d == 403));
@@ -102,7 +100,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_controllersProcessor.Setup(x => x.ProcessControllers(It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>())).Returns(Task.FromResult(ControllersProcessorResult.Http404));
 
 			// Act
-			await _requestHandler.ProcessRequest(null, _context.Object);
+			await _requestHandler.ProcessRequest(null!, _context.Object);
 
 			// Assert
 

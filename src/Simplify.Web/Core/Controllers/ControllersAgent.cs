@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Simplify.Web.Meta;
@@ -46,7 +44,7 @@ namespace Simplify.Web.Core.Controllers
 		/// <param name="sourceRoute">The source route.</param>
 		/// <param name="httpMethod">The HTTP method.</param>
 		/// <returns></returns>
-		public IRouteMatchResult MatchControllerRoute(IControllerMetaData controllerMetaData, string sourceRoute, string httpMethod)
+		public IRouteMatchResult? MatchControllerRoute(IControllerMetaData controllerMetaData, string? sourceRoute, string httpMethod)
 		{
 			if (controllerMetaData.ExecParameters == null || controllerMetaData.ExecParameters.Routes.Count == 0)
 				return _routeMatcher.Match(sourceRoute, null);
@@ -61,9 +59,9 @@ namespace Simplify.Web.Core.Controllers
 		/// </summary>
 		/// <param name="controllerType">Type of the controller.</param>
 		/// <returns></returns>
-		public IControllerMetaData GetHandlerController(HandlerControllerType controllerType)
+		public IControllerMetaData? GetHandlerController(HandlerControllerType controllerType)
 		{
-			IControllerMetaData metaData = null;
+			IControllerMetaData? metaData = null;
 
 			switch (controllerType)
 			{

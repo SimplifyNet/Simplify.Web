@@ -17,7 +17,7 @@ namespace Simplify.Web.Modules
 			sitePhysicalPath = sitePhysicalPath.Replace("\\", "/");
 
 			if (!sitePhysicalPath.EndsWith("/"))
-				sitePhysicalPath = sitePhysicalPath + "/";
+				sitePhysicalPath += "/";
 
 			SitePhysicalPath = sitePhysicalPath;
 

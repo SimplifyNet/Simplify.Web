@@ -9,10 +9,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		public const int MaximumPropertyLength = 2;
 
 		[OneTimeSetUp]
-		public void SetupAttribute()
-		{
-			Attr = new MaxLengthAttribute(MaximumPropertyLength);
-		}
+		public void SetupAttribute() => Attr = new MaxLengthAttribute(MaximumPropertyLength);
 
 		[Test]
 		public void Validate_MinLengthOk_Ok()

@@ -20,7 +20,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			tf.Setup();
 
 			// Act & Assert
-			Assert.Throws<ArgumentNullException>(() => tf.Load(null));
+			Assert.Throws<ArgumentNullException>(() => tf.Load(null!));
 		}
 
 		[Test]

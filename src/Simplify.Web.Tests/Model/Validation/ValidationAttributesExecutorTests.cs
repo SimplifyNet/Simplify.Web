@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Simplify.Web.Model.Validation;
 using Simplify.Web.Tests.Model.Validation.Attributes;
 using Simplify.Web.Tests.TestEntities;
@@ -12,13 +10,10 @@ namespace Simplify.Web.Tests.Model.Validation
 	[TestFixture]
 	public class ValidationAttributesExecutorTests
 	{
-		private ValidationAttributesExecutor _validator;
+		private ValidationAttributesExecutor _validator = null!;
 
 		[SetUp]
-		public void Initialize()
-		{
-			_validator = new ValidationAttributesExecutor();
-		}
+		public void Initialize() => _validator = new ValidationAttributesExecutor();
 
 		[Test]
 		public void Validate_ModelWithOnePropertyAndOneValidateAttribute_AttributeValidationCalled()
@@ -28,10 +23,10 @@ namespace Simplify.Web.Tests.Model.Validation
 
 			// Act
 
-			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null));
+			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
 
 			// Assert
-			Assert.That(ex.Message,
+			Assert.That(ex!.Message,
 				Does.StartWith($"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty"));
 		}
 
@@ -50,10 +45,10 @@ namespace Simplify.Web.Tests.Model.Validation
 
 			// Act
 
-			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null));
+			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
 
 			// Assert
-			Assert.That(ex.Message,
+			Assert.That(ex!.Message,
 				Does.StartWith($"Required property '{nameof(SubNestedModel.BuiltInType)}' is null or empty"));
 		}
 
@@ -67,10 +62,10 @@ namespace Simplify.Web.Tests.Model.Validation
 			};
 
 			// Act
-			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null));
+			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
 
 			// Assert
-			Assert.That(ex.Message,
+			Assert.That(ex!.Message,
 				Does.StartWith($"Required property '{nameof(BaseNestedModel.BuiltInType)}' is null or empty"));
 		}
 
@@ -85,7 +80,7 @@ namespace Simplify.Web.Tests.Model.Validation
 			};
 
 			// Act
-			_validator.Validate(model, null);
+			_validator.Validate(model, null!);
 		}
 	}
 }

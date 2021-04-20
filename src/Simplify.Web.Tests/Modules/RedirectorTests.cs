@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -11,9 +9,9 @@ namespace Simplify.Web.Tests.Modules
 	[TestFixture]
 	public class RedirectorTests
 	{
-		private Mock<IWebContext> _context;
-		private Redirector _redirector;
-		private Mock<IResponseCookies> _responseCookies;
+		private Mock<IWebContext> _context = null!;
+		private Redirector _redirector = null!;
+		private Mock<IResponseCookies> _responseCookies = null!;
 
 		[SetUp]
 		public void Initialize()

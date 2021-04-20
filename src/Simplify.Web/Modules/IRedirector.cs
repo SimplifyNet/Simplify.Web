@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-namespace Simplify.Web.Modules
+﻿namespace Simplify.Web.Modules
 {
 	/// <summary>
 	/// Represent website redirection manager, which controls current user location, url to previous page and url to specified page
@@ -13,7 +11,7 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The previous page url.
 		/// </value>
-		string PreviousPageUrl { get; set; }
+		string? PreviousPageUrl { get; set; }
 
 		/// <summary>
 		/// Gets or sets the redirect url.
@@ -21,7 +19,7 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The redirect url.
 		/// </value>
-		string RedirectUrl { get; set; }
+		string? RedirectUrl { get; set; }
 
 		/// <summary>
 		/// Gets the login return URL.
@@ -29,7 +27,7 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The login return URL.
 		/// </value>
-		string LoginReturnUrl { get; set; }
+		string? LoginReturnUrl { get; set; }
 
 		/// <summary>
 		/// Gets or sets the previous navigated URL.
@@ -37,7 +35,7 @@ namespace Simplify.Web.Modules
 		/// <value>
 		/// The previous navigated URL.
 		/// </value>
-		string PreviousNavigatedUrl { get; set; }
+		string? PreviousNavigatedUrl { get; set; }
 
 		/// <summary>
 		/// Sets the redirect url to current page.
@@ -59,7 +57,7 @@ namespace Simplify.Web.Modules
 		/// </summary>
 		/// <param name="redirectionType">Type of the redirection.</param>
 		/// <param name="bookmarkName">Name of the bookmark.</param>
-		void Redirect(RedirectionType redirectionType, string bookmarkName = null);
+		void Redirect(RedirectionType redirectionType, string? bookmarkName = null);
 
 		/// <summary>
 		/// Redirects the client to specified URL.

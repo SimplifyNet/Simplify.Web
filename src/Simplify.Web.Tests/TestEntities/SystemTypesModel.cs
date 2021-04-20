@@ -1,13 +1,11 @@
-﻿#nullable disable
-
-using Simplify.Web.Model.Validation.Attributes;
+﻿using Simplify.Web.Model.Validation.Attributes;
 
 namespace Simplify.Web.Tests.TestEntities
 {
 	public class SystemTypesModel
 	{
 		[Required]
-		public string StringProperty { get; set; }
+		public string? StringProperty { get; set; }
 
 		public int IntProperty { get; set; }
 

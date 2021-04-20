@@ -17,7 +17,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// </summary>
 		/// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
 		/// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>
-		protected ValidationAttribute(string errorMessage, bool isMessageFromStringTable)
+		protected ValidationAttribute(string? errorMessage, bool isMessageFromStringTable)
 		{
 			ErrorMessage = errorMessage;
 			IsMessageFromStringTable = isMessageFromStringTable;
@@ -29,7 +29,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// <value>
 		/// The error message.
 		/// </value>
-		protected string ErrorMessage { get; }
+		protected string? ErrorMessage { get; }
 
 		/// <summary>
 		/// Gets a value indicating whether the ErrorMessage is a message from string table.
@@ -56,9 +56,9 @@ namespace Simplify.Web.Model.Validation.Attributes
 				return;
 
 			if (IsMessageFromStringTable)
-				throw new ModelValidationException(resolver.Resolve<IStringTable>().GetItem(ErrorMessage));
+				throw new ModelValidationException(resolver.Resolve<IStringTable>().GetItem(ErrorMessage!) ?? "");
 
-			throw new ModelValidationException(ErrorMessage);
+			throw new ModelValidationException(ErrorMessage!);
 		}
 	}
 }

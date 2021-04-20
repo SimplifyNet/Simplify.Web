@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -14,9 +12,9 @@ namespace Simplify.Web.Tests.Responses
 	[TestFixture]
 	public class TplTests
 	{
-		private Mock<IDataCollector> _dataCollector;
-		private Mock<IWebContext> _context;
-		private Mock<HttpResponse> _response;
+		private Mock<IDataCollector> _dataCollector = null!;
+		private Mock<IWebContext> _context = null!;
+		private Mock<HttpResponse> _response = null!;
 
 		[SetUp]
 		public void Initialize()

@@ -43,7 +43,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		public void ParseUndefined_EnumList_ParsedCorrectly()
 		{
 			// Act
-			var result = (IList<TestEnum>)ArrayToSpecifiedListParser.ParseUndefined(new[] { "2", "1" }, typeof(IList<TestEnum>));
+			var result = (IList<TestEnum>)ArrayToSpecifiedListParser.ParseUndefined(new[] { "2", "1" }, typeof(IList<TestEnum>))!;
 
 			// Assert
 
@@ -55,7 +55,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		public void ParseUndefined_StringsList_Null()
 		{
 			// Act
-			var result = (string[])ArrayToSpecifiedListParser.ParseUndefined(new[] { "val1", "val2" }, typeof(string[]));
+			var result = (string[])ArrayToSpecifiedListParser.ParseUndefined(new[] { "val1", "val2" }, typeof(string[]))!;
 
 			// Assert
 

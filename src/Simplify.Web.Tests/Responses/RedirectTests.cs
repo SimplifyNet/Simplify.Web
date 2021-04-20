@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;
@@ -11,7 +9,7 @@ namespace Simplify.Web.Tests.Responses
 	[TestFixture]
 	public class RedirectTests
 	{
-		private Mock<IRedirector> _redirector;
+		private Mock<IRedirector> _redirector = null!;
 
 		[SetUp]
 		public void Initialize()

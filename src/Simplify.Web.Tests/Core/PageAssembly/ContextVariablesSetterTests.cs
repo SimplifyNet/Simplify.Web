@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using Simplify.DI;
 using Simplify.Web.Core.PageAssembly;
-using Simplify.Web.Diagnostics;
 using Simplify.Web.Diagnostics.Measurement;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
@@ -18,17 +15,17 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 	[TestFixture]
 	public class ContextVariablesSetterTests
 	{
-		private Mock<IDataCollector> _dataCollector;
-		private ContextVariablesSetter _setter;
-		private Mock<IDIContainerProvider> _containerProvider;
+		private Mock<IDataCollector> _dataCollector = null!;
+		private ContextVariablesSetter _setter = null!;
+		private Mock<IDIContainerProvider> _containerProvider = null!;
 
-		private Mock<IEnvironment> _environment;
-		private Mock<ILanguageManagerProvider> _languageManagerProvider;
-		private Mock<ILanguageManager> _languageManager;
-		private Mock<IWebContextProvider> _contextProvider;
-		private Mock<IWebContext> _context;
-		private Mock<IStringTable> _stringTable;
-		private Mock<IStopwatchProvider> _stopwatchProvider;
+		private Mock<IEnvironment> _environment = null!;
+		private Mock<ILanguageManagerProvider> _languageManagerProvider = null!;
+		private Mock<ILanguageManager> _languageManager = null!;
+		private Mock<IWebContextProvider> _contextProvider = null!;
+		private Mock<IWebContext> _context = null!;
+		private Mock<IStringTable> _stringTable = null!;
+		private Mock<IStopwatchProvider> _stopwatchProvider = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -92,10 +89,10 @@ namespace Simplify.Web.Tests.Core.PageAssembly
 		}
 
 		[Test]
-		public void SetVariables_NoLanguagesSet_DotLanguagesIsEmptyDefaltLanguage()
+		public void SetVariables_NoLanguagesSet_DotLanguagesIsEmptyDefaultLanguage()
 		{
 			// Assign
-			_languageManager.SetupGet(x => x.Language).Returns((string)null);
+			_languageManager.SetupGet(x => x.Language).Returns((string)null!);
 
 			// Act
 			_setter.SetVariables(_containerProvider.Object);

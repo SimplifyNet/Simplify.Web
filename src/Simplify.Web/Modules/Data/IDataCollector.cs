@@ -41,7 +41,7 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="variableName">Variable name in master template file</param>
 		/// <param name="template">The template.</param>
-		void Add(string variableName, ITemplate template);
+		void Add(string variableName, ITemplate? template);
 
 		/// <summary>
 		/// Set template main content variable value (all occurrences will be replaced)

@@ -1,8 +1,5 @@
-﻿#nullable disable
-
-using System.Threading;
+﻿using System.Threading;
 using Simplify.DI;
-using Simplify.Web.Diagnostics;
 using Simplify.Web.Diagnostics.Measurement;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
@@ -101,10 +98,10 @@ namespace Simplify.Web.Core.PageAssembly
 			}
 			else
 			{
-				_dataCollector.Add(VariableNameCurrentLanguage, (string)null);
-				_dataCollector.Add(VariableNameCurrentLanguageExtension, (string)null);
-				_dataCollector.Add(VariableNameCurrentLanguageCultureName, (string)null);
-				_dataCollector.Add(VariableNameCurrentLanguageCultureNameExtension, (string)null);
+				_dataCollector.Add(VariableNameCurrentLanguage, (string?)null);
+				_dataCollector.Add(VariableNameCurrentLanguageExtension, (string?)null);
+				_dataCollector.Add(VariableNameCurrentLanguageCultureName, (string?)null);
+				_dataCollector.Add(VariableNameCurrentLanguageCultureNameExtension, (string?)null);
 			}
 
 			_dataCollector.Add(VariableNameSiteUrl, context.SiteUrl);
@@ -116,14 +113,14 @@ namespace Simplify.Web.Core.PageAssembly
 			_dataCollector.Add(VariableNameExecutionTime, stopWatchProvider.StopAndGetMeasurement().ToString("mm\\:ss\\:fff"));
 		}
 
-		private void SetSiteTitleFromStringTable(string currentPath, IStringTable stringTable)
+		private void SetSiteTitleFromStringTable(string? currentPath, IStringTable stringTable)
 		{
 			var siteTitle = stringTable.GetItem(SiteTitleStringTableVariableName);
 
 			if (string.IsNullOrEmpty(siteTitle))
 				return;
 
-			if (string.IsNullOrEmpty(currentPath) || currentPath == "/" || currentPath.StartsWith("/?") || !_dataCollector.IsDataExist(_dataCollector.TitleVariableName))
+			if (string.IsNullOrEmpty(currentPath) || currentPath == "/" || currentPath!.StartsWith("/?") || !_dataCollector.IsDataExist(_dataCollector.TitleVariableName))
 				_dataCollector.Add(_dataCollector.TitleVariableName, siteTitle);
 			else
 				_dataCollector.Add(_dataCollector.TitleVariableName, " - " + siteTitle);

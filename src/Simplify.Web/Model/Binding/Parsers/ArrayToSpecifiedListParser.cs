@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -25,7 +23,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 
 			var genericType = GetGenericListType(type);
 
-			if (!StringToSpecifiedObjectParser.IsTypeValidForParsing(genericType))
+			if (!StringToSpecifiedObjectParser.IsTypeValidForParsing(genericType!))
 				throw new ModelNotSupportedException($"Not supported list property type of: '{genericType}'");
 
 			return true;
@@ -39,7 +37,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		/// <param name="format">The format.</param>
 		/// <returns></returns>
 		/// <exception cref="ModelNotSupportedException"></exception>
-		public static object ParseUndefined(string[] values, Type type, string format = null)
+		public static object? ParseUndefined(string[] values, Type type, string? format = null)
 		{
 			var parsingType = GetGenericListType(type);
 
@@ -83,7 +81,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 			{
 				var listType = typeof(List<>).MakeGenericType(parsingType);
 				var list = Activator.CreateInstance(listType);
-				var methodInfo = listType.GetMethod("Add");
+				var methodInfo = listType.GetMethod("Add")!;
 
 				foreach (var value in values)
 					methodInfo.Invoke(list, new[] { StringToSpecifiedObjectParser.ParseEnum(value, parsingType) });
@@ -99,7 +97,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		/// </summary>
 		/// <param name="type">The type.</param>
 		/// <returns></returns>
-		public static Type GetGenericListType(Type type)
+		public static Type? GetGenericListType(Type type)
 		{
 			var genericTypeArguments = type.GetTypeInfo().GenericTypeArguments;
 

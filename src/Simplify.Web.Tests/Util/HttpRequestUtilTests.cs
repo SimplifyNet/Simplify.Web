@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -50,7 +48,7 @@ namespace Simplify.Web.Tests.Util
 		public void IsNoCacheRequested_NullHeader_False()
 		{
 			// Act
-			var result = HttpRequestUtil.IsNoCacheRequested(null);
+			var result = HttpRequestUtil.IsNoCacheRequested(null!);
 
 			// Assert
 

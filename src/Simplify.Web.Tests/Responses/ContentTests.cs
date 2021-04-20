@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -13,8 +11,8 @@ namespace Simplify.Web.Tests.Responses
 	[TestFixture]
 	public class ContentTests
 	{
-		private Mock<IResponseWriter> _responseWriter;
-		private Mock<IWebContext> _context;
+		private Mock<IResponseWriter> _responseWriter = null!;
+		private Mock<IWebContext> _context = null!;
 
 		[SetUp]
 		public void Initialize()

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;
 using Simplify.Web.Settings;
@@ -10,7 +8,7 @@ namespace Simplify.Web.Tests.Modules
 	[TestFixture]
 	public class EnvironmentTests
 	{
-		private ISimplifyWebSettings _settings;
+		private ISimplifyWebSettings _settings = null!;
 
 		[SetUp]
 		public void Initialize()

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -30,7 +28,7 @@ namespace Simplify.Web.Routing
 		/// <param name="currentPath">The current path.</param>
 		/// <param name="controllerPath">The controller path.</param>
 		/// <returns></returns>
-		public IRouteMatchResult Match(string currentPath, string controllerPath)
+		public IRouteMatchResult Match(string? currentPath, string? controllerPath)
 		{
 			if (string.IsNullOrEmpty(currentPath))
 				return new RouteMatchResult();
@@ -39,13 +37,13 @@ namespace Simplify.Web.Routing
 			if (string.IsNullOrEmpty(controllerPath))
 				return new RouteMatchResult(true);
 
-			var controllerPathParsed = _controllerPathParser.Parse(controllerPath);
-			var currentPathItems = currentPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			var controllerPathParsed = _controllerPathParser.Parse(controllerPath!);
+			var currentPathItems = currentPath!.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
 			if (currentPathItems.Length != controllerPathParsed.Items.Count)
 				return new RouteMatchResult();
 
-			IDictionary<string, object> routeParameters = new ExpandoObject();
+			IDictionary<string, object> routeParameters = new ExpandoObject()!;
 
 			for (var i = 0; i < controllerPathParsed.Items.Count; i++)
 			{
@@ -71,7 +69,7 @@ namespace Simplify.Web.Routing
 			return new RouteMatchResult(true, routeParameters);
 		}
 
-		private static object GetParameterValue(PathParameter pathParameter, string source)
+		private static object? GetParameterValue(PathParameter pathParameter, string source)
 		{
 			if (pathParameter.Type == typeof(string))
 				return source;
@@ -100,7 +98,7 @@ namespace Simplify.Web.Routing
 			return null;
 		}
 
-		private static object GetIntParameterValue(string source)
+		private static object? GetIntParameterValue(string source)
 		{
 			if (!int.TryParse(source, out var buffer))
 				return null;
@@ -108,7 +106,7 @@ namespace Simplify.Web.Routing
 			return buffer;
 		}
 
-		private static object GetDecimalParameterValue(string source)
+		private static object? GetDecimalParameterValue(string source)
 		{
 			if (!decimal.TryParse(source, out var buffer))
 				return null;
@@ -116,7 +114,7 @@ namespace Simplify.Web.Routing
 			return buffer;
 		}
 
-		private static object GetBoolParameterValue(string source)
+		private static object? GetBoolParameterValue(string source)
 		{
 			if (!bool.TryParse(source, out var buffer))
 				return null;

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 
 namespace Simplify.Web.Model.Binding
 {
@@ -14,7 +12,7 @@ namespace Simplify.Web.Model.Binding
 		/// </summary>
 		/// <param name="message">The message that describes the error.</param>
 		/// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
-		public ModelNotSupportedException(string message, Exception innerException = null)
+		public ModelNotSupportedException(string message, Exception? innerException = null)
 			: base(message, innerException)
 		{
 		}

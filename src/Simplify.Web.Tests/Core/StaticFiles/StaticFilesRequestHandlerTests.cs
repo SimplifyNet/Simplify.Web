@@ -1,6 +1,5 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -11,12 +10,12 @@ namespace Simplify.Web.Tests.Core.StaticFiles
 	[TestFixture]
 	public class StaticFilesRequestHandlerTests
 	{
-		private StaticFilesRequestHandler _requestHandler;
-		private Mock<IStaticFileHandler> _fileHandler;
-		private Mock<IStaticFileResponseFactory> _responseFactory;
-		private Mock<IStaticFileResponse> _response;
+		private StaticFilesRequestHandler _requestHandler = null!;
+		private Mock<IStaticFileHandler> _fileHandler = null!;
+		private Mock<IStaticFileResponseFactory> _responseFactory = null!;
+		private Mock<IStaticFileResponse> _response = null!;
 
-		private Mock<HttpContext> _context;
+		private Mock<HttpContext> _context = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -35,28 +34,28 @@ namespace Simplify.Web.Tests.Core.StaticFiles
 		}
 
 		[Test]
-		public void ProcessRequest_CacheEnabled_SendNotModifiedCalled()
+		public async Task ProcessRequest_CacheEnabled_SendNotModifiedCalled()
 		{
 			// Assign
 			_fileHandler.Setup(x => x.IsFileCanBeUsedFromCache(It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime>()))
 				.Returns(true);
 
 			// Act
-			_requestHandler.ProcessRequest(_context.Object);
+			await _requestHandler.ProcessRequest(_context.Object);
 
 			// Assert
 			_response.Verify(x => x.SendNotModified(It.IsAny<DateTime>(), It.IsAny<string>()));
 		}
 
 		[Test]
-		public void ProcessRequest_CacheDisabled_SendNotModifiedCalled()
+		public async Task ProcessRequest_CacheDisabled_SendNotModifiedCalled()
 		{
 			// Assign
 			_fileHandler.Setup(x => x.IsFileCanBeUsedFromCache(It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime>()))
 				.Returns(false);
 
 			// Act
-			_requestHandler.ProcessRequest(_context.Object);
+			await _requestHandler.ProcessRequest(_context.Object);
 
 			// Assert
 			_response.Verify(x => x.SendNew(It.IsAny<byte[]>(), It.IsAny<DateTime>(), It.IsAny<string>()));

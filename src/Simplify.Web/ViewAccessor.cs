@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Simplify.DI;
+﻿using Simplify.DI;
 using Simplify.Web.Core.Views;
 
 namespace Simplify.Web
@@ -10,8 +8,8 @@ namespace Simplify.Web
 	/// </summary>
 	public abstract class ViewAccessor
 	{
-		internal virtual IViewFactory ViewFactory { get; set; }
-		internal virtual IDIResolver Resolver { get; set; }
+		internal virtual IViewFactory ViewFactory { get; set; } = null!;
+		internal virtual IDIResolver Resolver { get; set; } = null!;
 
 		/// <summary>
 		/// Gets view instance

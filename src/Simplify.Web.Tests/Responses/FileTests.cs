@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -12,8 +10,8 @@ namespace Simplify.Web.Tests.Responses
 	[TestFixture]
 	public class FileTests
 	{
-		private Mock<IWebContext> _context;
-		private HeaderDictionary _headerDictionary;
+		private Mock<IWebContext> _context = null!;
+		private HeaderDictionary _headerDictionary = null!;
 
 		[SetUp]
 		public void Initialize()

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -14,15 +12,15 @@ namespace Simplify.Web.Modules.Data
 	/// </summary>
 	public sealed class StringTable : IStringTable
 	{
-		private static readonly IDictionary<string, IDictionary<string, object>> Cache = new Dictionary<string, IDictionary<string, object>>();
-		private static readonly object Locker = new object();
+		private static readonly IDictionary<string, IDictionary<string, object?>> Cache = new Dictionary<string, IDictionary<string, object?>>();
+		private static readonly object Locker = new();
 
 		private readonly IList<string> _stringTableFiles;
 		private readonly string _defaultLanguage;
 		private readonly ILanguageManagerProvider _languageManagerProvider;
 		private readonly IFileReader _fileReader;
 		private readonly bool _memoryCache;
-		private ILanguageManager _languageManager;
+		private ILanguageManager _languageManager = null!;
 
 		/// <summary>
 		/// Load string table with current language
@@ -44,7 +42,7 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// String table items
 		/// </summary>
-		public dynamic Items { get; private set; }
+		public dynamic Items { get; private set; } = null!;
 
 		/// <summary>
 		/// Setups this string table.
@@ -62,7 +60,7 @@ namespace Simplify.Web.Modules.Data
 		/// <typeparam name="T">Enum</typeparam>
 		/// <param name="enumValue">Enum value</param>
 		/// <returns>associated value</returns>
-		public string GetAssociatedValue<T>(T enumValue) where T : struct
+		public string? GetAssociatedValue<T>(T enumValue) where T : struct
 		{
 			var currentItems = (IDictionary<string, object>)Items;
 			var enumItemName = enumValue.GetType().Name + "." + Enum.GetName(typeof(T), enumValue);
@@ -75,7 +73,7 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="itemName">Name of the item.</param>
 		/// <returns></returns>
-		public string GetItem(string itemName)
+		public string? GetItem(string itemName)
 		{
 			var currentItems = (IDictionary<string, object>)Items;
 
@@ -88,14 +86,19 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// Loads string table.
 		/// </summary>
-		private static void Load(string fileName, string defaultLanguage, string currentLanguage, IFileReader fileReader, IDictionary<string, object> currentItems)
+		private static void Load(string fileName, string defaultLanguage, string currentLanguage, IFileReader fileReader, IDictionary<string, object?> currentItems)
 		{
 			var stringTable = fileReader.LoadXDocument(fileName);
 
 			// Loading current culture strings
 			if (stringTable?.Root != null)
 				foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x => x.HasAttributes))
-					currentItems.Add((string)item.Attribute("name"), string.IsNullOrEmpty(item.Value) ? (string)item.Attribute("value") : item.InnerXml().Trim());
+				{
+					var nameAttribute = (string?)item.Attribute("name");
+
+					if (nameAttribute != null)
+						currentItems.Add(nameAttribute, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
+				}
 
 			if (currentLanguage == defaultLanguage)
 				return;
@@ -107,8 +110,13 @@ namespace Simplify.Web.Modules.Data
 			if (stringTable?.Root == null)
 				return;
 
-			foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x => x.HasAttributes && !currentItems.ContainsKey((string)x.Attribute("name"))))
-				currentItems.Add((string)item.Attribute("name"), string.IsNullOrEmpty(item.Value) ? (string)item.Attribute("value") : item.InnerXml().Trim());
+			foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x =>
+			{
+				var key = (string?)x.Attribute("name");
+
+				return x.HasAttributes && key != null && !currentItems.ContainsKey(key);
+			}))
+				currentItems.Add((string)item.Attribute("name")!, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
 		}
 
 		private void TryLoad()
@@ -142,9 +150,9 @@ namespace Simplify.Web.Modules.Data
 			return true;
 		}
 
-		private IDictionary<string, object> Load()
+		private IDictionary<string, object?> Load()
 		{
-			IDictionary<string, object> currentItems = new ExpandoObject();
+			IDictionary<string, object?> currentItems = new ExpandoObject()!;
 
 			foreach (var file in _stringTableFiles)
 				Load(file, _defaultLanguage, _languageManager.Language, _fileReader, currentItems);

@@ -14,10 +14,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		private readonly string _customMessage = "Hello world!";
 
 		[OneTimeSetUp]
-		public void SetupAttribute()
-		{
-			Attr = new RequiredAttribute();
-		}
+		public void SetupAttribute() => Attr = new RequiredAttribute();
 
 		[Test]
 		public void Validate_NotNullReference_NoExceptions()

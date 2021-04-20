@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Simplify.Web.Core;
 
 namespace Simplify.Web
@@ -16,7 +14,7 @@ namespace Simplify.Web
 		/// <value>
 		/// The response writer.
 		/// </value>
-		public virtual IResponseWriter ResponseWriter { get; internal set; }
+		public virtual IResponseWriter ResponseWriter { get; internal set; } = null!;
 
 		/// <summary>
 		/// Processes this response

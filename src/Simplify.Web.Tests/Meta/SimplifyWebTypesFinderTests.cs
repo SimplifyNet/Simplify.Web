@@ -20,7 +20,7 @@ namespace Simplify.Web.Tests.Meta
 			var type = SimplifyWebTypesFinder.FindTypeDerivedFrom<BaseBootstrapper>();
 
 			// Assert
-			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestBootstrapper", type.FullName);
+			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestBootstrapper", type!.FullName);
 		}
 
 		[Test]

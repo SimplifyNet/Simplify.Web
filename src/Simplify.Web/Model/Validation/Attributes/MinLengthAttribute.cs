@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Reflection;
 using Simplify.DI;
 
@@ -19,7 +17,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// <param name="errorMessage">The error message.</param>
 		/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
 		public MinLengthAttribute(int minimumPropertyLength,
-			string errorMessage = null,
+			string? errorMessage = null,
 			bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
 		{
 			MinimumPropertyLength = minimumPropertyLength;
@@ -39,19 +37,17 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// <param name="value">The object value.</param>
 		/// <param name="propertyInfo">Information about the property containing this attribute.</param>
 		/// <param name="resolver">The objects resolver, useful if you need to retrieve some dependencies to perform validation.</param>
-		public override void Validate(object value, PropertyInfo propertyInfo, IDIResolver resolver)
+		public override void Validate(object? value, PropertyInfo propertyInfo, IDIResolver resolver)
 		{
-			if (!(value is string))
+			if (value is not string s)
 				return;
 
-			var checkValue = (string)value;
-
-			if (checkValue.Length >= MinimumPropertyLength)
+			if (s.Length >= MinimumPropertyLength)
 				return;
 
 			TryThrowCustomOrStringTableException(resolver);
 
-			throw new ModelValidationException($"Property '{propertyInfo.Name}' required minimum length is '{MinimumPropertyLength}', actual value: '{value}'");
+			throw new ModelValidationException($"Property '{propertyInfo.Name}' required minimum length is '{MinimumPropertyLength}', actual value: '{s}'");
 		}
 	}
 }

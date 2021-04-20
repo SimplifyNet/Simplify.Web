@@ -14,12 +14,12 @@ namespace Simplify.Web.Responses
 		/// </summary>
 		/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 		/// <param name="template">The template.</param>
-		public InlineTpl(string dataCollectorVariableName, ITemplate template)
+		public InlineTpl(string? dataCollectorVariableName, ITemplate? template)
 		{
 			if (string.IsNullOrEmpty(dataCollectorVariableName))
 				throw new ArgumentNullException(nameof(dataCollectorVariableName));
 
-			DataCollectorVariableName = dataCollectorVariableName;
+			DataCollectorVariableName = dataCollectorVariableName!;
 
 			if (template != null)
 				Data = template.Get();
@@ -30,12 +30,12 @@ namespace Simplify.Web.Responses
 		/// </summary>
 		/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 		/// <param name="data">The data.</param>
-		public InlineTpl(string dataCollectorVariableName, string data)
+		public InlineTpl(string? dataCollectorVariableName, string data)
 		{
 			if (string.IsNullOrEmpty(dataCollectorVariableName))
 				throw new ArgumentNullException(nameof(dataCollectorVariableName));
 
-			DataCollectorVariableName = dataCollectorVariableName;
+			DataCollectorVariableName = dataCollectorVariableName!;
 			Data = data;
 		}
 

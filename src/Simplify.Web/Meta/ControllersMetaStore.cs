@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Attributes.Setup;
@@ -12,18 +10,15 @@ namespace Simplify.Web.Meta
 	/// </summary>
 	public class ControllersMetaStore : IControllersMetaStore
 	{
-		private static IControllersMetaStore _current;
+		private static IControllersMetaStore? _current;
 		private readonly IControllerMetaDataFactory _metaDataFactory;
-		private IList<IControllerMetaData> _controllersMetaData;
+		private IList<IControllerMetaData>? _controllersMetaData;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ControllersMetaStore"/> class.
 		/// </summary>
 		/// <param name="metaDataFactory">The meta data factory.</param>
-		public ControllersMetaStore(IControllerMetaDataFactory metaDataFactory)
-		{
-			_metaDataFactory = metaDataFactory;
-		}
+		public ControllersMetaStore(IControllerMetaDataFactory metaDataFactory) => _metaDataFactory = metaDataFactory;
 
 		/// <summary>
 		/// Current controllers meta store

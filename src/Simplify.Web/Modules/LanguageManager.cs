@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
@@ -39,13 +37,13 @@ namespace Simplify.Web.Modules
 		/// <summary>
 		/// Site current language, for example: "en", "ru", "de" etc.
 		/// </summary>
-		public string Language { get; private set; }
+		public string Language { get; private set; } = null!;
 
 		/// <summary>
 		/// Set site cookie language value
 		/// </summary>
 		/// <param name="language">Language code</param>
-		public void SetCookieLanguage(string language)
+		public void SetCookieLanguage(string? language)
 		{
 			if (string.IsNullOrEmpty(language))
 				throw new ArgumentNullException(nameof(language));

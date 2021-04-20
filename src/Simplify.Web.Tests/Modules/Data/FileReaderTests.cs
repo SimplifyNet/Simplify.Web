@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Xml.Linq;
 using Moq;
 using NUnit.Framework;
@@ -15,10 +13,10 @@ namespace Simplify.Web.Tests.Modules.Data
 	{
 		public const string DataPath = "WebSites\\FooSite\\App_Data\\";
 
-		private Mock<ILanguageManagerProvider> _languageManagerProvider;
-		private Mock<ILanguageManager> _languageManager;
+		private Mock<ILanguageManagerProvider> _languageManagerProvider = null!;
+		private Mock<ILanguageManager> _languageManager = null!;
 
-		private FileReader _fileReader;
+		private FileReader _fileReader = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -85,7 +83,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			Assert.AreEqual(
 				XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Foo.xml").Root.OuterXml());
+					.Root.OuterXml(), _fileReader.LoadXDocument("Foo.xml")!.Root.OuterXml());
 		}
 
 		[Test]
@@ -95,7 +93,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			Assert.AreEqual(
 				XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Foo").Root.OuterXml());
+					.Root.OuterXml(), _fileReader.LoadXDocument("Foo")!.Root.OuterXml());
 		}
 
 		[Test]
@@ -104,7 +102,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act & Assert
 			Assert.AreEqual(XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>en bar data</data>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Bar.xml").Root.OuterXml());
+					.Root.OuterXml(), _fileReader.LoadXDocument("Bar.xml")!.Root.OuterXml());
 		}
 
 		[Test]
@@ -120,13 +118,13 @@ namespace Simplify.Web.Tests.Modules.Data
 			_fileReader = new FileReader(DataPath, "en", _languageManagerProvider.Object);
 			_fileReader.Setup();
 
-			var result = _fileReader.LoadXDocument("Foo.xml", true);
+			var result = _fileReader.LoadXDocument("Foo.xml", true)!;
 
 			// Assert
 
 			Assert.AreEqual(XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
-					.Root.OuterXml(), result.Root.OuterXml());
+					.Root.OuterXml(), result.Root!.OuterXml());
 		}
 
 		[Test]
@@ -142,13 +140,13 @@ namespace Simplify.Web.Tests.Modules.Data
 			_fileReader = new FileReader(DataPath, "en", _languageManagerProvider.Object);
 			_fileReader.Setup();
 
-			var result = _fileReader.LoadXDocument("Bar.xml", true);
+			var result = _fileReader.LoadXDocument("Bar.xml", true)!;
 
 			// Assert
 
 			Assert.AreEqual(XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>en bar data</data>")
-					.Root.OuterXml(), result.Root.OuterXml());
+					.Root.OuterXml(), result.Root!.OuterXml());
 		}
 
 		#endregion LoadXDocument
@@ -172,7 +170,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		[Test]
 		public void LoadTextDocument_FileNotExistButDefaultFileExist_DefaultFile()
 		{
-	// Act & Assert
+			// Act & Assert
 			Assert.AreEqual("en bar data", _fileReader.LoadTextDocument("Bar.txt"));
 		}
 

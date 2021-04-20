@@ -66,7 +66,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			tf.Setup();
 
 			// Act & Assert
-			var ex = Assert.Throws<AggregateException>(() => tf.LoadAsync(null).Wait());
+			var ex = Assert.Throws<AggregateException>(() => tf.LoadAsync(null!).Wait());
 
 			// Assert
 			Assert.AreEqual(typeof(ArgumentNullException), ex?.InnerException?.GetType());

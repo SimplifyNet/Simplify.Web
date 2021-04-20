@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,20 +33,15 @@ namespace Simplify.Web.Core.StaticFiles
 		/// </summary>
 		/// <param name="relativeFilePath">The relative file path.</param>
 		/// <returns></returns>
-		public bool IsStaticFileRoutePath(string relativeFilePath)
-		{
-			return _staticFilesPaths.Where(relativeFilePath.ToLower().StartsWith).Any(path => File.Exists(_sitePhysicalPath + relativeFilePath));
-		}
+		public bool IsStaticFileRoutePath(string relativeFilePath) =>
+			_staticFilesPaths.Where(relativeFilePath.ToLower().StartsWith).Any(_ => File.Exists(_sitePhysicalPath + relativeFilePath));
 
 		/// <summary>
 		/// Gets If-Modified-Since time header from headers collection.
 		/// </summary>
 		/// <param name="headers">The headers.</param>
 		/// <returns></returns>
-		public DateTime? GetIfModifiedSinceTime(IHeaderDictionary headers)
-		{
-			return HttpRequestUtil.GetIfModifiedSinceTime(headers);
-		}
+		public DateTime? GetIfModifiedSinceTime(IHeaderDictionary headers) => HttpRequestUtil.GetIfModifiedSinceTime(headers);
 
 		/// <summary>
 		/// Determines whether file can be used from cached.
@@ -57,31 +50,24 @@ namespace Simplify.Web.Core.StaticFiles
 		/// <param name="ifModifiedSinceHeader">If modified since header.</param>
 		/// <param name="fileLastModifiedTime">The file last modified time.</param>
 		/// <returns></returns>
-		public bool IsFileCanBeUsedFromCache(string cacheControlHeader, DateTime? ifModifiedSinceHeader, DateTime fileLastModifiedTime)
-		{
-			return !HttpRequestUtil.IsNoCacheRequested(cacheControlHeader) && ifModifiedSinceHeader != null &&
-				   fileLastModifiedTime <= ifModifiedSinceHeader.Value;
-		}
+		public bool IsFileCanBeUsedFromCache(string cacheControlHeader, DateTime? ifModifiedSinceHeader, DateTime fileLastModifiedTime) =>
+			!HttpRequestUtil.IsNoCacheRequested(cacheControlHeader)
+			&& ifModifiedSinceHeader != null
+			&& fileLastModifiedTime <= ifModifiedSinceHeader.Value;
 
 		/// <summary>
 		/// Gets the relative file path of request.
 		/// </summary>
 		/// <param name="request">The request.</param>
 		/// <returns></returns>
-		public string GetRelativeFilePath(HttpRequest request)
-		{
-			return HttpRequestUtil.GetRelativeFilePath(request);
-		}
+		public string GetRelativeFilePath(HttpRequest request) => HttpRequestUtil.GetRelativeFilePath(request);
 
 		/// <summary>
 		/// Gets the file last modification time.
 		/// </summary>
 		/// <param name="relativeFilePath">The relative file path.</param>
 		/// <returns></returns>
-		public DateTime GetFileLastModificationTime(string relativeFilePath)
-		{
-			return DateTimeOperations.TrimMilliseconds(File.GetLastWriteTimeUtc(relativeFilePath));
-		}
+		public DateTime GetFileLastModificationTime(string relativeFilePath) => DateTimeOperations.TrimMilliseconds(File.GetLastWriteTimeUtc(relativeFilePath));
 
 		/// <summary>
 		/// Gets the file data.

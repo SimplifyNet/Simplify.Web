@@ -5,6 +5,6 @@ namespace Simplify.Web.Tests.TestEntities.Nesting
 	public interface ISubNestedModel
 	{
 		[Required]
-		string BuiltInType { get; set; }
+		string? BuiltInType { get; set; }
 	}
 }

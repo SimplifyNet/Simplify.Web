@@ -65,8 +65,8 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 
 			var coll = new List<KeyValuePair<string, string[]>>
 			{
-				new KeyValuePair<string, string[]>("Prop1", new []{"15--2014--03"}),
-				new KeyValuePair<string, string[]>("Prop2", new []{"2014-03-16T00:00:00.0000000"})
+				new("Prop1", new []{"15--2014--03"}),
+				new("Prop2", new []{"2014-03-16T00:00:00.0000000"})
 			};
 
 			// Act
@@ -89,11 +89,11 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 			};
 
 			// Act
-			var obj = ListToModelParser.Parse<TestModelStringsList>(coll);
+			var obj = ListToModelParser.Parse<TestModelStringsList>(coll)!;
 
 			// Assert
 
-			Assert.AreEqual("asd", obj.Prop1[0]);
+			Assert.AreEqual("asd", obj.Prop1![0]);
 			Assert.AreEqual("qwe", obj.Prop1[1]);
 		}
 

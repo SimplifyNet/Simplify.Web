@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-namespace Simplify.Web.Routing
+﻿namespace Simplify.Web.Routing
 {
 	/// <summary>
 	/// Provides HTTP route matching result
@@ -12,7 +10,7 @@ namespace Simplify.Web.Routing
 		/// </summary>
 		/// <param name="matched">if set to <c>true</c> then it means what matching was successful.</param>
 		/// <param name="routeParameters">The route parameters.</param>
-		public RouteMatchResult(bool matched = false, dynamic routeParameters = null)
+		public RouteMatchResult(bool matched = false, dynamic? routeParameters = null)
 		{
 			Success = matched;
 			RouteParameters = routeParameters;
@@ -32,6 +30,6 @@ namespace Simplify.Web.Routing
 		/// <value>
 		/// The route parsed parameters.
 		/// </value>
-		public dynamic RouteParameters { get; }
+		public dynamic? RouteParameters { get; }
 	}
 }

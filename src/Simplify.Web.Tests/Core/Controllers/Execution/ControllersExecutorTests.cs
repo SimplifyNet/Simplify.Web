@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -17,17 +15,16 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 	[TestFixture]
 	public class ControllersExecutorTests
 	{
-		private ControllerExecutor _executor;
-		private Mock<IControllerFactory> _controllerFactory;
-		private Mock<IControllerResponseBuilder> _controllerResponseBuilder;
+		private ControllerExecutor _executor = null!;
+		private Mock<IControllerFactory> _controllerFactory = null!;
+		private Mock<IControllerResponseBuilder> _controllerResponseBuilder = null!;
 
-		private Mock<Controller> _syncController;
+		private Mock<Controller> _syncController = null!;
 
-		private Mock<AsyncController> _asyncController;
-		private Mock<Controller<TestModel>> _syncModelController;
+		private Mock<AsyncController> _asyncController = null!;
+		private Mock<Controller<TestModel>> _syncModelController = null!;
 
-		private Mock<AsyncController<TestModel>> _asyncModelController;
-		private Mock<ControllerResponse> _controllerResponse;
+		private Mock<ControllerResponse> _controllerResponse = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -39,7 +36,6 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			_syncController = new Mock<Controller>();
 			_asyncController = new Mock<AsyncController>();
 			_syncModelController = new Mock<Controller<TestModel>>();
-			_asyncModelController = new Mock<AsyncController<TestModel>>();
 			_controllerResponse = new Mock<ControllerResponse>();
 		}
 
@@ -52,7 +48,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
 						It.IsAny<IDictionary<string, object>>())).Returns(_syncController.Object);
 			// Act
-			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
+			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
 
 			// Assert
 
@@ -76,7 +72,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
 						It.IsAny<IDictionary<string, object>>())).Returns(_syncController.Object);
 			// Act
-			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
+			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
 
 			// Assert
 
@@ -101,7 +97,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
 						It.IsAny<IDictionary<string, object>>())).Returns(_syncController.Object);
 			// Act
-			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
+			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
 
 			// Assert
 
@@ -126,7 +122,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
 						It.IsAny<IDictionary<string, object>>())).Returns(_asyncController.Object);
 			// Act
-			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
+			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
 
 			// Assert
 
@@ -151,7 +147,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),
 						It.IsAny<IDictionary<string, object>>())).Returns(_syncModelController.Object);
 			// Act
-			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null, null);
+			var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
 
 			// Assert
 

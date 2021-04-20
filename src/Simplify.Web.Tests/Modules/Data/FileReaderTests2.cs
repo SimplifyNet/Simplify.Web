@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
@@ -10,11 +8,10 @@ namespace Simplify.Web.Tests.Modules.Data
 	[TestFixture]
 	public class FileReaderTests2
 	{
+		private Mock<ILanguageManagerProvider> _languageManagerProvider = null!;
+		private Mock<ILanguageManager> _languageManager = null!;
 
-		private Mock<ILanguageManagerProvider> _languageManagerProvider;
-		private Mock<ILanguageManager> _languageManager;
-
-		private FileReader _fileReader;
+		private FileReader _fileReader = null!;
 
 		[SetUp]
 		public void Initialize()

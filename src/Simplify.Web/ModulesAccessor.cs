@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Simplify.Web.Modules;
+﻿using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
 
@@ -17,12 +15,12 @@ namespace Simplify.Web
 		/// <value>
 		/// The various HTML generation classes container
 		/// </value>
-		public virtual IHtmlWrapper Html { get; internal set; }
+		public virtual IHtmlWrapper Html { get; internal set; } = null!;
 
 		/// <summary>
 		/// Current request environment data.
 		/// </summary>
-		public virtual IEnvironment Environment { get; internal set; }
+		public virtual IEnvironment Environment { get; internal set; } = null!;
 
 		/// <summary>
 		/// Gets the string table.
@@ -30,7 +28,7 @@ namespace Simplify.Web
 		/// <value>
 		/// The string table.
 		/// </value>
-		public virtual dynamic StringTable { get; internal set; }
+		public virtual dynamic StringTable { get; internal set; } = null!;
 
 		/// <summary>
 		/// Gets the string table manager.
@@ -38,11 +36,11 @@ namespace Simplify.Web
 		/// <value>
 		/// The string table manager.
 		/// </value>
-		public virtual IStringTable StringTableManager { get; internal set; }
+		public virtual IStringTable StringTableManager { get; internal set; } = null!;
 
 		/// <summary>
 		/// Text templates loader.
 		/// </summary>
-		public virtual ITemplateFactory TemplateFactory { get; internal set; }
+		public virtual ITemplateFactory TemplateFactory { get; internal set; } = null!;
 	}
 }

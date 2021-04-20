@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Security.Claims;
@@ -21,15 +19,14 @@ namespace Simplify.Web.Tests.Core.Controllers
 	[TestFixture]
 	public class ControllersProcessorTests
 	{
-		private readonly IDIContainerProvider _containerProvider = null;
 		private readonly IDictionary<string, object> _routeParameters = new ExpandoObject();
-		private ControllersProcessor _processor;
-		private Mock<IControllersAgent> _agent;
-		private Mock<IControllerExecutor> _controllersExecutor;
-		private Mock<IRedirector> _redirector;
-		private Mock<HttpContext> _context;
+		private ControllersProcessor _processor = null!;
+		private Mock<IControllersAgent> _agent = null!;
+		private Mock<IControllerExecutor> _controllersExecutor = null!;
+		private Mock<IRedirector> _redirector = null!;
+		private Mock<HttpContext> _context = null!;
 
-		private ControllerMetaData _metaData;
+		private ControllerMetaData _metaData = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -67,7 +64,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult());
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -89,7 +86,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				.Returns(new ControllerMetaData(typeof(TestController2)));
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -121,7 +118,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 						It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(Task.FromResult(ControllerResponseResult.RawOutput));
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -151,7 +148,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 						It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(Task.FromResult(ControllerResponseResult.Redirect));
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -177,7 +174,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(true);
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -200,7 +197,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -233,7 +230,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.SetupSequence(
 				x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>()))
 				.Returns(new RouteMatchResult(true, _routeParameters))
-				.Returns((IRouteMatchResult)null);
+				.Returns((IRouteMatchResult?)null);
 			_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>
 			{
 				_metaData,
@@ -241,7 +238,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			});
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -280,7 +277,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				Task.FromResult(ControllerResponseResult.RawOutput));
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -310,7 +307,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				Task.FromResult(ControllerResponseResult.Redirect));
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -328,7 +325,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.NotAuthenticated);
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -347,7 +344,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 				.Returns(new ControllerMetaData(typeof(TestController2)));
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 
@@ -371,7 +368,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.Forbidden);
 
 			// Act
-			var result = await _processor.ProcessControllers(_containerProvider, _context.Object);
+			var result = await _processor.ProcessControllers(null!, _context.Object);
 
 			// Assert
 

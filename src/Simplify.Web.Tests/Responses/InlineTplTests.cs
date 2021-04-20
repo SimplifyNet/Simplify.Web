@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -13,23 +11,22 @@ namespace Simplify.Web.Tests.Responses
 	[TestFixture]
 	public class InlineTplTests
 	{
-		private Mock<IDataCollector> _dataCollector;
+		private Mock<IDataCollector> _dataCollector = null!;
 
 		[SetUp]
-		public void Initialize()
-		{
-			_dataCollector = new Mock<IDataCollector>();
-		}
+		public void Initialize() => _dataCollector = new Mock<IDataCollector>();
 
 		[Test]
 		public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
 		{
+			// ReSharper disable ObjectCreationAsStatement
 			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
 			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, TemplateBuilder.FromString("").Build()));
+			// ReSharper restore ObjectCreationAsStatement
 		}
 
 		[Test]
-		public async Task InlineTplProcess_NormalData_DataAddedtoDataCollector()
+		public async Task InlineTplProcess_NormalData_DataAddedToDataCollector()
 		{
 			// Assign
 
@@ -50,7 +47,7 @@ namespace Simplify.Web.Tests.Responses
 		{
 			// Assign
 
-			var tplData = new Mock<InlineTpl>("foo", TemplateBuilder.FromString("test").Build()) { CallBase = true };
+			var tplData = new Mock<InlineTpl>("foo", await TemplateBuilder.FromString("test").BuildAsync()) { CallBase = true };
 			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 			// Act

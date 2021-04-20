@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Simplify.Web.Routing;
 
 namespace Simplify.Web.Tests.Routing
@@ -8,13 +6,10 @@ namespace Simplify.Web.Tests.Routing
 	[TestFixture]
 	public class ControllerPathParserTests
 	{
-		private ControllerPathParser _parser;
+		private ControllerPathParser _parser = null!;
 
 		[SetUp]
-		public void Initialize()
-		{
-			_parser = new ControllerPathParser();
-		}
+		public void Initialize() => _parser = new ControllerPathParser();
 
 		[Test]
 		public void Parse_Root_NoSegments()

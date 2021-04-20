@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace Simplify.Web.Model.Binding.Parsers
@@ -18,7 +16,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		/// <param name="format">The format.</param>
 		/// <returns></returns>
 		/// <exception cref="ModelNotSupportedException"></exception>
-		public static object ParseUndefined(string value, Type parsingType, string format = null)
+		public static object? ParseUndefined(string value, Type parsingType, string? format = null)
 		{
 			if (parsingType == typeof(string))
 				return ParseString(value);
@@ -64,10 +62,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns></returns>
-		public static string ParseString(string value)
-		{
-			return string.IsNullOrEmpty(value) ? null : value;
-		}
+		public static string? ParseString(string value) => string.IsNullOrEmpty(value) ? null : value;
 
 		/// <summary>
 		/// Parses the boolean from string.
@@ -220,7 +215,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		/// <param name="format">The format.</param>
 		/// <returns></returns>
 		/// <exception cref="ModelBindingException"></exception>
-		public static DateTime ParseDateTime(string value, string format = null)
+		public static DateTime ParseDateTime(string value, string? format = null)
 		{
 			if (string.IsNullOrEmpty(value))
 				return default;
@@ -249,7 +244,7 @@ namespace Simplify.Web.Model.Binding.Parsers
 		/// <param name="format">The format.</param>
 		/// <returns></returns>
 		/// <exception cref="ModelBindingException"></exception>
-		public static DateTime? ParseNullableDateTime(string value, string format = null)
+		public static DateTime? ParseNullableDateTime(string value, string? format = null)
 		{
 			if (string.IsNullOrEmpty(value))
 				return null;

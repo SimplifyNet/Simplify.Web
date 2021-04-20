@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Attributes.Setup;

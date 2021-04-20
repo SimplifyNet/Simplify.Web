@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules
 {
@@ -9,18 +7,14 @@ namespace Simplify.Web.Modules
 	/// </summary>
 	public class WebContextProvider : IWebContextProvider
 	{
-		private IWebContext _webContext;
+		private IWebContext? _webContext;
 
 		/// <summary>
 		/// Creates the web context.
 		/// </summary>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public void Setup(HttpContext context)
-		{
-			if (_webContext == null)
-				_webContext = new WebContext(context);
-		}
+		public void Setup(HttpContext context) => _webContext ??= new WebContext(context);
 
 		/// <summary>
 		/// Gets the web context.
@@ -28,7 +22,7 @@ namespace Simplify.Web.Modules
 		/// <returns></returns>
 		public IWebContext Get()
 		{
-			return _webContext;
+			return _webContext!;
 		}
 	}
 }

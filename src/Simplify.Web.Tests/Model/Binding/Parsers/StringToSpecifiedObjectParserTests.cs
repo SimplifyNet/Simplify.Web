@@ -112,9 +112,9 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void ParseUndefined_BoolNull_DefaulBool()
+		public void ParseUndefined_BoolNull_DefaultBool()
 		{
-			Assert.AreEqual(default(bool), StringToSpecifiedObjectParser.ParseUndefined(null, typeof(bool)));
+			Assert.AreEqual(default(bool), StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(bool)));
 		}
 
 		[Test]
@@ -138,7 +138,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		[Test]
 		public void ParseUndefined_NullableBoolNull_Null()
 		{
-			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null, typeof(bool?)));
+			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(bool?)));
 		}
 
 		[Test]
@@ -154,9 +154,9 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void ParseUndefined_IntNull_DefaulInt()
+		public void ParseUndefined_IntNull_DefaultInt()
 		{
-			Assert.AreEqual(default(int), StringToSpecifiedObjectParser.ParseUndefined(null, typeof(int)));
+			Assert.AreEqual(default(int), StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(int)));
 		}
 
 		[Test]
@@ -174,7 +174,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		[Test]
 		public void ParseUndefined_NullableIntNull_Null()
 		{
-			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null, typeof(int?)));
+			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(int?)));
 		}
 
 		[Test]
@@ -190,9 +190,9 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void ParseUndefined_DecimalNull_DefaulDecimal()
+		public void ParseUndefined_DecimalNull_DefaultDecimal()
 		{
-			Assert.AreEqual(default(decimal), StringToSpecifiedObjectParser.ParseUndefined(null, typeof(decimal)));
+			Assert.AreEqual(default(decimal), StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(decimal)));
 		}
 
 		[Test]
@@ -210,7 +210,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		[Test]
 		public void ParseUndefined_NullableDecimalNull_Null()
 		{
-			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null, typeof(decimal?)));
+			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(decimal?)));
 		}
 
 		[Test]
@@ -226,9 +226,9 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void ParseUndefined_LongNull_DefaulLong()
+		public void ParseUndefined_LongNull_DefaultLong()
 		{
-			Assert.AreEqual(default(long), StringToSpecifiedObjectParser.ParseUndefined(null, typeof(long)));
+			Assert.AreEqual(default(long), StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(long)));
 		}
 
 		[Test]
@@ -246,7 +246,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		[Test]
 		public void ParseUndefined_NullableLongNull_Null()
 		{
-			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null, typeof(long?)));
+			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(long?)));
 		}
 
 		[Test]
@@ -270,15 +270,15 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void ParseUndefined_DateTimeNull_DefaulDateTime()
+		public void ParseUndefined_DateTimeNull_DefaultDateTime()
 		{
-			Assert.AreEqual(default(DateTime), StringToSpecifiedObjectParser.ParseUndefined(null, typeof(DateTime)));
+			Assert.AreEqual(default(DateTime), StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(DateTime)));
 		}
 
 		[Test]
-		public void ParseUndefined_DateTimeWithFormatNull_DefaulDateTime()
+		public void ParseUndefined_DateTimeWithFormatNull_DefaultDateTime()
 		{
-			Assert.AreEqual(default(DateTime), StringToSpecifiedObjectParser.ParseUndefined(null, typeof(DateTime), "dd.MM.yyyy"));
+			Assert.AreEqual(default(DateTime), StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(DateTime), "dd.MM.yyyy"));
 		}
 
 		[Test]
@@ -308,15 +308,15 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers
 		}
 
 		[Test]
-		public void ParseUndefined_NullableDateTimeNull_DefaulDateTime()
+		public void ParseUndefined_NullableDateTimeNull_DefaultDateTime()
 		{
-			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null, typeof(DateTime?)));
+			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(DateTime?)));
 		}
 
 		[Test]
-		public void ParseUndefined_NullableDateTimeWithFormatNull_DefaulDateTime()
+		public void ParseUndefined_NullableDateTimeWithFormatNull_DefaultDateTime()
 		{
-			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null, typeof(DateTime?), "dd.MM.yyyy"));
+			Assert.IsNull(StringToSpecifiedObjectParser.ParseUndefined(null!, typeof(DateTime?), "dd.MM.yyyy"));
 		}
 
 		[Test]

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
@@ -13,9 +11,9 @@ namespace Simplify.Web.Tests.Core
 	[TestFixture]
 	public class RequestHandlerTests
 	{
-		private Mock<IControllersRequestHandler> _controllersRequestHandler;
-		private Mock<IStaticFilesRequestHandler> _staticFilesRequestHandler;
-		private RequestHandler _requestHandler;
+		private Mock<IControllersRequestHandler> _controllersRequestHandler = null!;
+		private Mock<IStaticFilesRequestHandler> _staticFilesRequestHandler = null!;
+		private RequestHandler _requestHandler = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -34,7 +32,7 @@ namespace Simplify.Web.Tests.Core
 			_staticFilesRequestHandler.Setup(x => x.IsStaticFileRoutePath(It.IsAny<HttpContext>())).Returns(true);
 
 			// Act
-			_requestHandler.ProcessRequest(null, null);
+			_requestHandler.ProcessRequest(null!, null!);
 
 			// Assert
 
@@ -50,7 +48,7 @@ namespace Simplify.Web.Tests.Core
 			_staticFilesRequestHandler.Setup(x => x.IsStaticFileRoutePath(It.IsAny<HttpContext>())).Returns(true);
 
 			// Act
-			_requestHandler.ProcessRequest(null, null);
+			_requestHandler.ProcessRequest(null!, null!);
 
 			// Assert
 
@@ -65,7 +63,7 @@ namespace Simplify.Web.Tests.Core
 			_staticFilesRequestHandler.Setup(x => x.IsStaticFileRoutePath(It.IsAny<HttpContext>())).Returns(false);
 
 			// Act
-			_requestHandler.ProcessRequest(null, null);
+			_requestHandler.ProcessRequest(null!, null!);
 
 			// Assert
 

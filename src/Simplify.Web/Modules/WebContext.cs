@@ -34,7 +34,7 @@ namespace Simplify.Web.Modules
 
 			IsAjax = Request.Headers.ContainsKey("X-Requested-With");
 
-			Route = Request.Path.Value;
+			Route = Request.Path.Value ?? "/";
 		}
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace Simplify.Web.Modules
 		/// <summary>
 		/// Gets a value indicating whether current request context user is not null and is authenticated.
 		/// </summary>
-		public bool IsAuthenticated => Context.User != null && Context.User.Identity.IsAuthenticated;
+		public bool IsAuthenticated => Context.User != null && Context.User.Identity != null && Context.User.Identity.IsAuthenticated;
 
 		/// <summary>
 		/// Gets or sets the request body.

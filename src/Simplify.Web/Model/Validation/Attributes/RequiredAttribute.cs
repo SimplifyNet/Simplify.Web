@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Reflection;
 using Simplify.DI;
 
@@ -17,7 +15,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// </summary>
 		/// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
 		/// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>
-		public RequiredAttribute(string errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
+		public RequiredAttribute(string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
 		{
 		}
 
@@ -32,7 +30,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// or
 		/// or
 		/// </exception>
-		public override void Validate(object value, PropertyInfo propertyInfo, IDIResolver resolver)
+		public override void Validate(object? value, PropertyInfo propertyInfo, IDIResolver resolver)
 		{
 			var objectIsValid = false;
 
@@ -40,7 +38,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 			{
 				objectIsValid = value switch
 				{
-					DateTime _ => !value.Equals(default(DateTime)),
+					DateTime => !value.Equals(default(DateTime)),
 					string s => !string.IsNullOrEmpty(s),
 					_ => true
 				};

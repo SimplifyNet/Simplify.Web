@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,15 +15,15 @@ namespace Simplify.Web.Modules.Data
 	public sealed class TemplateFactory : ITemplateFactory
 	{
 		private static readonly IDictionary<KeyValuePair<string, string>, string> Cache = new Dictionary<KeyValuePair<string, string>, string>();
-		private static readonly object Locker = new object();
-		private readonly SemaphoreSlim _cacheSemaphore = new SemaphoreSlim(1, 1);
+		private static readonly object Locker = new();
+		private readonly SemaphoreSlim _cacheSemaphore = new(1, 1);
 
 		private readonly IEnvironment _environment;
 		private readonly ILanguageManagerProvider _languageManagerProvider;
 		private readonly string _defaultLanguage;
 		private readonly bool _templatesMemoryCache;
 		private readonly bool _loadTemplatesFromAssembly;
-		private ILanguageManager _languageManager;
+		private ILanguageManager _languageManager = null!;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TemplateFactory" /> class.
@@ -47,10 +45,7 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// Setups the template factory.
 		/// </summary>
-		public void Setup()
-		{
-			_languageManager = _languageManagerProvider.Get();
-		}
+		public void Setup() => _languageManager = _languageManagerProvider.Get();
 
 		/// <summary>
 		/// Load web-site template from a file
@@ -170,7 +165,7 @@ namespace Simplify.Web.Modules.Data
 				.BuildAsync();
 		}
 
-		private ITemplate TryLoadFromCache(string filePath)
+		private ITemplate? TryLoadFromCache(string filePath)
 		{
 			var existingItem = Cache.FirstOrDefault(x => x.Key.Key == filePath && x.Key.Value == _languageManager.Language);
 

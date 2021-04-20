@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
@@ -11,8 +9,8 @@ namespace Simplify.Web.Tests.Modules.Data
 	[TestFixture]
 	public class DataCollectorTests
 	{
-		private Mock<IStringTable> _stringTable;
-		private DataCollector _dataCollector;
+		private Mock<IStringTable> _stringTable = null!;
+		private DataCollector _dataCollector = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -25,7 +23,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		public void AddVariableWithTest_Nulls_ArgumentException()
 		{
 			// Act & Assert
-			Assert.Throws<ArgumentException>(() => _dataCollector.Add(null, (string)null));
+			Assert.Throws<ArgumentException>(() => _dataCollector.Add(null, (string?)null));
 		}
 
 		[Test]
@@ -69,7 +67,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		public void AddVariableWithTemplate_Null_NotAdded()
 		{
 			// Act
-			_dataCollector.Add("Foo", (ITemplate)null);
+			_dataCollector.Add("Foo", (ITemplate?)null);
 
 			// Assert
 			Assert.AreEqual(0, _dataCollector.Items.Count);

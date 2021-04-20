@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using NUnit.Framework;
 using Simplify.Web.Diagnostics;
 
@@ -14,9 +12,9 @@ namespace Simplify.Web.Tests.Diagnostics
 		{
 			try
 			{
-				string text = null;
+				string? text = null;
 				// ReSharper disable PossibleNullReferenceException
-				text.IndexOf("test", StringComparison.Ordinal);
+				text!.IndexOf("test", StringComparison.Ordinal);
 				// ReSharper restore PossibleNullReferenceException
 			}
 			catch (Exception e)

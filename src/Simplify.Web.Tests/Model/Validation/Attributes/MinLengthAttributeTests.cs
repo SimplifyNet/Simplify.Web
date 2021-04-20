@@ -9,10 +9,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		public const int MinimumPropertyLength = 2;
 
 		[OneTimeSetUp]
-		public void SetupAttribute()
-		{
-			Attr = new MinLengthAttribute(MinimumPropertyLength);
-		}
+		public void SetupAttribute() => Attr = new MinLengthAttribute(MinimumPropertyLength);
 
 		[Test]
 		public void Validate_MinLengthOk_Ok()

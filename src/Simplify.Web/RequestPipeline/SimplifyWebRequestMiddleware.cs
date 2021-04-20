@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
@@ -22,12 +20,12 @@ namespace Simplify.Web.RequestPipeline
 		/// <summary>
 		/// Occurs when exception occurred and catched by framework.
 		/// </summary>
-		public static event ExceptionEventHandler OnException;
+		public static event ExceptionEventHandler? OnException;
 
 		/// <summary>
 		/// Occurs on each request.
 		/// </summary>
-		public static event TraceEventHandler OnTrace;
+		public static event TraceEventHandler? OnTrace;
 
 		/// <summary>
 		/// Process an individual request.

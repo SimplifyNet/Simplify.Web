@@ -9,10 +9,7 @@ namespace Simplify.Web.Tests.Model.Validation.Attributes
 		private const string RegexPattern = "^[a-zA-Z]+$";
 
 		[OneTimeSetUp]
-		public void SetupAttribute()
-		{
-			Attr = new RegexAttribute(RegexPattern);
-		}
+		public void SetupAttribute() => Attr = new RegexAttribute(RegexPattern);
 
 		[Test]
 		public void Validate_RegexOk_Ok()

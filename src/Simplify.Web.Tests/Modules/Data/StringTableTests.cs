@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using Moq;
 using NUnit.Framework;
@@ -21,11 +19,11 @@ namespace Simplify.Web.Tests.Modules.Data
 		private const string DefaultLanguage = "en";
 
 		private readonly IList<string> _stringTableFiles = new[] { "StringTable.xml" };
-		private StringTable _stringTable;
-		private Mock<IFileReader> _fileReader;
+		private StringTable? _stringTable;
+		private Mock<IFileReader> _fileReader = null!;
 
-		private Mock<ILanguageManagerProvider> _languageManagerProvider;
-		private Mock<ILanguageManager> _languageManager;
+		private Mock<ILanguageManagerProvider> _languageManagerProvider = null!;
+		private Mock<ILanguageManager> _languageManager = null!;
 
 		[SetUp]
 		public void Initialize()
@@ -87,7 +85,7 @@ namespace Simplify.Web.Tests.Modules.Data
 		{
 			// Assign
 
-			_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns((XDocument)null);
+			_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns((XDocument?)null);
 			_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.Is<string>(d => d == DefaultLanguage), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"SiteTitle\" value=\"Your site title!\" /></items>"));
 
 			// Act

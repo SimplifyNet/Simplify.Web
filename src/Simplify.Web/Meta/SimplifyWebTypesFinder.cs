@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,8 +11,8 @@ namespace Simplify.Web.Meta
 	/// </summary>
 	public static class SimplifyWebTypesFinder
 	{
-		private static Assembly[] _currentDomainAssemblies;
-		private static IEnumerable<Type> _currentDomainAssembliesTypes;
+		private static Assembly[]? _currentDomainAssemblies;
+		private static IEnumerable<Type>? _currentDomainAssembliesTypes;
 
 		/// <summary>
 		/// Gets or sets the excluded assemblies prefixes.
@@ -42,7 +40,7 @@ namespace Simplify.Web.Meta
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static Type FindTypeDerivedFrom<T>()
+		public static Type? FindTypeDerivedFrom<T>()
 		{
 			var type = typeof(T);
 
@@ -116,7 +114,7 @@ namespace Simplify.Web.Meta
 		{
 			var types = new List<Type>();
 
-			foreach (var assembly in assemblies.Where(assembly => !ExcludedAssembliesPrefixes.Any(prefix => assembly.FullName.StartsWith(prefix))))
+			foreach (var assembly in assemblies.Where(assembly => !ExcludedAssembliesPrefixes.Any(prefix => assembly.FullName != null && assembly.FullName.StartsWith(prefix))))
 				types.AddRange(assembly.GetTypes());
 
 			return types;

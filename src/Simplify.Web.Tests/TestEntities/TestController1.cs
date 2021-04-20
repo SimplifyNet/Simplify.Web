@@ -16,9 +16,6 @@ namespace Simplify.Web.Tests.TestEntities
 	[Authorize("Admin, User")]
 	public class TestController1 : Controller
 	{
-		public override ControllerResponse Invoke()
-		{
-			throw new NotImplementedException();
-		}
+		public override ControllerResponse Invoke() => throw new NotImplementedException();
 	}
 }

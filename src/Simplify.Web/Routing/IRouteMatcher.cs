@@ -11,6 +11,6 @@
 		/// <param name="currentPath">The current path.</param>
 		/// <param name="controllerPath">The controller path.</param>
 		/// <returns></returns>
-		IRouteMatchResult Match(string currentPath, string controllerPath);
+		IRouteMatchResult Match(string? currentPath, string? controllerPath);
 	}
 }

@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -14,11 +12,11 @@ namespace Simplify.Web.Tests.Modules
 	[TestFixture]
 	public class LanguageManagerTests
 	{
-		private LanguageManager _languageManager;
-		private Mock<ISimplifyWebSettings> _settings;
-		private Mock<HttpContext> _context;
+		private LanguageManager _languageManager = null!;
+		private Mock<ISimplifyWebSettings> _settings = null!;
+		private Mock<HttpContext> _context = null!;
 
-		private Mock<IResponseCookies> _responseCookies;
+		private Mock<IResponseCookies> _responseCookies = null!;
 
 		[SetUp]
 		public void Initialize()

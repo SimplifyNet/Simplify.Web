@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,20 +11,20 @@ namespace Simplify.Web.Modules.Data
 	/// </summary>
 	public class FileReader : IFileReader
 	{
-		private static readonly IDictionary<KeyValuePair<string, string>, XDocument> XmlCache =
-			new Dictionary<KeyValuePair<string, string>, XDocument>();
+		private static readonly IDictionary<KeyValuePair<string, string>, XDocument?> XmlCache =
+			new Dictionary<KeyValuePair<string, string>, XDocument?>();
 
-		private static readonly IDictionary<KeyValuePair<string, string>, string> TextCache =
-			new Dictionary<KeyValuePair<string, string>, string>();
+		private static readonly IDictionary<KeyValuePair<string, string>, string?> TextCache =
+			new Dictionary<KeyValuePair<string, string>, string?>();
 
-		private static readonly object Locker = new object();
+		private static readonly object Locker = new();
 
 		private readonly string _dataPhysicalPath;
 		private readonly string _defaultLanguage;
 		private readonly ILanguageManagerProvider _languageManagerProvider;
 		private readonly bool _disableCache;
 
-		private ILanguageManager _languageManager;
+		private ILanguageManager _languageManager = null!;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileReader" /> class.
@@ -84,12 +82,12 @@ namespace Simplify.Web.Modules.Data
 		/// <param name="fileName">File name</param>
 		/// <param name="language">File language</param>
 		/// <returns>File path</returns>
-		public string GetFilePath(string fileName, string language)
+		public string GetFilePath(string? fileName, string? language)
 		{
 			if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException(nameof(fileName));
 			if (string.IsNullOrEmpty(language)) throw new ArgumentNullException(nameof(language));
 
-			var indexOfPoint = fileName.LastIndexOf(".", StringComparison.Ordinal);
+			var indexOfPoint = fileName!.LastIndexOf(".", StringComparison.Ordinal);
 
 			if (indexOfPoint == -1)
 				return $"{_dataPhysicalPath}{fileName}.{language}";
@@ -112,10 +110,7 @@ namespace Simplify.Web.Modules.Data
 		/// <returns>
 		/// Text from a file
 		/// </returns>
-		public string LoadTextDocument(string fileName, bool memoryCache = false)
-		{
-			return LoadTextDocument(fileName, _languageManager.Language, memoryCache);
-		}
+		public string? LoadTextDocument(string fileName, bool memoryCache = false) => LoadTextDocument(fileName, _languageManager.Language, memoryCache);
 
 		/// <summary>
 		/// Load text from a file with specific language located in data folder
@@ -127,12 +122,12 @@ namespace Simplify.Web.Modules.Data
 		/// Text from a file
 		/// </returns>
 		/// <exception cref="ArgumentNullException">fileName</exception>
-		public string LoadTextDocument(string fileName, string language, bool memoryCache = false)
+		public string? LoadTextDocument(string fileName, string language, bool memoryCache = false)
 		{
 			if (string.IsNullOrEmpty(fileName))
 				throw new ArgumentNullException(nameof(fileName));
 
-			string data;
+			string? data;
 
 			if (!memoryCache || _disableCache)
 			{
@@ -160,10 +155,7 @@ namespace Simplify.Web.Modules.Data
 		/// <returns>
 		/// Xml document
 		/// </returns>
-		public XDocument LoadXDocument(string fileName, bool memoryCache = false)
-		{
-			return LoadXDocument(fileName, _languageManager.Language, memoryCache);
-		}
+		public XDocument? LoadXDocument(string fileName, bool memoryCache = false) => LoadXDocument(fileName, _languageManager.Language, memoryCache);
 
 		/// <summary>
 		/// Load xml document from a file with specific language located in data folder
@@ -175,7 +167,7 @@ namespace Simplify.Web.Modules.Data
 		/// Xml document
 		/// </returns>
 		/// <exception cref="ArgumentNullException">fileName</exception>
-		public XDocument LoadXDocument(string fileName, string language, bool memoryCache = false)
+		public XDocument? LoadXDocument(string fileName, string language, bool memoryCache = false)
 		{
 			if (string.IsNullOrEmpty(fileName))
 				throw new ArgumentNullException(nameof(fileName));
@@ -183,7 +175,7 @@ namespace Simplify.Web.Modules.Data
 			if (!fileName.EndsWith(".xml"))
 				fileName = fileName + ".xml";
 
-			XDocument data;
+			XDocument? data;
 
 			if (!memoryCache || _disableCache)
 			{
@@ -201,7 +193,7 @@ namespace Simplify.Web.Modules.Data
 
 		#endregion XML
 
-		private static bool TryToLoadTextFileFromCache(string fileName, string language, out string data)
+		private static bool TryToLoadTextFileFromCache(string fileName, string language, out string? data)
 		{
 			data = null;
 
@@ -214,7 +206,7 @@ namespace Simplify.Web.Modules.Data
 			return true;
 		}
 
-		private static bool TryToLoadXDocumentFromCache(string fileName, string language, out XDocument data)
+		private static bool TryToLoadXDocumentFromCache(string fileName, string language, out XDocument? data)
 		{
 			data = null;
 
@@ -227,7 +219,7 @@ namespace Simplify.Web.Modules.Data
 			return true;
 		}
 
-		private bool LoadTextFileFromFileSystem(string fileName, string language, out string data)
+		private bool LoadTextFileFromFileSystem(string fileName, string language, out string? data)
 		{
 			data = null;
 
@@ -240,7 +232,7 @@ namespace Simplify.Web.Modules.Data
 			return true;
 		}
 
-		private bool LoadTextFileCached(string fileName, string language, out string data)
+		private bool LoadTextFileCached(string fileName, string language, out string? data)
 		{
 			if (TryToLoadTextFileFromCache(fileName, language, out data))
 				return true;
@@ -259,18 +251,18 @@ namespace Simplify.Web.Modules.Data
 			}
 		}
 
-		private bool LoadXDocumentFromFileSystem(string fileName, string language, out XDocument data)
+		private bool LoadXDocumentFromFileSystem(string fileName, string language, out XDocument? data)
 		{
 			data = null;
 
 			if (!LoadTextFileFromFileSystem(fileName, language, out var internalData))
 				return false;
 
-			data = XDocument.Parse(internalData);
+			data = XDocument.Parse(internalData!);
 			return true;
 		}
 
-		private bool LoadXDocumentCached(string fileName, string language, out XDocument data)
+		private bool LoadXDocumentCached(string fileName, string language, out XDocument? data)
 		{
 			if (TryToLoadXDocumentFromCache(fileName, language, out data))
 				return true;
