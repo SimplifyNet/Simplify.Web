@@ -5,7 +5,7 @@ using Simplify.Templates;
 namespace Simplify.Web.Diagnostics.Templates
 {
 	/// <summary>
-	/// Provides HTML HTTP 500 error page builder
+	/// Provides HTTP 500 error page builder
 	/// </summary>
 	public static class Http500ErrorPageBuilder
 	{

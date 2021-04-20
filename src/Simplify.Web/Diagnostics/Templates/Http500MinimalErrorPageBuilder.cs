@@ -3,9 +3,8 @@
 namespace Simplify.Web.Diagnostics.Templates
 {
 	/// <summary>
-	/// Provides HTML HTTP 500 minimal error page builder
+	/// Provides HTTP 500 minimal error page builder
 	/// </summary>
-
 	public class Http500MinimalErrorPageBuilder
 	{
 		/// <summary>
