@@ -22,4 +22,5 @@
 ### Dependencies
 
 - Microsoft.Extensions.Configuration.Json bump to 3.1.14
+- Simplify.System.Sources bump to 1.6.1
 - Simplify.Xml.Sources bump to 1.3
