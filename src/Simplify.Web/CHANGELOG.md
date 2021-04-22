@@ -1,6 +1,6 @@
 # Changelog
 
-## [4.3.1-pre01] - 2021-04-21
+## [4.3.0] - 2021-04-22
 
 ### New
 
@@ -8,7 +8,7 @@
 - Built-in exception page light/dark design switch option (#142)
 - Display minimal text exception page in case of WebContext.IsAjax (#141)
 - .NET 5.0 explicit support
-- Refactofing to nullable
+- Refactoring to nullable
 
 ### Changed
 
