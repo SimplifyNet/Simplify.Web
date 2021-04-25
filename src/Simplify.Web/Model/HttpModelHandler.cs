@@ -16,14 +16,13 @@ namespace Simplify.Web.Model
 	{
 		private readonly IWebContext _context;
 
+		private object? _model;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HttpModelHandler"/> class.
 		/// </summary>
 		/// <param name="context">The context.</param>
-		public HttpModelHandler(IWebContext context)
-		{
-			_context = context;
-		}
+		public HttpModelHandler(IWebContext context) => _context = context;
 
 		/// <summary>
 		/// Gets the model binders types.
@@ -55,24 +54,25 @@ namespace Simplify.Web.Model
 		};
 
 		/// <summary>
+		/// Gets a value indicating whether model has been processed (parsed/validated).
+		/// </summary>
+		public bool Processed { get; private set; }
+
+		/// <summary>
 		/// Adds the model binder into model binders list, this type should be registered in Simplify.DI container.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public static void RegisterModelBinder<T>()
-			where T : IModelBinder
-		{
+			where T : IModelBinder =>
 			ModelBindersTypes.Add(typeof(T));
-		}
 
 		/// <summary>
 		/// Adds the model validator into model validators list, this type should be registered in Simplify.DI container.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public static void RegisterModelValidator<T>()
-			where T : IModelValidator
-		{
+			where T : IModelValidator =>
 			ModelValidatorsTypes.Add(typeof(T));
-		}
 
 		/// <summary>
 		/// Parses model and validates it asynchronously
@@ -80,7 +80,7 @@ namespace Simplify.Web.Model
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="resolver">The resolver.</param>
 		/// <returns></returns>
-		public async Task<T> ProcessAsync<T>(IDIResolver resolver)
+		public async Task ProcessAsync<T>(IDIResolver resolver)
 		{
 			var args = new ModelBinderEventArgs<T>(_context);
 
@@ -93,10 +93,27 @@ namespace Simplify.Web.Model
 
 				Validate(args, resolver);
 
-				return args.Model;
+				_model = args.Model;
+				Processed = true;
+
+				return;
 			}
 
 			throw new ModelBindingException($"Unrecognized request content type for binding: {_context.Request.ContentType}");
+		}
+
+		/// <summary>
+		/// Gets the model.
+		/// </summary>
+		/// <typeparam name="T">The model</typeparam>
+		/// <returns></returns>
+		/// <exception cref="InvalidOperationException">Error getting model, model should be processed via ProcessAsync&lt;T&gt; method first</exception>
+		public T GetModel<T>()
+		{
+			if (_model == null)
+				throw new InvalidOperationException("Error getting model, model should be processed via ProcessAsync<T> method first");
+
+			return (T)_model;
 		}
 
 		private static void Validate<T>(ModelBinderEventArgs<T> args, IDIResolver resolver)

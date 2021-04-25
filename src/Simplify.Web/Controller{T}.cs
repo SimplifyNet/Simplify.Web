@@ -38,7 +38,12 @@ namespace Simplify.Web
 		/// </summary>
 		public virtual async Task ReadModelAsync()
 		{
-			_model = await Resolver.Resolve<IModelHandler>().ProcessAsync<T>(Resolver);
+			var handler = Resolver.Resolve<IModelHandler>();
+
+			if (!handler.Processed)
+				await handler.ProcessAsync<T>(Resolver);
+
+			_model = handler.GetModel<T>();
 		}
 	}
 }

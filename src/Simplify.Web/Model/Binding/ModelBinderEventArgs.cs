@@ -14,10 +14,7 @@ namespace Simplify.Web.Model.Binding
 		/// Initializes a new instance of the <see cref="ModelBinderEventArgs{T}"/> class.
 		/// </summary>
 		/// <param name="context">The context.</param>
-		public ModelBinderEventArgs(IWebContext context)
-		{
-			Context = context;
-		}
+		public ModelBinderEventArgs(IWebContext context) => Context = context;
 
 		/// <summary>
 		/// Gets the model.
