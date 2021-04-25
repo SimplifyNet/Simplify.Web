@@ -12,10 +12,7 @@ namespace Simplify.Web.Attributes.Setup
 		/// Initializes a new instance of the <see cref="IgnoreTypesRegistrationAttribute"/> class.
 		/// </summary>
 		/// <param name="types">Controllers or views types which should be ignored from DI container registration</param>
-		public IgnoreTypesRegistrationAttribute(params Type[] types)
-		{
-			Types = types;
-		}
+		public IgnoreTypesRegistrationAttribute(params Type[] types) => Types = types;
 
 		/// <summary>
 		/// Gets the types of controllers.

@@ -27,10 +27,7 @@ namespace Simplify.Web.Core.StaticFiles
 		/// </summary>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public bool IsStaticFileRoutePath(HttpContext context)
-		{
-			return _fileHandler.IsStaticFileRoutePath(_fileHandler.GetRelativeFilePath(context.Request));
-		}
+		public bool IsStaticFileRoutePath(HttpContext context) => _fileHandler.IsStaticFileRoutePath(_fileHandler.GetRelativeFilePath(context.Request));
 
 		/// <summary>
 		/// Processes the HTTP request for static files.

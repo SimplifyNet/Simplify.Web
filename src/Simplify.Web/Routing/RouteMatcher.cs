@@ -16,10 +16,7 @@ namespace Simplify.Web.Routing
 		/// Initializes a new instance of the <see cref="RouteMatcher"/> class.
 		/// </summary>
 		/// <param name="controllerPathParser">The controller path parser.</param>
-		public RouteMatcher(IControllerPathParser controllerPathParser)
-		{
-			_controllerPathParser = controllerPathParser;
-		}
+		public RouteMatcher(IControllerPathParser controllerPathParser) => _controllerPathParser = controllerPathParser;
 
 		/// <summary>
 		/// Matches the current path with controller path.

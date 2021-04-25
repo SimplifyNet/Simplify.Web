@@ -14,10 +14,7 @@ namespace Simplify.Web.Core
 		/// <param name="data">The data.</param>
 		/// <param name="response">The response.</param>
 		/// <returns></returns>
-		public void Write(string data, HttpResponse response)
-		{
-			response.WriteAsync(data).Wait();
-		}
+		public void Write(string data, HttpResponse response) => response.WriteAsync(data).Wait();
 
 		/// <summary>
 		/// Writes the specified data.
@@ -25,10 +22,7 @@ namespace Simplify.Web.Core
 		/// <param name="data">The data.</param>
 		/// <param name="response">The response.</param>
 		/// <returns></returns>
-		public void Write(byte[] data, HttpResponse response)
-		{
-			response.Body.Write(data, 0, data.Length);
-		}
+		public void Write(byte[] data, HttpResponse response) => response.Body.Write(data, 0, data.Length);
 
 		/// <summary>
 		/// Writes the specified data asynchronously.
@@ -36,10 +30,7 @@ namespace Simplify.Web.Core
 		/// <param name="data">The data.</param>
 		/// <param name="response">The response.</param>
 		/// <returns></returns>
-		public Task WriteAsync(string data, HttpResponse response)
-		{
-			return response.WriteAsync(data);
-		}
+		public Task WriteAsync(string data, HttpResponse response) => response.WriteAsync(data);
 
 		/// <summary>
 		/// Writes the specified data asynchronously.
@@ -47,9 +38,6 @@ namespace Simplify.Web.Core
 		/// <param name="data">The data.</param>
 		/// <param name="response">The response.</param>
 		/// <returns></returns>
-		public Task WriteAsync(byte[] data, HttpResponse response)
-		{
-			return response.Body.WriteAsync(data, 0, data.Length);
-		}
+		public Task WriteAsync(byte[] data, HttpResponse response) => response.Body.WriteAsync(data, 0, data.Length);
 	}
 }

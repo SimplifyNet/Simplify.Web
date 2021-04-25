@@ -86,10 +86,7 @@ namespace Simplify.Web.Modules.Data
 		/// </summary>
 		/// <param name="fileName">The file name.</param>
 		/// <returns></returns>
-		public Task<ITemplate> LoadAsync(string fileName)
-		{
-			return LoadAsyncInternal(fileName, Assembly.GetCallingAssembly());
-		}
+		public Task<ITemplate> LoadAsync(string fileName) => LoadAsyncInternal(fileName, Assembly.GetCallingAssembly());
 
 		private async Task<ITemplate> LoadAsyncInternal(string fileName, Assembly assembly)
 		{
@@ -137,33 +134,25 @@ namespace Simplify.Web.Modules.Data
 			return !_loadTemplatesFromAssembly ? Path.Combine(_environment.TemplatesPhysicalPath, fileName) : fileName;
 		}
 
-		private ITemplate LoadFromFile(string filePath)
-		{
-			return TemplateBuilder.FromFile(filePath)
+		private ITemplate LoadFromFile(string filePath) =>
+			TemplateBuilder.FromFile(filePath)
 				.Localizable(_languageManager.Language, _defaultLanguage)
 				.Build();
-		}
 
-		private Task<ITemplate> LoadFromFileAsync(string filePath)
-		{
-			return TemplateBuilder.FromFile(filePath)
+		private Task<ITemplate> LoadFromFileAsync(string filePath) =>
+			TemplateBuilder.FromFile(filePath)
 				.Localizable(_languageManager.Language, _defaultLanguage)
 				.BuildAsync();
-		}
 
-		private ITemplate LoadFromAssembly(string filePath, Assembly assembly)
-		{
-			return TemplateBuilder.FromAssembly(filePath, assembly)
+		private ITemplate LoadFromAssembly(string filePath, Assembly assembly) =>
+			TemplateBuilder.FromAssembly(filePath, assembly)
 				.Localizable(_languageManager.Language, _defaultLanguage)
 				.Build();
-		}
 
-		private Task<ITemplate> LoadFromAssemblyAsync(string filePath, Assembly assembly)
-		{
-			return TemplateBuilder.FromAssembly(filePath, assembly)
+		private Task<ITemplate> LoadFromAssemblyAsync(string filePath, Assembly assembly) =>
+			TemplateBuilder.FromAssembly(filePath, assembly)
 				.Localizable(_languageManager.Language, _defaultLanguage)
 				.BuildAsync();
-		}
 
 		private ITemplate? TryLoadFromCache(string filePath)
 		{

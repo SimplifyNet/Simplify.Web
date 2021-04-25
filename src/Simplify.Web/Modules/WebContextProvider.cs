@@ -20,9 +20,6 @@ namespace Simplify.Web.Modules
 		/// Gets the web context.
 		/// </summary>
 		/// <returns></returns>
-		public IWebContext Get()
-		{
-			return _webContext!;
-		}
+		public IWebContext Get() => _webContext!;
 	}
 }

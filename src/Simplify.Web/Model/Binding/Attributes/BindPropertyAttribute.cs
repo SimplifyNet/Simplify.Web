@@ -12,10 +12,7 @@ namespace Simplify.Web.Model.Binding.Attributes
 		/// Initializes a new instance of the <see cref="BindPropertyAttribute"/> class.
 		/// </summary>
 		/// <param name="fieldName">Name of the field.</param>
-		public BindPropertyAttribute(string fieldName)
-		{
-			FieldName = fieldName;
-		}
+		public BindPropertyAttribute(string fieldName) => FieldName = fieldName;
 
 		/// <summary>
 		/// Gets or sets the name of the field.

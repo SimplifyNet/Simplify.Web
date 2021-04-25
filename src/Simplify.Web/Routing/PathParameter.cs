@@ -12,10 +12,7 @@ namespace Simplify.Web.Routing
 		/// </summary>
 		/// <param name="name">The name of path parameter.</param>
 		/// <param name="type">The type of path parameter.</param>
-		public PathParameter(string name, Type type) : base(name)
-		{
-			Type = type;
-		}
+		public PathParameter(string name, Type type) : base(name) => Type = type;
 
 		/// <summary>
 		/// Gets the type of path parameter.

@@ -11,10 +11,7 @@ namespace Simplify.Web.Routing
 		/// Initializes a new instance of the <see cref="ControllerPath"/> class.
 		/// </summary>
 		/// <param name="items">The items.</param>
-		public ControllerPath(IList<PathItem> items)
-		{
-			Items = items;
-		}
+		public ControllerPath(IList<PathItem> items) => Items = items;
 
 		/// <summary>
 		/// Gets the controller path items.

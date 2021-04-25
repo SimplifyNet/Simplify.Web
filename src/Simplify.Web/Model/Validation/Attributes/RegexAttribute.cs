@@ -17,10 +17,7 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// <param name="regexString">The regex string.</param>
 		/// <param name="errorMessage">The error message.</param>
 		/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
-		public RegexAttribute(string regexString, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
-		{
-			RegexString = regexString;
-		}
+		public RegexAttribute(string regexString, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) => RegexString = regexString;
 
 		/// <summary>
 		/// Gets or sets the regex string.

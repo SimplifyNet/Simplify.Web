@@ -12,10 +12,7 @@ namespace Simplify.Web.Model.Binding.Attributes
 		/// Initializes a new instance of the <see cref="FormatAttribute"/> class.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		public FormatAttribute(string format)
-		{
-			Format = format;
-		}
+		public FormatAttribute(string format) => Format = format;
 
 		/// <summary>
 		/// Gets or sets the format.

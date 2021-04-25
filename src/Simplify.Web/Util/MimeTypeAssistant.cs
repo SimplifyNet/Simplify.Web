@@ -709,20 +709,14 @@ namespace Simplify.Web.Util
 		/// Gets the MIME by the file extension at the end of the file path.
 		/// </summary>
 		/// <param name="filePath">The file path.</param>
-		public static string GetMimeTypeByFilePath(string filePath)
-		{
-			return GetMimeType(Path.GetExtension(filePath));
-		}
+		public static string GetMimeTypeByFilePath(string filePath) => GetMimeType(Path.GetExtension(filePath));
 
 		/// <summary>
 		/// Gets the extension by the MIME type (throwing exception if the type is not found).
 		/// </summary>
 		/// <param name="mimeType">MIME type.</param>
 		/// <returns></returns>
-		public static string GetExtension(string mimeType)
-		{
-			return GetExtension(mimeType, true);
-		}
+		public static string GetExtension(string mimeType) => GetExtension(mimeType, true);
 
 		/// <summary>
 		/// Gets the extension by the MIME type.

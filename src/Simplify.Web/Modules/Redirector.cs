@@ -35,10 +35,7 @@ namespace Simplify.Web.Modules
 		/// Initializes a new instance of the <see cref="Redirector"/> class.
 		/// </summary>
 		/// <param name="context">The context.</param>
-		public Redirector(IWebContext context)
-		{
-			_context = context;
-		}
+		public Redirector(IWebContext context) => _context = context;
 
 		/// <summary>
 		/// Gets or sets the previous page url.
@@ -107,26 +104,17 @@ namespace Simplify.Web.Modules
 		/// <summary>
 		/// Sets the redirect url to current page.
 		/// </summary>
-		public void SetRedirectUrlToCurrentPage()
-		{
-			RedirectUrl = _context.Request.GetEncodedUrl();
-		}
+		public void SetRedirectUrlToCurrentPage() => RedirectUrl = _context.Request.GetEncodedUrl();
 
 		/// <summary>
 		/// Sets the login return URL from current URI.
 		/// </summary>
-		public void SetLoginReturnUrlFromCurrentUri()
-		{
-			LoginReturnUrl = _context.Request.GetEncodedUrl();
-		}
+		public void SetLoginReturnUrlFromCurrentUri() => LoginReturnUrl = _context.Request.GetEncodedUrl();
 
 		/// <summary>
 		/// Sets the previous page URL to current page.
 		/// </summary>
-		public void SetPreviousPageUrlToCurrentPage()
-		{
-			PreviousPageUrl = _context.Request.GetEncodedUrl();
-		}
+		public void SetPreviousPageUrlToCurrentPage() => PreviousPageUrl = _context.Request.GetEncodedUrl();
 
 		/// <summary>
 		/// Navigates the client by specifying redirection type.

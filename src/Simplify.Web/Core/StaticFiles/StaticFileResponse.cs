@@ -58,18 +58,12 @@ namespace Simplify.Web.Core.StaticFiles
 			return _responseWriter.WriteAsync(data, _response);
 		}
 
-		private void SetModificationHeaders(DateTime lastModifiedTime)
-		{
-			_response.Headers.Append("Last-Modified", lastModifiedTime.ToString("r"));
-		}
+		private void SetModificationHeaders(DateTime lastModifiedTime) => _response.Headers.Append("Last-Modified", lastModifiedTime.ToString("r"));
 
 		/// <summary>
 		/// Sets the MIME type of response.
 		/// </summary>
 		/// <param name="fileName">Name of the file.</param>
-		private void SetMimeType(string fileName)
-		{
-			_response.ContentType = MimeTypeAssistant.GetMimeTypeByFilePath(fileName);
-		}
+		private void SetMimeType(string fileName) => _response.ContentType = MimeTypeAssistant.GetMimeTypeByFilePath(fileName);
 	}
 }
