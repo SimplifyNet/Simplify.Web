@@ -16,10 +16,7 @@ namespace Simplify.Web.Model.Validation
 		/// Initializes a new instance of the <see cref="ValidationAttributesExecutor"/> class.
 		/// </summary>
 		/// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.</param>
-		public ValidationAttributesExecutor(bool nesting = true)
-		{
-			Nesting = nesting;
-		}
+		public ValidationAttributesExecutor(bool nesting = true) => Nesting = nesting;
 
 		/// <summary>
 		/// Gets a value indicating whether <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.
@@ -33,10 +30,7 @@ namespace Simplify.Web.Model.Validation
 		/// <param name="model">The model.</param>
 		/// <param name="resolver">The resolver.</param>
 		/// <exception cref="ModelValidationException"></exception>
-		public void Validate<T>(T model, IDIResolver resolver)
-		{
-			Validate(typeof(T), model, resolver);
-		}
+		public void Validate<T>(T model, IDIResolver resolver) => Validate(typeof(T), model, resolver);
 
 		/// <summary>
 		/// Validates the specified value.
@@ -53,10 +47,7 @@ namespace Simplify.Web.Model.Validation
 				attribute.Validate(value, propertyInfo, resolver);
 		}
 
-		private static bool IsSystemType(Type type)
-		{
-			return type.Namespace?.StartsWith("System") ?? false;
-		}
+		private static bool IsSystemType(Type type) => type.Namespace?.StartsWith("System") ?? false;
 
 		private void Validate(Type type, object? value, IDIResolver resolver)
 		{

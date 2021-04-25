@@ -57,10 +57,7 @@ namespace Simplify.Web.Modules.Data
 		/// <summary>
 		/// Setups the file reader.
 		/// </summary>
-		public void Setup()
-		{
-			_languageManager = _languageManagerProvider.Get();
-		}
+		public void Setup() => _languageManager = _languageManagerProvider.Get();
 
 		#region Paths
 
@@ -71,10 +68,7 @@ namespace Simplify.Web.Modules.Data
 		/// <returns>
 		/// File path
 		/// </returns>
-		public string GetFilePath(string fileName)
-		{
-			return GetFilePath(fileName, _languageManager.Language);
-		}
+		public string GetFilePath(string fileName) => GetFilePath(fileName, _languageManager.Language);
 
 		/// <summary>
 		/// Get extension data file path for specific language

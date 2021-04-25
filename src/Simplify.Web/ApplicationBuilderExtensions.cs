@@ -117,9 +117,6 @@ namespace Simplify.Web
 			});
 		}
 
-		private static void RegisterAsTerminal(IApplicationBuilder builder)
-		{
-			builder.Run(SimplifyWebRequestMiddleware.Invoke);
-		}
+		private static void RegisterAsTerminal(IApplicationBuilder builder) => builder.Run(SimplifyWebRequestMiddleware.Invoke);
 	}
 }

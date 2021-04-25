@@ -52,33 +52,25 @@ namespace Simplify.Web.Meta
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static IList<Type> FindTypesDerivedFrom<T>()
-		{
-			return FindTypesDerivedFrom(typeof(T));
-		}
+		public static IList<Type> FindTypesDerivedFrom<T>() => FindTypesDerivedFrom(typeof(T));
 
 		/// <summary>
 		/// Finds the all types derived from specified type in current domain assemblies.
 		/// </summary>
 		/// <param name="type">The type.</param>
 		/// <returns></returns>
-		public static IList<Type> FindTypesDerivedFrom(Type type)
-		{
-			return CurrentDomainAssembliesTypes.Where(t => t.BaseType != null
-														   && ((t.BaseType.IsGenericType == false && t.BaseType == type)
-															   ||
-															   (t.BaseType.IsGenericType && t.BaseType.GetGenericTypeDefinition() == type)))
+		public static IList<Type> FindTypesDerivedFrom(Type type) =>
+			CurrentDomainAssembliesTypes.Where(t => t.BaseType != null
+													&& ((t.BaseType.IsGenericType == false && t.BaseType == type)
+														||
+														(t.BaseType.IsGenericType && t.BaseType.GetGenericTypeDefinition() == type)))
 				.ToList();
-		}
 
 		/// <summary>
 		/// Gets all types.
 		/// </summary>
 		/// <returns></returns>
-		public static IList<Type> GetAllTypes()
-		{
-			return CurrentDomainAssembliesTypes.ToList();
-		}
+		public static IList<Type> GetAllTypes() => CurrentDomainAssembliesTypes.ToList();
 
 		/// <summary>
 		/// Gets the types to ignore.

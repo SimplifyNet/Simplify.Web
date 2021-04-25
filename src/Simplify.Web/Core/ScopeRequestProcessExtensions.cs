@@ -15,10 +15,8 @@ namespace Simplify.Web.Core
 		/// <param name="scope">The scope.</param>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public static Task<RequestHandlingStatus> ProcessRequest(this ILifetimeScope scope, HttpContext context)
-		{
+		public static Task<RequestHandlingStatus> ProcessRequest(this ILifetimeScope scope, HttpContext context) =>
 			// Run request process pipeline
-			return scope.Resolver.Resolve<IRequestHandler>().ProcessRequest(scope.Resolver, context);
-		}
+			scope.Resolver.Resolve<IRequestHandler>().ProcessRequest(scope.Resolver, context);
 	}
 }

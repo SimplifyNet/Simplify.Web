@@ -12,10 +12,7 @@ namespace Simplify.Web.Attributes
 		/// Initializes a new instance of the <see cref="GetAttribute"/> class.
 		/// </summary>
 		/// <param name="route">The route.</param>
-		public ControllerRouteAttribute(string route)
-		{
-			Route = route;
-		}
+		public ControllerRouteAttribute(string route) => Route = route;
 
 		/// <summary>
 		/// Gets the route.

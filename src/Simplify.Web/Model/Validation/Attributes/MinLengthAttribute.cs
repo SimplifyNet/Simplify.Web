@@ -18,10 +18,8 @@ namespace Simplify.Web.Model.Validation.Attributes
 		/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
 		public MinLengthAttribute(int minimumPropertyLength,
 			string? errorMessage = null,
-			bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
-		{
+			bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) =>
 			MinimumPropertyLength = minimumPropertyLength;
-		}
 
 		/// <summary>
 		/// Gets or sets the minimum length of the property.

@@ -12,10 +12,7 @@ namespace Simplify.Web.Attributes.Setup
 		/// Initializes a new instance of the <see cref="IgnoreControllersAttribute"/> class.
 		/// </summary>
 		/// <param name="types">Controllers types which should be ignored by Simplify.Web</param>
-		public IgnoreControllersAttribute(params Type[] types)
-		{
-			Types = types;
-		}
+		public IgnoreControllersAttribute(params Type[] types) => Types = types;
 
 		/// <summary>
 		/// Gets the types of controllers.

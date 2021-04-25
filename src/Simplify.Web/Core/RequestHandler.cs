@@ -34,11 +34,9 @@ namespace Simplify.Web.Core
 		/// <param name="resolver">The DI container resolver.</param>
 		/// <param name="context">The context.</param>
 		/// <returns></returns>
-		public Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context)
-		{
-			return _staticFilesHandling && _staticFilesRequestHandler.IsStaticFileRoutePath(context)
+		public Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context) =>
+			_staticFilesHandling && _staticFilesRequestHandler.IsStaticFileRoutePath(context)
 				? _staticFilesRequestHandler.ProcessRequest(context)
 				: _controllersRequestHandler.ProcessRequest(resolver, context);
-		}
 	}
 }

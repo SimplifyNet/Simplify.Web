@@ -19,10 +19,7 @@ namespace Simplify.Web.Modules.Data.Html
 		/// Initializes a new instance of the <see cref="ListsGenerator"/> class.
 		/// </summary>
 		/// <param name="stringTable">The string table.</param>
-		public ListsGenerator(IStringTable stringTable)
-		{
-			_stringTable = stringTable;
-		}
+		public ListsGenerator(IStringTable stringTable) => _stringTable = stringTable;
 
 		/// <summary>
 		/// Generate number selected HTML list
@@ -233,18 +230,13 @@ namespace Simplify.Web.Modules.Data.Html
 		/// Generating empty HTML list item
 		/// </summary>
 		/// <returns></returns>
-		public string GenerateEmptyListItem()
-		{
-			return "<option value=''>&nbsp;</option>";
-		}
+		public string GenerateEmptyListItem() => "<option value=''>&nbsp;</option>";
 
 		/// <summary>
 		/// Generating HTML list default item
 		/// </summary>
 		/// <returns></returns>
-		public string GenerateDefaultListItem(bool isSelected = true)
-		{
-			return string.Format("<option value=''{1}>{0}</option>", _stringTable.GetItem("HtmlListDefaultItemLabel"), isSelected ? " selected='selected'" : "");
-		}
+		public string GenerateDefaultListItem(bool isSelected = true) =>
+			string.Format("<option value=''{1}>{0}</option>", _stringTable.GetItem("HtmlListDefaultItemLabel"), isSelected ? " selected='selected'" : "");
 	}
 }

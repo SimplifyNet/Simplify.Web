@@ -30,12 +30,10 @@ namespace Simplify.Web.Core.Controllers
 		/// Gets the standard controllers meta data.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<IControllerMetaData> GetStandardControllersMetaData()
-		{
-			return _controllersMetaStore.ControllersMetaData.Where(
+		public IEnumerable<IControllerMetaData> GetStandardControllersMetaData() =>
+			_controllersMetaStore.ControllersMetaData.Where(
 				x =>
 					x.Role == null || (x.Role.Is400Handler == false && x.Role.Is403Handler == false && x.Role.Is404Handler == false));
-		}
 
 		/// <summary>
 		/// Matches the controller route.

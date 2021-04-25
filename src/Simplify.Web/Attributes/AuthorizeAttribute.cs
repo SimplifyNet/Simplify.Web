@@ -24,10 +24,7 @@ namespace Simplify.Web.Attributes
 		/// Initializes a new instance of the <see cref="AuthorizeAttribute"/> class.
 		/// </summary>
 		/// <param name="requiredUserRoles">The required user roles.</param>
-		public AuthorizeAttribute(params string[] requiredUserRoles)
-		{
-			RequiredUserRoles = requiredUserRoles;
-		}
+		public AuthorizeAttribute(params string[] requiredUserRoles) => RequiredUserRoles = requiredUserRoles;
 
 		/// <summary>
 		/// Gets the required user roles.

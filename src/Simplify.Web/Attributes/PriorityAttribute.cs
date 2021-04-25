@@ -12,10 +12,7 @@ namespace Simplify.Web.Attributes
 		/// Initializes a new instance of the <see cref="PriorityAttribute"/> class.
 		/// </summary>
 		/// <param name="priority">The execution priority.</param>
-		public PriorityAttribute(int priority)
-		{
-			Priority = priority;
-		}
+		public PriorityAttribute(int priority) => Priority = priority;
 
 		/// <summary>
 		/// Gets the priority.
