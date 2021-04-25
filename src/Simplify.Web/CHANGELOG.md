@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.4.0] - 2021-04-25
+
+### New
+
+- Possibility to reuse model between controllers in same scope (#145)
+
 ## [4.3.0] - 2021-04-22
 
 ### New
