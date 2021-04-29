@@ -1,0 +1,31 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "06:45"
+    timezone: Asia/Dacca
+  open-pull-requests-limit: 10
+  target-branch: develop
+  ignore:
+  - dependency-name: Simplify.Xml.Sources
+    versions:
+    - 1.2.0
+    - 1.2.1
+    - 1.3.0
+  - dependency-name: System.Text.Json
+    versions:
+    - 5.0.2
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.9.1
+  - dependency-name: Simplify.System.Sources
+    versions:
+    - 1.5.0
+  - dependency-name: Simplify.Xml
+    versions:
+    - 1.2.0
+  - dependency-name: Microsoft.AspNetCore.SpaServices.Extensions
+    versions:
+    - 5.0.2
