@@ -9,7 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.9" />
-		<PackageReference Include="System.Text.Json" Version="4.7.2" />
+		<PackageReference Include="System.Text.Json" Version="5.0.1" />
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
 	<ItemGroup>
