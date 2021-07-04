@@ -116,7 +116,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution
 			// Assign
 
 			_controllerResponse.Setup(x => x.Process()).Returns(Task.FromResult(ControllerResponseResult.RawOutput));
-			_asyncController.Setup(x => x.Invoke()).Returns(Task.FromResult(_controllerResponse.Object));
+			_asyncController.Setup(x => x.Invoke()).Returns(Task.FromResult(_controllerResponse.Object)!);
 			_controllerFactory.Setup(
 				x =>
 					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<HttpContext>(),

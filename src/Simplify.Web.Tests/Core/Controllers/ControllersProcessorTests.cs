@@ -19,7 +19,7 @@ namespace Simplify.Web.Tests.Core.Controllers
 	[TestFixture]
 	public class ControllersProcessorTests
 	{
-		private readonly IDictionary<string, object> _routeParameters = new ExpandoObject();
+		private readonly IDictionary<string, object> _routeParameters = new ExpandoObject()!;
 		private ControllersProcessor _processor = null!;
 		private Mock<IControllersAgent> _agent = null!;
 		private Mock<IControllerExecutor> _controllersExecutor = null!;

@@ -22,7 +22,7 @@ namespace Simplify.Web.Tests.Meta
 			if (metaData.Security == null || metaData.ExecParameters == null || metaData.Role == null)
 				throw new InvalidOperationException();
 
-			var roles = metaData.Security.RequiredUserRoles.ToList();
+			var roles = metaData.Security.RequiredUserRoles!.ToList();
 
 			// Assert
 

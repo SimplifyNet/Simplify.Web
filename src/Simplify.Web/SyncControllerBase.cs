@@ -8,6 +8,6 @@
 		/// <summary>
 		/// Invokes the controller.
 		/// </summary>
-		public abstract ControllerResponse Invoke();
+		public abstract ControllerResponse? Invoke();
 	}
 }

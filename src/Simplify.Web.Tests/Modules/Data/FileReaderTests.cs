@@ -83,7 +83,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			Assert.AreEqual(
 				XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Foo.xml")!.Root.OuterXml());
+					.Root!.OuterXml(), _fileReader.LoadXDocument("Foo.xml")!.Root!.OuterXml());
 		}
 
 		[Test]
@@ -93,7 +93,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			Assert.AreEqual(
 				XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Foo")!.Root.OuterXml());
+					.Root!.OuterXml(), _fileReader.LoadXDocument("Foo")!.Root!.OuterXml());
 		}
 
 		[Test]
@@ -102,7 +102,7 @@ namespace Simplify.Web.Tests.Modules.Data
 			// Act & Assert
 			Assert.AreEqual(XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>en bar data</data>")
-					.Root.OuterXml(), _fileReader.LoadXDocument("Bar.xml")!.Root.OuterXml());
+					.Root!.OuterXml(), _fileReader.LoadXDocument("Bar.xml")!.Root!.OuterXml());
 		}
 
 		[Test]
@@ -124,7 +124,7 @@ namespace Simplify.Web.Tests.Modules.Data
 
 			Assert.AreEqual(XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>ru data</data>")
-					.Root.OuterXml(), result.Root!.OuterXml());
+					.Root!.OuterXml(), result.Root!.OuterXml());
 		}
 
 		[Test]
@@ -146,7 +146,7 @@ namespace Simplify.Web.Tests.Modules.Data
 
 			Assert.AreEqual(XDocument.Parse(
 					"<?xml version=\"1.0\" encoding=\"utf-8\" ?><data>en bar data</data>")
-					.Root.OuterXml(), result.Root!.OuterXml());
+					.Root!.OuterXml(), result.Root!.OuterXml());
 		}
 
 		#endregion LoadXDocument

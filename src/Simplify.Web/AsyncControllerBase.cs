@@ -10,6 +10,6 @@ namespace Simplify.Web
 		/// <summary>
 		/// Invokes the controller.
 		/// </summary>
-		public abstract Task<ControllerResponse> Invoke();
+		public abstract Task<ControllerResponse?> Invoke();
 	}
 }
