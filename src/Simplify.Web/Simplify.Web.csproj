@@ -10,7 +10,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-		<Version>4.4</Version>
+		<Version>4.4.1</Version>
 
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>

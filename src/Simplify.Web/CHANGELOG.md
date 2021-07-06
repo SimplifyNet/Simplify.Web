@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.4.1] - 2021-06-07
+
+### Fixed
+
+- Nullable controllers responses (#155)
+
+### Dependencies
+
+- Simplify.DI bump to 4.0.20
+- Microsoft.Extensions.Configuration.Json bump to 3.1.16
+
 ## [4.4.0] - 2021-04-25
 
 ### New
