@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using BrunoLau.SpaServices.Webpack;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Hosting;
 using Simplify.Web;
 
@@ -14,7 +14,7 @@ namespace SampleApp.Vue
 			{
 				app.UseDeveloperExceptionPage();
 
-				app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+				app.UseWebpackDevMiddlewareEx(new WebpackDevMiddlewareOptions
 				{
 					HotModuleReplacement = true
 				});
