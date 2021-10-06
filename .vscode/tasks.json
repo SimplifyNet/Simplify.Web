@@ -2,6 +2,16 @@
 	"version": "2.0.0",
 	"tasks": [
 	{
+		"label": "Build Angular Example",
+		"command": "dotnet",
+		"type": "process",
+		"args": [
+			"build",
+			"${workspaceFolder}/src/SampleApps/SampleApp.Angular/SampleApp.Angular.csproj"
+		],
+		"problemMatcher": "$msCompile"
+	},
+	{
 		"label": "Build Kestrel Example",
 		"command": "dotnet",
 		"type": "process",
@@ -18,6 +28,26 @@
 		"args": [
 			"build",
 			"${workspaceFolder}/src/SampleApps/SampleApp.Classic/SampleApp.Classic.csproj"
+		],
+		"problemMatcher": "$msCompile"
+	},
+	{
+		"label": "Build Vue Example",
+		"command": "dotnet",
+		"type": "process",
+		"args": [
+			"build",
+			"${workspaceFolder}/src/SampleApps/SampleApp.Vue/SampleApp.Vue.csproj"
+		],
+		"problemMatcher": "$msCompile"
+	},
+	{
+		"label": "Build Vue Example",
+		"command": "dotnet",
+		"type": "process",
+		"args": [
+			"build",
+			"${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/SampleApp.Vue.Element.csproj"
 		],
 		"problemMatcher": "$msCompile"
 	},
