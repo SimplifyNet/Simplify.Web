@@ -12,16 +12,6 @@
 		"problemMatcher": "$msCompile"
 	},
 	{
-		"label": "Build Kestrel Example",
-		"command": "dotnet",
-		"type": "process",
-		"args": [
-			"build",
-			"${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/SampleApp.Kestrel.csproj"
-		],
-		"problemMatcher": "$msCompile"
-	},
-	{
 		"label": "Build Classic Example",
 		"command": "dotnet",
 		"type": "process",

@@ -21,25 +21,6 @@
 		}
 	},
 	{
-		"name": "SampleApp.Kestrel Launch",
-		"type": "coreclr",
-		"request": "launch",
-		"preLaunchTask": "Build Kestrel Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/net5.0/SampleApp.Kestrel.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/net5.0/",
-		"internalConsoleOptions": "openOnSessionStart",
-		"serverReadyAction":
-		{
-			"action": "openExternally",
-			"pattern": "Now listening on",
-			"uriFormat": "http://localhost:5000"
-		},
-		"env":
-		{
-			"ASPNETCORE_ENVIRONMENT": "Development"
-		}
-	},
-	{
 		"name": "SampleApp.Classic Launch",
 		"type": "coreclr",
 		"request": "launch",
