@@ -30,10 +30,12 @@ namespace Simplify.Web.Core.Controllers
 		/// Gets the standard controllers meta data.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<IControllerMetaData> GetStandardControllersMetaData() =>
-			_controllersMetaStore.ControllersMetaData.Where(
-				x =>
-					x.Role == null || (x.Role.Is400Handler == false && x.Role.Is403Handler == false && x.Role.Is404Handler == false));
+		public IList<IControllerMetaData> GetStandardControllersMetaData() =>
+			SortControllersMetaContainers(_controllersMetaStore.ControllersMetaData.Where(x =>
+				x.Role == null ||
+				x.Role.Is400Handler == false &&
+				x.Role.Is403Handler == false &&
+				x.Role.Is404Handler == false));
 
 		/// <summary>
 		/// Matches the controller route.
@@ -57,23 +59,15 @@ namespace Simplify.Web.Core.Controllers
 		/// </summary>
 		/// <param name="controllerType">Type of the controller.</param>
 		/// <returns></returns>
-		public IControllerMetaData? GetHandlerController(HandlerControllerType controllerType)
-		{
-			IControllerMetaData? metaData = null;
-
-			switch (controllerType)
+		public IControllerMetaData? GetHandlerController(HandlerControllerType controllerType) =>
+			controllerType switch
 			{
-				case HandlerControllerType.Http403Handler:
-					metaData = _controllersMetaStore.ControllersMetaData.FirstOrDefault(x => x.Role != null && x.Role.Is403Handler);
-					break;
-
-				case HandlerControllerType.Http404Handler:
-					metaData = _controllersMetaStore.ControllersMetaData.FirstOrDefault(x => x.Role != null && x.Role.Is404Handler);
-					break;
-			}
-
-			return metaData;
-		}
+				HandlerControllerType.Http403Handler => _controllersMetaStore.ControllersMetaData.FirstOrDefault(x =>
+					x.Role is { Is403Handler: true }),
+				HandlerControllerType.Http404Handler => _controllersMetaStore.ControllersMetaData.FirstOrDefault(x =>
+					x.Role is { Is404Handler: true }),
+				_ => null
+			};
 
 		/// <summary>
 		/// Determines whether controller can be executed on any page.
@@ -102,10 +96,7 @@ namespace Simplify.Web.Core.Controllers
 		/// <returns></returns>
 		public SecurityRuleCheckResult IsSecurityRulesViolated(IControllerMetaData metaData, ClaimsPrincipal user)
 		{
-			if (metaData.Security == null)
-				return SecurityRuleCheckResult.Ok;
-
-			if (!metaData.Security.IsAuthorizationRequired)
+			if (metaData.Security is not { IsAuthorizationRequired: true })
 				return SecurityRuleCheckResult.Ok;
 
 			if (metaData.Security.RequiredUserRoles == null || !metaData.Security.RequiredUserRoles.Any())
@@ -116,5 +107,9 @@ namespace Simplify.Web.Core.Controllers
 
 			return metaData.Security.RequiredUserRoles.Any(user.IsInRole) ? SecurityRuleCheckResult.Ok : SecurityRuleCheckResult.Forbidden;
 		}
+
+		private static IList<IControllerMetaData> SortControllersMetaContainers(IEnumerable<IControllerMetaData> controllersMetaContainers) =>
+			controllersMetaContainers.OrderBy(x => x.ExecParameters?.RunPriority ?? 0)
+				.ToList();
 	}
 }

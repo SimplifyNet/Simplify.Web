@@ -63,14 +63,10 @@ namespace Simplify.Web.Meta
 				}
 
 				LoadMetaData(controllersMetaContainers, types, typesToIgnore);
-				_controllersMetaData = SortControllersMetaContainers(controllersMetaContainers);
 
-				return _controllersMetaData;
+				return _controllersMetaData = controllersMetaContainers;
 			}
 		}
-
-		private static IList<IControllerMetaData> SortControllersMetaContainers(IEnumerable<IControllerMetaData> controllersMetaContainers) =>
-			controllersMetaContainers.OrderBy(x => x.ExecParameters?.RunPriority ?? 0).ToList();
 
 		private void LoadMetaData(ICollection<IControllerMetaData> controllersMetaContainers, IEnumerable<Type> types, IEnumerable<Type> typesToIgnore)
 		{
