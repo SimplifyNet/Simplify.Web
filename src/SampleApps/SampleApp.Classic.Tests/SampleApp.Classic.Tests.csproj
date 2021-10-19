@@ -8,13 +8,15 @@
 		<Copyright>Licensed under LGPL</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
+		<ProjectReference Include="..\SampleApp.Classic\SampleApp.Classic.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Appveyor.TestLogger" Version="2.0.*" />
 		<PackageReference Include="coverlet.msbuild" Version="3.1.*" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.*" />
 		<PackageReference Include="NUnit" Version="3.13.*" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.0.*" />
 		<PackageReference Include="Moq" Version="4.16.*" />
-		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
-		<ProjectReference Include="..\SampleApp.Classic\SampleApp.Classic.csproj" />
 	</ItemGroup>
 </Project>
