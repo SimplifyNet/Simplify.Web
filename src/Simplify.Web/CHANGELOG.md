@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.4.3] - 2021-10-19
+
+### Fixed
+
+- Controllers sorting by run priority
+
+### Dependencies
+
+- Simplify.DI bump to 4.1.1
+
 ## [4.4.2] - 2021-07-18
 
 ### Dependencies
