@@ -14,7 +14,7 @@ namespace Simplify.Web.Core.Controllers
 		/// Gets the standard controllers meta data.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerable<IControllerMetaData> GetStandardControllersMetaData();
+		IList<IControllerMetaData> GetStandardControllersMetaData();
 
 		/// <summary>
 		/// Matches the controller route.

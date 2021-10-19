@@ -30,10 +30,10 @@ namespace Simplify.Web.Core.Controllers
 		/// Gets the standard controllers meta data.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<IControllerMetaData> GetStandardControllersMetaData() =>
-			_controllersMetaStore.ControllersMetaData.Where(
+		public IList<IControllerMetaData> GetStandardControllersMetaData() =>
+			SortControllersMetaContainers(_controllersMetaStore.ControllersMetaData.Where(
 				x =>
-					x.Role == null || (x.Role.Is400Handler == false && x.Role.Is403Handler == false && x.Role.Is404Handler == false));
+					x.Role == null || (x.Role.Is400Handler == false && x.Role.Is403Handler == false && x.Role.Is404Handler == false)));
 
 		/// <summary>
 		/// Matches the controller route.
@@ -116,5 +116,9 @@ namespace Simplify.Web.Core.Controllers
 
 			return metaData.Security.RequiredUserRoles.Any(user.IsInRole) ? SecurityRuleCheckResult.Ok : SecurityRuleCheckResult.Forbidden;
 		}
+
+		private static IList<IControllerMetaData> SortControllersMetaContainers(IEnumerable<IControllerMetaData> controllersMetaContainers) =>
+			controllersMetaContainers.OrderBy(x => x.ExecParameters?.RunPriority ?? 0)
+				.ToList();
 	}
 }

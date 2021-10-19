@@ -12,7 +12,7 @@ namespace Simplify.Web.Tests.Meta
 	public class ControllersMetaStoreTests
 	{
 		[Test]
-		public void GetControllersMetaData_LocalControllers_GetWithoutIgnoredAndSortedCorrectly()
+		public void GetControllersMetaData_LocalControllers_GetWithoutIgnored()
 		{
 			// Assign
 
@@ -33,10 +33,6 @@ namespace Simplify.Web.Tests.Meta
 			var metaData = store.ControllersMetaData;
 
 			Assert.AreEqual(4, metaData.Count);
-			Assert.AreEqual("TestController4", metaData[0].ControllerType.Name);
-			Assert.AreEqual("TestController5", metaData[1].ControllerType.Name);
-			Assert.AreEqual("TestController2", metaData[2].ControllerType.Name);
-			Assert.AreEqual("TestController1", metaData[3].ControllerType.Name);
 
 			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController1))));
 			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController2))));

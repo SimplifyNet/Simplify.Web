@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Meta;
 using Simplify.Web.Routing;
+using Simplify.Web.Tests.TestEntities;
 
 namespace Simplify.Web.Tests.Core.Controllers
 {
@@ -42,11 +43,37 @@ namespace Simplify.Web.Tests.Core.Controllers
 			_agent = new ControllersAgent(_metaStore.Object, _routeMatcher.Object);
 
 			// Act
-			var items = _agent.GetStandardControllersMetaData().ToList();
+			var items = _agent.GetStandardControllersMetaData();
 
 			// Assert
 			Assert.AreEqual(1, items.Count);
 			Assert.IsNull(items.First().Role);
+		}
+
+		[Test]
+		public void GetStandardControllersMetaData_DifferentPriorities_RunOrderingRespected()
+		{
+			// Assign
+
+			_metaStore.SetupGet(x => x.ControllersMetaData)
+				.Returns(new List<IControllerMetaData>
+				{
+					new ControllerMetaData(typeof(TestController1), new ControllerExecParameters(null, 2)),
+					new ControllerMetaData(typeof(TestController2), new ControllerExecParameters(null, 1)),
+					new ControllerMetaData(typeof(TestController4)),
+					new ControllerMetaData(typeof(TestController5))
+				});
+
+			_agent = new ControllersAgent(_metaStore.Object, _routeMatcher.Object);
+
+			// Act
+			var items = _agent.GetStandardControllersMetaData();
+
+			Assert.AreEqual(4, items.Count);
+			Assert.AreEqual("TestController4", items[0].ControllerType.Name);
+			Assert.AreEqual("TestController5", items[1].ControllerType.Name);
+			Assert.AreEqual("TestController2", items[2].ControllerType.Name);
+			Assert.AreEqual("TestController1", items[3].ControllerType.Name);
 		}
 
 		[Test]
