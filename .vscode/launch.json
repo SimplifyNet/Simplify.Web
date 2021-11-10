@@ -2,13 +2,19 @@
 	"version": "0.2.0",
 	"configurations": [
 	{
-		"name": "SampleApp.Kestrel Launch",
+		"name": "SampleApp.Angular Launch",
 		"type": "coreclr",
 		"request": "launch",
-		"preLaunchTask": "Build Kestrel Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.1/SampleApp.Kestrel.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Kestrel/bin/Debug/netcoreapp3.1/",
+		"preLaunchTask": "Build Angular Example",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net5.0/SampleApp.Angular.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net5.0/",
 		"internalConsoleOptions": "openOnSessionStart",
+		"serverReadyAction":
+		{
+			"action": "openExternally",
+			"pattern": "Now listening on",
+			"uriFormat": "http://localhost:5000"
+		},
 		"env":
 		{
 			"ASPNETCORE_ENVIRONMENT": "Development"
@@ -19,9 +25,53 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Classic Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.1/SampleApp.Classic.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/netcoreapp3.1/",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net5.0/SampleApp.Classic.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net5.0/",
 		"internalConsoleOptions": "openOnSessionStart",
+		"serverReadyAction":
+		{
+			"action": "openExternally",
+			"pattern": "Now listening on",
+			"uriFormat": "http://localhost:5000"
+		},
+		"env":
+		{
+			"ASPNETCORE_ENVIRONMENT": "Development"
+		}
+	},
+	{
+		"name": "SampleApp.Vue Launch",
+		"type": "coreclr",
+		"request": "launch",
+		"preLaunchTask": "Build Vue Example",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Vue/bin/Debug/net5.0/SampleApp.Vue.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Vue/bin/Debug/net5.0/",
+		"internalConsoleOptions": "openOnSessionStart",
+		"serverReadyAction":
+		{
+			"action": "openExternally",
+			"pattern": "Now listening on",
+			"uriFormat": "http://localhost:5000"
+		},
+		"env":
+		{
+			"ASPNETCORE_ENVIRONMENT": "Development"
+		}
+	},
+	{
+		"name": "SampleApp.Vue.Element Launch",
+		"type": "coreclr",
+		"request": "launch",
+		"preLaunchTask": "Build Vue Example",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/bin/Debug/net5.0/SampleApp.Vue.Element.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/bin/Debug/net5.0/",
+		"internalConsoleOptions": "openOnSessionStart",
+		"serverReadyAction":
+		{
+			"action": "openExternally",
+			"pattern": "Now listening on",
+			"uriFormat": "http://localhost:5000"
+		},
 		"env":
 		{
 			"ASPNETCORE_ENVIRONMENT": "Development"
