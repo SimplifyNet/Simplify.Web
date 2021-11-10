@@ -31,7 +31,8 @@ namespace Simplify.Web.Modules
 				return;
 
 			if (!settings.AcceptBrowserLanguage || (settings.AcceptBrowserLanguage && !TrySetLanguageFromRequestHeader(context)))
-				SetCurrentLanguage(settings.DefaultLanguage);
+				if (!SetCurrentLanguage(settings.DefaultLanguage))
+					Language = "iv";
 		}
 
 		/// <summary>
