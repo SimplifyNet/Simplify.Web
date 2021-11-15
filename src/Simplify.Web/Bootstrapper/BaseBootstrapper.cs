@@ -192,7 +192,7 @@ namespace Simplify.Web.Bootstrapper
 		/// </summary>
 		public virtual void RegisterEnvironment() =>
 			BootstrapperFactory.ContainerProvider.Register<IEnvironment>(
-				p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", p.Resolve<ISimplifyWebSettings>()));
+				p => new Modules.Environment(global::System.Environment.CurrentDirectory, p.Resolve<ISimplifyWebSettings>()));
 
 		/// <summary>
 		/// Registers the language manager provider.
