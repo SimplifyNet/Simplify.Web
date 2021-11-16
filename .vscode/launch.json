@@ -6,8 +6,8 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Angular Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net5.0/SampleApp.Angular.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net5.0/",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net6.0/SampleApp.Angular.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net6.0/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"serverReadyAction":
 		{
@@ -25,8 +25,8 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Classic Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net5.0/SampleApp.Classic.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net5.0/",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net6.0/SampleApp.Classic.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net6.0/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"serverReadyAction":
 		{
@@ -44,8 +44,8 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Vue Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Vue/bin/Debug/net5.0/SampleApp.Vue.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Vue/bin/Debug/net5.0/",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Vue/bin/Debug/net6.0/SampleApp.Vue.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Vue/bin/Debug/net6.0/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"serverReadyAction":
 		{
@@ -63,8 +63,8 @@
 		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build Vue Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/bin/Debug/net5.0/SampleApp.Vue.Element.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/bin/Debug/net5.0/",
+		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/bin/Debug/net6.0/SampleApp.Vue.Element.dll",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/bin/Debug/net6.0/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"serverReadyAction":
 		{
