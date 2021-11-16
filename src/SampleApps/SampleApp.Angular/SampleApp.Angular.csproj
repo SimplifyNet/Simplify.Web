@@ -11,7 +11,7 @@
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.*" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.*" />
 		<PackageReference Include="System.Text.Json" Version="4.7.2" />
 	</ItemGroup>
 	<ItemGroup>
