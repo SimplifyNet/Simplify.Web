@@ -12,7 +12,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-		<PackageReference Include="Simplify.WindowsServices" Version="2.13.*" />
+		<PackageReference Include="Simplify.WindowsServices" Version="2.14.*" />
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
 		<Reference Include="System.ServiceModel" />
 	</ItemGroup>
