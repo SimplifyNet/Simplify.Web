@@ -60,11 +60,25 @@ namespace Simplify.Web.Meta
 		/// <param name="type">The type.</param>
 		/// <returns></returns>
 		public static IList<Type> FindTypesDerivedFrom(Type type) =>
-			CurrentDomainAssembliesTypes.Where(t => t.BaseType != null
-													&& ((t.BaseType.IsGenericType == false && t.BaseType == type)
-														||
-														(t.BaseType.IsGenericType && t.BaseType.GetGenericTypeDefinition() == type)))
-				.ToList();
+			CurrentDomainAssembliesTypes.Where(t =>
+			{
+				if (t.IsAbstract)
+					return false;
+
+				if (t.BaseType == null)
+					return false;
+
+				if (t.BaseType.IsTypeOf(type))
+					return true;
+
+				if (t.BaseType.BaseType == null)
+					return false;
+
+				if (t.BaseType.BaseType.IsTypeOf(type))
+					return true;
+
+				return false;
+			}).ToList();
 
 		/// <summary>
 		/// Gets all types.
@@ -100,6 +114,19 @@ namespace Simplify.Web.Meta
 		{
 			_currentDomainAssemblies = null;
 			_currentDomainAssembliesTypes = null;
+		}
+
+		private static bool IsTypeOf(this Type t, Type type)
+		{
+			switch (t.IsGenericType)
+			{
+				case false when t == type:
+				case true when t.GetGenericTypeDefinition() == type:
+					return true;
+
+				default:
+					return false;
+			}
 		}
 
 		private static IEnumerable<Type> GetAssembliesTypes(IEnumerable<Assembly> assemblies)

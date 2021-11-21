@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SampleApp.Classic.Infrastructure.Log;
 using SampleApp.Classic.Models.Accounts;
 using SampleApp.Classic.Views;
 using SampleApp.Classic.Views.Accounts;
@@ -14,11 +15,13 @@ using Simplify.Web.Responses;
 namespace SampleApp.Classic.Controllers.Accounts
 {
 	[Post("login")]
-	public class LoginController : AsyncController<LoginViewModel>
+	public class LoginController : LoggableController<LoginViewModel>
 	{
 		public override async Task<ControllerResponse> Invoke()
 		{
 			await ReadModelAsync();
+
+			Log("Login controller executed");
 
 			if (Model.Password == "1" && Model.UserName == "Foo")
 			{
