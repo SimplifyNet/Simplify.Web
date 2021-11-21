@@ -48,10 +48,11 @@ namespace Simplify.Web.Tests.Meta
 
 			// Assert
 
-			Assert.AreEqual(2, types.Count);
+			Assert.AreEqual(3, types.Count);
 			Assert.AreEqual(1, types2.Count);
 			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestController1", types[0].FullName);
 			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestController3", types[1].FullName);
+			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestController6", types[2].FullName);
 			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestController2", types2[0].FullName);
 		}
 
