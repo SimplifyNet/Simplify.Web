@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  simplify.web.sampleapp.classic:
+    build:
+      context: .
+      dockerfile: ./SampleApps/SampleApp.Classic/Dockerfile
+    image: simplify.web.sampleapp.classic
+    ports:
+      - "5000:5000"

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net5.0</TargetFrameworks>
+		<TargetFramework>net6.0</TargetFramework>
 
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
@@ -14,9 +14,9 @@
 	<ItemGroup>
 		<PackageReference Include="Appveyor.TestLogger" Version="2.0.*" />
 		<PackageReference Include="coverlet.msbuild" Version="3.1.*" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.*" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.*" />
 		<PackageReference Include="NUnit" Version="3.13.*" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.0.*" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.1.*" />
 		<PackageReference Include="Moq" Version="4.16.*" />
 	</ItemGroup>
 </Project>
