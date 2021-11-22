@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.5.0] - 2021-11-23
+
+### Added
+
+- Possibility to use base class between user controller and controller base class (#167)
+
 ## [4.4.3] - 2021-10-19
 
 ### Fixed
