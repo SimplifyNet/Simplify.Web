@@ -7,7 +7,7 @@
 	<ItemGroup>
 		<PackageReference Include="BrunoLau.SpaServices" Version="0.8.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.*" />
-		<PackageReference Include="System.Text.Json" Version="4.7.2" />
+		<PackageReference Include="System.Text.Json" Version="6.0.1" />
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
 	<ItemGroup>
