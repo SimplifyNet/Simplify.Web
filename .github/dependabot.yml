@@ -1,14 +1,10 @@
 version: 2
 updates:
-- package-ecosystem: nuget
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "06:45"
-    timezone: Asia/Dacca
-  open-pull-requests-limit: 10
-  target-branch: develop
-  ignore:
-  - dependency-name: Microsoft.AspNetCore.SpaServices.Extensions
-    versions:
-    - 5.0.2
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "06:45"
+      timezone: Asia/Dacca
+    open-pull-requests-limit: 10
+    target-branch: develop
