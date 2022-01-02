@@ -7,7 +7,7 @@
 		"request": "launch",
 		"preLaunchTask": "Build Angular Example",
 		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net6.0/SampleApp.Angular.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net6.0/",
+		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
 		"internalConsoleOptions": "openOnSessionStart",
 		"serverReadyAction":
 		{

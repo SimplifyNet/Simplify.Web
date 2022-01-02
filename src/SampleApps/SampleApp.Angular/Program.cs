@@ -1,17 +1,34 @@
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+using Simplify.Web;
 
-namespace SampleApp.Angular
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp");
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			CreateWebHostBuilder(args).Build().Run();
-		}
+	//	Configure the HTTP request pipeline.
 
-		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>();
-	}
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
+
+	app.UseHttpsRedirection();
 }
+
+// Production use: proxying from .NET to Angular
+if (!app.Environment.IsDevelopment())
+{
+	app.UseStaticFiles();
+	app.UseSpaStaticFiles();
+}
+
+app.UseSimplifyWebNonTerminal();
+
+// Production use: proxying from .NET to Angular
+if (!app.Environment.IsDevelopment())
+	app.UseSpa(spa => spa.Options.SourcePath = "ClientApp");
+
+app.Run();
