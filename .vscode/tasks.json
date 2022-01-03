@@ -22,26 +22,6 @@
 		"problemMatcher": "$msCompile"
 	},
 	{
-		"label": "Build Vue Example",
-		"command": "dotnet",
-		"type": "process",
-		"args": [
-			"build",
-			"${workspaceFolder}/src/SampleApps/SampleApp.Vue/SampleApp.Vue.csproj"
-		],
-		"problemMatcher": "$msCompile"
-	},
-	{
-		"label": "Build Vue Example",
-		"command": "dotnet",
-		"type": "process",
-		"args": [
-			"build",
-			"${workspaceFolder}/src/SampleApps/SampleApp.Vue.Element/SampleApp.Vue.Element.csproj"
-		],
-		"problemMatcher": "$msCompile"
-	},
-	{
 		"label": "Build",
 		"command": "dotnet",
 		"type": "process",
