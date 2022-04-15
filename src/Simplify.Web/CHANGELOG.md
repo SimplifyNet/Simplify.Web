@@ -7,3 +7,4 @@
 - Microsoft.Owin to 4.2.1
 - Simplify.DI bump to 4.1.7
 - Internal Simplify.String.Sources to 1.2.1
+- Microsoft.Extensions.Configuration to 5.0.0
