@@ -5,8 +5,7 @@
 [![Nuget Version](https://img.shields.io/nuget/v/Simplify.Web)](https://www.nuget.org/packages/Simplify.Web/)
 [![Nuget Download](https://img.shields.io/nuget/dt/Simplify.Web)](https://www.nuget.org/packages/Simplify.Web/)
 [![Issues board](https://dxssrr2j0sq4w.cloudfront.net/3.2.0/img/external/zenhub-badge.svg)](https://app.zenhub.com/workspaces/simplify-5d7dd300da4a88000107f7e5/board?repos=208544410,208543783,208544195,208544168,208544390,208544370,208543999,229945810)
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/i4004/simplify-web/master)](https://ci.appveyor.com/project/i4004/simplify-web)
-[![AppVeyor tests (branch)](https://img.shields.io/appveyor/tests/i4004/simplify-web/master)](https://ci.appveyor.com/project/i4004/simplify-web)
+[![Build Package](https://github.com/SimplifyNet/Simplify.Web/actions/workflows/build.yml/badge.svg)](https://github.com/SimplifyNet/Simplify.Web/actions/workflows/build.yml)
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/nuget/Simplify.Web)](https://libraries.io/nuget/Simplify.Web)
 [![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/SimplifyNet/Simplify.Web)](https://www.codefactor.io/repository/github/simplifynet/simplify.web)
 ![Platform](https://img.shields.io/badge/platform-.NET%205.0%20%7C%20.NET%20Core%203.1%20%7C%20.NET%20Standard%202.0%20%7C%20.NET%204.6.2-lightgrey)
@@ -186,15 +185,15 @@ public class LoggedUserPanelView : View
 
 Below is the list of sample applications showing different variations of Simplify.Web usage:
 
-* [Only as an API backend with Angular + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Angular)
-* [Simple Kestrel-based Application with backend page](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Kestrel)
-* [Kestrel-based Application with backend HTML generation, localization, authentication](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Classic)
+- [Only as an API backend with Angular + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Angular)
+- [Simple Kestrel-based Application with backend page](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Kestrel)
+- [Kestrel-based Application with backend HTML generation, localization, authentication](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Classic)
 
 ![Simplify](https://raw.githubusercontent.com/SimplifyNet/Simplify.Web/master/images/screenshots/sample-app-classic.png)
 
-* [Only as an API backend with Vue.js + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Vue)
-* [Only as an API backend with Vue.js + Element UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Vue.Element)
-* [Simple Kestrel-based Application hosted as windows-service](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.WindowsServiceHosted)
+- [Only as an API backend with Vue.js + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Vue)
+- [Only as an API backend with Vue.js + Element UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Vue.Element)
+- [Simple Kestrel-based Application hosted as windows-service](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.WindowsServiceHosted)
 
 ## Contributing
 
