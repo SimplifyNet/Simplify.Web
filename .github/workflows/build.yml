@@ -24,7 +24,7 @@ jobs:
         run: dotnet build --no-restore -c Release
 
       - name: Create Package
-        run: dotnet pack --no-restore --no-build -c Release -o ./publish
+        run: dotnet pack Simplify.Web/Simplify.Web.csproj --no-restore --no-build -c Release -o ./publish
 
       - name: Create packages artifact
         uses: actions/upload-artifact@v2
