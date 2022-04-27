@@ -42,7 +42,7 @@
 		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="..\..\images\icon.png" Pack="true" Visible="false" PackagePath="" />
+		<None Include="..\..\Images\icon.png" Pack="true" Visible="false" PackagePath="" />
 		<None Include="CHANGELOG.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 </Project>
