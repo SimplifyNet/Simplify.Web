@@ -11,7 +11,7 @@ namespace Simplify.Web.Tests.Modules.Data
 	[TestFixture]
 	public class FileReaderTests
 	{
-		public const string DataPath = "WebSites\\FooSite\\App_Data\\";
+		public const string DataPath = "WebSites/FooSite/App_Data/";
 
 		private Mock<ILanguageManagerProvider> _languageManagerProvider = null!;
 		private Mock<ILanguageManager> _languageManager = null!;
