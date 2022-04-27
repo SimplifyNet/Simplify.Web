@@ -59,7 +59,7 @@ _ReSharper*
 *.ncrunch*
 .*crunch*.local.xml
 
-# Installshield output folder 
+# Installshield output folder
 [Ee]xpress
 
 # DocProject is a documentation generator add-in
@@ -131,3 +131,4 @@ lcov*.info
 src/SampleApps/SampleApp.Classic/Styles/**/*.css
 !src/SampleApps/SampleApp.Classic/Styles/Main.min.css
 
+**/.angular/cache
