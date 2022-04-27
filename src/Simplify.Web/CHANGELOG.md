@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.5.1] - 2022-04-27
+
+### Dependencies
+
+- Simplify.DI bump to 4.2 (PR#187)
+- Microsoft.Extensions.Configuration.Json bump to 3.1.24 for .NET Standard 2.0 and .NET 4.6.2
+
 ## [4.5.0] - 2021-11-23
 
 ### Added
