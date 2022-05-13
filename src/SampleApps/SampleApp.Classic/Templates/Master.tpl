@@ -7,7 +7,7 @@
 	<title>{Title}</title>
 	<link rel="stylesheet" type="text/css" href="{~}/node_modules/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="{~}/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" type="text/css" href="{~}/styles/Main.min.css" />
+	<link rel="stylesheet" type="text/css" href="{~}/Styles/Main.min.css" />
 
 	<link rel="shortcut icon" href="{~}/Images/favicon.ico" type="image/x-icon" />
 </head>
@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="{~}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<div class="Title">
-		<img class="Logo" src="{~}/images/IconMedium.png" alt="Simplify.Web" />Your Simplify.Web application
+		<img class="Logo" src="{~}/Images/IconMedium.png" alt="Simplify.Web" />Your Simplify.Web application
 	</div>
 
 	{Navbar}
@@ -26,4 +26,5 @@
 
 	<div class="ExecutionTimeFooter">{LabelExecutionTime}: {SV:SiteExecutionTime}</div>
 </body>
+
 </html>
