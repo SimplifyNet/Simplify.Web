@@ -12,7 +12,7 @@
 		<div class="collapse navbar-collapse" id="navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="{~}/about">About</a></li>
-				<li><a href="{~}/messagePageExample">Message page example</a></li>
+				<li><a href="{~}/messagePageExample">404 Message page example</a></li>
 				<li><a href="{~}/exception">Exception</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
