@@ -31,6 +31,6 @@ namespace Simplify.Web.Diagnostics.Trace
 
 		private static void TraceToConsole(HttpContext context) =>
 			global::System.Diagnostics.Trace.WriteLine(
-				$"[{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss:fff", CultureInfo.InvariantCulture)}] [{context.Request.Method}] {context.Request.GetDisplayUrl()}");
+				$"[{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss:fff", CultureInfo.InvariantCulture)}] [{context.Request.Method}] {context.Request.GetDisplayUrl().Replace(Environment.NewLine, "")}");
 	}
 }
