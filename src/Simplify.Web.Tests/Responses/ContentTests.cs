@@ -25,6 +25,7 @@ namespace Simplify.Web.Tests.Responses
 		public async Task Process_NormalData_DataWrittenToResponse()
 		{
 			// Assign
+
 			var content = new Mock<Content>("test", 123, "") { CallBase = true };
 			content.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
 			content.SetupGet(x => x.Context).Returns(_context.Object);

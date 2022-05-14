@@ -13,7 +13,7 @@ namespace Simplify.Web.Responses
 		/// <param name="content">The string content.</param>
 		/// <param name="statusCode">The HTTP response status code.</param>
 		/// <param name="contentType">Type of the content.</param>
-		public Content(string content, int statusCode = 200, string? contentType = null)
+		public Content(string content, int statusCode = 200, string contentType = "text/plain")
 		{
 			StringContent = content;
 			StatusCode = statusCode;
