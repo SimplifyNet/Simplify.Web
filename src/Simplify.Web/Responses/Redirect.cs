@@ -12,10 +12,7 @@ namespace Simplify.Web.Responses
 		/// Redirects the client to specified URL.
 		/// </summary>
 		/// <param name="url">The URL.</param>
-		public Redirect(string url)
-		{
-			Url = url;
-		}
+		public Redirect(string url) => Url = url;
 
 		/// <summary>
 		/// Redirects the client by specifying redirection type.
@@ -50,7 +47,7 @@ namespace Simplify.Web.Responses
 		/// <value>
 		/// The URL.
 		/// </value>
-		public string Url { get; } = null!;
+		public string? Url { get; }
 
 		/// <summary>
 		/// Processes this response
@@ -59,7 +56,7 @@ namespace Simplify.Web.Responses
 		public override Task<ControllerResponseResult> Process()
 		{
 			if (!string.IsNullOrEmpty(Url))
-				Redirector.Redirect(Url);
+				Redirector.Redirect(Url!);
 			else
 				Redirector.Redirect(RedirectionType, BookmarkName);
 
