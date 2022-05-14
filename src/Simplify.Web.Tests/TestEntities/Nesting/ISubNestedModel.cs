@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.Model.Validation.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities.Nesting
+namespace Simplify.Web.Tests.TestEntities.Nesting;
+
+public interface ISubNestedModel
 {
-	public interface ISubNestedModel
-	{
-		[Required]
-		string? BuiltInType { get; set; }
-	}
+	[Required]
+	string? BuiltInType { get; set; }
 }

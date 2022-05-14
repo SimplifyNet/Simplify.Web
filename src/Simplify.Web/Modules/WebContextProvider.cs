@@ -1,25 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Modules
+namespace Simplify.Web.Modules;
+
+/// <summary>
+/// Provides web context provider
+/// </summary>
+public class WebContextProvider : IWebContextProvider
 {
+	private IWebContext? _webContext;
+
 	/// <summary>
-	/// Provides web context provider
+	/// Creates the web context.
 	/// </summary>
-	public class WebContextProvider : IWebContextProvider
-	{
-		private IWebContext? _webContext;
+	/// <param name="context">The context.</param>
+	/// <returns></returns>
+	public void Setup(HttpContext context) => _webContext ??= new WebContext(context);
 
-		/// <summary>
-		/// Creates the web context.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <returns></returns>
-		public void Setup(HttpContext context) => _webContext ??= new WebContext(context);
-
-		/// <summary>
-		/// Gets the web context.
-		/// </summary>
-		/// <returns></returns>
-		public IWebContext Get() => _webContext!;
-	}
+	/// <summary>
+	/// Gets the web context.
+	/// </summary>
+	/// <returns></returns>
+	public IWebContext Get() => _webContext!;
 }

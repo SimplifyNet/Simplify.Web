@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Simplify.Web.Meta
+namespace Simplify.Web.Meta;
+
+/// <summary>
+/// Represent views meta store
+/// </summary>
+public interface IViewsMetaStore
 {
 	/// <summary>
-	/// Represent views meta store
+	/// Current domain views types
 	/// </summary>
-	public interface IViewsMetaStore
-	{
-		/// <summary>
-		/// Current domain views types
-		/// </summary>
-		/// <returns></returns>
-		IList<Type> ViewsTypes { get; }
-	}
+	/// <returns></returns>
+	IList<Type> ViewsTypes { get; }
 }

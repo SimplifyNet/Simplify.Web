@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace Simplify.Web.Attributes
+namespace Simplify.Web.Attributes;
+
+/// <summary>
+/// Set controller HTTP GET request route path
+/// </summary>
+[AttributeUsage(AttributeTargets.Class)]
+public class GetAttribute : ControllerRouteAttribute
 {
 	/// <summary>
-	/// Set controller HTTP GET request route path
+	/// Initializes a new instance of the <see cref="GetAttribute"/> class.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class)]
-	public class GetAttribute : ControllerRouteAttribute
+	/// <param name="route">The route.</param>
+	public GetAttribute(string route) : base(route)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="GetAttribute"/> class.
-		/// </summary>
-		/// <param name="route">The route.</param>
-		public GetAttribute(string route) : base(route)
-		{
-		}
 	}
 }

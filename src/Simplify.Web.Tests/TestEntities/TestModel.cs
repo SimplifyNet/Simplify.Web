@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.Model.Validation.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModel
 {
-	public class TestModel
-	{
-		[Required]
-		public string? Prop1 { get; set; }
-	}
+	[Required]
+	public string? Prop1 { get; set; }
 }

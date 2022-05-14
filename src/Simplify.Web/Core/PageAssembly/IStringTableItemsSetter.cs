@@ -1,13 +1,12 @@
-﻿namespace Simplify.Web.Core.PageAssembly
+﻿namespace Simplify.Web.Core.PageAssembly;
+
+/// <summary>
+/// Represent string table items setter
+/// </summary>
+public interface IStringTableItemsSetter
 {
 	/// <summary>
-	/// Represent string table items setter
+	/// Sets this items from string table to data collector.
 	/// </summary>
-	public interface IStringTableItemsSetter
-	{
-		/// <summary>
-		/// Sets this items from string table to data collector.
-		/// </summary>
-		void Set();
-	}
+	void Set();
 }

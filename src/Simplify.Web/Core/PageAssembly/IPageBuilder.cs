@@ -1,17 +1,16 @@
 ﻿using Simplify.DI;
 
-namespace Simplify.Web.Core.PageAssembly
+namespace Simplify.Web.Core.PageAssembly;
+
+/// <summary>
+/// Represent web-page builder
+/// </summary>
+public interface IPageBuilder
 {
 	/// <summary>
-	/// Represent web-page builder
+	/// Builds a web page
 	/// </summary>
-	public interface IPageBuilder
-	{
-		/// <summary>
-		/// Builds a web page
-		/// </summary>
-		/// <param name="resolver">The DI container resolver.</param>
-		/// <returns></returns>
-		string Build(IDIResolver resolver);
-	}
+	/// <param name="resolver">The DI container resolver.</param>
+	/// <returns></returns>
+	string Build(IDIResolver resolver);
 }

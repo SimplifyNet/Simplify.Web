@@ -6,55 +6,54 @@ using Simplify.Templates;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Responses;
 
-namespace Simplify.Web.Tests.Responses
+namespace Simplify.Web.Tests.Responses;
+
+[TestFixture]
+public class InlineTplTests
 {
-	[TestFixture]
-	public class InlineTplTests
+	private Mock<IDataCollector> _dataCollector = null!;
+
+	[SetUp]
+	public void Initialize() => _dataCollector = new Mock<IDataCollector>();
+
+	[Test]
+	public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
 	{
-		private Mock<IDataCollector> _dataCollector = null!;
+		// ReSharper disable ObjectCreationAsStatement
+		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
+		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, TemplateBuilder.FromString("").Build()));
+		// ReSharper restore ObjectCreationAsStatement
+	}
 
-		[SetUp]
-		public void Initialize() => _dataCollector = new Mock<IDataCollector>();
+	[Test]
+	public async Task InlineTplProcess_NormalData_DataAddedToDataCollector()
+	{
+		// Assign
 
-		[Test]
-		public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
-		{
-			// ReSharper disable ObjectCreationAsStatement
-			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
-			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, TemplateBuilder.FromString("").Build()));
-			// ReSharper restore ObjectCreationAsStatement
-		}
+		var tplData = new Mock<InlineTpl>("foo", "test") { CallBase = true };
+		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
-		[Test]
-		public async Task InlineTplProcess_NormalData_DataAddedToDataCollector()
-		{
-			// Assign
+		// Act
+		var result = await tplData.Object.Process();
 
-			var tplData = new Mock<InlineTpl>("foo", "test") { CallBase = true };
-			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
+		// Assert
 
-			// Act
-			var result = await tplData.Object.Process();
+		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+	}
 
-			// Assert
+	[Test]
+	public async Task InlineTplProcess_NormalTemplate_DataAddedToDataCollector()
+	{
+		// Assign
 
-			_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-		}
+		var tplData = new Mock<InlineTpl>("foo", await TemplateBuilder.FromString("test").BuildAsync()) { CallBase = true };
+		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
-		[Test]
-		public async Task InlineTplProcess_NormalTemplate_DataAddedToDataCollector()
-		{
-			// Assign
+		// Act
+		await tplData.Object.Process();
 
-			var tplData = new Mock<InlineTpl>("foo", await TemplateBuilder.FromString("test").BuildAsync()) { CallBase = true };
-			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
-
-			// Act
-			await tplData.Object.Process();
-
-			// Assert
-			_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
-		}
+		// Assert
+		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
 	}
 }

@@ -6,76 +6,75 @@ using System.Linq;
 using System.Reflection;
 using Simplify.Web.Model.Binding.Attributes;
 
-namespace Simplify.Web.Model.Binding.Parsers
+namespace Simplify.Web.Model.Binding.Parsers;
+
+/// <summary>
+/// Provides list of key value pair to model binding
+/// </summary>
+public static class ListToModelParser
 {
 	/// <summary>
-	/// Provides list of key value pair to model binding
+	/// Parses list and creates a model.
 	/// </summary>
-	public static class ListToModelParser
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	public static T Parse<T>(IList<KeyValuePair<string, string[]>> source)
 	{
-		/// <summary>
-		/// Parses list and creates a model.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public static T Parse<T>(IList<KeyValuePair<string, string[]>> source)
+		var type = typeof(T);
+
+		var obj = Activator.CreateInstance<T>();
+
+		source = LowerCaseRequest(source);
+
+		foreach (var propInfo in type.GetProperties())
 		{
-			var type = typeof(T);
+			var propertyInfo = propInfo;
 
-			var obj = Activator.CreateInstance<T>();
+			if (IsExcluded(propertyInfo))
+				continue;
 
-			source = LowerCaseRequest(source);
-
-			foreach (var propInfo in type.GetProperties())
-			{
-				var propertyInfo = propInfo;
-
-				if (IsExcluded(propertyInfo))
-					continue;
-
-				propInfo.SetValue(obj, ParseProperty(propInfo, source.FirstOrDefault(x => x.Key == GetPropertyName(propertyInfo))));
-			}
-
-			return obj;
+			propInfo.SetValue(obj, ParseProperty(propInfo, source.FirstOrDefault(x => x.Key == GetPropertyName(propertyInfo))));
 		}
 
-		private static IList<KeyValuePair<string, string[]>> LowerCaseRequest(IEnumerable<KeyValuePair<string, string[]>> source)
-		{
-			return source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLower(), x.Value)).ToList();
-		}
+		return obj;
+	}
 
-		private static string GetPropertyName(MemberInfo propertyInfo)
-		{
-			return (GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLower();
-		}
+	private static IList<KeyValuePair<string, string[]>> LowerCaseRequest(IEnumerable<KeyValuePair<string, string[]>> source)
+	{
+		return source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLower(), x.Value)).ToList();
+	}
 
-		private static string GetBindPropertyName(ICustomAttributeProvider propertyInfo)
-		{
-			var attributes = propertyInfo.GetCustomAttributes(typeof(BindPropertyAttribute), false);
+	private static string GetPropertyName(MemberInfo propertyInfo)
+	{
+		return (GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLower();
+	}
 
-			return attributes.Length == 0 ? null : ((BindPropertyAttribute)attributes[0]).FieldName;
-		}
+	private static string GetBindPropertyName(ICustomAttributeProvider propertyInfo)
+	{
+		var attributes = propertyInfo.GetCustomAttributes(typeof(BindPropertyAttribute), false);
 
-		private static string TryGetFormat(ICustomAttributeProvider propertyInfo)
-		{
-			var attributes = propertyInfo.GetCustomAttributes(typeof(FormatAttribute), false);
+		return attributes.Length == 0 ? null : ((BindPropertyAttribute)attributes[0]).FieldName;
+	}
 
-			return attributes.Length == 0 ? null : ((FormatAttribute)attributes[0]).Format;
-		}
+	private static string TryGetFormat(ICustomAttributeProvider propertyInfo)
+	{
+		var attributes = propertyInfo.GetCustomAttributes(typeof(FormatAttribute), false);
 
-		private static bool IsExcluded(ICustomAttributeProvider propertyInfo)
-		{
-			return propertyInfo.GetCustomAttributes(typeof(ExcludeAttribute), false).Length != 0;
-		}
+		return attributes.Length == 0 ? null : ((FormatAttribute)attributes[0]).Format;
+	}
 
-		private static object ParseProperty(PropertyInfo propertyInfo, KeyValuePair<string, string[]> keyValuePair)
-		{
-			if (keyValuePair.Equals(default(KeyValuePair<string, string[]>)) || keyValuePair.Value.Length == 0)
-				return null;
+	private static bool IsExcluded(ICustomAttributeProvider propertyInfo)
+	{
+		return propertyInfo.GetCustomAttributes(typeof(ExcludeAttribute), false).Length != 0;
+	}
 
-			return ArrayToSpecifiedListParser.IsTypeValidForParsing(propertyInfo.PropertyType)
-				? ArrayToSpecifiedListParser.ParseUndefined(keyValuePair.Value, propertyInfo.PropertyType, TryGetFormat(propertyInfo))
-				: StringToSpecifiedObjectParser.ParseUndefined(string.Join(",", keyValuePair.Value), propertyInfo.PropertyType, TryGetFormat(propertyInfo));
-		}
+	private static object ParseProperty(PropertyInfo propertyInfo, KeyValuePair<string, string[]> keyValuePair)
+	{
+		if (keyValuePair.Equals(default(KeyValuePair<string, string[]>)) || keyValuePair.Value.Length == 0)
+			return null;
+
+		return ArrayToSpecifiedListParser.IsTypeValidForParsing(propertyInfo.PropertyType)
+			? ArrayToSpecifiedListParser.ParseUndefined(keyValuePair.Value, propertyInfo.PropertyType, TryGetFormat(propertyInfo))
+			: StringToSpecifiedObjectParser.ParseUndefined(string.Join(",", keyValuePair.Value), propertyInfo.PropertyType, TryGetFormat(propertyInfo));
 	}
 }

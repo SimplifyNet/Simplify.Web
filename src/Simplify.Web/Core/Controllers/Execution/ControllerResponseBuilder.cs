@@ -1,23 +1,22 @@
 ﻿using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
 
-namespace Simplify.Web.Core.Controllers.Execution
+namespace Simplify.Web.Core.Controllers.Execution;
+
+/// <summary>
+/// Provides controller response builder
+/// </summary>
+public class ControllerResponseBuilder : ActionModulesAccessorBuilder, IControllerResponseBuilder
 {
 	/// <summary>
-	/// Provides controller response builder
+	/// Builds the controller response properties.
 	/// </summary>
-	public class ControllerResponseBuilder : ActionModulesAccessorBuilder, IControllerResponseBuilder
+	/// <param name="controllerResponse">The controller response.</param>
+	/// <param name="resolver">The DI container resolver.</param>
+	public void BuildControllerResponseProperties(ControllerResponse controllerResponse, IDIResolver resolver)
 	{
-		/// <summary>
-		/// Builds the controller response properties.
-		/// </summary>
-		/// <param name="controllerResponse">The controller response.</param>
-		/// <param name="resolver">The DI container resolver.</param>
-		public void BuildControllerResponseProperties(ControllerResponse controllerResponse, IDIResolver resolver)
-		{
-			BuildActionModulesAccessorProperties(controllerResponse, resolver);
+		BuildActionModulesAccessorProperties(controllerResponse, resolver);
 
-			controllerResponse.ResponseWriter = resolver.Resolve<IResponseWriter>();
-		}
+		controllerResponse.ResponseWriter = resolver.Resolve<IResponseWriter>();
 	}
 }

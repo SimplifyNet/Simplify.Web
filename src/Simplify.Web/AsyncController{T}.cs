@@ -4,46 +4,45 @@ using System.Threading.Tasks;
 using Simplify.DI;
 using Simplify.Web.Model;
 
-namespace Simplify.Web
+namespace Simplify.Web;
+
+/// <summary>
+/// Asynchronous model controllers base class
+/// </summary>
+public abstract class AsyncController<T> : AsyncControllerBase
+	where T : class
 {
+	private T _model;
+
 	/// <summary>
-	/// Asynchronous model controllers base class
+	/// Gets the model of current request.
 	/// </summary>
-	public abstract class AsyncController<T> : AsyncControllerBase
-		where T : class
+	/// <value>
+	/// The current request model.
+	/// </value>
+	public virtual T Model
 	{
-		private T _model;
-
-		/// <summary>
-		/// Gets the model of current request.
-		/// </summary>
-		/// <value>
-		/// The current request model.
-		/// </value>
-		public virtual T Model
+		get
 		{
-			get
-			{
-				if (_model != null)
-					return _model;
-
-				ReadModelAsync().Wait();
-
+			if (_model != null)
 				return _model;
-			}
+
+			ReadModelAsync().Wait();
+
+			return _model;
 		}
+	}
 
-		/// <summary>
-		/// Reads the model asynchronously.
-		/// </summary>
-		public virtual async Task ReadModelAsync()
-		{
-			var handler = Resolver.Resolve<IModelHandler>();
+	/// <summary>
+	/// Reads the model asynchronously.
+	/// </summary>
+	public virtual async Task ReadModelAsync()
+	{
+		var handler = Resolver.Resolve<IModelHandler>();
 
-			if (!handler.Processed)
-				await handler.ProcessAsync<T>(Resolver);
+		if (!handler.Processed)
+			await handler.ProcessAsync<T>(Resolver);
 
-			_model = handler.GetModel<T>();
-		}
+		_model = handler.GetModel<T>();
 	}
 }

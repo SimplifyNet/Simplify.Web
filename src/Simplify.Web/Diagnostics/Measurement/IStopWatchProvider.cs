@@ -1,21 +1,20 @@
 ﻿using System;
 
-namespace Simplify.Web.Diagnostics.Measurement
+namespace Simplify.Web.Diagnostics.Measurement;
+
+/// <summary>
+/// Represent stopwatch provider
+/// </summary>
+public interface IStopwatchProvider
 {
 	/// <summary>
-	/// Represent stopwatch provider
+	/// Starts the measurement.
 	/// </summary>
-	public interface IStopwatchProvider
-	{
-		/// <summary>
-		/// Starts the measurement.
-		/// </summary>
-		void StartMeasurement();
+	void StartMeasurement();
 
-		/// <summary>
-		/// Stops the and get measurement.
-		/// </summary>
-		/// <returns></returns>
-		TimeSpan StopAndGetMeasurement();
-	}
+	/// <summary>
+	/// Stops the and get measurement.
+	/// </summary>
+	/// <returns></returns>
+	TimeSpan StopAndGetMeasurement();
 }

@@ -8,31 +8,30 @@ using Simplify.DI;
 using Simplify.Web;
 using Simplify.Web.Auth;
 
-namespace SampleApp.Classic
+namespace SampleApp.Classic;
+
+public class Startup
 {
-	public class Startup
+	public void ConfigureServices(IServiceCollection services)
 	{
-		public void ConfigureServices(IServiceCollection services)
-		{
-			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-				.AddCookie(options =>
-				{
-					options.LoginPath = new PathString("/login");
-					options.Cookie.Name = "AppCookie";
-				});
-		}
+		services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			.AddCookie(options =>
+			{
+				options.LoginPath = new PathString("/login");
+				options.Cookie.Name = "AppCookie";
+			});
+	}
 
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-		{
-			if (env.IsDevelopment())
-				app.UseDeveloperExceptionPage();
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	{
+		if (env.IsDevelopment())
+			app.UseDeveloperExceptionPage();
 
-			app.UseAuthentication();
-			app.UseAuthRedirect("/login");
+		app.UseAuthentication();
+		app.UseAuthRedirect("/login");
 
-			app.UseSimplifyWeb();
+		app.UseSimplifyWeb();
 
-			DIContainer.Current.Verify();
-		}
+		DIContainer.Current.Verify();
 	}
 }

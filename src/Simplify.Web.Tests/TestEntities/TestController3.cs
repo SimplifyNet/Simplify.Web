@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public class TestController3 : Controller
 {
-	public class TestController3 : Controller
-	{
-		public override ControllerResponse Invoke() => throw new NotImplementedException();
-	}
+	public override ControllerResponse Invoke() => throw new NotImplementedException();
 }

@@ -5,82 +5,81 @@ using Simplify.Web.Tests.TestEntities;
 using Simplify.Web.Tests.TestEntities.Inheritance;
 using Simplify.Web.Tests.TestEntities.Nesting;
 
-namespace Simplify.Web.Tests.Model.Validation
+namespace Simplify.Web.Tests.Model.Validation;
+
+[TestFixture]
+public class ValidationAttributesExecutorTests
 {
-	[TestFixture]
-	public class ValidationAttributesExecutorTests
+	private ValidationAttributesExecutor _validator = null!;
+
+	[SetUp]
+	public void Initialize() => _validator = new ValidationAttributesExecutor();
+
+	[Test]
+	public void Validate_ModelWithOnePropertyAndOneValidateAttribute_AttributeValidationCalled()
 	{
-		private ValidationAttributesExecutor _validator = null!;
+		// Assign
+		var model = new TestModel();
 
-		[SetUp]
-		public void Initialize() => _validator = new ValidationAttributesExecutor();
+		// Act
 
-		[Test]
-		public void Validate_ModelWithOnePropertyAndOneValidateAttribute_AttributeValidationCalled()
+		var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
+
+		// Assert
+		Assert.That(ex!.Message,
+			Does.StartWith($"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty"));
+	}
+
+	[Test]
+	public void Validate_NestedProperties_NestedNullAttributeException()
+	{
+		// Arrange
+		var model = new NestingRootModel
 		{
-			// Assign
-			var model = new TestModel();
-
-			// Act
-
-			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
-
-			// Assert
-			Assert.That(ex!.Message,
-				Does.StartWith($"Required property '{nameof(TestEntityWithProperty.Prop1)}' is null or empty"));
-		}
-
-		[Test]
-		public void Validate_NestedProperties_NestedNullAttributeException()
-		{
-			// Arrange
-			var model = new NestingRootModel
+			NestedProperty = new NestedModel
 			{
-				NestedProperty = new NestedModel
-				{
-					NestedProperty = new SubNestedModel()
-				},
-				TestInt = 1
-			};
+				NestedProperty = new SubNestedModel()
+			},
+			TestInt = 1
+		};
 
-			// Act
+		// Act
 
-			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
+		var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
 
-			// Assert
-			Assert.That(ex!.Message,
-				Does.StartWith($"Required property '{nameof(SubNestedModel.BuiltInType)}' is null or empty"));
-		}
+		// Assert
+		Assert.That(ex!.Message,
+			Does.StartWith($"Required property '{nameof(SubNestedModel.BuiltInType)}' is null or empty"));
+	}
 
-		[Test]
-		public void Validate_InheritedProperty_NestedNullAttributeException()
+	[Test]
+	public void Validate_InheritedProperty_NestedNullAttributeException()
+	{
+		// Arrange
+		var model = new InheritanceRootModel
 		{
-			// Arrange
-			var model = new InheritanceRootModel
-			{
-				NestedProperty = new BaseNestedModel()
-			};
+			NestedProperty = new BaseNestedModel()
+		};
 
-			// Act
-			var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
+		// Act
+		var ex = Assert.Throws<ModelValidationException>(() => _validator.Validate(model, null!));
 
-			// Assert
-			Assert.That(ex!.Message,
-				Does.StartWith($"Required property '{nameof(BaseNestedModel.BuiltInType)}' is null or empty"));
-		}
+		// Assert
+		Assert.That(ex!.Message,
+			Does.StartWith($"Required property '{nameof(BaseNestedModel.BuiltInType)}' is null or empty"));
+	}
 
-		[Test]
-		public void Validate_NotNullSystemTypes_NoExceptions()
+	[Test]
+	public void Validate_NotNullSystemTypes_NoExceptions()
+	{
+		// Arrange
+		var model = new SystemTypesModel
 		{
-			// Arrange
-			var model = new SystemTypesModel
-			{
-				StringProperty = "test",
-				IntProperty = 23
-			};
+			StringProperty = "test",
+			IntProperty = 23
+		};
 
-			// Act
-			_validator.Validate(model, null!);
-		}
+		// Act
+		_validator.Validate(model, null!);
 	}
 }

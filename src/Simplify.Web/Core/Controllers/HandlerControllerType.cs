@@ -1,18 +1,17 @@
-﻿namespace Simplify.Web.Core.Controllers
+﻿namespace Simplify.Web.Core.Controllers;
+
+/// <summary>
+/// Handler controller types
+/// </summary>
+public enum HandlerControllerType
 {
 	/// <summary>
-	/// Handler controller types
+	/// The HTTP 404 handler
 	/// </summary>
-	public enum HandlerControllerType
-	{
-		/// <summary>
-		/// The HTTP 404 handler
-		/// </summary>
-		Http404Handler,
+	Http404Handler,
 
-		/// <summary>
-		/// The HTTP 403 handler
-		/// </summary>
-		Http403Handler
-	}
+	/// <summary>
+	/// The HTTP 403 handler
+	/// </summary>
+	Http403Handler
 }

@@ -1,23 +1,22 @@
-﻿namespace Simplify.Web.Core.Controllers
+﻿namespace Simplify.Web.Core.Controllers;
+
+/// <summary>
+/// Security rules check result
+/// </summary>
+public enum SecurityRuleCheckResult
 {
 	/// <summary>
-	/// Security rules check result
+	/// Ok
 	/// </summary>
-	public enum SecurityRuleCheckResult
-	{
-		/// <summary>
-		/// Ok
-		/// </summary>
-		Ok,
+	Ok,
 
-		/// <summary>
-		/// The user is not authenticated
-		/// </summary>
-		NotAuthenticated,
+	/// <summary>
+	/// The user is not authenticated
+	/// </summary>
+	NotAuthenticated,
 
-		/// <summary>
-		/// The user is authenticated but does not have access rights
-		/// </summary>
-		Forbidden
-	}
+	/// <summary>
+	/// The user is authenticated but does not have access rights
+	/// </summary>
+	Forbidden
 }

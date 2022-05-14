@@ -2,43 +2,42 @@
 using Simplify.Web.Bootstrapper;
 using Simplify.Web.Meta;
 
-namespace Simplify.Web.Tests.Bootstrapper
+namespace Simplify.Web.Tests.Bootstrapper;
+
+[TestFixture]
+public class BootstrapperFactoryTests
 {
-	[TestFixture]
-	public class BootstrapperFactoryTests
+	[Test]
+	public void CreateBootstrapper_NoUserType_BaseBootstrapperReturned()
 	{
-		[Test]
-		public void CreateBootstrapper_NoUserType_BaseBootstrapperReturned()
-		{
-			// Assign
+		// Assign
 
-			if (!SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Contains("Simplify"))
-				SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Add("Simplify");
+		if (!SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Contains("Simplify"))
+			SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Add("Simplify");
 
-			SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
+		SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
 
-			// Act
-			var bootstrapper = BootstrapperFactory.CreateBootstrapper();
+		// Act
+		var bootstrapper = BootstrapperFactory.CreateBootstrapper();
 
-			// Assert
+		// Assert
 
-			Assert.AreEqual("Simplify.Web.Bootstrapper.BaseBootstrapper", bootstrapper.GetType().FullName);
-		}
+		Assert.AreEqual("Simplify.Web.Bootstrapper.BaseBootstrapper", bootstrapper.GetType().FullName);
+	}
 
-		[Test]
-		public void CreateBootstrapper_HaveUserType_TestBootstrapperReturned()
-		{
-			// Assign
+	[Test]
+	public void CreateBootstrapper_HaveUserType_TestBootstrapperReturned()
+	{
+		// Assign
 
-			SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
-			SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
+		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
+		SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
 
-			// Act
-			var bootstrapper = BootstrapperFactory.CreateBootstrapper();
+		// Act
+		var bootstrapper = BootstrapperFactory.CreateBootstrapper();
 
-			// Assert
+		// Assert
 
-			Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestBootstrapper", bootstrapper.GetType().FullName);
-		}
+		Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestBootstrapper", bootstrapper.GetType().FullName);
 	}
 }

@@ -2,67 +2,66 @@
 using System.Threading.Tasks;
 using Simplify.Templates;
 
-namespace Simplify.Web.Responses
+namespace Simplify.Web.Responses;
+
+/// <summary>
+/// Provides template response (puts data to DataCollector specified variable)
+/// </summary>
+public class InlineTpl : ControllerResponse
 {
 	/// <summary>
-	/// Provides template response (puts data to DataCollector specified variable)
+	/// Initializes a new instance of the <see cref="InlineTpl"/> class.
 	/// </summary>
-	public class InlineTpl : ControllerResponse
+	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
+	/// <param name="template">The template.</param>
+	public InlineTpl(string? dataCollectorVariableName, ITemplate? template)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="InlineTpl"/> class.
-		/// </summary>
-		/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
-		/// <param name="template">The template.</param>
-		public InlineTpl(string? dataCollectorVariableName, ITemplate? template)
-		{
-			if (string.IsNullOrEmpty(dataCollectorVariableName))
-				throw new ArgumentNullException(nameof(dataCollectorVariableName));
+		if (string.IsNullOrEmpty(dataCollectorVariableName))
+			throw new ArgumentNullException(nameof(dataCollectorVariableName));
 
-			DataCollectorVariableName = dataCollectorVariableName!;
+		DataCollectorVariableName = dataCollectorVariableName!;
 
-			if (template != null)
-				Data = template.Get();
-		}
+		if (template != null)
+			Data = template.Get();
+	}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="InlineTpl"/> class.
-		/// </summary>
-		/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
-		/// <param name="data">The data.</param>
-		public InlineTpl(string? dataCollectorVariableName, string data)
-		{
-			if (string.IsNullOrEmpty(dataCollectorVariableName))
-				throw new ArgumentNullException(nameof(dataCollectorVariableName));
+	/// <summary>
+	/// Initializes a new instance of the <see cref="InlineTpl"/> class.
+	/// </summary>
+	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
+	/// <param name="data">The data.</param>
+	public InlineTpl(string? dataCollectorVariableName, string data)
+	{
+		if (string.IsNullOrEmpty(dataCollectorVariableName))
+			throw new ArgumentNullException(nameof(dataCollectorVariableName));
 
-			DataCollectorVariableName = dataCollectorVariableName!;
-			Data = data;
-		}
+		DataCollectorVariableName = dataCollectorVariableName!;
+		Data = data;
+	}
 
-		/// <summary>
-		/// Gets the name of the data collector variable.
-		/// </summary>
-		/// <value>
-		/// The name of the data collector variable.
-		/// </value>
-		public string DataCollectorVariableName { get; }
+	/// <summary>
+	/// Gets the name of the data collector variable.
+	/// </summary>
+	/// <value>
+	/// The name of the data collector variable.
+	/// </value>
+	public string DataCollectorVariableName { get; }
 
-		/// <summary>
-		/// Gets the data.
-		/// </summary>
-		/// <value>
-		/// The data.
-		/// </value>
-		public string? Data { get; }
+	/// <summary>
+	/// Gets the data.
+	/// </summary>
+	/// <value>
+	/// The data.
+	/// </value>
+	public string? Data { get; }
 
-		/// <summary>
-		/// Processes this response
-		/// </summary>
-		public override Task<ControllerResponseResult> Process()
-		{
-			DataCollector.Add(DataCollectorVariableName, Data);
+	/// <summary>
+	/// Processes this response
+	/// </summary>
+	public override Task<ControllerResponseResult> Process()
+	{
+		DataCollector.Add(DataCollectorVariableName, Data);
 
-			return Task.FromResult(ControllerResponseResult.Default);
-		}
+		return Task.FromResult(ControllerResponseResult.Default);
 	}
 }

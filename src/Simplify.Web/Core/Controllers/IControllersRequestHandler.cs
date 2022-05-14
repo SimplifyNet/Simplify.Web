@@ -2,19 +2,18 @@
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
-namespace Simplify.Web.Core.Controllers
+namespace Simplify.Web.Core.Controllers;
+
+/// <summary>
+/// Represent controllers HTTP request handler
+/// </summary>
+public interface IControllersRequestHandler
 {
 	/// <summary>
-	/// Represent controllers HTTP request handler
+	/// Processes the HTTP request for controllers.
 	/// </summary>
-	public interface IControllersRequestHandler
-	{
-		/// <summary>
-		/// Processes the HTTP request for controllers.
-		/// </summary>
-		/// <param name="resolver">The DI container resolver.</param>
-		/// <param name="context">The context.</param>
-		/// <returns></returns>
-		Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context);
-	}
+	/// <param name="resolver">The DI container resolver.</param>
+	/// <param name="context">The context.</param>
+	/// <returns></returns>
+	Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context);
 }

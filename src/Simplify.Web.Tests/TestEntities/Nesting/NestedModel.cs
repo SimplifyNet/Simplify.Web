@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.Model.Validation.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities.Nesting
+namespace Simplify.Web.Tests.TestEntities.Nesting;
+
+public class NestedModel
 {
-	public class NestedModel
-	{
-		[Required]
-		public ISubNestedModel? NestedProperty { get; set; }
-	}
+	[Required]
+	public ISubNestedModel? NestedProperty { get; set; }
 }

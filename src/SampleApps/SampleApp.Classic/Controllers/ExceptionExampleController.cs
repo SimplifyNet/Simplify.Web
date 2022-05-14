@@ -2,14 +2,13 @@
 using Simplify.Web;
 using Simplify.Web.Attributes;
 
-namespace SampleApp.Classic.Controllers
+namespace SampleApp.Classic.Controllers;
+
+[Get("exception")]
+public class ExceptionExampleController : Controller
 {
-	[Get("exception")]
-	public class ExceptionExampleController : Controller
+	public override ControllerResponse Invoke()
 	{
-		public override ControllerResponse Invoke()
-		{
-			throw new NotImplementedException();
-		}
+		throw new NotImplementedException();
 	}
 }

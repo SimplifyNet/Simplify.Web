@@ -1,8 +1,7 @@
-﻿namespace Simplify.Web.Tests.TestEntities
+﻿namespace Simplify.Web.Tests.TestEntities;
+
+public enum TestEnum
 {
-	public enum TestEnum
-	{
-		Value1 = 1,
-		Value2 = 2
-	}
+	Value1 = 1,
+	Value2 = 2
 }

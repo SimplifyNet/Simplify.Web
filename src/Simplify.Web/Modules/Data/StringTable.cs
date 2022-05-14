@@ -5,159 +5,158 @@ using System.Linq;
 using System.Xml.XPath;
 using Simplify.Xml;
 
-namespace Simplify.Web.Modules.Data
+namespace Simplify.Web.Modules.Data;
+
+/// <summary>
+/// Localizable text items string table.
+/// </summary>
+public sealed class StringTable : IStringTable
 {
+	private static readonly IDictionary<string, IDictionary<string, object?>> Cache = new Dictionary<string, IDictionary<string, object?>>();
+	private static readonly object Locker = new();
+
+	private readonly IList<string> _stringTableFiles;
+	private readonly string _defaultLanguage;
+	private readonly ILanguageManagerProvider _languageManagerProvider;
+	private readonly IFileReader _fileReader;
+	private readonly bool _memoryCache;
+	private ILanguageManager _languageManager = null!;
+
 	/// <summary>
-	/// Localizable text items string table.
+	/// Load string table with current language
 	/// </summary>
-	public sealed class StringTable : IStringTable
+	/// <param name="stringTableFiles">The string table files.</param>
+	/// <param name="defaultLanguage">The default language.</param>
+	/// <param name="languageManagerProvider">The language manager provider.</param>
+	/// <param name="fileReader">The file reader.</param>
+	/// <param name="memoryCache">Enable memory cache.</param>
+	public StringTable(IList<string> stringTableFiles, string defaultLanguage, ILanguageManagerProvider languageManagerProvider, IFileReader fileReader, bool memoryCache = false)
 	{
-		private static readonly IDictionary<string, IDictionary<string, object?>> Cache = new Dictionary<string, IDictionary<string, object?>>();
-		private static readonly object Locker = new();
+		_stringTableFiles = stringTableFiles;
+		_defaultLanguage = defaultLanguage;
+		_languageManagerProvider = languageManagerProvider;
+		_fileReader = fileReader;
+		_memoryCache = memoryCache;
+	}
 
-		private readonly IList<string> _stringTableFiles;
-		private readonly string _defaultLanguage;
-		private readonly ILanguageManagerProvider _languageManagerProvider;
-		private readonly IFileReader _fileReader;
-		private readonly bool _memoryCache;
-		private ILanguageManager _languageManager = null!;
+	/// <summary>
+	/// String table items
+	/// </summary>
+	public dynamic Items { get; private set; } = null!;
 
-		/// <summary>
-		/// Load string table with current language
-		/// </summary>
-		/// <param name="stringTableFiles">The string table files.</param>
-		/// <param name="defaultLanguage">The default language.</param>
-		/// <param name="languageManagerProvider">The language manager provider.</param>
-		/// <param name="fileReader">The file reader.</param>
-		/// <param name="memoryCache">Enable memory cache.</param>
-		public StringTable(IList<string> stringTableFiles, string defaultLanguage, ILanguageManagerProvider languageManagerProvider, IFileReader fileReader, bool memoryCache = false)
-		{
-			_stringTableFiles = stringTableFiles;
-			_defaultLanguage = defaultLanguage;
-			_languageManagerProvider = languageManagerProvider;
-			_fileReader = fileReader;
-			_memoryCache = memoryCache;
-		}
+	/// <summary>
+	/// Setups this string table.
+	/// </summary>
+	public void Setup()
+	{
+		_languageManager = _languageManagerProvider.Get();
 
-		/// <summary>
-		/// String table items
-		/// </summary>
-		public dynamic Items { get; private set; } = null!;
+		TryLoad();
+	}
 
-		/// <summary>
-		/// Setups this string table.
-		/// </summary>
-		public void Setup()
-		{
-			_languageManager = _languageManagerProvider.Get();
+	/// <summary>
+	/// Get enum associated value from string table by enum type + enum element name
+	/// </summary>
+	/// <typeparam name="T">Enum</typeparam>
+	/// <param name="enumValue">Enum value</param>
+	/// <returns>associated value</returns>
+	public string? GetAssociatedValue<T>(T enumValue) where T : struct
+	{
+		var currentItems = (IDictionary<string, object>)Items;
+		var enumItemName = enumValue.GetType().Name + "." + Enum.GetName(typeof(T), enumValue);
 
-			TryLoad();
-		}
+		return currentItems.ContainsKey(enumItemName) ? currentItems[enumItemName] as string : null;
+	}
 
-		/// <summary>
-		/// Get enum associated value from string table by enum type + enum element name
-		/// </summary>
-		/// <typeparam name="T">Enum</typeparam>
-		/// <param name="enumValue">Enum value</param>
-		/// <returns>associated value</returns>
-		public string? GetAssociatedValue<T>(T enumValue) where T : struct
-		{
-			var currentItems = (IDictionary<string, object>)Items;
-			var enumItemName = enumValue.GetType().Name + "." + Enum.GetName(typeof(T), enumValue);
+	/// <summary>
+	/// Gets the item from string table.
+	/// </summary>
+	/// <param name="itemName">Name of the item.</param>
+	/// <returns></returns>
+	public string? GetItem(string itemName)
+	{
+		var currentItems = (IDictionary<string, object>)Items;
 
-			return currentItems.ContainsKey(enumItemName) ? currentItems[enumItemName] as string : null;
-		}
+		if (currentItems.ContainsKey(itemName))
+			return currentItems[itemName] as string;
 
-		/// <summary>
-		/// Gets the item from string table.
-		/// </summary>
-		/// <param name="itemName">Name of the item.</param>
-		/// <returns></returns>
-		public string? GetItem(string itemName)
-		{
-			var currentItems = (IDictionary<string, object>)Items;
+		return null;
+	}
 
-			if (currentItems.ContainsKey(itemName))
-				return currentItems[itemName] as string;
+	/// <summary>
+	/// Loads string table.
+	/// </summary>
+	private static void Load(string fileName, string defaultLanguage, string currentLanguage, IFileReader fileReader, IDictionary<string, object?> currentItems)
+	{
+		var stringTable = fileReader.LoadXDocument(fileName);
 
-			return null;
-		}
-
-		/// <summary>
-		/// Loads string table.
-		/// </summary>
-		private static void Load(string fileName, string defaultLanguage, string currentLanguage, IFileReader fileReader, IDictionary<string, object?> currentItems)
-		{
-			var stringTable = fileReader.LoadXDocument(fileName);
-
-			// Loading current culture strings
-			if (stringTable?.Root != null)
-				foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x => x.HasAttributes))
-				{
-					var nameAttribute = (string?)item.Attribute("name");
-
-					if (nameAttribute != null)
-						currentItems.Add(nameAttribute, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
-				}
-
-			if (currentLanguage == defaultLanguage)
-				return;
-
-			// Loading default culture strings
-
-			stringTable = fileReader.LoadXDocument(fileName, defaultLanguage);
-
-			if (stringTable?.Root == null)
-				return;
-
-			foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x =>
+		// Loading current culture strings
+		if (stringTable?.Root != null)
+			foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x => x.HasAttributes))
 			{
-				var key = (string?)x.Attribute("name");
+				var nameAttribute = (string?)item.Attribute("name");
 
-				return x.HasAttributes && key != null && !currentItems.ContainsKey(key);
-			}))
-				currentItems.Add((string)item.Attribute("name")!, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
-		}
-
-		private void TryLoad()
-		{
-			if (!_memoryCache)
-			{
-				Items = Load();
-				return;
+				if (nameAttribute != null)
+					currentItems.Add(nameAttribute, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
 			}
 
+		if (currentLanguage == defaultLanguage)
+			return;
+
+		// Loading default culture strings
+
+		stringTable = fileReader.LoadXDocument(fileName, defaultLanguage);
+
+		if (stringTable?.Root == null)
+			return;
+
+		foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x =>
+		         {
+			         var key = (string?)x.Attribute("name");
+
+			         return x.HasAttributes && key != null && !currentItems.ContainsKey(key);
+		         }))
+			currentItems.Add((string)item.Attribute("name")!, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
+	}
+
+	private void TryLoad()
+	{
+		if (!_memoryCache)
+		{
+			Items = Load();
+			return;
+		}
+
+		if (TryGetStringTableFromCache())
+			return;
+
+		lock (Locker)
+		{
 			if (TryGetStringTableFromCache())
 				return;
 
-			lock (Locker)
-			{
-				if (TryGetStringTableFromCache())
-					return;
-
-				var currentItems = Load();
-				Cache.Add(_languageManager.Language, currentItems);
-				Items = currentItems;
-			}
+			var currentItems = Load();
+			Cache.Add(_languageManager.Language, currentItems);
+			Items = currentItems;
 		}
+	}
 
-		private bool TryGetStringTableFromCache()
-		{
-			if (!Cache.ContainsKey(_languageManager.Language)) return false;
+	private bool TryGetStringTableFromCache()
+	{
+		if (!Cache.ContainsKey(_languageManager.Language)) return false;
 
-			Items = Cache[_languageManager.Language];
+		Items = Cache[_languageManager.Language];
 
-			return true;
-		}
+		return true;
+	}
 
-		private IDictionary<string, object?> Load()
-		{
-			IDictionary<string, object?> currentItems = new ExpandoObject()!;
+	private IDictionary<string, object?> Load()
+	{
+		IDictionary<string, object?> currentItems = new ExpandoObject()!;
 
-			foreach (var file in _stringTableFiles)
-				Load(file, _defaultLanguage, _languageManager.Language, _fileReader, currentItems);
+		foreach (var file in _stringTableFiles)
+			Load(file, _defaultLanguage, _languageManager.Language, _fileReader, currentItems);
 
-			return currentItems;
-		}
+		return currentItems;
 	}
 }

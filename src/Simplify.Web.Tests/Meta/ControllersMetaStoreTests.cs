@@ -5,41 +5,40 @@ using Simplify.Web.Attributes.Setup;
 using Simplify.Web.Meta;
 using Simplify.Web.Tests.TestEntities;
 
-namespace Simplify.Web.Tests.Meta
+namespace Simplify.Web.Tests.Meta;
+
+[TestFixture]
+[IgnoreControllers(typeof(TestController3))]
+public class ControllersMetaStoreTests
 {
-	[TestFixture]
-	[IgnoreControllers(typeof(TestController3))]
-	public class ControllersMetaStoreTests
+	[Test]
+	public void GetControllersMetaData_LocalControllers_GetWithoutIgnored()
 	{
-		[Test]
-		public void GetControllersMetaData_LocalControllers_GetWithoutIgnored()
-		{
-			// Assign
+		// Assign
 
-			SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
-			SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Add("DynamicProxyGenAssembly2");
-			SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
+		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
+		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Add("DynamicProxyGenAssembly2");
+		SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
 
-			var factory = new Mock<IControllerMetaDataFactory>();
-			var store = new ControllersMetaStore(factory.Object);
+		var factory = new Mock<IControllerMetaDataFactory>();
+		var store = new ControllersMetaStore(factory.Object);
 
-			factory.SetupSequence(x => x.CreateControllerMetaData(It.IsAny<Type>()))
-				.Returns(new ControllerMetaData(typeof(TestController1), new ControllerExecParameters(null, 2)))
-				.Returns(new ControllerMetaData(typeof(TestController6)))
-				.Returns(new ControllerMetaData(typeof(TestController2), new ControllerExecParameters(null, 1)))
-				.Returns(new ControllerMetaData(typeof(TestController4)))
-				.Returns(new ControllerMetaData(typeof(TestController5)));
+		factory.SetupSequence(x => x.CreateControllerMetaData(It.IsAny<Type>()))
+			.Returns(new ControllerMetaData(typeof(TestController1), new ControllerExecParameters(null, 2)))
+			.Returns(new ControllerMetaData(typeof(TestController6)))
+			.Returns(new ControllerMetaData(typeof(TestController2), new ControllerExecParameters(null, 1)))
+			.Returns(new ControllerMetaData(typeof(TestController4)))
+			.Returns(new ControllerMetaData(typeof(TestController5)));
 
-			// Act
-			var metaData = store.ControllersMetaData;
+		// Act
+		var metaData = store.ControllersMetaData;
 
-			Assert.AreEqual(5, metaData.Count);
+		Assert.AreEqual(5, metaData.Count);
 
-			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController1))));
-			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController2))));
-			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController4))));
-			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController5))));
-			factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController6))));
-		}
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController1))));
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController2))));
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController4))));
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController5))));
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController6))));
 	}
 }

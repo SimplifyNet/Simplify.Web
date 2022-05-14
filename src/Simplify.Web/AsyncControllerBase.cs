@@ -1,15 +1,14 @@
 ﻿using System.Threading.Tasks;
 
-namespace Simplify.Web
+namespace Simplify.Web;
+
+/// <summary>
+/// Asynchronous controllers base class
+/// </summary>
+public abstract class AsyncControllerBase : ControllerBase
 {
 	/// <summary>
-	/// Asynchronous controllers base class
+	/// Invokes the controller.
 	/// </summary>
-	public abstract class AsyncControllerBase : ControllerBase
-	{
-		/// <summary>
-		/// Invokes the controller.
-		/// </summary>
-		public abstract Task<ControllerResponse?> Invoke();
-	}
+	public abstract Task<ControllerResponse?> Invoke();
 }

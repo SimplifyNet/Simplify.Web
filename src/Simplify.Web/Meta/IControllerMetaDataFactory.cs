@@ -1,17 +1,16 @@
 ﻿using System;
 
-namespace Simplify.Web.Meta
+namespace Simplify.Web.Meta;
+
+/// <summary>
+/// Represent controller meta-data creator
+/// </summary>
+public interface IControllerMetaDataFactory
 {
 	/// <summary>
-	/// Represent controller meta-data creator
+	/// Creates the controller meta data.
 	/// </summary>
-	public interface IControllerMetaDataFactory
-	{
-		/// <summary>
-		/// Creates the controller meta data.
-		/// </summary>
-		/// <param name="controllerType">Type of the controller.</param>
-		/// <returns></returns>
-		ControllerMetaData CreateControllerMetaData(Type controllerType);
-	}
+	/// <param name="controllerType">Type of the controller.</param>
+	/// <returns></returns>
+	ControllerMetaData CreateControllerMetaData(Type controllerType);
 }

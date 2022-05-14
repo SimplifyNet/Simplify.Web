@@ -1,43 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Simplify.Web.Meta
+namespace Simplify.Web.Meta;
+
+/// <summary>
+/// Loads and stores views meta information
+/// </summary>
+public class ViewsMetaStore : IViewsMetaStore
 {
+	private static IViewsMetaStore? _current;
+	private IList<Type>? _viewsTypes;
+
 	/// <summary>
-	/// Loads and stores views meta information
+	/// Current views meta store
 	/// </summary>
-	public class ViewsMetaStore : IViewsMetaStore
+	public static IViewsMetaStore Current
 	{
-		private static IViewsMetaStore? _current;
-		private IList<Type>? _viewsTypes;
-
-		/// <summary>
-		/// Current views meta store
-		/// </summary>
-		public static IViewsMetaStore Current
+		get
 		{
-			get
-			{
-				return _current ??= new ViewsMetaStore();
-			}
-			set => _current = value ?? throw new ArgumentNullException(nameof(value));
+			return _current ??= new ViewsMetaStore();
 		}
+		set => _current = value ?? throw new ArgumentNullException(nameof(value));
+	}
 
-		/// <summary>
-		/// Current domain views types
-		/// </summary>
-		/// <returns></returns>
-		public IList<Type> ViewsTypes
+	/// <summary>
+	/// Current domain views types
+	/// </summary>
+	/// <returns></returns>
+	public IList<Type> ViewsTypes
+	{
+		get
 		{
-			get
-			{
-				if (_viewsTypes != null)
-					return _viewsTypes;
-
-				_viewsTypes = SimplifyWebTypesFinder.FindTypesDerivedFrom<View>();
-
+			if (_viewsTypes != null)
 				return _viewsTypes;
-			}
+
+			_viewsTypes = SimplifyWebTypesFinder.FindTypesDerivedFrom<View>();
+
+			return _viewsTypes;
 		}
 	}
 }

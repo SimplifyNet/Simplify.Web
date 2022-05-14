@@ -1,6 +1,5 @@
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public abstract class ControllerBase : Controller
 {
-	public abstract class ControllerBase : Controller
-	{
-	}
 }

@@ -1,40 +1,39 @@
 ﻿using NUnit.Framework;
 using Simplify.Web.Model.Validation.Attributes;
 
-namespace Simplify.Web.Tests.Model.Validation.Attributes
+namespace Simplify.Web.Tests.Model.Validation.Attributes;
+
+[TestFixture]
+public class RegexAttributeTests : AttributesTestBase
 {
-	[TestFixture]
-	public class RegexAttributeTests : AttributesTestBase
+	private const string RegexPattern = "^[a-zA-Z]+$";
+
+	[OneTimeSetUp]
+	public void SetupAttribute() => Attr = new RegexAttribute(RegexPattern);
+
+	[Test]
+	public void Validate_RegexOk_Ok()
 	{
-		private const string RegexPattern = "^[a-zA-Z]+$";
+		// Act & Assert
+		TestAttributeForValidValue("test");
+	}
 
-		[OneTimeSetUp]
-		public void SetupAttribute() => Attr = new RegexAttribute(RegexPattern);
+	[Test]
+	public void Validate_RegexNull_Ok()
+	{
+		// Act & Assert
+		TestAttributeForValidValue(null);
+	}
 
-		[Test]
-		public void Validate_RegexOk_Ok()
-		{
-			// Act & Assert
-			TestAttributeForValidValue("test");
-		}
+	[Test]
+	public void Validate_InvalidRegex_ExceptionThrown()
+	{
+		// Assign
 
-		[Test]
-		public void Validate_RegexNull_Ok()
-		{
-			// Act & Assert
-			TestAttributeForValidValue(null);
-		}
+		const string value = "test1";
+		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' regex not matched, actual value: '{value}', pattern: '{RegexPattern}'";
 
-		[Test]
-		public void Validate_InvalidRegex_ExceptionThrown()
-		{
-			// Assign
-
-			const string value = "test1";
-			var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' regex not matched, actual value: '{value}', pattern: '{RegexPattern}'";
-
-			// Act & Assert
-			TestAttribute(value, defaultMessage);
-		}
+		// Act & Assert
+		TestAttribute(value, defaultMessage);
 	}
 }

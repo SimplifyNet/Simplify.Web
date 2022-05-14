@@ -6,47 +6,46 @@ using Simplify.DI;
 using Simplify.Web.Core;
 using Simplify.Web.Core.PageAssembly;
 
-namespace Simplify.Web.Tests.Core.PageAssembly
+namespace Simplify.Web.Tests.Core.PageAssembly;
+
+[TestFixture]
+public class PageProcessorTests
 {
-	[TestFixture]
-	public class PageProcessorTests
+	private PageProcessor _processor = null!;
+	private Mock<IPageBuilder> _pageBuilder = null!;
+	private Mock<IResponseWriter> _responseWriter = null!;
+
+	private Mock<HttpContext> _context = null!;
+
+	[SetUp]
+	public void Initialize()
 	{
-		private PageProcessor _processor = null!;
-		private Mock<IPageBuilder> _pageBuilder = null!;
-		private Mock<IResponseWriter> _responseWriter = null!;
+		_pageBuilder = new Mock<IPageBuilder>();
+		_responseWriter = new Mock<IResponseWriter>();
+		_processor = new PageProcessor(_pageBuilder.Object, _responseWriter.Object);
 
-		private Mock<HttpContext> _context = null!;
+		_context = new Mock<HttpContext>();
 
-		[SetUp]
-		public void Initialize()
-		{
-			_pageBuilder = new Mock<IPageBuilder>();
-			_responseWriter = new Mock<IResponseWriter>();
-			_processor = new PageProcessor(_pageBuilder.Object, _responseWriter.Object);
+		_context.SetupSet(x => x.Response.ContentType = It.IsAny<string>());
+	}
 
-			_context = new Mock<HttpContext>();
+	[Test]
+	public async Task Process_Ok_PageBuiltWithOutput()
+	{
+		// Assign
 
-			_context.SetupSet(x => x.Response.ContentType = It.IsAny<string>());
-		}
+		_pageBuilder.Setup(x => x.Build(It.IsAny<IDIContainerProvider>())).Returns("Foo");
+		_context.SetupGet(x => x.Request.Scheme).Returns("http");
+		_context.SetupGet(x => x.Request.Host).Returns(new HostString("localhost", 8080));
+		_context.SetupGet(x => x.Request.Path).Returns("/test");
 
-		[Test]
-		public async Task Process_Ok_PageBuiltWithOutput()
-		{
-			// Assign
+		// Act
+		await _processor.ProcessPage(null!, _context.Object);
 
-			_pageBuilder.Setup(x => x.Build(It.IsAny<IDIContainerProvider>())).Returns("Foo");
-			_context.SetupGet(x => x.Request.Scheme).Returns("http");
-			_context.SetupGet(x => x.Request.Host).Returns(new HostString("localhost", 8080));
-			_context.SetupGet(x => x.Request.Path).Returns("/test");
+		// Assert
 
-			// Act
-			await _processor.ProcessPage(null!, _context.Object);
-
-			// Assert
-
-			_pageBuilder.Verify(x => x.Build(It.IsAny<IDIContainerProvider>()));
-			_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "Foo"), It.Is<HttpResponse>(d => d == _context.Object.Response)));
-			_context.VerifySet(x => x.Response.ContentType = It.Is<string>(s => s == "text/html"));
-		}
+		_pageBuilder.Verify(x => x.Build(It.IsAny<IDIContainerProvider>()));
+		_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "Foo"), It.Is<HttpResponse>(d => d == _context.Object.Response)));
+		_context.VerifySet(x => x.Response.ContentType = It.Is<string>(s => s == "text/html"));
 	}
 }

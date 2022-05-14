@@ -4,99 +4,98 @@ using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Settings;
 
-namespace Simplify.Web.Modules
+namespace Simplify.Web.Modules;
+
+/// <summary>
+/// Current language controller and information container
+/// </summary>
+public class LanguageManager : ILanguageManager
 {
 	/// <summary>
-	/// Current language controller and information container
+	/// Language field name in user cookies
 	/// </summary>
-	public class LanguageManager : ILanguageManager
+	public const string CookieLanguageFieldName = "language";
+
+	private readonly IResponseCookies _responseCookies;
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="LanguageManager" /> class.
+	/// </summary>
+	/// <param name="settings">The settings.</param>
+	/// <param name="context">The OWIN context.</param>
+	public LanguageManager(ISimplifyWebSettings settings, HttpContext context)
 	{
-		/// <summary>
-		/// Language field name in user cookies
-		/// </summary>
-		public const string CookieLanguageFieldName = "language";
+		_responseCookies = context.Response.Cookies;
 
-		private readonly IResponseCookies _responseCookies;
+		if (TrySetLanguageFromCookie(context))
+			return;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="LanguageManager" /> class.
-		/// </summary>
-		/// <param name="settings">The settings.</param>
-		/// <param name="context">The OWIN context.</param>
-		public LanguageManager(ISimplifyWebSettings settings, HttpContext context)
+		if (!settings.AcceptBrowserLanguage || (settings.AcceptBrowserLanguage && !TrySetLanguageFromRequestHeader(context)))
+			if (!SetCurrentLanguage(settings.DefaultLanguage))
+				Language = "iv";
+	}
+
+	/// <summary>
+	/// Site current language, for example: "en", "ru", "de" etc.
+	/// </summary>
+	public string Language { get; private set; } = null!;
+
+	/// <summary>
+	/// Set site cookie language value
+	/// </summary>
+	/// <param name="language">Language code</param>
+	public void SetCookieLanguage(string? language)
+	{
+		if (string.IsNullOrEmpty(language))
+			throw new ArgumentNullException(nameof(language));
+
+		_responseCookies.Append(CookieLanguageFieldName, language, new CookieOptions
 		{
-			_responseCookies = context.Response.Cookies;
+			Expires = DateTime.Now.AddYears(5),
+			SameSite = SameSiteMode.None,
+			Secure = true
+		});
+	}
 
-			if (TrySetLanguageFromCookie(context))
-				return;
-
-			if (!settings.AcceptBrowserLanguage || (settings.AcceptBrowserLanguage && !TrySetLanguageFromRequestHeader(context)))
-				if (!SetCurrentLanguage(settings.DefaultLanguage))
-					Language = "iv";
-		}
-
-		/// <summary>
-		/// Site current language, for example: "en", "ru", "de" etc.
-		/// </summary>
-		public string Language { get; private set; } = null!;
-
-		/// <summary>
-		/// Set site cookie language value
-		/// </summary>
-		/// <param name="language">Language code</param>
-		public void SetCookieLanguage(string? language)
+	/// <summary>
+	/// Set language only for current request
+	/// </summary>
+	/// <param name="language">Language code</param>
+	public bool SetCurrentLanguage(string language)
+	{
+		try
 		{
-			if (string.IsNullOrEmpty(language))
-				throw new ArgumentNullException(nameof(language));
+			Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+			Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
 
-			_responseCookies.Append(CookieLanguageFieldName, language, new CookieOptions
-			{
-				Expires = DateTime.Now.AddYears(5),
-				SameSite = SameSiteMode.None,
-				Secure = true
-			});
+			Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+			return true;
 		}
-
-		/// <summary>
-		/// Set language only for current request
-		/// </summary>
-		/// <param name="language">Language code</param>
-		public bool SetCurrentLanguage(string language)
+		catch
 		{
-			try
-			{
-				Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
-				Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
-
-				Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
+			return false;
 		}
+	}
 
-		private bool TrySetLanguageFromCookie(HttpContext context)
-		{
-			var cookieLanguage = context.Request.Cookies[CookieLanguageFieldName];
+	private bool TrySetLanguageFromCookie(HttpContext context)
+	{
+		var cookieLanguage = context.Request.Cookies[CookieLanguageFieldName];
 
-			return !string.IsNullOrEmpty(cookieLanguage) && SetCurrentLanguage(cookieLanguage);
-		}
+		return !string.IsNullOrEmpty(cookieLanguage) && SetCurrentLanguage(cookieLanguage);
+	}
 
-		private bool TrySetLanguageFromRequestHeader(HttpContext context)
-		{
-			var languages = context.Request.Headers["Accept-Language"];
+	private bool TrySetLanguageFromRequestHeader(HttpContext context)
+	{
+		var languages = context.Request.Headers["Accept-Language"];
 
-			if (languages.Count == 0)
-				return false;
+		if (languages.Count == 0)
+			return false;
 
-			var languageString = languages[0];
+		var languageString = languages[0];
 
-			var items = languageString.Split(';');
+		var items = languageString.Split(';');
 
-			return SetCurrentLanguage(items[0]);
-		}
+		return SetCurrentLanguage(items[0]);
 	}
 }

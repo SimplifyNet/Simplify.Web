@@ -12,32 +12,31 @@ using Simplify.Web.Attributes;
 using Simplify.Web.Modules;
 using Simplify.Web.Responses;
 
-namespace SampleApp.Classic.Controllers.Accounts
+namespace SampleApp.Classic.Controllers.Accounts;
+
+[Post("login")]
+public class LoginController : LoggableController<LoginViewModel>
 {
-	[Post("login")]
-	public class LoginController : LoggableController<LoginViewModel>
+	public override async Task<ControllerResponse> Invoke()
 	{
-		public override async Task<ControllerResponse> Invoke()
+		await ReadModelAsync();
+
+		Log("Login controller executed");
+
+		if (Model.Password == "1" && Model.UserName == "Foo")
 		{
-			await ReadModelAsync();
-
-			Log("Login controller executed");
-
-			if (Model.Password == "1" && Model.UserName == "Foo")
+			var claims = new List<Claim>
 			{
-				var claims = new List<Claim>
-				{
-					new Claim(ClaimTypes.Name, Model.UserName)
-				};
+				new Claim(ClaimTypes.Name, Model.UserName)
+			};
 
-				var id = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+			var id = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-				await Context.Context.SignInAsync(new ClaimsPrincipal(id));
+			await Context.Context.SignInAsync(new ClaimsPrincipal(id));
 
-				return new Redirect(RedirectionType.LoginReturnUrl);
-			}
-
-			return new Tpl(GetView<LoginView>().Get(Model, GetView<MessageBoxView>().Get(StringTable.WrongUserNameOrPassword)), StringTable.PageTitleLogin);
+			return new Redirect(RedirectionType.LoginReturnUrl);
 		}
+
+		return new Tpl(GetView<LoginView>().Get(Model, GetView<MessageBoxView>().Get(StringTable.WrongUserNameOrPassword)), StringTable.PageTitleLogin);
 	}
 }
