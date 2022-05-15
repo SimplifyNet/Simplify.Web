@@ -7,6 +7,7 @@
 		"cref",
 		"HOSTINGSTARTUPASSEMBLIES",
 		"OWIN",
-		"Redirector"
+		"Redirector",
+		"registrator"
 	]
 }

@@ -1,4 +1,5 @@
-﻿using Simplify.DI;
+﻿using System;
+using Simplify.DI;
 using Simplify.Web.Bootstrapper;
 
 namespace Simplify.Web;
@@ -12,11 +13,20 @@ public static class SimplifyDIContainerProviderExtensions
 	/// Registers Simplify.Web types and controllers and use this container as current for Simplify.Web.
 	/// </summary>
 	/// <param name="containerProvider">The container provider.</param>
-	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider)
+	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider, Action<SimplifyWebRegistrationOverride>? registrationOverride = null)
 	{
 		BootstrapperFactory.ContainerProvider = containerProvider;
 
-		BootstrapperFactory.CreateBootstrapper().Register();
+		if (registrationOverride != null)
+		{
+			var overrideSettings = new SimplifyWebRegistrationOverride();
+
+			registrationOverride.Invoke(overrideSettings);
+
+			overrideSettings.RegisterActions(BootstrapperFactory.ContainerProvider);
+		}
+		else
+			BootstrapperFactory.CreateBootstrapper().Register();
 
 		return containerProvider;
 	}
