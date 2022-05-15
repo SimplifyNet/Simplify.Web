@@ -119,38 +119,27 @@ public class RouteMatcher : IRouteMatcher
 		return buffer;
 	}
 
-	private static IList<string> GetStringArrayParameterValue(string source)
-	{
-		return source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-	}
+	private static IList<string> GetStringArrayParameterValue(string source) =>
+		source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-	private static IList<int> GetIntArrayParameterValue(string source)
-	{
-		return
-			source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-				.Select(GetIntParameterValue)
-				.Where(x => x != null)
-				.Cast<int>()
-				.ToList();
-	}
+	private static IList<int> GetIntArrayParameterValue(string source) =>
+		source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+			.Select(GetIntParameterValue)
+			.Where(x => x != null)
+			.Cast<int>()
+			.ToList();
 
-	private static IList<decimal> GetDecimalArrayParameterValue(string source)
-	{
-		return
-			source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-				.Select(GetDecimalParameterValue)
-				.Where(x => x != null)
-				.Cast<decimal>()
-				.ToList();
-	}
+	private static IList<decimal> GetDecimalArrayParameterValue(string source) =>
+		source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+			.Select(GetDecimalParameterValue)
+			.Where(x => x != null)
+			.Cast<decimal>()
+			.ToList();
 
-	private static IList<bool> GetBoolArrayParameterValue(string source)
-	{
-		return
-			source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-				.Select(GetBoolParameterValue)
-				.Where(x => x != null)
-				.Cast<bool>()
-				.ToList();
-	}
+	private static IList<bool> GetBoolArrayParameterValue(string source) =>
+		source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+			.Select(GetBoolParameterValue)
+			.Where(x => x != null)
+			.Cast<bool>()
+			.ToList();
 }

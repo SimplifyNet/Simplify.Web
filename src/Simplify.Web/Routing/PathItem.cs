@@ -9,10 +9,7 @@ public abstract class PathItem
 	/// Initializes a new instance of the <see cref="PathItem"/> class.
 	/// </summary>
 	/// <param name="name">The name of path item.</param>
-	protected PathItem(string name)
-	{
-		Name = name;
-	}
+	protected PathItem(string name) => Name = name;
 
 	/// <summary>
 	/// Gets the name of path item.

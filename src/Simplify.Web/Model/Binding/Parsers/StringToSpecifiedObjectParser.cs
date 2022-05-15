@@ -272,10 +272,7 @@ public class StringToSpecifiedObjectParser
 	/// <param name="value">The value.</param>
 	/// <param name="enumType">Type of the enum.</param>
 	/// <returns></returns>
-	public static object ParseEnum(string value, Type enumType)
-	{
-		return Enum.Parse(enumType, value);
-	}
+	public static object ParseEnum(string value, Type enumType) => Enum.Parse(enumType, value);
 
 	/// <summary>
 	/// Determines whether specified type is valid for parsing.

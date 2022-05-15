@@ -106,8 +106,7 @@ public static class ApplicationBuilderExtensions
 		}
 	}
 
-	private static void Register(IApplicationBuilder builder)
-	{
+	private static void Register(IApplicationBuilder builder) =>
 		builder.Use(async (context, next) =>
 		{
 			var result = await SimplifyWebRequestMiddleware.Invoke(context);
@@ -115,7 +114,6 @@ public static class ApplicationBuilderExtensions
 			if (result == RequestHandlingStatus.RequestWasUnhandled)
 				await next.Invoke();
 		});
-	}
 
 	private static void RegisterAsTerminal(IApplicationBuilder builder) => builder.Run(SimplifyWebRequestMiddleware.Invoke);
 }

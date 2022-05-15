@@ -39,15 +39,11 @@ public static class ListToModelParser
 		return obj;
 	}
 
-	private static IList<KeyValuePair<string, string[]>> LowerCaseRequest(IEnumerable<KeyValuePair<string, string[]>> source)
-	{
-		return source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLower(), x.Value)).ToList();
-	}
+	private static IList<KeyValuePair<string, string[]>> LowerCaseRequest(IEnumerable<KeyValuePair<string, string[]>> source) =>
+		source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLower(), x.Value)).ToList();
 
-	private static string GetPropertyName(MemberInfo propertyInfo)
-	{
-		return (GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLower();
-	}
+	private static string GetPropertyName(MemberInfo propertyInfo) =>
+		(GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLower();
 
 	private static string GetBindPropertyName(ICustomAttributeProvider propertyInfo)
 	{
@@ -63,10 +59,8 @@ public static class ListToModelParser
 		return attributes.Length == 0 ? null : ((FormatAttribute)attributes[0]).Format;
 	}
 
-	private static bool IsExcluded(ICustomAttributeProvider propertyInfo)
-	{
-		return propertyInfo.GetCustomAttributes(typeof(ExcludeAttribute), false).Length != 0;
-	}
+	private static bool IsExcluded(ICustomAttributeProvider propertyInfo) =>
+		propertyInfo.GetCustomAttributes(typeof(ExcludeAttribute), false).Length != 0;
 
 	private static object ParseProperty(PropertyInfo propertyInfo, KeyValuePair<string, string[]> keyValuePair)
 	{

@@ -46,9 +46,8 @@ public static class HttpRequestUtil
 	/// </summary>
 	/// <param name="method">The method.</param>
 	/// <returns></returns>
-	public static HttpMethod HttpMethodStringToHttpMethod(string method)
-	{
-		return method switch
+	public static HttpMethod HttpMethodStringToHttpMethod(string method) =>
+		method switch
 		{
 			"GET" => HttpMethod.Get,
 			"POST" => HttpMethod.Post,
@@ -58,5 +57,4 @@ public static class HttpRequestUtil
 			"OPTIONS" => HttpMethod.Options,
 			_ => HttpMethod.Undefined
 		};
-	}
 }

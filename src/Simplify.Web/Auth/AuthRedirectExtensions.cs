@@ -12,8 +12,7 @@ public static class AuthRedirectExtensions
 	/// </summary>
 	/// <param name="app">The application.</param>
 	/// <param name="redirectUrl">The redirect URL.</param>
-	public static void UseAuthRedirect(this IApplicationBuilder app, string redirectUrl)
-	{
+	public static void UseAuthRedirect(this IApplicationBuilder app, string redirectUrl) =>
 		app.Use(async (context, next) =>
 		{
 			await next();
@@ -21,5 +20,4 @@ public static class AuthRedirectExtensions
 			if (context.Response.StatusCode == 401)
 				context.Response.Redirect(redirectUrl);
 		});
-	}
 }
