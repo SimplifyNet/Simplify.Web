@@ -7,8 +7,5 @@ namespace SampleApp.Classic.Controllers.Static;
 [Get("about")]
 public class AboutController : Controller
 {
-	public override ControllerResponse Invoke()
-	{
-		return new StaticTpl("Static/About", StringTable.PageTitleAbout);
-	}
+	public override ControllerResponse Invoke() => new StaticTpl("Static/About", StringTable.PageTitleAbout);
 }

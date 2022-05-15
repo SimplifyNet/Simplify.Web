@@ -6,12 +6,7 @@ namespace SampleApp.Classic.Views.Shared;
 
 public class LoggedUserPanelView : View
 {
-	public async Task<ITemplate> Get(string userName)
-	{
-		var tpl = await TemplateFactory.LoadAsync("Shared/LoginPanel/LoggedUserPanel");
-
-		tpl.Add("UserName", userName);
-
-		return tpl;
-	}
+	public async Task<ITemplate> Get(string userName) =>
+		(await TemplateFactory.LoadAsync("Shared/LoginPanel/LoggedUserPanel"))
+			.Add("UserName", userName);
 }

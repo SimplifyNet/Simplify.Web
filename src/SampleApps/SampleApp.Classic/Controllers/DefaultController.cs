@@ -7,8 +7,5 @@ namespace SampleApp.Classic.Controllers;
 [Get("/")]
 public class DefaultController : Controller
 {
-	public override ControllerResponse Invoke()
-	{
-		return new StaticTpl("Default");
-	}
+	public override ControllerResponse Invoke() => new StaticTpl("Default");
 }

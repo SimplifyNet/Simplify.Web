@@ -8,8 +8,5 @@ namespace SampleApp.Classic.Controllers.Accounts;
 [Get("login")]
 public class LoginPageController : Controller
 {
-	public override ControllerResponse Invoke()
-	{
-		return new Tpl(GetView<LoginView>().Get(), StringTable.PageTitleLogin);
-	}
+	public override ControllerResponse Invoke() => new Tpl(GetView<LoginView>().Get(), StringTable.PageTitleLogin);
 }

@@ -8,8 +8,5 @@ namespace SampleApp.Classic.Controllers.User;
 [Get("profile")]
 public class ProfileController : Controller
 {
-	public override ControllerResponse Invoke()
-	{
-		return new StaticTpl("User/Profile", StringTable.PageTitleProfile);
-	}
+	public override ControllerResponse Invoke() => new StaticTpl("User/Profile", StringTable.PageTitleProfile);
 }

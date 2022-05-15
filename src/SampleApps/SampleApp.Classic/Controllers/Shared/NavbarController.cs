@@ -7,8 +7,5 @@ namespace SampleApp.Classic.Controllers.Shared;
 [Priority(-2)]
 public class NavbarController : Controller
 {
-	public override ControllerResponse Invoke()
-	{
-		return new InlineTpl("Navbar", TemplateFactory.Load("Navbar"));
-	}
+	public override ControllerResponse Invoke() => new InlineTpl("Navbar", TemplateFactory.Load("Navbar"));
 }
