@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
 
@@ -10,24 +11,29 @@ namespace Simplify.Web;
 public static class SimplifyDIContainerProviderExtensions
 {
 	/// <summary>
-	/// Registers Simplify.Web types and controllers and use this container as current for Simplify.Web.
+	/// Registers `Simplify.Web` types and controllers and use this container as current for `Simplify.Web`.
 	/// </summary>
 	/// <param name="containerProvider">The container provider.</param>
-	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider, Action<SimplifyWebRegistrationOverride>? registrationOverride = null)
+	/// <param name="registrationsOverride">The `Simplify.Web` types registrations override</param>
+	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider, Action<SimplifyWebRegistrationsOverride>? registrationsOverride = null)
 	{
 		BootstrapperFactory.ContainerProvider = containerProvider;
 
-		if (registrationOverride != null)
-		{
-			var overrideSettings = new SimplifyWebRegistrationOverride();
-
-			registrationOverride.Invoke(overrideSettings);
-
-			overrideSettings.RegisterActions(BootstrapperFactory.ContainerProvider);
-		}
-		else
-			BootstrapperFactory.CreateBootstrapper().Register();
+		BootstrapperFactory
+			.CreateBootstrapper()
+			.Register(registrationsOverride != null ? PerformTypesOverride(registrationsOverride) : null);
 
 		return containerProvider;
+	}
+
+	private static IEnumerable<Type>? PerformTypesOverride(Action<SimplifyWebRegistrationsOverride> registrationsOverride)
+	{
+		var overrideObj = new SimplifyWebRegistrationsOverride();
+
+		registrationsOverride.Invoke(overrideObj);
+
+		overrideObj.RegisterActions(BootstrapperFactory.ContainerProvider);
+
+		return overrideObj.GetTypesToExclude();
 	}
 }

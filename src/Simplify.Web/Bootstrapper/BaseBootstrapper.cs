@@ -30,11 +30,20 @@ namespace Simplify.Web.Bootstrapper;
 public class BaseBootstrapper
 {
 	/// <summary>
+	/// Provides `Simplify.Web` types to exclude from registrations
+	/// </summary>
+	protected IEnumerable<Type> TypesToExclude { get; private set; } = new List<Type>();
+
+	/// <summary>
 	/// Registers the types in container.
 	/// </summary>
 	// ReSharper disable once MethodTooLong
-	public void Register()
+
+	public void Register(IEnumerable<Type>? typesToExclude = null)
 	{
+		if (typesToExclude != null)
+			TypesToExclude = typesToExclude;
+
 		// Registering non Simplify.Web types
 
 		RegisterConfiguration();
@@ -90,7 +99,7 @@ public class BaseBootstrapper
 	public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
 	{
 		foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
-			         .Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
+					 .Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
 		{
 			BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
 		}
@@ -113,6 +122,9 @@ public class BaseBootstrapper
 	/// </summary>
 	public virtual void RegisterConfiguration()
 	{
+		if (TypesToExclude.Contains(typeof(IConfiguration)))
+			return;
+
 		var environmentName = global::System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
 		var builder = new ConfigurationBuilder()
@@ -179,7 +191,13 @@ public class BaseBootstrapper
 	/// <summary>
 	/// Registers the controller executor.
 	/// </summary>
-	public virtual void RegisterControllerExecutor() => BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>();
+	public virtual void RegisterControllerExecutor()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerExecutor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>();
+	}
 
 	/// <summary>
 	/// Registers the controllers processor.
