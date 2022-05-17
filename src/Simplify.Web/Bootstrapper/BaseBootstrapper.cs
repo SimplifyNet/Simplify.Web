@@ -30,11 +30,20 @@ namespace Simplify.Web.Bootstrapper;
 public class BaseBootstrapper
 {
 	/// <summary>
+	/// Provides `Simplify.Web` types to exclude from registrations
+	/// </summary>
+	protected IEnumerable<Type> TypesToExclude { get; private set; } = new List<Type>();
+
+	/// <summary>
 	/// Registers the types in container.
 	/// </summary>
 	// ReSharper disable once MethodTooLong
-	public void Register()
+
+	public void Register(IEnumerable<Type>? typesToExclude = null)
 	{
+		if (typesToExclude != null)
+			TypesToExclude = typesToExclude;
+
 		// Registering non Simplify.Web types
 
 		RegisterConfiguration();
@@ -90,7 +99,7 @@ public class BaseBootstrapper
 	public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
 	{
 		foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
-			         .Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
+					 .Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
 		{
 			BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
 		}
@@ -113,6 +122,9 @@ public class BaseBootstrapper
 	/// </summary>
 	public virtual void RegisterConfiguration()
 	{
+		if (TypesToExclude.Contains(typeof(IConfiguration)))
+			return;
+
 		var environmentName = global::System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
 		var builder = new ConfigurationBuilder()
@@ -125,85 +137,155 @@ public class BaseBootstrapper
 	/// <summary>
 	/// Registers the controllers meta store.
 	/// </summary>
-	public virtual void RegisterControllersMetaStore() =>
+	public virtual void RegisterControllersMetaStore()
+	{
+		if (TypesToExclude.Contains(typeof(IControllersMetaStore)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register(p => ControllersMetaStore.Current, LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the views meta store.
 	/// </summary>
-	public virtual void RegisterViewsMetaStore() =>
+	public virtual void RegisterViewsMetaStore()
+	{
+		if (TypesToExclude.Contains(typeof(IViewsMetaStore)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register(p => ViewsMetaStore.Current, LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the Simplify.Web settings.
 	/// </summary>
-	public virtual void RegisterSimplifyWebSettings() =>
+	public virtual void RegisterSimplifyWebSettings()
+	{
+		if (TypesToExclude.Contains(typeof(ISimplifyWebSettings)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<ISimplifyWebSettings, SimplifyWebSettings>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the view factory.
 	/// </summary>
-	public virtual void RegisterViewFactory() =>
+	public virtual void RegisterViewFactory()
+	{
+		if (TypesToExclude.Contains(typeof(IViewFactory)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IViewFactory, ViewFactory>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the controller factory.
 	/// </summary>
-	public virtual void RegisterControllerFactory() =>
+	public virtual void RegisterControllerFactory()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerFactory)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IControllerFactory, ControllerFactory>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the controller path parser.
 	/// </summary>
-	public virtual void RegisterControllerPathParser() =>
+	public virtual void RegisterControllerPathParser()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerPathParser)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IControllerPathParser, ControllerPathParser>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the route matcher.
 	/// </summary>
-	public virtual void RegisterRouteMatcher() =>
+	public virtual void RegisterRouteMatcher()
+	{
+		if (TypesToExclude.Contains(typeof(IRouteMatcher)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IRouteMatcher, RouteMatcher>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the controllers agent.
 	/// </summary>
-	public virtual void RegisterControllersAgent() =>
+	public virtual void RegisterControllersAgent()
+	{
+		if (TypesToExclude.Contains(typeof(IControllersAgent)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IControllersAgent, ControllersAgent>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the controller response builder.
 	/// </summary>
-	public virtual void RegisterControllerResponseBuilder() =>
+	public virtual void RegisterControllerResponseBuilder()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerResponseBuilder)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IControllerResponseBuilder, ControllerResponseBuilder>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the controller executor.
 	/// </summary>
-	public virtual void RegisterControllerExecutor() => BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>();
+	public virtual void RegisterControllerExecutor()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerExecutor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>();
+	}
 
 	/// <summary>
 	/// Registers the controllers processor.
 	/// </summary>
-	public virtual void RegisterControllersProcessor() =>
+	public virtual void RegisterControllersProcessor()
+	{
+		if (TypesToExclude.Contains(typeof(IControllersProcessor)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IControllersProcessor, ControllersProcessor>();
+	}
 
 	/// <summary>
 	/// Registers the environment.
 	/// </summary>
-	public virtual void RegisterEnvironment() =>
+	public virtual void RegisterEnvironment()
+	{
+		if (TypesToExclude.Contains(typeof(IEnvironment)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IEnvironment>(
 			p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", p.Resolve<ISimplifyWebSettings>()));
+	}
 
 	/// <summary>
 	/// Registers the language manager provider.
 	/// </summary>
-	public virtual void RegisterLanguageManagerProvider() =>
+	public virtual void RegisterLanguageManagerProvider()
+	{
+		if (TypesToExclude.Contains(typeof(ILanguageManagerProvider)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(p => new LanguageManagerProvider(p.Resolve<ISimplifyWebSettings>()));
+	}
 
 	/// <summary>
 	/// Registers the template factory.
 	/// </summary>
-	public virtual void RegisterTemplateFactory() =>
+	public virtual void RegisterTemplateFactory()
+	{
+		if (TypesToExclude.Contains(typeof(ITemplateFactory)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(
 			p =>
 			{
@@ -212,11 +294,16 @@ public class BaseBootstrapper
 				return new TemplateFactory(p.Resolve<IEnvironment>(), p.Resolve<ILanguageManagerProvider>(),
 					settings.DefaultLanguage, settings.TemplatesMemoryCache, settings.LoadTemplatesFromAssembly);
 			});
+	}
 
 	/// <summary>
 	/// Registers the file reader.
 	/// </summary>
-	public virtual void RegisterFileReader() =>
+	public virtual void RegisterFileReader()
+	{
+		if (TypesToExclude.Contains(typeof(IFileReader)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IFileReader>(
 			p =>
 			{
@@ -225,11 +312,16 @@ public class BaseBootstrapper
 				return new FileReader(p.Resolve<IEnvironment>().DataPhysicalPath, p.Resolve<ISimplifyWebSettings>().DefaultLanguage,
 					p.Resolve<ILanguageManagerProvider>(), settings.DisableFileReaderCache);
 			});
+	}
 
 	/// <summary>
 	/// Registers the string table.
 	/// </summary>
-	public virtual void RegisterStringTable() =>
+	public virtual void RegisterStringTable()
+	{
+		if (TypesToExclude.Contains(typeof(IStringTable)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IStringTable>(
 			p =>
 			{
@@ -237,112 +329,196 @@ public class BaseBootstrapper
 				return new StringTable(settings.StringTableFiles, settings.DefaultLanguage, p.Resolve<ILanguageManagerProvider>(),
 					p.Resolve<IFileReader>(), settings.StringTableMemoryCache);
 			});
+	}
 
 	/// <summary>
 	/// Registers the data collector.
 	/// </summary>
-	public virtual void RegisterDataCollector() =>
+	public virtual void RegisterDataCollector()
+	{
+		if (TypesToExclude.Contains(typeof(IDataCollector)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IDataCollector>(p =>
 		{
 			var settings = p.Resolve<ISimplifyWebSettings>();
 
 			return new DataCollector(settings.DefaultMainContentVariableName, settings.DefaultTitleVariableName, p.Resolve<IStringTable>());
 		});
+	}
 
 	/// <summary>
 	/// Registers the lists generator.
 	/// </summary>
-	public virtual void RegisterListsGenerator() => BootstrapperFactory.ContainerProvider.Register<IListsGenerator, ListsGenerator>();
+	public virtual void RegisterListsGenerator()
+	{
+		if (TypesToExclude.Contains(typeof(IListsGenerator)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IListsGenerator, ListsGenerator>();
+	}
 
 	/// <summary>
 	/// Registers the string table items setter.
 	/// </summary>
-	public virtual void RegisterStringTableItemsSetter() =>
+	public virtual void RegisterStringTableItemsSetter()
+	{
+		if (TypesToExclude.Contains(typeof(IStringTableItemsSetter)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IStringTableItemsSetter, StringTableItemsSetter>();
+	}
 
 	/// <summary>
 	/// Registers the page builder.
 	/// </summary>
-	public virtual void RegisterPageBuilder() => BootstrapperFactory.ContainerProvider.Register<IPageBuilder, PageBuilder>();
+	public virtual void RegisterPageBuilder()
+	{
+		if (TypesToExclude.Contains(typeof(IPageBuilder)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IPageBuilder, PageBuilder>();
+	}
 
 	/// <summary>
 	/// Registers the response writer.
 	/// </summary>
-	public virtual void RegisterResponseWriter() =>
+	public virtual void RegisterResponseWriter()
+	{
+		if (TypesToExclude.Contains(typeof(IResponseWriter)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IResponseWriter, ResponseWriter>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the page processor.
 	/// </summary>
-	public virtual void RegisterPageProcessor() => BootstrapperFactory.ContainerProvider.Register<IPageProcessor, PageProcessor>();
+	public virtual void RegisterPageProcessor()
+	{
+		if (TypesToExclude.Contains(typeof(IPageProcessor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IPageProcessor, PageProcessor>();
+	}
 
 	/// <summary>
 	/// Registers the controllers request handler.
 	/// </summary>
-	public virtual void RegisterControllersRequestHandler() =>
+	public virtual void RegisterControllersRequestHandler()
+	{
+		if (TypesToExclude.Contains(typeof(IControllersRequestHandler)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IControllersRequestHandler, ControllersRequestHandler>();
+	}
 
 	/// <summary>
 	/// Registers the static file response factory
 	/// </summary>
-	public virtual void RegisterStaticFileResponseFactory() =>
+	public virtual void RegisterStaticFileResponseFactory()
+	{
+		if (TypesToExclude.Contains(typeof(IStaticFileResponseFactory)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IStaticFileResponseFactory, StaticFileResponseFactory>(LifetimeType.Singleton);
+	}
 
 	/// <summary>
 	/// Registers the static file handler.
 	/// </summary>
-	public virtual void RegisterStaticFileHandler() =>
+	public virtual void RegisterStaticFileHandler()
+	{
+		if (TypesToExclude.Contains(typeof(IStaticFileHandler)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IStaticFileHandler>(
 			p =>
 				new StaticFileHandler(p.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
 					p.Resolve<IEnvironment>().SitePhysicalPath));
+	}
 
 	/// <summary>
 	/// Registers the static files request handler.
 	/// </summary>
-	public virtual void RegisterStaticFilesRequestHandler() =>
+	public virtual void RegisterStaticFilesRequestHandler()
+	{
+		if (TypesToExclude.Contains(typeof(IStaticFilesRequestHandler)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IStaticFilesRequestHandler, StaticFilesRequestHandler>();
+	}
 
 	/// <summary>
 	/// Registers the request handler.
 	/// </summary>
-	public virtual void RegisterRequestHandler() =>
+	public virtual void RegisterRequestHandler()
+	{
+		if (TypesToExclude.Contains(typeof(IRequestHandler)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IRequestHandler>(
-			p =>
-				new RequestHandler(p.Resolve<IControllersRequestHandler>(),
-					p.Resolve<IStaticFilesRequestHandler>(), p.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
+				p =>
+					new RequestHandler(p.Resolve<IControllersRequestHandler>(),
+						p.Resolve<IStaticFilesRequestHandler>(), p.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
+	}
 
 	/// <summary>
 	/// Registers the stopwatch provider.
 	/// </summary>
-	public virtual void RegisterStopwatchProvider() =>
+	public virtual void RegisterStopwatchProvider()
+	{
+		if (TypesToExclude.Contains(typeof(IStopwatchProvider)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IStopwatchProvider, StopwatchProvider>();
+	}
 
 	/// <summary>
 	/// Registers the context variables setter.
 	/// </summary>
-	public virtual void RegisterContextVariablesSetter() =>
+	public virtual void RegisterContextVariablesSetter()
+	{
+		if (TypesToExclude.Contains(typeof(IContextVariablesSetter)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IContextVariablesSetter>(
-			p =>
-				new ContextVariablesSetter(p.Resolve<IDataCollector>(), p.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
+				p =>
+					new ContextVariablesSetter(p.Resolve<IDataCollector>(), p.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
+	}
 
 	/// <summary>
 	/// Registers the web context provider.
 	/// </summary>
-	public virtual void RegisterWebContextProvider() =>
+	public virtual void RegisterWebContextProvider()
+	{
+		if (TypesToExclude.Contains(typeof(IWebContextProvider)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IWebContextProvider, WebContextProvider>();
+	}
 
 	/// <summary>
 	/// Registers the redirector.
 	/// </summary>
-	public virtual void RegisterRedirector() =>
+	public virtual void RegisterRedirector()
+	{
+		if (TypesToExclude.Contains(typeof(IRedirector)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IRedirector>(p => new Redirector(p.Resolve<IWebContextProvider>().Get()));
+	}
 
 	/// <summary>
 	/// Registers the model handler.
 	/// </summary>
-	public virtual void RegisterModelHandler() =>
+	public virtual void RegisterModelHandler()
+	{
+		if (TypesToExclude.Contains(typeof(IModelHandler)))
+			return;
+
 		BootstrapperFactory.ContainerProvider.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
+	}
 
 	/// <summary>
 	/// Registers the default model binders.

@@ -25,6 +25,6 @@ if (!app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthRedirect("/login");
 
-app.UseSimplifyWebNonTerminal();
+app.UseSimplifyWeb();
 
 app.Run();

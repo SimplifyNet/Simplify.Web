@@ -10,7 +10,6 @@
 		<Copyright>Licensed under LGPL</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Appveyor.TestLogger" Version="2.0.*" />
 		<PackageReference Include="coverlet.msbuild" Version="3.1.*">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
