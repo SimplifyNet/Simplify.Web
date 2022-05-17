@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
@@ -164,6 +165,9 @@ public class Redirector : IRedirector
 	{
 		if (string.IsNullOrEmpty(url))
 			throw new ArgumentNullException(nameof(url));
+
+		if (!url!.StartsWith(_context.SiteUrl))
+			throw new SecurityException("Redirection outside of the website, redirection URL: " + url);
 
 		_context.Response.Redirect(url);
 	}

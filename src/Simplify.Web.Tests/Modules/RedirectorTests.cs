@@ -41,6 +41,9 @@ public class RedirectorTests
 	[Test]
 	public void Redirect_NormalUrl_ResponseRedirectCalled()
 	{
+		// Arrange
+		_context.SetupGet(x => x.SiteUrl).Returns("http://testwebsite.com");
+
 		// Act
 		_redirector.Redirect("http://testwebsite.com");
 
@@ -51,11 +54,13 @@ public class RedirectorTests
 	[Test]
 	public void Redirect_ToRedirectUrlHaveRedirectUrl_RedirectCalledWithCorrectLinkPreviousNavigatedUrlSet()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.RedirectUrlCookieFieldName)]).Returns("foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
+
+		_context.SetupGet(x => x.SiteUrl).Returns("foo");
 
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
@@ -93,11 +98,13 @@ public class RedirectorTests
 	[Test]
 	public void Redirect_ToLoginReturnUrl_NotNullOrEmpty_LoginReturnUrl()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.LoginReturnUrlCookieFieldName)]).Returns("loginFoo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
+
+		_context.SetupGet(x => x.SiteUrl).Returns("loginFoo");
 
 		// Act
 		_redirector.Redirect(RedirectionType.LoginReturnUrl);
@@ -115,6 +122,8 @@ public class RedirectorTests
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
+		_context.SetupGet(x => x.SiteUrl).Returns("foo");
+
 		// Act
 		_redirector.Redirect(RedirectionType.PreviousPage);
 
@@ -125,11 +134,13 @@ public class RedirectorTests
 	[Test]
 	public void Redirect_ToPreviousPageWithBookmarkHaveUrl_RedirectCalledWithCorrectBookmarkUrl()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
+
+		_context.SetupGet(x => x.SiteUrl).Returns("foo");
 
 		// Act
 		_redirector.Redirect(RedirectionType.PreviousPageWithBookmark, "bar");
@@ -161,7 +172,7 @@ public class RedirectorTests
 	[Test]
 	public void SetRedirectUrlToCurrentPage_NormalUrl_Set()
 	{
-		// Assign
+		// Arrange
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
 			Assert.AreEqual(Redirector.RedirectUrlCookieFieldName, key);
@@ -175,7 +186,7 @@ public class RedirectorTests
 	[Test]
 	public void SetLoginReturnUrlFromQuery_NormalUrl_Set()
 	{
-		// Assign
+		// Arrange
 
 		_context.SetupGet(x => x.Request.Path).Returns("/foo2");
 
@@ -192,7 +203,7 @@ public class RedirectorTests
 	[Test]
 	public void GetPreviousPageUrl_Return()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
@@ -205,7 +216,8 @@ public class RedirectorTests
 	[Test]
 	public void GetPreviousNavigatedUrl_Return()
 	{
-		// Assign
+		// Arrange
+
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousNavigatedUrlCookieFieldName)]).Returns("foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
@@ -217,7 +229,7 @@ public class RedirectorTests
 	[Test]
 	public void SetPreviousPageUrl_Set()
 	{
-		// Assign
+		// Arrange
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
 			Assert.AreEqual(Redirector.PreviousPageUrlCookieFieldName, key);
