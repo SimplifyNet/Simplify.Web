@@ -1,5 +1,28 @@
 # Changelog
 
+## [4.6.0] - 2022-05-17
+
+### Added
+
+- Changing framework modules via lambda expression in `RegisterSimplifyWeb` (#191)
+
+### Changed
+
+- `RegisterSimplifyWeb` moved to `Simplify.Web` namespace
+
+### Fixed
+
+- `Content` controller response should have 'text/plain' type by default (#192)
+
+### Security
+
+- URL redirection from remote source (#189)
+- Log entries created from user input (#190)
+
+### Dependencies
+
+- `Simplify.DI` bump to 4.2.1
+
 ## [4.5.1] - 2022-04-27
 
 ### Dependencies
