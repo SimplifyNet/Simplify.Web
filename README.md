@@ -4,7 +4,7 @@
 
 [![Nuget Version](https://img.shields.io/nuget/v/Simplify.Web)](https://www.nuget.org/packages/Simplify.Web/)
 [![Nuget Download](https://img.shields.io/nuget/dt/Simplify.Web)](https://www.nuget.org/packages/Simplify.Web/)
-[![Issues board](https://dxssrr2j0sq4w.cloudfront.net/3.2.0/img/external/zenhub-badge.svg)](https://app.zenhub.com/workspaces/simplify-5d7dd300da4a88000107f7e5/board?repos=208544410,208543783,208544195,208544168,208544390,208544370,208543999,229945810)
+[![Issues Board](https://img.shields.io/badge/issues-Board-yellow)](https://github.com/orgs/SimplifyNet/projects/1/views/1)
 [![Build Package](https://github.com/SimplifyNet/Simplify.Web/actions/workflows/build.yml/badge.svg)](https://github.com/SimplifyNet/Simplify.Web/actions/workflows/build.yml)
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/nuget/Simplify.Web)](https://libraries.io/nuget/Simplify.Web)
 [![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/SimplifyNet/Simplify.Web)](https://www.codefactor.io/repository/github/simplifynet/simplify.web)
