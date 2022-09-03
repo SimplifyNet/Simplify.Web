@@ -31,5 +31,5 @@ public static class ScopeTraceExtensions
 
 	private static void TraceToConsole(HttpContext context) =>
 		global::System.Diagnostics.Trace.WriteLine(
-			$"[{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss:fff", CultureInfo.InvariantCulture)}] [{context.Request.Method}] {context.Request.GetDisplayUrl().Replace(Environment.NewLine, "")}");
+			$"[{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss:fff", CultureInfo.InvariantCulture)}] [{context.Request.Method.Replace(Environment.NewLine, "")}] {context.Request.GetDisplayUrl().Replace(Environment.NewLine, "")}");
 }
