@@ -10,14 +10,14 @@
 		<Copyright>Licensed under LGPL</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="coverlet.msbuild" Version="3.1.*">
+		<PackageReference Include="coverlet.msbuild" Version="3.2.*">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.*" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.*" />
 		<PackageReference Include="Moq" Version="4.18.*" />
 		<PackageReference Include="NUnit" Version="3.13.*" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.2.*" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.3.*" />
 		<PackageReference Include="Simplify.Xml" Version="1.3.*" />
 	</ItemGroup>
 	<ItemGroup>
