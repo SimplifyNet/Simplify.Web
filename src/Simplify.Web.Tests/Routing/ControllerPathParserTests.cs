@@ -222,7 +222,6 @@ public class ControllerPathParserTests
 
 	[Test]
 	public void Parse_privateBoolArrayParameter_Parsed()
-
 	{
 		// Act
 		var result = _parser.Parse("/{boolArray:bool[]}");

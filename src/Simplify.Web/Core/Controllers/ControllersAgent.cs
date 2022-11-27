@@ -32,10 +32,10 @@ public class ControllersAgent : IControllersAgent
 	/// <returns></returns>
 	public IList<IControllerMetaData> GetStandardControllersMetaData() =>
 		SortControllersMetaContainers(_controllersMetaStore.ControllersMetaData.Where(x =>
-			x.Role == null ||
+			x.Role == null || (
 			x.Role.Is400Handler == false &&
 			x.Role.Is403Handler == false &&
-			x.Role.Is404Handler == false));
+			x.Role.Is404Handler == false)));
 
 	/// <summary>
 	/// Matches the controller route.
@@ -78,8 +78,8 @@ public class ControllersAgent : IControllersAgent
 	{
 		if (metaData.Role != null)
 			if (metaData.Role.Is400Handler
-			    || metaData.Role.Is403Handler
-			    || metaData.Role.Is404Handler)
+				|| metaData.Role.Is403Handler
+				|| metaData.Role.Is404Handler)
 				return false;
 
 		if (metaData.ExecParameters == null)
