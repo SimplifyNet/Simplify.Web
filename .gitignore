@@ -132,3 +132,5 @@ src/SampleApps/SampleApp.Classic/Styles/**/*.css
 !src/SampleApps/SampleApp.Classic/Styles/Main.min.css
 
 **/.angular/cache
+
+coverage.json
