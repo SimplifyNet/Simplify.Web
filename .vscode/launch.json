@@ -1,42 +1,39 @@
 {
 	"version": "0.2.0",
 	"configurations": [
-	{
-		"name": "SampleApp.Angular Launch",
-		"type": "coreclr",
-		"request": "launch",
-		"preLaunchTask": "Build Angular Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net6.0/SampleApp.Angular.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
-		"internalConsoleOptions": "openOnSessionStart",
-		"serverReadyAction":
 		{
-			"action": "openExternally",
-			"pattern": "Now listening on",
-			"uriFormat": "http://localhost:5000"
+			"name": "SampleApp.Angular Launch",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "Build Angular Example",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net7.0/SampleApp.Angular.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
+			"internalConsoleOptions": "openOnSessionStart",
+			"serverReadyAction": {
+				"action": "openExternally",
+				"pattern": "Now listening on",
+				"uriFormat": "http://localhost:5000"
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
 		},
-		"env":
 		{
-			"ASPNETCORE_ENVIRONMENT": "Development"
+			"name": "SampleApp.Classic Launch",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "Build Classic Example",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net7.0/SampleApp.Classic.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net7.0/",
+			"internalConsoleOptions": "openOnSessionStart",
+			"serverReadyAction": {
+				"action": "openExternally",
+				"pattern": "Now listening on",
+				"uriFormat": "http://localhost:5000"
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
 		}
-	},
-	{
-		"name": "SampleApp.Classic Launch",
-		"type": "coreclr",
-		"request": "launch",
-		"preLaunchTask": "Build Classic Example",
-		"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net6.0/SampleApp.Classic.dll",
-		"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net6.0/",
-		"internalConsoleOptions": "openOnSessionStart",
-		"serverReadyAction":
-		{
-			"action": "openExternally",
-			"pattern": "Now listening on",
-			"uriFormat": "http://localhost:5000"
-		},
-		"env":
-		{
-			"ASPNETCORE_ENVIRONMENT": "Development"
-		}
-	}]
+	]
 }
