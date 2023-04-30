@@ -1,29 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{11330387-2CFF-4DD4-848E-EBFF0BD67AB7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7852664A-185C-40D4-B4BE-BF791C49A3C4}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web", "Simplify.Web\Simplify.Web.csproj", "{17B12D5C-025A-4FA9-A9B2-1C246E7A6AB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web.Tests", "Simplify.Web.Tests\Simplify.Web.Tests.csproj", "{6B905D63-6CA1-455D-BD71-9608C32FB309}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Web.Examples.Katana", "Examples\Simplify.Web.Examples.Katana\Simplify.Web.Examples.Katana.csproj", "{6CC47549-4A2A-4C35-A45A-808B7B4D2817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web.Examples.Katana", "Examples\Simplify.Web.Examples.Katana\Simplify.Web.Examples.Katana.csproj", "{6CC47549-4A2A-4C35-A45A-808B7B4D2817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Web.Examples.Nowin", "Examples\Simplify.Web.Examples.Nowin\Simplify.Web.Examples.Nowin.csproj", "{E8F567A9-F460-4FAC-A7B6-95D78B78962A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web.Examples.Nowin", "Examples\Simplify.Web.Examples.Nowin\Simplify.Web.Examples.Nowin.csproj", "{E8F567A9-F460-4FAC-A7B6-95D78B78962A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Web.Examples.SelfHosted", "Examples\Simplify.Web.Examples.SelfHosted\Simplify.Web.Examples.SelfHosted.csproj", "{9B1E9F18-5593-4F57-B49F-D8F54981ADEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web.Examples.SelfHosted", "Examples\Simplify.Web.Examples.SelfHosted\Simplify.Web.Examples.SelfHosted.csproj", "{9B1E9F18-5593-4F57-B49F-D8F54981ADEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Web.Examples.WindowsService", "Examples\Simplify.Web.Examples.WindowsService\Simplify.Web.Examples.WindowsService.csproj", "{3F1BF8C5-D27A-4E06-AAC0-142C6851AECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web.Examples.WindowsService", "Examples\Simplify.Web.Examples.WindowsService\Simplify.Web.Examples.WindowsService.csproj", "{3F1BF8C5-D27A-4E06-AAC0-142C6851AECD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Web.Examples.SelfHosted.Tests", "Examples\Simplify.Web.Examples.SelfHosted.Tests\Simplify.Web.Examples.SelfHosted.Tests.csproj", "{5E46B646-1EFF-43B8-9146-402D727F39F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplify.Web.Examples.SelfHosted.Tests", "Examples\Simplify.Web.Examples.SelfHosted.Tests\Simplify.Web.Examples.SelfHosted.Tests.csproj", "{5E46B646-1EFF-43B8-9146-402D727F39F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
