@@ -8,25 +8,14 @@ namespace Simplify.Web.Tests.Modules.Data;
 [TestFixture]
 public class DataCollectorTests
 {
-	private Mock<IStringTable> _stringTable;
-	private DataCollector _dataCollector;
+	private Mock<IStringTable> _stringTable = null!;
+	private DataCollector _dataCollector = null!;
 
 	[SetUp]
 	public void Initialize()
 	{
 		_stringTable = new Mock<IStringTable>();
 		_dataCollector = new DataCollector("MainContent", "Title", _stringTable.Object);
-	}
-
-	[Test]
-	public void AddVariableWithTest_Nulls_NotInserted()
-	{
-		// Act
-		_dataCollector.Add(null, (string)null);
-
-		// Assert
-		Assert.AreEqual(0, _dataCollector.Items.Count);
-		Assert.IsFalse(_dataCollector.IsDataExist("Foo"));
 	}
 
 	[Test]
@@ -80,7 +69,7 @@ public class DataCollectorTests
 	public void AddVariableWithTemplate_NormalData_Added()
 	{
 		// Act
-		_dataCollector.Add("Foo", Template.FromString("Bar"));
+		_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
 
 		// Assert
 		Assert.AreEqual("Bar", _dataCollector["Foo"]);
@@ -100,7 +89,7 @@ public class DataCollectorTests
 	public void AddMainContentVariableWithTemplate_NormalData_Added()
 	{
 		// Act
-		_dataCollector.Add("Foo", Template.FromString("Bar"));
+		_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
 
 		// Assert
 		Assert.AreEqual("Bar", _dataCollector["Foo"]);

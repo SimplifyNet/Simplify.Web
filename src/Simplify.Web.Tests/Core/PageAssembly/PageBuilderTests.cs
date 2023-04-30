@@ -13,14 +13,14 @@ namespace Simplify.Web.Tests.Core.PageAssembly;
 [TestFixture]
 public class PageBuilderTests
 {
-	private PageBuilder _pageBuilder;
-	private Mock<IDataCollector> _dataCollector;
-	private Mock<ITemplateFactory> _templatesFactory;
+	private PageBuilder _pageBuilder = null!;
+	private Mock<IDataCollector> _dataCollector = null!;
+	private Mock<ITemplateFactory> _templatesFactory = null!;
 
-	private Mock<IDIContainerProvider> _containerProvider;
-	private Mock<IContextVariablesSetter> _variablesSetter;
-	private Mock<IStringTableItemsSetter> _stringTableItemsSetter;
-	private Mock<IEnvironment> _environment;
+	private Mock<IDIContainerProvider> _containerProvider = null!;
+	private Mock<IContextVariablesSetter> _variablesSetter = null!;
+	private Mock<IStringTableItemsSetter> _stringTableItemsSetter = null!;
+	private Mock<IEnvironment> _environment = null!;
 
 	[SetUp]
 	public void Initialize()
@@ -40,7 +40,7 @@ public class PageBuilderTests
 		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IStringTableItemsSetter)))).Returns(_stringTableItemsSetter.Object);
 		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IEnvironment)))).Returns(_environment.Object);
 
-		_templatesFactory.Setup(x => x.Load(It.IsAny<string>())).Returns(Template.FromString("{Foo}"));
+		_templatesFactory.Setup(x => x.Load(It.IsAny<string>())).Returns(TemplateBuilder.FromString("{Foo}").Build);
 		_dataCollector.SetupGet(x => x.Items).Returns(new Dictionary<string, string> { { "Foo", "Bar" } });
 	}
 

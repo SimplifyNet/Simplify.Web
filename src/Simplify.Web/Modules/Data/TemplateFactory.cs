@@ -66,7 +66,7 @@ public sealed class TemplateFactory : ITemplateFactory
 		var filePath = !_loadTemplatesFromAssembly ? Path.Combine(_environment.TemplatesPhysicalPath, fileName) : fileName;
 
 		if (!_templatesMemoryCache)
-			return new Template(filePath, _languageManager.Language, _defaultLanguage);
+			return TemplateBuilder.FromFile(filePath).Localizable(_languageManager.Language, _defaultLanguage).Build();
 
 		var tpl = TryLoadExistingTemplate(filePath);
 
@@ -81,8 +81,13 @@ public sealed class TemplateFactory : ITemplateFactory
 				return tpl;
 
 			tpl = !_loadTemplatesFromAssembly
-				? new Template(filePath, _languageManager.Language, _defaultLanguage)
-				: new Template(Assembly.GetCallingAssembly(), filePath.Replace("/", "."), _languageManager.Language, _defaultLanguage);
+				? TemplateBuilder
+					.FromFile(filePath)
+					.Localizable(_languageManager.Language, _defaultLanguage)
+					.Build()
+				: TemplateBuilder.FromAssembly(filePath.Replace("/", "."), Assembly.GetCallingAssembly())
+					.Localizable(_languageManager.Language, _defaultLanguage)
+					.Build();
 
 			Cache.Add(new KeyValuePair<string, string>(filePath, _languageManager.Language), tpl.Get());
 
@@ -106,7 +111,9 @@ public sealed class TemplateFactory : ITemplateFactory
 		var existingItem = Cache.FirstOrDefault(x => x.Key.Key == filePath && x.Key.Value == _languageManager.Language);
 
 		if (!existingItem.Equals(default(KeyValuePair<KeyValuePair<string, string>, string>)))
-			return new Template(existingItem.Value, _languageManager.Language, false);
+			return TemplateBuilder.FromString(existingItem.Value)
+				.Localizable(_languageManager.Language)
+				.Build();
 
 		return null;
 	}

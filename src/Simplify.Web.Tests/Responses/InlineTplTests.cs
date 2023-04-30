@@ -10,23 +10,22 @@ namespace Simplify.Web.Tests.Responses;
 [TestFixture]
 public class InlineTplTests
 {
-	private Mock<IDataCollector> _dataCollector;
+	private Mock<IDataCollector> _dataCollector = null!;
 
 	[SetUp]
-	public void Initialize()
-	{
-		_dataCollector = new Mock<IDataCollector>();
-	}
+	public void Initialize() => _dataCollector = new Mock<IDataCollector>();
 
 	[Test]
 	public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
 	{
+		// ReSharper disable ObjectCreationAsStatement
 		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
-		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, Template.FromString("")));
+		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, TemplateBuilder.FromString("").Build()));
+		// ReSharper restore ObjectCreationAsStatement
 	}
 
 	[Test]
-	public void Process_NormalData_DataAddedtoDataCollector()
+	public void InlineTplProcess_NormalData_DataAddedToDataCollector()
 	{
 		// Assign
 
@@ -43,11 +42,11 @@ public class InlineTplTests
 	}
 
 	[Test]
-	public void Process_NormalTemplate_DataAddedtoDataCollector()
+	public void InlineTplProcess_NormalTemplate_DataAddedToDataCollector()
 	{
 		// Assign
 
-		var tplData = new Mock<InlineTpl>("foo", Template.FromString("test")) { CallBase = true };
+		var tplData = new Mock<InlineTpl>("foo", TemplateBuilder.FromString("test").Build()) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 		// Act

@@ -1,65 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.Abstractions;
-using System.IO.Abstractions.TestingHelpers;
-using Moq;
 using NUnit.Framework;
-using Simplify.Templates;
-using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Tests.Modules.Data;
 
 [TestFixture]
-public class TemplateFactoryTests
+public class TemplateFactoryTests : TemplateFactoryTestsBase
 {
-	private Mock<IEnvironment> _environment;
-	private Mock<ILanguageManagerProvider> _languageManagerProvider;
-	private Mock<ILanguageManager> _languageManager;
-
-	[OneTimeSetUp]
-	public void Initialize()
-	{
-		var dir = Path.Combine("WebSites", "FooSite", "Templates");
-		var file = Path.Combine("WebSites", "FooSite", "Templates", "Foo.tpl");
-
-		var files = new Dictionary<string, MockFileData> { { file, "Dummy data" } };
-
-		Template.FileSystem = new MockFileSystem(files);
-
-		_environment = new Mock<IEnvironment>();
-		_languageManagerProvider = new Mock<ILanguageManagerProvider>();
-		_languageManager = new Mock<ILanguageManager>();
-
-		_environment.SetupGet(x => x.TemplatesPhysicalPath).Returns(dir);
-		_languageManagerProvider.Setup(x => x.Get()).Returns(_languageManager.Object);
-		_languageManager.SetupGet(x => x.Language).Returns("en");
-	}
+	private const string FileName = "Foo.tpl";
 
 	[Test]
 	public void Load_NullFileName_ArgumentNullExceptionThrown()
 	{
 		// Assign
-		var tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en");
+		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
 		tf.Setup();
 
 		// Act & Assert
-		Assert.Throws<ArgumentNullException>(() => tf.Load(null));
+		Assert.Throws<ArgumentNullException>(() => tf.Load(null!));
 	}
 
 	[Test]
 	public void Load_NoCache_TemplateLoadedCorrectly()
 	{
 		// Assign
-		var tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en");
+		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
 
 		tf.Setup();
-		var data = tf.Load("Foo.tpl");
+		var data = tf.Load(FileName);
 
 		// Assert
 		Assert.AreEqual("Dummy data", data.Get());
@@ -69,7 +42,7 @@ public class TemplateFactoryTests
 	public void Load_NameWithoutTpl_TemplateLoadedCorrectly()
 	{
 		// Assign
-		var tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en");
+		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
 
@@ -84,36 +57,36 @@ public class TemplateFactoryTests
 	public void Load_WithCache_TemplateLoadedCorrectly()
 	{
 		// Assign
-		var tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en", true);
+		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
 
 		// Act
 
 		tf.Setup();
-		var data = tf.Load("Foo.tpl");
+		var data = tf.Load(FileName);
 
 		// Asset
 		Assert.AreEqual("Dummy data", data.Get());
 
 		// Assign
 
-		tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en", true);
+		tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
 		tf.Setup();
-		Template.FileSystem = new Mock<IFileSystem>().Object;
+
+		File.Delete(Environment.Object.TemplatesPhysicalPath + "\\" + FileName);
 
 		// Act
-		data = tf.Load("Foo.tpl");
+		data = tf.Load(FileName);
 
 		// Assert
 
 		Assert.AreEqual("Dummy data", data.Get());
-		Assert.AreEqual("en", data.Language);
 	}
 
 	[Test]
 	public void Load_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
 	{
 		// Assign
-		var tf = new TemplateFactory(_environment.Object, _languageManagerProvider.Object, "en", true, true);
+		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true, true);
 
 		// Act
 

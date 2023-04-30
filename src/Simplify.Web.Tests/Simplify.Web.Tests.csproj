@@ -27,4 +27,9 @@
 	<ItemGroup>
 		<EmbeddedResource Include="Templates\Test.tpl" />
 	</ItemGroup>
+	<ItemGroup>
+		<None Update="Templates\Foo.tpl">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 </Project>

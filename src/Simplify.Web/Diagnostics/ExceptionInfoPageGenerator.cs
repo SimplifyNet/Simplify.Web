@@ -25,7 +25,7 @@ public static class ExceptionInfoPageGenerator
 		if (e == null)
 			return null;
 
-		var tpl = Template.FromManifest("Diagnostics.ExceptionInfoPage.html");
+		var tpl = TemplateBuilder.FromCurrentAssembly("Diagnostics.ExceptionInfoPage.html").Build();
 
 		tpl.Set("Simplify.Web.Version", new AssemblyInfo(Assembly.GetCallingAssembly()).Version);
 
@@ -35,7 +35,7 @@ public static class ExceptionInfoPageGenerator
 			return tpl.Get();
 		}
 
-		var detailsTpl = Template.FromManifest("Diagnostics.ExceptionIDetails.html");
+		var detailsTpl = TemplateBuilder.FromCurrentAssembly("Diagnostics.ExceptionIDetails.html").Build();
 
 		var trace = new StackTrace(e, true);
 

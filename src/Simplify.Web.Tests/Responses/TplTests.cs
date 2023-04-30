@@ -11,9 +11,9 @@ namespace Simplify.Web.Tests.Responses;
 [TestFixture]
 public class TplTests
 {
-	private Mock<IDataCollector> _dataCollector;
-	private Mock<IWebContext> _context;
-	private Mock<IOwinResponse> _response;
+	private Mock<IDataCollector> _dataCollector = null!;
+	private Mock<IWebContext> _context = null!;
+	private Mock<IOwinResponse> _response = null!;
 
 	[SetUp]
 	public void Initialize()
@@ -26,7 +26,7 @@ public class TplTests
 	}
 
 	[Test]
-	public void Process_NormalData_DataAddedtoDataCollector()
+	public void Process_NormalData_DataAddedToDataCollector()
 	{
 		// Assign
 
@@ -44,11 +44,11 @@ public class TplTests
 	}
 
 	[Test]
-	public void Process_NormalTemplate_DataAddedtoDataCollector()
+	public void Process_NormalTemplate_DataAddedToDataCollector()
 	{
 		// Assign
 
-		var tplData = new Mock<Tpl>(Template.FromString("test"), null, 200) { CallBase = true };
+		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null, 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
@@ -60,11 +60,11 @@ public class TplTests
 	}
 
 	[Test]
-	public void Process_NormalTemplateAndTitle_DataAndTitleAddedtoDataCollector()
+	public void Process_NormalTemplateAndTitle_DataAndTitleAddedToDataCollector()
 	{
 		// Assign
 
-		var tplData = new Mock<Tpl>(Template.FromString("test"), "foo title", 200) { CallBase = true };
+		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), "foo title", 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
@@ -78,7 +78,7 @@ public class TplTests
 	}
 
 	[Test]
-	public void Process_NormalDataAndTitle_DataAndTitleAddedtoDataCollector()
+	public void Process_NormalDataAndTitle_DataAndTitleAddedToDataCollector()
 	{
 		// Assign
 
@@ -96,7 +96,7 @@ public class TplTests
 	}
 
 	[Test]
-	public void Process_NormalDataAndNullTitle_DataAddedTitleNotAddedtoDataCollector()
+	public void Process_NormalDataAndNullTitle_DataAddedTitleNotAddedToDataCollector()
 	{
 		// Assign
 

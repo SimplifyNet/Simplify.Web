@@ -1,4 +1,4 @@
-﻿using Simplify.Templates;
+﻿using Simplify.Templates.Model;
 
 #nullable disable
 
