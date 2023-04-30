@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Routing
+﻿#nullable disable
+
+namespace Simplify.Web.Routing
 {
 	/// <summary>
 	/// Provides HTTP route matching result

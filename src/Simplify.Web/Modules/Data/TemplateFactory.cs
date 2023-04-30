@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Simplify.Templates;
 
+#nullable disable
+
 namespace Simplify.Web.Modules.Data
 {
 	/// <summary>

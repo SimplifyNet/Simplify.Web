@@ -1,6 +1,8 @@
 ﻿using System;
 using Simplify.Web.Modules;
 
+#nullable disable
+
 namespace Simplify.Web.ModelBinding
 {
 	/// <summary>

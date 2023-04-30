@@ -1,6 +1,8 @@
 ﻿using Simplify.DI;
 using Simplify.Web.Core.Views;
 
+#nullable disable
+
 namespace Simplify.Web
 {
 	/// <summary>

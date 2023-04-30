@@ -1,6 +1,8 @@
 ﻿using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 
+#nullable disable
+
 namespace Simplify.Web
 {
 	/// <summary>

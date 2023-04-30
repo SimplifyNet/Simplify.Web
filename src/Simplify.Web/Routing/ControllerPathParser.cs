@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+#nullable disable
+
 namespace Simplify.Web.Routing
 {
 	/// <summary>

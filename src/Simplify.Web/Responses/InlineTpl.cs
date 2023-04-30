@@ -1,10 +1,12 @@
 ﻿using System;
 using Simplify.Templates;
 
+#nullable disable
+
 namespace Simplify.Web.Responses
 {
 	/// <summary>
-	/// Provides tempate response (puts data to DataCollector specified variable)
+	/// Provides template response (puts data to DataCollector specified variable)
 	/// </summary>
 	public class InlineTpl : ControllerResponse
 	{

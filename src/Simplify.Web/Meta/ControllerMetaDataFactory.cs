@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Simplify.Web.Attributes;
 
+#nullable disable
+
 namespace Simplify.Web.Meta
 {
 	/// <summary>

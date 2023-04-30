@@ -19,6 +19,8 @@ using Simplify.Web.Routing;
 using Simplify.Web.Settings;
 using Environment = Simplify.Web.Modules.Environment;
 
+#nullable disable
+
 namespace Simplify.Web.Bootstrapper
 {
 	/// <summary>

@@ -4,6 +4,8 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Xml.Linq;
 
+#nullable disable
+
 namespace Simplify.Web.Modules.Data
 {
 	/// <summary>

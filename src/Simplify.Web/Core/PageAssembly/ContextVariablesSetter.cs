@@ -3,6 +3,8 @@ using Simplify.DI;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 
+#nullable disable
+
 namespace Simplify.Web.Core.PageAssembly
 {
 	/// <summary>

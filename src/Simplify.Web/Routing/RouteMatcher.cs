@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 
+#nullable disable
+
 namespace Simplify.Web.Routing
 {
 	/// <summary>

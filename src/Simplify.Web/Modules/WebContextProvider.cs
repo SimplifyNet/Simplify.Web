@@ -1,5 +1,7 @@
 ﻿using Microsoft.Owin;
 
+#nullable disable
+
 namespace Simplify.Web.Modules
 {
 	/// <summary>

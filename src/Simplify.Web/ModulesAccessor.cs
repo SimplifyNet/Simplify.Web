@@ -2,6 +2,8 @@
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
 
+#nullable disable
+
 namespace Simplify.Web
 {
 	/// <summary>

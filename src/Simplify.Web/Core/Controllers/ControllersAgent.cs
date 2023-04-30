@@ -4,6 +4,8 @@ using System.Security.Claims;
 using Simplify.Web.Meta;
 using Simplify.Web.Routing;
 
+#nullable disable
+
 namespace Simplify.Web.Core.Controllers
 {
 	/// <summary>

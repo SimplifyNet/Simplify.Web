@@ -6,6 +6,8 @@ using Microsoft.Owin;
 using Simplify.Web.Owin;
 using Simplify.Web.Util;
 
+#nullable disable
+
 namespace Simplify.Web.Core.StaticFiles
 {
 	/// <summary>

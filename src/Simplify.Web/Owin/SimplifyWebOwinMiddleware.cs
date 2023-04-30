@@ -10,6 +10,8 @@ using Simplify.Web.Modules;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Settings;
 
+#nullable disable
+
 namespace Simplify.Web.Owin
 {
 	/// <summary>

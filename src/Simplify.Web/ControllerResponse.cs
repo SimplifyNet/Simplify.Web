@@ -1,5 +1,7 @@
 ﻿using Simplify.Web.Core;
 
+#nullable disable
+
 namespace Simplify.Web
 {
 	/// <summary>

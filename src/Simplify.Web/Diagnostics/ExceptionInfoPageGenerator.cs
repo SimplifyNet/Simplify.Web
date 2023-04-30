@@ -5,6 +5,8 @@ using System.Reflection;
 using Simplify.System;
 using Simplify.Templates;
 
+#nullable disable
+
 namespace Simplify.Web.Diagnostics
 {
 	/// <summary>

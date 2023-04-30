@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web
+﻿#nullable disable
+
+namespace Simplify.Web
 {
 	/// <summary>
 	/// Controllers base class

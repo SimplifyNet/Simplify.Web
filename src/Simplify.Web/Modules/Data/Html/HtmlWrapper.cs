@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Modules.Data.Html
+﻿#nullable disable
+
+namespace Simplify.Web.Modules.Data.Html
 {
 	/// <summary>
 	/// Various HTML generation classes container

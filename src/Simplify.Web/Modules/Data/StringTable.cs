@@ -5,6 +5,8 @@ using System.Linq;
 using System.Xml.XPath;
 using Simplify.Xml;
 
+#nullable disable
+
 namespace Simplify.Web.Modules.Data
 {
 	/// <summary>

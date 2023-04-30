@@ -1,5 +1,7 @@
 ﻿using Simplify.Templates;
 
+#nullable disable
+
 namespace Simplify.Web.Responses
 {
 	/// <summary>
