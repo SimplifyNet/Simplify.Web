@@ -1,23 +1,22 @@
 ﻿using Microsoft.Owin;
 
-namespace Simplify.Web.Modules
+namespace Simplify.Web.Modules;
+
+/// <summary>
+/// Represent web context provider
+/// </summary>
+public interface IWebContextProvider
 {
 	/// <summary>
-	/// Represent web context provider
+	/// Creates the web context.
 	/// </summary>
-	public interface IWebContextProvider
-	{
-		/// <summary>
-		/// Creates the web context.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <returns></returns>
-		void Setup(IOwinContext context);
+	/// <param name="context">The context.</param>
+	/// <returns></returns>
+	void Setup(IOwinContext context);
 
-		/// <summary>
-		/// Gets the web context.
-		/// </summary>
-		/// <returns></returns>
-		IWebContext Get();
-	}
+	/// <summary>
+	/// Gets the web context.
+	/// </summary>
+	/// <returns></returns>
+	IWebContext Get();
 }

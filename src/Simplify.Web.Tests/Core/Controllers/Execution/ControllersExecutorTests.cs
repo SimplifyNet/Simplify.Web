@@ -9,195 +9,194 @@ using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Core.Controllers.Execution.Building;
 using Simplify.Web.Tests.TestEntities;
 
-namespace Simplify.Web.Tests.Core.Controllers.Execution
+namespace Simplify.Web.Tests.Core.Controllers.Execution;
+
+[TestFixture]
+public class ControllersExecutorTests
 {
-	[TestFixture]
-	public class ControllersExecutorTests
+	private ControllerExecutor _executor;
+	private Mock<IControllerFactory> _controllerFactory;
+	private Mock<IControllerResponseBuilder> _controllerResponseBuilder;
+
+	private Mock<Controller> _syncController;
+	private Mock<AsyncController> _asyncController;
+	private Mock<Controller<TestModel>> _syncModelController;
+	private Mock<AsyncController<TestModel>> _asyncModelController;
+	private Mock<ControllerResponse> _controllerResponse;
+
+	[SetUp]
+	public void Initialize()
 	{
-		private ControllerExecutor _executor;
-		private Mock<IControllerFactory> _controllerFactory;
-		private Mock<IControllerResponseBuilder> _controllerResponseBuilder;
+		_controllerFactory = new Mock<IControllerFactory>();
+		_controllerResponseBuilder = new Mock<IControllerResponseBuilder>();
+		_executor = new ControllerExecutor(_controllerFactory.Object, _controllerResponseBuilder.Object);
 
-		private Mock<Controller> _syncController;
-		private Mock<AsyncController> _asyncController;
-		private Mock<Controller<TestModel>> _syncModelController;
-		private Mock<AsyncController<TestModel>> _asyncModelController;
-		private Mock<ControllerResponse> _controllerResponse;
+		_syncController = new Mock<Controller>();
+		_asyncController = new Mock<AsyncController>();
+		_syncModelController = new Mock<Controller<TestModel>>();
+		_asyncModelController = new Mock<AsyncController<TestModel>>();
+		_controllerResponse = new Mock<ControllerResponse>();
+	}
 
-		[SetUp]
-		public void Initialize()
-		{
-			_controllerFactory = new Mock<IControllerFactory>();
-			_controllerResponseBuilder = new Mock<IControllerResponseBuilder>();
-			_executor = new ControllerExecutor(_controllerFactory.Object, _controllerResponseBuilder.Object);
+	[Test]
+	public void Process_StandardControllerNoResponse_CreatedDefaultReturned()
+	{
+		// Assign
+		_controllerFactory.Setup(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
+		// Act
+		var result = _executor.Execute(null, null, null);
 
-			_syncController = new Mock<Controller>();
-			_asyncController = new Mock<AsyncController>();
-			_syncModelController = new Mock<Controller<TestModel>>();
-			_asyncModelController = new Mock<AsyncController<TestModel>>();
-			_controllerResponse = new Mock<ControllerResponse>();
-		}
+		// Assert
 
-		[Test]
-		public void Process_StandardControllerNoResponse_CreatedDefaultReturned()
-		{
-			// Assign
-			_controllerFactory.Setup(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
-			// Act
-			var result = _executor.Execute(null, null, null);
-
-			// Assert
-
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-			_controllerFactory.Verify(
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+		_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
 					It.IsAny<IDictionary<string, Object>>()));
-			_syncController.Verify(x => x.Invoke());
-		}
+		_syncController.Verify(x => x.Invoke());
+	}
 
-		[Test]
-		public void Process_StandardControllerHaveDefaultResponse_CreatedProcessedDefaultReturned()
-		{
-			// Assign
+	[Test]
+	public void Process_StandardControllerHaveDefaultResponse_CreatedProcessedDefaultReturned()
+	{
+		// Assign
 
-			_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.Default);
-			_syncController.Setup(x => x.Invoke()).Returns(_controllerResponse.Object);
-			_controllerFactory.Setup(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
-			// Act
-			var result = _executor.Execute(null, null, null);
+		_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.Default);
+		_syncController.Setup(x => x.Invoke()).Returns(_controllerResponse.Object);
+		_controllerFactory.Setup(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
+		// Act
+		var result = _executor.Execute(null, null, null);
 
-			// Assert
+		// Assert
 
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-			_controllerFactory.Verify(
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+		_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
 					It.IsAny<IDictionary<string, Object>>()));
-			_syncController.Verify(x => x.Invoke());
-			_controllerResponse.Setup(x => x.Process());
-		}
+		_syncController.Verify(x => x.Invoke());
+		_controllerResponse.Setup(x => x.Process());
+	}
 
-		[Test]
-		public void Process_StandardControllerHaveRawDataResponse_CreatedProcessedRawDataReturned()
-		{
-			// Assign
+	[Test]
+	public void Process_StandardControllerHaveRawDataResponse_CreatedProcessedRawDataReturned()
+	{
+		// Assign
 
-			_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.RawOutput);
-			_syncController.Setup(x => x.Invoke()).Returns(_controllerResponse.Object);
-			_controllerFactory.Setup(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
-			// Act
-			var result = _executor.Execute(null, null, null);
+		_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.RawOutput);
+		_syncController.Setup(x => x.Invoke()).Returns(_controllerResponse.Object);
+		_controllerFactory.Setup(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>())).Returns(_syncController.Object);
+		// Act
+		var result = _executor.Execute(null, null, null);
 
-			// Assert
+		// Assert
 
-			Assert.AreEqual(ControllerResponseResult.RawOutput, result);
-			_controllerFactory.Verify(
+		Assert.AreEqual(ControllerResponseResult.RawOutput, result);
+		_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
 					It.IsAny<IDictionary<string, Object>>()));
-			_syncController.Verify(x => x.Invoke());
-			_controllerResponse.Setup(x => x.Process());
-		}
+		_syncController.Verify(x => x.Invoke());
+		_controllerResponse.Setup(x => x.Process());
+	}
 
-		[Test]
-		public void Process_AsyncControllerHaveRawDataResponse_CreatedDefaultReturnedRawDataReturnedAfterGetProcessResponse()
-		{
-			// Assign
+	[Test]
+	public void Process_AsyncControllerHaveRawDataResponse_CreatedDefaultReturnedRawDataReturnedAfterGetProcessResponse()
+	{
+		// Assign
 
-			_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.RawOutput);
-			_asyncController.Setup(x => x.Invoke()).Returns(Task.FromResult(_controllerResponse.Object));
-			_controllerFactory.Setup(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_asyncController.Object);
-			// Act
-			var result = _executor.Execute(null, null, null);
+		_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.RawOutput);
+		_asyncController.Setup(x => x.Invoke()).Returns(Task.FromResult(_controllerResponse.Object));
+		_controllerFactory.Setup(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>())).Returns(_asyncController.Object);
+		// Act
+		var result = _executor.Execute(null, null, null);
 
-			// Assert
+		// Assert
 
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-			_asyncController.Verify(x => x.Invoke());
-			_controllerResponse.Verify(x => x.Process(), Times.Never());
-			_controllerFactory.Verify(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>()));
-
-			// Act & Assert
-
-			foreach (var response in _executor.ProcessAsyncControllersResponses(null))
-			{
-				_controllerResponse.Verify(x => x.Process());
-				Assert.AreEqual(ControllerResponseResult.RawOutput, response);
-			}
-		}
-
-		[Test]
-		public void Process_ModelControllerHaveDefaultResponse_CreatedProcessedDefaultReturned()
-		{
-			// Assign
-
-			_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.Default);
-			_syncModelController.Setup(x => x.Invoke()).Returns(_controllerResponse.Object);
-			_controllerFactory.Setup(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_syncModelController.Object);
-			// Act
-			var result = _executor.Execute(null, null, null);
-
-			// Assert
-
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-			_controllerFactory.Verify(
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+		_asyncController.Verify(x => x.Invoke());
+		_controllerResponse.Verify(x => x.Process(), Times.Never());
+		_controllerFactory.Verify(
 			x =>
 				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
 					It.IsAny<IDictionary<string, Object>>()));
-			_syncModelController.Verify(x => x.Invoke());
-			_controllerResponse.Setup(x => x.Process());
-		}
 
-		[Test]
-		public void Process_AsyncModelControllerDefaultResponse_CreatedDefaultReturnedDefaultReturnedAfterGetProcessResponse()
+		// Act & Assert
+
+		foreach (var response in _executor.ProcessAsyncControllersResponses(null))
 		{
-			// Assign
+			_controllerResponse.Verify(x => x.Process());
+			Assert.AreEqual(ControllerResponseResult.RawOutput, response);
+		}
+	}
 
-			_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.RawOutput);
-			_asyncModelController.Setup(x => x.Invoke()).Returns(Task.FromResult(_controllerResponse.Object));
-			_controllerFactory.Setup(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>())).Returns(_asyncModelController.Object);
-			// Act
-			var result = _executor.Execute(null, null, null);
+	[Test]
+	public void Process_ModelControllerHaveDefaultResponse_CreatedProcessedDefaultReturned()
+	{
+		// Assign
 
-			// Assert
+		_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.Default);
+		_syncModelController.Setup(x => x.Invoke()).Returns(_controllerResponse.Object);
+		_controllerFactory.Setup(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>())).Returns(_syncModelController.Object);
+		// Act
+		var result = _executor.Execute(null, null, null);
 
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-			_asyncModelController.Verify(x => x.Invoke());
-			_controllerResponse.Verify(x => x.Process(), Times.Never());
-			_controllerFactory.Verify(
-				x =>
-					x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
-						It.IsAny<IDictionary<string, Object>>()));
+		// Assert
 
-			// Act & Assert
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+		_controllerFactory.Verify(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>()));
+		_syncModelController.Verify(x => x.Invoke());
+		_controllerResponse.Setup(x => x.Process());
+	}
 
-			foreach (var response in _executor.ProcessAsyncControllersResponses(null))
-			{
-				_controllerResponse.Verify(x => x.Process());
-				Assert.AreEqual(ControllerResponseResult.RawOutput, response);
-			}
+	[Test]
+	public void Process_AsyncModelControllerDefaultResponse_CreatedDefaultReturnedDefaultReturnedAfterGetProcessResponse()
+	{
+		// Assign
+
+		_controllerResponse.Setup(x => x.Process()).Returns(ControllerResponseResult.RawOutput);
+		_asyncModelController.Setup(x => x.Invoke()).Returns(Task.FromResult(_controllerResponse.Object));
+		_controllerFactory.Setup(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>())).Returns(_asyncModelController.Object);
+		// Act
+		var result = _executor.Execute(null, null, null);
+
+		// Assert
+
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+		_asyncModelController.Verify(x => x.Invoke());
+		_controllerResponse.Verify(x => x.Process(), Times.Never());
+		_controllerFactory.Verify(
+			x =>
+				x.CreateController(It.IsAny<Type>(), It.IsAny<IDIContainerProvider>(), It.IsAny<IOwinContext>(),
+					It.IsAny<IDictionary<string, Object>>()));
+
+		// Act & Assert
+
+		foreach (var response in _executor.ProcessAsyncControllersResponses(null))
+		{
+			_controllerResponse.Verify(x => x.Process());
+			Assert.AreEqual(ControllerResponseResult.RawOutput, response);
 		}
 	}
 }

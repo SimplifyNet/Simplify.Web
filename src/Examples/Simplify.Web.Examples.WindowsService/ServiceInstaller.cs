@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using Simplify.WindowsServices;
 
-namespace Simplify.Web.Examples.WindowsService
+namespace Simplify.Web.Examples.WindowsService;
+
+[RunInstaller(true)]
+public class ServiceInstaller : ServiceInstallerBase
 {
-	[RunInstaller(true)]
-	public class ServiceInstaller : ServiceInstallerBase
-	{
-	}
 }

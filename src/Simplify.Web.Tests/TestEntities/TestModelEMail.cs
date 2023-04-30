@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.ModelBinding.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModelEMail
 {
-	public class TestModelEMail
-	{
-		[EMail]
-		public string Prop1 { get; set; }
-	}
+	[EMail]
+	public string Prop1 { get; set; }
 }

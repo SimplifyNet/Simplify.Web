@@ -3,313 +3,312 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Simplify.Web.Settings
+namespace Simplify.Web.Settings;
+
+/// <summary>
+/// Simplify.Web settings
+/// </summary>
+/// <seealso cref="ISimplifyWebSettings" />
+public sealed class ConfigurationBasedSimplifyWebSettings : ISimplifyWebSettings
 {
 	/// <summary>
-	/// Simplify.Web settings
+	/// Initializes a new instance of the <see cref="ConfigurationBasedSimplifyWebSettings"/> class.
 	/// </summary>
-	/// <seealso cref="ISimplifyWebSettings" />
-	public sealed class ConfigurationBasedSimplifyWebSettings : ISimplifyWebSettings
+	public ConfigurationBasedSimplifyWebSettings(IConfiguration configuration)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ConfigurationBasedSimplifyWebSettings"/> class.
-		/// </summary>
-		public ConfigurationBasedSimplifyWebSettings(IConfiguration configuration)
+		var config = configuration.GetSection("SimplifyWebSettings");
+
+		if (!config.GetChildren().Any())
+			return;
+
+		LoadLanguageManagerSettings(config);
+		LoadTemplatesSettings(config);
+		LoadDataCollectorSettings(config);
+		LoadStyleSettings(config);
+		LoadOtherSettings(config);
+		LoadEngineBehaviorSettings(config);
+		LoadCacheSettings(config);
+		LoadDiagnosticSettings(config);
+	}
+
+	/// <summary>
+	/// Default language, for example: "en", "ru", "de" etc., default value is "en"
+	/// </summary>
+	public string DefaultLanguage { get; private set; } = "en";
+
+	/// <summary>
+	/// Gets a value indicating whether browser language should be accepted
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if  browser language should be accepted; otherwise, <c>false</c>.
+	/// </value>
+	public bool AcceptBrowserLanguage { get; private set; }
+
+	/// <summary>
+	/// Default templates directory path, for example: Templates, default value is "Templates"
+	/// </summary>
+	public string DefaultTemplatesPath { get; private set; } = "Templates";
+
+	/// <summary>
+	/// Gets a value indicating whether all templates should be loaded from assembly
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if all templates should be loaded from assembly; otherwise, <c>false</c>.
+	/// </value>
+	public bool LoadTemplatesFromAssembly { get; private set; }
+
+	/// <summary>
+	/// Gets or sets the master page template file name
+	/// </summary>
+	/// <value>
+	/// The name of the master page template file
+	/// </value>
+	public string DefaultMasterTemplateFileName { get; private set; } = "Master.tpl";
+
+	/// <summary>
+	/// Gets or sets the master template main content variable name.
+	/// </summary>
+	/// <value>
+	/// The  master template main content variable name.
+	/// </value>
+	public string DefaultMainContentVariableName { get; private set; } = "MainContent";
+
+	/// <summary>
+	/// Gets or sets the master template title variable name.
+	/// </summary>
+	/// <value>
+	/// The title variable name.
+	/// </value>
+	public string DefaultTitleVariableName { get; private set; } = "Title";
+
+	/// <summary>
+	/// Default site style
+	/// </summary>
+	public string DefaultStyle { get; private set; } = "Main";
+
+	/// <summary>
+	/// Data directory path, default value is "App_Data"
+	/// </summary>
+	public string DataPath { get; private set; } = "App_Data";
+
+	/// <summary>
+	/// Gets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only
+	/// </summary>
+	public bool StaticFilesEnabled { get; private set; } = true;
+
+	/// <summary>
+	/// Gets the static files paths.
+	/// </summary>
+	/// <value>
+	/// The static files paths.
+	/// </value>
+	public IList<string> StaticFilesPaths { get; }
+		= new List<string> { "styles", "scripts", "images", "content", "fonts" };
+
+	/// <summary>
+	/// Gets the string table files.
+	/// </summary>
+	/// <value>
+	/// The string table files.
+	/// </value>
+	public IList<string> StringTableFiles { get; }
+		= new List<string> { "StringTable.xml" };
+
+	/// <summary>
+	/// Gets or sets a value indicating whether site title postfix should be set automatically
+	/// </summary>
+	public bool DisableAutomaticSiteTitleSet { get; private set; }
+
+	/// <summary>
+	/// Gets a value indicating whether exception details should be hide when some unhandled exception occured.
+	/// </summary>
+	public bool HideExceptionDetails { get; private set; }
+
+	/// <summary>
+	/// Gets a value indicating whether templates memory cache enabled or disabled.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if templates memory cache enabled; otherwise, <c>false</c>.
+	/// </value>
+	public bool TemplatesMemoryCache { get; private set; }
+
+	/// <summary>
+	/// Gets a value indicating whether string table memory cache enabled or disabled.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if string table memory cache enabled; otherwise, <c>false</c>.
+	/// </value>
+	public bool StringTableMemoryCache { get; private set; }
+
+	/// <summary>
+	/// Gets a value indicating whether file reader caching should be disable.
+	/// </summary>
+	public bool DisableFileReaderCache { get; private set; }
+
+	/// <summary>
+	/// Gets a value indicating whether console tracing is enabled.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if console tracing is enabled; otherwise, <c>false</c>.
+	/// </value>
+	public bool ConsoleTracing { get; private set; }
+
+	private void LoadLanguageManagerSettings(IConfiguration config)
+	{
+		var defaultLanguage = config["DefaultLanguage"];
+
+		if (!string.IsNullOrEmpty(defaultLanguage))
+			DefaultLanguage = defaultLanguage;
+
+		var acceptBrowserLanguage = config["AcceptBrowserLanguage"];
+
+		if (string.IsNullOrEmpty(acceptBrowserLanguage))
+			return;
+
+		if (bool.TryParse(acceptBrowserLanguage, out var buffer))
+			AcceptBrowserLanguage = buffer;
+	}
+
+	private void LoadTemplatesSettings(IConfiguration config)
+	{
+		var defaultTemplatesPath = config["DefaultTemplatesPath"];
+
+		if (!string.IsNullOrEmpty(defaultTemplatesPath))
+			DefaultTemplatesPath = defaultTemplatesPath;
+
+		var loadTemplatesFromAssembly = config["LoadTemplatesFromAssembly"];
+
+		if (!string.IsNullOrEmpty(loadTemplatesFromAssembly))
 		{
-			var config = configuration.GetSection("SimplifyWebSettings");
-
-			if (!config.GetChildren().Any())
-				return;
-
-			LoadLanguageManagerSettings(config);
-			LoadTemplatesSettings(config);
-			LoadDataCollectorSettings(config);
-			LoadStyleSettings(config);
-			LoadOtherSettings(config);
-			LoadEngineBehaviorSettings(config);
-			LoadCacheSettings(config);
-			LoadDiagnosticSettings(config);
+			if (bool.TryParse(loadTemplatesFromAssembly, out var buffer))
+				LoadTemplatesFromAssembly = buffer;
 		}
 
-		/// <summary>
-		/// Default language, for example: "en", "ru", "de" etc., default value is "en"
-		/// </summary>
-		public string DefaultLanguage { get; private set; } = "en";
+		var defaultMasterTemplateFileName = config["DefaultMasterTemplateFileName"];
 
-		/// <summary>
-		/// Gets a value indicating whether browser language should be accepted
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if  browser language should be accepted; otherwise, <c>false</c>.
-		/// </value>
-		public bool AcceptBrowserLanguage { get; private set; }
+		if (!string.IsNullOrEmpty(defaultMasterTemplateFileName))
+			DefaultMasterTemplateFileName = defaultMasterTemplateFileName;
+	}
 
-		/// <summary>
-		/// Default templates directory path, for example: Templates, default value is "Templates"
-		/// </summary>
-		public string DefaultTemplatesPath { get; private set; } = "Templates";
+	private void LoadDataCollectorSettings(IConfiguration config)
+	{
+		var defaultMainContentVariableName = config["DefaultMainContentVariableName"];
 
-		/// <summary>
-		/// Gets a value indicating whether all templates should be loaded from assembly
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if all templates should be loaded from assembly; otherwise, <c>false</c>.
-		/// </value>
-		public bool LoadTemplatesFromAssembly { get; private set; }
+		if (!string.IsNullOrEmpty(defaultMainContentVariableName))
+			DefaultMainContentVariableName = defaultMainContentVariableName;
 
-		/// <summary>
-		/// Gets or sets the master page template file name
-		/// </summary>
-		/// <value>
-		/// The name of the master page template file
-		/// </value>
-		public string DefaultMasterTemplateFileName { get; private set; } = "Master.tpl";
+		var defaultTitleVariableName = config["DefaultTitleVariableName"];
 
-		/// <summary>
-		/// Gets or sets the master template main content variable name.
-		/// </summary>
-		/// <value>
-		/// The  master template main content variable name.
-		/// </value>
-		public string DefaultMainContentVariableName { get; private set; } = "MainContent";
+		if (!string.IsNullOrEmpty(defaultTitleVariableName))
+			DefaultTitleVariableName = defaultTitleVariableName;
+	}
 
-		/// <summary>
-		/// Gets or sets the master template title variable name.
-		/// </summary>
-		/// <value>
-		/// The title variable name.
-		/// </value>
-		public string DefaultTitleVariableName { get; private set; } = "Title";
+	private void LoadStyleSettings(IConfiguration config)
+	{
+		var defaultStyle = config["DefaultStyle"];
 
-		/// <summary>
-		/// Default site style
-		/// </summary>
-		public string DefaultStyle { get; private set; } = "Main";
+		if (!string.IsNullOrEmpty(defaultStyle))
+			DefaultStyle = defaultStyle;
+	}
 
-		/// <summary>
-		/// Data directory path, default value is "App_Data"
-		/// </summary>
-		public string DataPath { get; private set; } = "App_Data";
+	private void LoadOtherSettings(IConfiguration config)
+	{
+		var dataPath = config["DataPath"];
 
-		/// <summary>
-		/// Gets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only
-		/// </summary>
-		public bool StaticFilesEnabled { get; private set; } = true;
+		if (!string.IsNullOrEmpty(dataPath))
+			DataPath = dataPath;
 
-		/// <summary>
-		/// Gets the static files paths.
-		/// </summary>
-		/// <value>
-		/// The static files paths.
-		/// </value>
-		public IList<string> StaticFilesPaths { get; }
-			= new List<string> { "styles", "scripts", "images", "content", "fonts" };
+		var staticFilesEnabled = config["StaticFilesEnabled"];
 
-		/// <summary>
-		/// Gets the string table files.
-		/// </summary>
-		/// <value>
-		/// The string table files.
-		/// </value>
-		public IList<string> StringTableFiles { get; }
-			= new List<string> { "StringTable.xml" };
-
-		/// <summary>
-		/// Gets or sets a value indicating whether site title postfix should be set automatically
-		/// </summary>
-		public bool DisableAutomaticSiteTitleSet { get; private set; }
-
-		/// <summary>
-		/// Gets a value indicating whether exception details should be hide when some unhandled exception occured.
-		/// </summary>
-		public bool HideExceptionDetails { get; private set; }
-
-		/// <summary>
-		/// Gets a value indicating whether templates memory cache enabled or disabled.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if templates memory cache enabled; otherwise, <c>false</c>.
-		/// </value>
-		public bool TemplatesMemoryCache { get; private set; }
-
-		/// <summary>
-		/// Gets a value indicating whether string table memory cache enabled or disabled.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if string table memory cache enabled; otherwise, <c>false</c>.
-		/// </value>
-		public bool StringTableMemoryCache { get; private set; }
-
-		/// <summary>
-		/// Gets a value indicating whether file reader caching should be disable.
-		/// </summary>
-		public bool DisableFileReaderCache { get; private set; }
-
-		/// <summary>
-		/// Gets a value indicating whether console tracing is enabled.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if console tracing is enabled; otherwise, <c>false</c>.
-		/// </value>
-		public bool ConsoleTracing { get; private set; }
-
-		private void LoadLanguageManagerSettings(IConfiguration config)
+		if (!string.IsNullOrEmpty(staticFilesEnabled))
 		{
-			var defaultLanguage = config["DefaultLanguage"];
-
-			if (!string.IsNullOrEmpty(defaultLanguage))
-				DefaultLanguage = defaultLanguage;
-
-			var acceptBrowserLanguage = config["AcceptBrowserLanguage"];
-
-			if (string.IsNullOrEmpty(acceptBrowserLanguage))
-				return;
-
-			if (bool.TryParse(acceptBrowserLanguage, out var buffer))
-				AcceptBrowserLanguage = buffer;
+			if (bool.TryParse(staticFilesEnabled, out var buffer))
+				StaticFilesEnabled = buffer;
 		}
 
-		private void LoadTemplatesSettings(IConfiguration config)
+		var staticFilesPaths = config["StaticFilesPaths"];
+
+		if (!string.IsNullOrEmpty(staticFilesPaths))
 		{
-			var defaultTemplatesPath = config["DefaultTemplatesPath"];
+			StaticFilesPaths.Clear();
+			var items = staticFilesPaths.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-			if (!string.IsNullOrEmpty(defaultTemplatesPath))
-				DefaultTemplatesPath = defaultTemplatesPath;
-
-			var loadTemplatesFromAssembly = config["LoadTemplatesFromAssembly"];
-
-			if (!string.IsNullOrEmpty(loadTemplatesFromAssembly))
-			{
-				if (bool.TryParse(loadTemplatesFromAssembly, out var buffer))
-					LoadTemplatesFromAssembly = buffer;
-			}
-
-			var defaultMasterTemplateFileName = config["DefaultMasterTemplateFileName"];
-
-			if (!string.IsNullOrEmpty(defaultMasterTemplateFileName))
-				DefaultMasterTemplateFileName = defaultMasterTemplateFileName;
+			foreach (var item in items)
+				StaticFilesPaths.Add(item);
 		}
 
-		private void LoadDataCollectorSettings(IConfiguration config)
+		var stringTableFiles = config["StringTableFiles"];
+
+		if (string.IsNullOrEmpty(stringTableFiles))
+			return;
+
 		{
-			var defaultMainContentVariableName = config["DefaultMainContentVariableName"];
+			StringTableFiles.Clear();
+			var items = stringTableFiles.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-			if (!string.IsNullOrEmpty(defaultMainContentVariableName))
-				DefaultMainContentVariableName = defaultMainContentVariableName;
+			foreach (var item in items)
+				StringTableFiles.Add(item);
+		}
+	}
 
-			var defaultTitleVariableName = config["DefaultTitleVariableName"];
+	private void LoadEngineBehaviorSettings(IConfiguration config)
+	{
+		var disableAutomaticSiteTitleSet = config["DisableAutomaticSiteTitleSet"];
 
-			if (!string.IsNullOrEmpty(defaultTitleVariableName))
-				DefaultTitleVariableName = defaultTitleVariableName;
+		if (!string.IsNullOrEmpty(disableAutomaticSiteTitleSet))
+		{
+			if (bool.TryParse(disableAutomaticSiteTitleSet, out var buffer))
+				DisableAutomaticSiteTitleSet = buffer;
 		}
 
-		private void LoadStyleSettings(IConfiguration config)
-		{
-			var defaultStyle = config["DefaultStyle"];
+		var hideExceptionDetails = config["HideExceptionDetails"];
 
-			if (!string.IsNullOrEmpty(defaultStyle))
-				DefaultStyle = defaultStyle;
+		if (string.IsNullOrEmpty(hideExceptionDetails))
+			return;
+
+		{
+			if (bool.TryParse(hideExceptionDetails, out var buffer))
+				HideExceptionDetails = buffer;
+		}
+	}
+
+	private void LoadCacheSettings(IConfiguration config)
+	{
+		var templatesMemoryCache = config["TemplatesMemoryCache"];
+
+		if (!string.IsNullOrEmpty(templatesMemoryCache))
+		{
+			if (bool.TryParse(templatesMemoryCache, out var buffer))
+				TemplatesMemoryCache = buffer;
 		}
 
-		private void LoadOtherSettings(IConfiguration config)
+		var stringTableMemoryCache = config["StringTableMemoryCache"];
+
+		if (!string.IsNullOrEmpty(stringTableMemoryCache))
 		{
-			var dataPath = config["DataPath"];
-
-			if (!string.IsNullOrEmpty(dataPath))
-				DataPath = dataPath;
-
-			var staticFilesEnabled = config["StaticFilesEnabled"];
-
-			if (!string.IsNullOrEmpty(staticFilesEnabled))
-			{
-				if (bool.TryParse(staticFilesEnabled, out var buffer))
-					StaticFilesEnabled = buffer;
-			}
-
-			var staticFilesPaths = config["StaticFilesPaths"];
-
-			if (!string.IsNullOrEmpty(staticFilesPaths))
-			{
-				StaticFilesPaths.Clear();
-				var items = staticFilesPaths.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-				foreach (var item in items)
-					StaticFilesPaths.Add(item);
-			}
-
-			var stringTableFiles = config["StringTableFiles"];
-
-			if (string.IsNullOrEmpty(stringTableFiles))
-				return;
-
-			{
-				StringTableFiles.Clear();
-				var items = stringTableFiles.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-				foreach (var item in items)
-					StringTableFiles.Add(item);
-			}
+			if (bool.TryParse(stringTableMemoryCache, out var buffer))
+				StringTableMemoryCache = buffer;
 		}
 
-		private void LoadEngineBehaviorSettings(IConfiguration config)
+		var disableFileReaderCache = config["DisableFileReaderCache"];
+
+		if (string.IsNullOrEmpty(disableFileReaderCache))
+			return;
+
 		{
-			var disableAutomaticSiteTitleSet = config["DisableAutomaticSiteTitleSet"];
-
-			if (!string.IsNullOrEmpty(disableAutomaticSiteTitleSet))
-			{
-				if (bool.TryParse(disableAutomaticSiteTitleSet, out var buffer))
-					DisableAutomaticSiteTitleSet = buffer;
-			}
-
-			var hideExceptionDetails = config["HideExceptionDetails"];
-
-			if (string.IsNullOrEmpty(hideExceptionDetails))
-				return;
-
-			{
-				if (bool.TryParse(hideExceptionDetails, out var buffer))
-					HideExceptionDetails = buffer;
-			}
+			if (bool.TryParse(disableFileReaderCache, out var buffer))
+				DisableFileReaderCache = buffer;
 		}
+	}
 
-		private void LoadCacheSettings(IConfiguration config)
-		{
-			var templatesMemoryCache = config["TemplatesMemoryCache"];
+	private void LoadDiagnosticSettings(IConfiguration config)
+	{
+		var consoleTracing = config["ConsoleTracing"];
 
-			if (!string.IsNullOrEmpty(templatesMemoryCache))
-			{
-				if (bool.TryParse(templatesMemoryCache, out var buffer))
-					TemplatesMemoryCache = buffer;
-			}
+		if (string.IsNullOrEmpty(consoleTracing))
+			return;
 
-			var stringTableMemoryCache = config["StringTableMemoryCache"];
-
-			if (!string.IsNullOrEmpty(stringTableMemoryCache))
-			{
-				if (bool.TryParse(stringTableMemoryCache, out var buffer))
-					StringTableMemoryCache = buffer;
-			}
-
-			var disableFileReaderCache = config["DisableFileReaderCache"];
-
-			if (string.IsNullOrEmpty(disableFileReaderCache))
-				return;
-
-			{
-				if (bool.TryParse(disableFileReaderCache, out var buffer))
-					DisableFileReaderCache = buffer;
-			}
-		}
-
-		private void LoadDiagnosticSettings(IConfiguration config)
-		{
-			var consoleTracing = config["ConsoleTracing"];
-
-			if (string.IsNullOrEmpty(consoleTracing))
-				return;
-
-			if (bool.TryParse(consoleTracing, out var buffer))
-				ConsoleTracing = buffer;
-		}
+		if (bool.TryParse(consoleTracing, out var buffer))
+			ConsoleTracing = buffer;
 	}
 }

@@ -1,17 +1,16 @@
 ﻿using System.Threading.Tasks;
 using Simplify.Templates;
 
-namespace Simplify.Web.Examples.SelfHosted.Views.Shared
+namespace Simplify.Web.Examples.SelfHosted.Views.Shared;
+
+public class LoggedUserPanelView : View
 {
-	public class LoggedUserPanelView : View
+	public async Task<ITemplate> Get(string userName)
 	{
-		public async Task<ITemplate> Get(string userName)
-		{
-			var tpl = await TemplateFactory.LoadAsync("Shared/LoginPanel/LoggedUserPanel");
+		var tpl = await TemplateFactory.LoadAsync("Shared/LoginPanel/LoggedUserPanel");
 
-			tpl.Add("UserName", userName);
+		tpl.Add("UserName", userName);
 
-			return tpl;
-		}
+		return tpl;
 	}
 }

@@ -2,33 +2,32 @@
 
 #nullable disable
 
-namespace Simplify.Web.Modules
+namespace Simplify.Web.Modules;
+
+/// <summary>
+/// Provides web context provider
+/// </summary>
+public class WebContextProvider : IWebContextProvider
 {
+	private IWebContext _webContext;
+
 	/// <summary>
-	/// Provides web context provider
+	/// Creates the web context.
 	/// </summary>
-	public class WebContextProvider : IWebContextProvider
+	/// <param name="context">The context.</param>
+	/// <returns></returns>
+	public void Setup(IOwinContext context)
 	{
-		private IWebContext _webContext;
+		if (_webContext == null)
+			_webContext = new WebContext(context);
+	}
 
-		/// <summary>
-		/// Creates the web context.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <returns></returns>
-		public void Setup(IOwinContext context)
-		{
-			if (_webContext == null)
-				_webContext = new WebContext(context);
-		}
-
-		/// <summary>
-		/// Gets the web context.
-		/// </summary>
-		/// <returns></returns>
-		public IWebContext Get()
-		{
-			return _webContext;
-		}
+	/// <summary>
+	/// Gets the web context.
+	/// </summary>
+	/// <returns></returns>
+	public IWebContext Get()
+	{
+		return _webContext;
 	}
 }

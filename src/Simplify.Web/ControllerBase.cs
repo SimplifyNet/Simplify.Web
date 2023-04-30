@@ -1,18 +1,17 @@
 ﻿#nullable disable
 
-namespace Simplify.Web
+namespace Simplify.Web;
+
+/// <summary>
+/// Controllers base class
+/// </summary>
+public abstract class ControllerBase : ActionModulesAccessor
 {
 	/// <summary>
-	/// Controllers base class
+	/// Gets the route parameters.
 	/// </summary>
-	public abstract class ControllerBase : ActionModulesAccessor
-	{
-		/// <summary>
-		/// Gets the route parameters.
-		/// </summary>
-		/// <value>
-		/// The route parameters.
-		/// </value>
-		public virtual dynamic RouteParameters { get; internal set; }
-	}
+	/// <value>
+	/// The route parameters.
+	/// </value>
+	public virtual dynamic RouteParameters { get; internal set; }
 }

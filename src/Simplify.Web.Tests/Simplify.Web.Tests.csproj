@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net462</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web unit tests</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Simplify.Web\Simplify.Web.csproj" />

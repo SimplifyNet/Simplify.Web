@@ -1,10 +1,9 @@
-﻿namespace Simplify.Web.Examples.SelfHosted.Views
+﻿namespace Simplify.Web.Examples.SelfHosted.Views;
+
+public class MessageBoxView : View
 {
-	public class MessageBoxView : View
+	public string Get(string message)
 	{
-		public string Get(string message)
-		{
-			return TemplateFactory.Load("MessageBox").Set("Message", message).Get();
-		}
+		return TemplateFactory.Load("MessageBox").Set("Message", message).Get();
 	}
 }

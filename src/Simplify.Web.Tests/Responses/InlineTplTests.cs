@@ -5,56 +5,55 @@ using Simplify.Templates;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Responses;
 
-namespace Simplify.Web.Tests.Responses
+namespace Simplify.Web.Tests.Responses;
+
+[TestFixture]
+public class InlineTplTests
 {
-	[TestFixture]
-	public class InlineTplTests
+	private Mock<IDataCollector> _dataCollector;
+
+	[SetUp]
+	public void Initialize()
 	{
-		private Mock<IDataCollector> _dataCollector;
+		_dataCollector = new Mock<IDataCollector>();
+	}
 
-		[SetUp]
-		public void Initialize()
-		{
-			_dataCollector = new Mock<IDataCollector>();
-		}
+	[Test]
+	public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
+	{
+		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
+		Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, Template.FromString("")));
+	}
 
-		[Test]
-		public void Process_DataCollectorVariableNameIsNullOrEmpty_ArgumentNullException()
-		{
-			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, "foo"));
-			Assert.Throws<ArgumentNullException>(() => new InlineTpl(null, Template.FromString("")));
-		}
+	[Test]
+	public void Process_NormalData_DataAddedtoDataCollector()
+	{
+		// Assign
 
-		[Test]
-		public void Process_NormalData_DataAddedtoDataCollector()
-		{
-			// Assign
+		var tplData = new Mock<InlineTpl>("foo", "test") { CallBase = true };
+		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
-			var tplData = new Mock<InlineTpl>("foo", "test") { CallBase = true };
-			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
+		// Act
+		var result = tplData.Object.Process();
 
-			// Act
-			var result = tplData.Object.Process();
+		// Assert
 
-			// Assert
+		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
+		Assert.AreEqual(ControllerResponseResult.Default, result);
+	}
 
-			_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
-			Assert.AreEqual(ControllerResponseResult.Default, result);
-		}
+	[Test]
+	public void Process_NormalTemplate_DataAddedtoDataCollector()
+	{
+		// Assign
 
-		[Test]
-		public void Process_NormalTemplate_DataAddedtoDataCollector()
-		{
-			// Assign
+		var tplData = new Mock<InlineTpl>("foo", Template.FromString("test")) { CallBase = true };
+		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
-			var tplData = new Mock<InlineTpl>("foo", Template.FromString("test")) { CallBase = true };
-			tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
+		// Act
+		tplData.Object.Process();
 
-			// Act
-			tplData.Object.Process();
-
-			// Assert
-			_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
-		}
+		// Assert
+		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
 	}
 }

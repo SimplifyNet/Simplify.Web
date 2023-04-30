@@ -1,23 +1,22 @@
-﻿namespace Simplify.Web
+﻿namespace Simplify.Web;
+
+/// <summary>
+/// Controller response result types
+/// </summary>
+public enum ControllerResponseResult
 {
 	/// <summary>
-	/// Controller response result types
+	/// Default result
 	/// </summary>
-	public enum ControllerResponseResult
-	{
-		/// <summary>
-		/// Default result
-		/// </summary>
-		Default,
+	Default,
 
-		/// <summary>
-		/// Execution should be stopped, becase raw output will be sent to client
-		/// </summary>
-		RawOutput,
+	/// <summary>
+	/// Execution should be stopped, becase raw output will be sent to client
+	/// </summary>
+	RawOutput,
 
-		/// <summary>
-		/// Execution should be stopped, becase client will be redirected to new URL
-		/// </summary>
-		Redirect
-	}
+	/// <summary>
+	/// Execution should be stopped, becase client will be redirected to new URL
+	/// </summary>
+	Redirect
 }

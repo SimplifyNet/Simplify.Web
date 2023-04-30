@@ -1,15 +1,14 @@
-﻿namespace Simplify.Web.ModelBinding
+﻿namespace Simplify.Web.ModelBinding;
+
+/// <summary>
+/// Represent model validator
+/// </summary>
+public interface IModelValidator
 {
 	/// <summary>
-	/// Represent model validator
+	/// Validates the specified model.
 	/// </summary>
-	public interface IModelValidator
-	{
-		/// <summary>
-		/// Validates the specified model.
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="model">The model.</param>
-		void Validate<T>(T model);
-	}
+	/// <typeparam name="T">Model type</typeparam>
+	/// <param name="model">The model.</param>
+	void Validate<T>(T model);
 }

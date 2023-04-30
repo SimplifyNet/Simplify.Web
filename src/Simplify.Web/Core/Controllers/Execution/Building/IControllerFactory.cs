@@ -4,21 +4,20 @@ using Simplify.DI;
 
 #nullable disable
 
-namespace Simplify.Web.Core.Controllers.Execution.Building
+namespace Simplify.Web.Core.Controllers.Execution.Building;
+
+/// <summary>
+/// Represent controller factory
+/// </summary>
+public interface IControllerFactory
 {
 	/// <summary>
-	/// Represent controller factory
+	/// Creates the controller.
 	/// </summary>
-	public interface IControllerFactory
-	{
-		/// <summary>
-		/// Creates the controller.
-		/// </summary>
-		/// <param name="controllerType">Type of the controller.</param>
-		/// <param name="resolver">The DI container resolver.</param>
-		/// <param name="context">The context.</param>
-		/// <param name="routeParameters">The route parameters.</param>
-		/// <returns></returns>
-		ControllerBase CreateController(Type controllerType, IDIResolver resolver, IOwinContext context, dynamic routeParameters = null);
-	}
+	/// <param name="controllerType">Type of the controller.</param>
+	/// <param name="resolver">The DI container resolver.</param>
+	/// <param name="context">The context.</param>
+	/// <param name="routeParameters">The route parameters.</param>
+	/// <returns></returns>
+	ControllerBase CreateController(Type controllerType, IDIResolver resolver, IOwinContext context, dynamic routeParameters = null);
 }

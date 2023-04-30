@@ -5,164 +5,163 @@ using System.Linq;
 
 #nullable disable
 
-namespace Simplify.Web.Routing
+namespace Simplify.Web.Routing;
+
+/// <summary>
+/// Provides HTTP route parser and matcher
+/// </summary>
+public class RouteMatcher : IRouteMatcher
 {
+	private readonly IControllerPathParser _controllerPathParser;
+
 	/// <summary>
-	/// Provides HTTP route parser and matcher
+	/// Initializes a new instance of the <see cref="RouteMatcher"/> class.
 	/// </summary>
-	public class RouteMatcher : IRouteMatcher
+	/// <param name="controllerPathParser">The controller path parser.</param>
+	public RouteMatcher(IControllerPathParser controllerPathParser)
 	{
-		private readonly IControllerPathParser _controllerPathParser;
+		_controllerPathParser = controllerPathParser;
+	}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="RouteMatcher"/> class.
-		/// </summary>
-		/// <param name="controllerPathParser">The controller path parser.</param>
-		public RouteMatcher(IControllerPathParser controllerPathParser)
+	/// <summary>
+	/// Matches the current path with controller path.
+	/// Only "/", "/action", "/action/{userName}/{id}", "/action/{id:int}", "/{id}" etc. route types allowed
+	/// </summary>
+	/// <param name="currentPath">The current path.</param>
+	/// <param name="controllerPath">The controller path.</param>
+	/// <returns></returns>
+	public IRouteMatchResult Match(string currentPath, string controllerPath)
+	{
+		if (string.IsNullOrEmpty(currentPath))
+			return new RouteMatchResult();
+
+		// Run on all pages route
+		if (string.IsNullOrEmpty(controllerPath))
+			return new RouteMatchResult(true);
+
+		var controllerPathParsed = _controllerPathParser.Parse(controllerPath);
+		var currentPathItems = currentPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+		if (currentPathItems.Length != controllerPathParsed.Items.Count)
+			return new RouteMatchResult();
+
+		IDictionary<string, object> routeParameters = new ExpandoObject();
+
+		for (var i = 0; i < controllerPathParsed.Items.Count; i++)
 		{
-			_controllerPathParser = controllerPathParser;
-		}
+			var currentItem = controllerPathParsed.Items[i];
 
-		/// <summary>
-		/// Matches the current path with controller path.
-		/// Only "/", "/action", "/action/{userName}/{id}", "/action/{id:int}", "/{id}" etc. route types allowed
-		/// </summary>
-		/// <param name="currentPath">The current path.</param>
-		/// <param name="controllerPath">The controller path.</param>
-		/// <returns></returns>
-		public IRouteMatchResult Match(string currentPath, string controllerPath)
-		{
-			if (string.IsNullOrEmpty(currentPath))
-				return new RouteMatchResult();
-
-			// Run on all pages route
-			if (string.IsNullOrEmpty(controllerPath))
-				return new RouteMatchResult(true);
-
-			var controllerPathParsed = _controllerPathParser.Parse(controllerPath);
-			var currentPathItems = currentPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-			if (currentPathItems.Length != controllerPathParsed.Items.Count)
-				return new RouteMatchResult();
-
-			IDictionary<string, object> routeParameters = new ExpandoObject();
-
-			for (var i = 0; i < controllerPathParsed.Items.Count; i++)
+			if (currentItem is PathSegment)
 			{
-				var currentItem = controllerPathParsed.Items[i];
-
-				if (currentItem is PathSegment)
-				{
-					if (currentItem.Name != currentPathItems[i])
-						return new RouteMatchResult();
-				}
-				else if (currentItem is PathParameter)
-				{
-					var value = GetParameterValue((PathParameter)currentItem, currentPathItems[i]);
-
-					if (value == null)
-						return new RouteMatchResult();
-
-					routeParameters.Add(currentItem.Name, value);
-				}
+				if (currentItem.Name != currentPathItems[i])
+					return new RouteMatchResult();
 			}
+			else if (currentItem is PathParameter)
+			{
+				var value = GetParameterValue((PathParameter)currentItem, currentPathItems[i]);
 
-			// Return string value
-			return new RouteMatchResult(true, routeParameters);
+				if (value == null)
+					return new RouteMatchResult();
+
+				routeParameters.Add(currentItem.Name, value);
+			}
 		}
 
-		private static object GetParameterValue(PathParameter pathParameter, string source)
-		{
-			if (pathParameter.Type == typeof(string))
-				return source;
+		// Return string value
+		return new RouteMatchResult(true, routeParameters);
+	}
 
-			if (pathParameter.Type == typeof(int))
-				return GetIntParameterValue(source);
+	private static object GetParameterValue(PathParameter pathParameter, string source)
+	{
+		if (pathParameter.Type == typeof(string))
+			return source;
 
-			if (pathParameter.Type == typeof(decimal))
-				return GetDecimalParameterValue(source);
+		if (pathParameter.Type == typeof(int))
+			return GetIntParameterValue(source);
 
-			if (pathParameter.Type == typeof(bool))
-				return GetBoolParameterValue(source);
+		if (pathParameter.Type == typeof(decimal))
+			return GetDecimalParameterValue(source);
 
-			if (pathParameter.Type == typeof(string[]))
-				return GetStringArrayParameterValue(source);
+		if (pathParameter.Type == typeof(bool))
+			return GetBoolParameterValue(source);
 
-			if (pathParameter.Type == typeof(int[]))
-				return GetIntArrayParameterValue(source);
+		if (pathParameter.Type == typeof(string[]))
+			return GetStringArrayParameterValue(source);
 
-			if (pathParameter.Type == typeof(decimal[]))
-				return GetDecimalArrayParameterValue(source);
+		if (pathParameter.Type == typeof(int[]))
+			return GetIntArrayParameterValue(source);
 
-			if (pathParameter.Type == typeof(bool[]))
-				return GetBoolArrayParameterValue(source);
+		if (pathParameter.Type == typeof(decimal[]))
+			return GetDecimalArrayParameterValue(source);
 
+		if (pathParameter.Type == typeof(bool[]))
+			return GetBoolArrayParameterValue(source);
+
+		return null;
+	}
+
+	private static object GetIntParameterValue(string source)
+	{
+		int buffer;
+
+		if (!int.TryParse(source, out buffer))
 			return null;
-		}
 
-		private static object GetIntParameterValue(string source)
-		{
-			int buffer;
+		return buffer;
+	}
 
-			if (!int.TryParse(source, out buffer))
-				return null;
+	private static object GetDecimalParameterValue(string source)
+	{
+		decimal buffer;
 
-			return buffer;
-		}
+		if (!decimal.TryParse(source, out buffer))
+			return null;
 
-		private static object GetDecimalParameterValue(string source)
-		{
-			decimal buffer;
+		return buffer;
+	}
 
-			if (!decimal.TryParse(source, out buffer))
-				return null;
+	private static object GetBoolParameterValue(string source)
+	{
+		bool buffer;
 
-			return buffer;
-		}
+		if (!bool.TryParse(source, out buffer))
+			return null;
 
-		private static object GetBoolParameterValue(string source)
-		{
-			bool buffer;
+		return buffer;
+	}
 
-			if (!bool.TryParse(source, out buffer))
-				return null;
+	private static IList<string> GetStringArrayParameterValue(string source)
+	{
+		return source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+	}
 
-			return buffer;
-		}
+	private static IList<int> GetIntArrayParameterValue(string source)
+	{
+		return
+			source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(GetIntParameterValue)
+				.Where(x => x != null)
+				.Cast<int>()
+				.ToList();
+	}
 
-		private static IList<string> GetStringArrayParameterValue(string source)
-		{
-			return source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-		}
+	private static IList<decimal> GetDecimalArrayParameterValue(string source)
+	{
+		return
+			source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(GetDecimalParameterValue)
+				.Where(x => x != null)
+				.Cast<decimal>()
+				.ToList();
+	}
 
-		private static IList<int> GetIntArrayParameterValue(string source)
-		{
-			return
-				source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(GetIntParameterValue)
-					.Where(x => x != null)
-					.Cast<int>()
-					.ToList();
-		}
-
-		private static IList<decimal> GetDecimalArrayParameterValue(string source)
-		{
-			return
-				source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(GetDecimalParameterValue)
-					.Where(x => x != null)
-					.Cast<decimal>()
-					.ToList();
-		}
-
-		private static IList<bool> GetBoolArrayParameterValue(string source)
-		{
-			return
-				source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(GetBoolParameterValue)
-					.Where(x => x != null)
-					.Cast<bool>()
-					.ToList();
-		}
+	private static IList<bool> GetBoolArrayParameterValue(string source)
+	{
+		return
+			source.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(GetBoolParameterValue)
+				.Where(x => x != null)
+				.Cast<bool>()
+				.ToList();
 	}
 }

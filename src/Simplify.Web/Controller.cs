@@ -1,9 +1,8 @@
-﻿namespace Simplify.Web
+﻿namespace Simplify.Web;
+
+/// <summary>
+/// Synchronous controllers base class
+/// </summary>
+public abstract class Controller : SyncControllerBase
 {
-	/// <summary>
-	/// Synchronous controllers base class
-	/// </summary>
-	public abstract class Controller : SyncControllerBase
-	{
-	}
 }

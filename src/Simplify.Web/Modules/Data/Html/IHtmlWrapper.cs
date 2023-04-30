@@ -1,13 +1,12 @@
-﻿namespace Simplify.Web.Modules.Data.Html
+﻿namespace Simplify.Web.Modules.Data.Html;
+
+/// <summary>
+/// Various HTML generation classes container
+/// </summary>
+public interface IHtmlWrapper : IHideObjectMembers
 {
 	/// <summary>
-	/// Various HTML generation classes container
+	/// HTML ComboBox lists generator.
 	/// </summary>
-	public interface IHtmlWrapper : IHideObjectMembers
-	{
-		/// <summary>
-		/// HTML ComboBox lists generator.
-		/// </summary>
-		IListsGenerator ListsGenerator { get; }
-	}
+	IListsGenerator ListsGenerator { get; }
 }

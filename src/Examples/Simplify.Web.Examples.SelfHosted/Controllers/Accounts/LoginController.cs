@@ -8,29 +8,28 @@ using Simplify.Web.Examples.SelfHosted.Views.Accounts;
 using Simplify.Web.Modules;
 using Simplify.Web.Responses;
 
-namespace Simplify.Web.Examples.SelfHosted.Controllers.Accounts
+namespace Simplify.Web.Examples.SelfHosted.Controllers.Accounts;
+
+[Post("login")]
+public class LoginController : Controller<LoginViewModel>
 {
-	[Post("login")]
-	public class LoginController : Controller<LoginViewModel>
+	public override ControllerResponse Invoke()
 	{
-		public override ControllerResponse Invoke()
+		if (Model.Password == "1" && Model.UserName == "Foo")
 		{
-			if (Model.Password == "1" && Model.UserName == "Foo")
+			var claims = new List<Claim>
 			{
-				var claims = new List<Claim>
-				{
-					new Claim(ClaimTypes.Name, Model.UserName)
-				};
+				new Claim(ClaimTypes.Name, Model.UserName)
+			};
 
-				var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+			var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
-				var authenticationManager = Context.Context.Authentication;
-				authenticationManager.SignIn(id);
+			var authenticationManager = Context.Context.Authentication;
+			authenticationManager.SignIn(id);
 
-				return new Redirect(RedirectionType.LoginReturnUrl);
-			}
-
-			return new Tpl(GetView<LoginView>().Get(Model, GetView<MessageBoxView>().Get(StringTable.WrongUserNameOrPassword)), StringTable.PageTitleLogin);
+			return new Redirect(RedirectionType.LoginReturnUrl);
 		}
+
+		return new Tpl(GetView<LoginView>().Get(Model, GetView<MessageBoxView>().Get(StringTable.WrongUserNameOrPassword)), StringTable.PageTitleLogin);
 	}
 }

@@ -1,14 +1,13 @@
 ﻿using Simplify.Web.Attributes;
 using Simplify.Web.Responses;
 
-namespace Simplify.Web.Examples.Nowin.Controllers
+namespace Simplify.Web.Examples.Nowin.Controllers;
+
+[Get("/")]
+public class DefaultController : Controller
 {
-	[Get("/")]
-	public class DefaultController : Controller
+	public override ControllerResponse Invoke()
 	{
-		public override ControllerResponse Invoke()
-		{
-			return new Tpl("Hello from OWIN self-hosted application with NOWIN web-server!");
-		}
+		return new Tpl("Hello from OWIN self-hosted application with NOWIN web-server!");
 	}
 }

@@ -7,48 +7,47 @@ using Simplify.Web.Core;
 using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Modules;
 
-namespace Simplify.Web.Tests.Core.PageAssembly
+namespace Simplify.Web.Tests.Core.PageAssembly;
+
+[TestFixture]
+public class PageProcessorTests
 {
-	[TestFixture]
-	public class PageProcessorTests
+	private PageProcessor _processor;
+	private Mock<IPageBuilder> _pageBuilder;
+	private Mock<IResponseWriter> _responseWriter;
+	private Mock<IRedirector> _redirector;
+
+	private Mock<IOwinContext> _context;
+
+	[SetUp]
+	public void Initialize()
 	{
-		private PageProcessor _processor;
-		private Mock<IPageBuilder> _pageBuilder;
-		private Mock<IResponseWriter> _responseWriter;
-		private Mock<IRedirector> _redirector;
+		_pageBuilder = new Mock<IPageBuilder>();
+		_responseWriter = new Mock<IResponseWriter>();
+		_redirector = new Mock<IRedirector>();
+		_processor = new PageProcessor(_pageBuilder.Object, _responseWriter.Object, _redirector.Object);
 
-		private Mock<IOwinContext> _context;
+		_context = new Mock<IOwinContext>();
 
-		[SetUp]
-		public void Initialize()
-		{
-			_pageBuilder = new Mock<IPageBuilder>();
-			_responseWriter = new Mock<IResponseWriter>();
-			_redirector = new Mock<IRedirector>();
-			_processor = new PageProcessor(_pageBuilder.Object, _responseWriter.Object, _redirector.Object);
+		_context.SetupSet(x => x.Response.ContentType = It.IsAny<string>());
+	}
 
-			_context = new Mock<IOwinContext>();
+	[Test]
+	public void Process_Ok_PageBuiltWithOutput()
+	{
+		// Assign
 
-			_context.SetupSet(x => x.Response.ContentType = It.IsAny<string>());
-		}
+		_pageBuilder.Setup(x => x.Build(It.IsAny<IDIContainerProvider>())).Returns("Foo");
+		_context.SetupGet(x => x.Request.Uri).Returns(new Uri("http://localhost:8080/test"));
 
-		[Test]
-		public void Process_Ok_PageBuiltWithOutput()
-		{
-			// Assign
+		// Act
+		_processor.ProcessPage(null, _context.Object);
 
-			_pageBuilder.Setup(x => x.Build(It.IsAny<IDIContainerProvider>())).Returns("Foo");
-			_context.SetupGet(x => x.Request.Uri).Returns(new Uri("http://localhost:8080/test"));
+		// Assert
 
-			// Act
-			_processor.ProcessPage(null, _context.Object);
-
-			// Assert
-
-			_pageBuilder.Verify(x => x.Build(It.IsAny<IDIContainerProvider>()));
-			_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "Foo"), It.Is<IOwinResponse>(d => d == _context.Object.Response)));
-			_redirector.SetupSet(x => x.PreviousPageUrl = It.Is<string>(d => d == "http://localhost:8080/test"));
-			_context.VerifySet(x => x.Response.ContentType = It.Is<string>(s => s == "text/html"));
-		}
+		_pageBuilder.Verify(x => x.Build(It.IsAny<IDIContainerProvider>()));
+		_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "Foo"), It.Is<IOwinResponse>(d => d == _context.Object.Response)));
+		_redirector.SetupSet(x => x.PreviousPageUrl = It.Is<string>(d => d == "http://localhost:8080/test"));
+		_context.VerifySet(x => x.Response.ContentType = It.Is<string>(s => s == "text/html"));
 	}
 }

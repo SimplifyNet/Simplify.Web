@@ -1,9 +1,8 @@
-﻿namespace Simplify.Web
+﻿namespace Simplify.Web;
+
+/// <summary>
+/// Asynchronous controllers base class
+/// </summary>
+public abstract class AsyncController : AsyncControllerBase
 {
-	/// <summary>
-	/// Asynchronous controllers base class
-	/// </summary>
-	public abstract class AsyncController : AsyncControllerBase
-	{
-	}
 }

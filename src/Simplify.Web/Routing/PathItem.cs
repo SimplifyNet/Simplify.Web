@@ -1,25 +1,24 @@
-﻿namespace Simplify.Web.Routing
+﻿namespace Simplify.Web.Routing;
+
+/// <summary>
+/// Provides path items base class
+/// </summary>
+public abstract class PathItem
 {
 	/// <summary>
-	/// Provides path items base class
+	/// Initializes a new instance of the <see cref="PathItem"/> class.
 	/// </summary>
-	public abstract class PathItem
+	/// <param name="name">The name of path item.</param>
+	protected PathItem(string name)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PathItem"/> class.
-		/// </summary>
-		/// <param name="name">The name of path item.</param>
-		protected PathItem(string name)
-		{
-			Name = name;
-		}
-
-		/// <summary>
-		/// Gets the name of path item.
-		/// </summary>
-		/// <value>
-		/// The name of path item.
-		/// </value>
-		public virtual string Name { get; private set; }
+		Name = name;
 	}
+
+	/// <summary>
+	/// Gets the name of path item.
+	/// </summary>
+	/// <value>
+	/// The name of path item.
+	/// </value>
+	public virtual string Name { get; private set; }
 }

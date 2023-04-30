@@ -1,15 +1,14 @@
 ﻿#nullable disable
 
-namespace Simplify.Web.Modules.Data.Html
+namespace Simplify.Web.Modules.Data.Html;
+
+/// <summary>
+/// Various HTML generation classes container
+/// </summary>
+public sealed class HtmlWrapper : IHtmlWrapper
 {
 	/// <summary>
-	/// Various HTML generation classes container
+	/// HTML ComboBox lists generator.
 	/// </summary>
-	public sealed class HtmlWrapper : IHtmlWrapper
-	{
-		/// <summary>
-		/// HTML ComboBox lists generator.
-		/// </summary>
-		public IListsGenerator ListsGenerator { get; internal set; }
-	}
+	public IListsGenerator ListsGenerator { get; internal set; }
 }

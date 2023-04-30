@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.ModelBinding.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModelMinLength
 {
-	public class TestModelMinLength
-	{
-		[MinLength(2)]
-		public string Prop1 { get; set; }
-	}
+	[MinLength(2)]
+	public string Prop1 { get; set; }
 }

@@ -3,23 +3,22 @@ using System.Diagnostics;
 using Simplify.DI;
 using Simplify.WindowsServices;
 
-namespace Simplify.Web.Examples.WindowsService
+namespace Simplify.Web.Examples.WindowsService;
+
+internal class Program
 {
-	internal class Program
+	private static void Main(string[] args)
 	{
-		private static void Main(string[] args)
-		{
 #if DEBUG
-			Debugger.Launch();
+		Debugger.Launch();
 #endif
 
-			if (new BasicServiceHandler<WebApplicationStartup>(true).Start(args))
-				return;
+		if (new BasicServiceHandler<WebApplicationStartup>(true).Start(args))
+			return;
 
-			using (var scope = DIContainer.Current.BeginLifetimeScope())
-				scope.Resolver.Resolve<WebApplicationStartup>().Run();
+		using (var scope = DIContainer.Current.BeginLifetimeScope())
+			scope.Resolver.Resolve<WebApplicationStartup>().Run();
 
-			Console.ReadLine();
-		}
+		Console.ReadLine();
 	}
 }

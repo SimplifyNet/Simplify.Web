@@ -2,39 +2,38 @@
 
 #nullable disable
 
-namespace Simplify.Web.Meta
+namespace Simplify.Web.Meta;
+
+/// <summary>
+/// Provides controller security information
+/// </summary>
+public class ControllerSecurity
 {
 	/// <summary>
-	/// Provides controller security information
+	/// Initializes a new instance of the <see cref="ControllerSecurity" /> class.
 	/// </summary>
-	public class ControllerSecurity
+	/// <param name="isAuthorizationRequired">if set to <c>true</c> then indicates whether controller requires user authorization.</param>
+	/// <param name="requiredUserRoles">The required user roles.</param>
+	public ControllerSecurity(bool isAuthorizationRequired = false, IEnumerable<string> requiredUserRoles = null)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ControllerSecurity" /> class.
-		/// </summary>
-		/// <param name="isAuthorizationRequired">if set to <c>true</c> then indicates whether controller requires user authorization.</param>
-		/// <param name="requiredUserRoles">The required user roles.</param>
-		public ControllerSecurity(bool isAuthorizationRequired = false, IEnumerable<string> requiredUserRoles = null)
-		{
-			IsAuthorizationRequired = isAuthorizationRequired;
+		IsAuthorizationRequired = isAuthorizationRequired;
 
-			RequiredUserRoles = requiredUserRoles;
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether controller requires user authorization.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if controller requires authorization; otherwise, <c>false</c>.
-		/// </value>
-		public bool IsAuthorizationRequired { get; private set; }
-
-		/// <summary>
-		/// Gets the required user roles.
-		/// </summary>
-		/// <value>
-		/// The required user roles.
-		/// </value>
-		public IEnumerable<string> RequiredUserRoles { get; private set; }
+		RequiredUserRoles = requiredUserRoles;
 	}
+
+	/// <summary>
+	/// Gets a value indicating whether controller requires user authorization.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if controller requires authorization; otherwise, <c>false</c>.
+	/// </value>
+	public bool IsAuthorizationRequired { get; private set; }
+
+	/// <summary>
+	/// Gets the required user roles.
+	/// </summary>
+	/// <value>
+	/// The required user roles.
+	/// </value>
+	public IEnumerable<string> RequiredUserRoles { get; private set; }
 }

@@ -2,31 +2,30 @@
 using Owin;
 using Simplify.Web.Bootstrapper;
 
-namespace Simplify.Web.Owin
+namespace Simplify.Web.Owin;
+
+/// <summary>
+/// OWIN IAppBuilder Simplify.Web extensions
+/// </summary>
+public static class AppBuilderExtensions
 {
 	/// <summary>
-	/// OWIN IAppBuilder Simplify.Web extensions
+	/// Adds Simplify.Web to OWIN pipeline
 	/// </summary>
-	public static class AppBuilderExtensions
+	/// <param name="builder">The OWIN builder.</param>
+	/// <returns></returns>
+	public static IAppBuilder UseSimplifyWeb(this IAppBuilder builder)
 	{
-		/// <summary>
-		/// Adds Simplify.Web to OWIN pipeline
-		/// </summary>
-		/// <param name="builder">The OWIN builder.</param>
-		/// <returns></returns>
-		public static IAppBuilder UseSimplifyWeb(this IAppBuilder builder)
+		try
 		{
-			try
-			{
-				BootstrapperFactory.CreateBootstrapper().Register();
-				return builder.Use<SimplifyWebOwinMiddleware>();
-			}
-			catch (Exception e)
-			{
-				SimplifyWebOwinMiddleware.ProcessOnException(e);
+			BootstrapperFactory.CreateBootstrapper().Register();
+			return builder.Use<SimplifyWebOwinMiddleware>();
+		}
+		catch (Exception e)
+		{
+			SimplifyWebOwinMiddleware.ProcessOnException(e);
 
-				throw;
-			}
+			throw;
 		}
 	}
 }

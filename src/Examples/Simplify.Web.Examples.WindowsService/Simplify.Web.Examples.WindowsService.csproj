@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net462</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
 		<OutputType>Exe</OutputType>
 		<IsPackable>false</IsPackable>
 

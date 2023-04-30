@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.ModelBinding.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModelWithExcludedProperty
 {
-	public class TestModelWithExcludedProperty
-	{
-		[Exclude]
-		public string Prop1 { get; set; }
-	}
+	[Exclude]
+	public string Prop1 { get; set; }
 }

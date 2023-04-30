@@ -1,12 +1,11 @@
 ﻿using Simplify.Web.Responses;
 
-namespace Simplify.Web.Examples.SelfHosted.Controllers.Shared
+namespace Simplify.Web.Examples.SelfHosted.Controllers.Shared;
+
+public class NavbarController : Controller
 {
-	public class NavbarController : Controller
+	public override ControllerResponse Invoke()
 	{
-		public override ControllerResponse Invoke()
-		{
-			return new InlineTpl("Navbar", TemplateFactory.Load("Navbar"));
-		}
+		return new InlineTpl("Navbar", TemplateFactory.Load("Navbar"));
 	}
 }

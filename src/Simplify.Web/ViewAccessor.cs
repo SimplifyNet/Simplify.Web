@@ -3,27 +3,26 @@ using Simplify.Web.Core.Views;
 
 #nullable disable
 
-namespace Simplify.Web
+namespace Simplify.Web;
+
+/// <summary>
+/// View accessor base class
+/// </summary>
+public abstract class ViewAccessor
 {
+	internal virtual IViewFactory ViewFactory { get; set; }
+	internal virtual IDIResolver Resolver { get; set; }
+
 	/// <summary>
-	/// View accessor base class
+	/// Gets view instance
 	/// </summary>
-	public abstract class ViewAccessor
+	/// <typeparam name="T">View instance to get</typeparam>
+	/// <returns>View instance</returns>
+	public virtual T GetView<T>()
+		where T : View
 	{
-		internal virtual IViewFactory ViewFactory { get; set; }
-		internal virtual IDIResolver Resolver { get; set; }
+		var type = typeof(T);
 
-		/// <summary>
-		/// Gets view instance
-		/// </summary>
-		/// <typeparam name="T">View instance to get</typeparam>
-		/// <returns>View instance</returns>
-		public virtual T GetView<T>()
-			where T : View
-		{
-			var type = typeof(T);
-
-			return (T)ViewFactory.CreateView(type, Resolver);
-		}
+		return (T)ViewFactory.CreateView(type, Resolver);
 	}
 }

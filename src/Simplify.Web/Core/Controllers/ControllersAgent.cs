@@ -6,148 +6,147 @@ using Simplify.Web.Routing;
 
 #nullable disable
 
-namespace Simplify.Web.Core.Controllers
+namespace Simplify.Web.Core.Controllers;
+
+/// <summary>
+/// Provides controllers agent
+/// </summary>
+public class ControllersAgent : IControllersAgent
 {
+	private readonly IControllersMetaStore _controllersMetaStore;
+	private readonly IRouteMatcher _routeMatcher;
+
 	/// <summary>
-	/// Provides controllers agent
+	/// Initializes a new instance of the <see cref="ControllersAgent" /> class.
 	/// </summary>
-	public class ControllersAgent : IControllersAgent
+	/// <param name="controllersMetaStore">The controllers meta store.</param>
+	/// <param name="routeMatcher">The route matcher.</param>
+	public ControllersAgent(IControllersMetaStore controllersMetaStore, IRouteMatcher routeMatcher)
 	{
-		private readonly IControllersMetaStore _controllersMetaStore;
-		private readonly IRouteMatcher _routeMatcher;
+		_controllersMetaStore = controllersMetaStore;
+		_routeMatcher = routeMatcher;
+	}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ControllersAgent" /> class.
-		/// </summary>
-		/// <param name="controllersMetaStore">The controllers meta store.</param>
-		/// <param name="routeMatcher">The route matcher.</param>
-		public ControllersAgent(IControllersMetaStore controllersMetaStore, IRouteMatcher routeMatcher)
+	/// <summary>
+	/// Gets the standard controllers meta data.
+	/// </summary>
+	/// <returns></returns>
+	public IEnumerable<IControllerMetaData> GetStandardControllersMetaData()
+	{
+		return _controllersMetaStore.ControllersMetaData.Where(
+			x =>
+				x.Role == null || (x.Role.Is400Handler == false && x.Role.Is403Handler == false && x.Role.Is404Handler == false));
+	}
+
+	/// <summary>
+	/// Matches the controller route.
+	/// </summary>
+	/// <param name="controllerMetaData">The controller meta data.</param>
+	/// <param name="sourceRoute">The source route.</param>
+	/// <param name="httpMethod">The HTTP method.</param>
+	/// <returns></returns>
+	public IRouteMatchResult MatchControllerRoute(IControllerMetaData controllerMetaData, string sourceRoute, string httpMethod)
+	{
+		if (controllerMetaData.ExecParameters?.RouteInfo == null)
+			return _routeMatcher.Match(sourceRoute, null);
+
+		switch (httpMethod)
 		{
-			_controllersMetaStore = controllersMetaStore;
-			_routeMatcher = routeMatcher;
+			case "GET":
+				return controllerMetaData.ExecParameters.RouteInfo.GetRoute == null
+					? null
+					: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.GetRoute);
+
+			case "POST":
+				return controllerMetaData.ExecParameters.RouteInfo.PostRoute == null
+					? null
+					: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PostRoute);
+
+			case "PUT":
+				return controllerMetaData.ExecParameters.RouteInfo.PutRoute == null
+					? null
+					: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PutRoute);
+
+			case "PATCH":
+				return controllerMetaData.ExecParameters.RouteInfo.PatchRoute == null
+					? null
+					: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PatchRoute);
+
+			case "DELETE":
+				return controllerMetaData.ExecParameters.RouteInfo.DeleteRoute == null
+					? null
+					: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.DeleteRoute);
 		}
 
-		/// <summary>
-		/// Gets the standard controllers meta data.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<IControllerMetaData> GetStandardControllersMetaData()
+		return null;
+	}
+
+	/// <summary>
+	/// Gets the handler controller.
+	/// </summary>
+	/// <param name="controllerType">Type of the controller.</param>
+	/// <returns></returns>
+	public IControllerMetaData GetHandlerController(HandlerControllerType controllerType)
+	{
+		IControllerMetaData metaData = null;
+
+		switch (controllerType)
 		{
-			return _controllersMetaStore.ControllersMetaData.Where(
-				x =>
-					x.Role == null || (x.Role.Is400Handler == false && x.Role.Is403Handler == false && x.Role.Is404Handler == false));
+			case HandlerControllerType.Http403Handler:
+				metaData = _controllersMetaStore.ControllersMetaData.FirstOrDefault(x => x.Role != null && x.Role.Is403Handler);
+				break;
+
+			case HandlerControllerType.Http404Handler:
+				metaData = _controllersMetaStore.ControllersMetaData.FirstOrDefault(x => x.Role != null && x.Role.Is404Handler);
+				break;
 		}
 
-		/// <summary>
-		/// Matches the controller route.
-		/// </summary>
-		/// <param name="controllerMetaData">The controller meta data.</param>
-		/// <param name="sourceRoute">The source route.</param>
-		/// <param name="httpMethod">The HTTP method.</param>
-		/// <returns></returns>
-		public IRouteMatchResult MatchControllerRoute(IControllerMetaData controllerMetaData, string sourceRoute, string httpMethod)
-		{
-			if (controllerMetaData.ExecParameters?.RouteInfo == null)
-				return _routeMatcher.Match(sourceRoute, null);
+		return metaData;
+	}
 
-			switch (httpMethod)
-			{
-				case "GET":
-					return controllerMetaData.ExecParameters.RouteInfo.GetRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.GetRoute);
+	/// <summary>
+	/// Determines whether controller can be executed on any page.
+	/// </summary>
+	/// <param name="metaData">The controller meta data.</param>
+	/// <returns></returns>
+	public bool IsAnyPageController(IControllerMetaData metaData)
+	{
+		if (metaData.Role != null)
+			if (metaData.Role.Is400Handler
+			    || metaData.Role.Is403Handler
+			    || metaData.Role.Is404Handler)
+				return false;
 
-				case "POST":
-					return controllerMetaData.ExecParameters.RouteInfo.PostRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PostRoute);
+		if (metaData.ExecParameters?.RouteInfo == null)
+			return true;
 
-				case "PUT":
-					return controllerMetaData.ExecParameters.RouteInfo.PutRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PutRoute);
+		return string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.GetRoute) &&
+		       string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PostRoute) &&
+		       string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PutRoute) &&
+		       string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PatchRoute) &&
+		       string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.DeleteRoute);
+	}
 
-				case "PATCH":
-					return controllerMetaData.ExecParameters.RouteInfo.PatchRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.PatchRoute);
+	/// <summary>
+	/// Determines whether controller security rules violated.
+	/// </summary>
+	/// <param name="metaData">The controller meta data.</param>
+	/// <param name="user">The current request user.</param>
+	/// <returns></returns>
+	public SecurityRuleCheckResult IsSecurityRulesViolated(IControllerMetaData metaData, ClaimsPrincipal user)
+	{
+		if (metaData.Security == null)
+			return SecurityRuleCheckResult.Ok;
 
-				case "DELETE":
-					return controllerMetaData.ExecParameters.RouteInfo.DeleteRoute == null
-						? null
-						: _routeMatcher.Match(sourceRoute, controllerMetaData.ExecParameters.RouteInfo.DeleteRoute);
-			}
+		if (!metaData.Security.IsAuthorizationRequired)
+			return SecurityRuleCheckResult.Ok;
 
-			return null;
-		}
+		if (metaData.Security.RequiredUserRoles == null)
+			return user?.Identity == null || !user.Identity.IsAuthenticated ? SecurityRuleCheckResult.NotAuthenticated : SecurityRuleCheckResult.Ok;
 
-		/// <summary>
-		/// Gets the handler controller.
-		/// </summary>
-		/// <param name="controllerType">Type of the controller.</param>
-		/// <returns></returns>
-		public IControllerMetaData GetHandlerController(HandlerControllerType controllerType)
-		{
-			IControllerMetaData metaData = null;
+		if (user?.Identity == null || !user.Identity.IsAuthenticated)
+			return SecurityRuleCheckResult.NotAuthenticated;
 
-			switch (controllerType)
-			{
-				case HandlerControllerType.Http403Handler:
-					metaData = _controllersMetaStore.ControllersMetaData.FirstOrDefault(x => x.Role != null && x.Role.Is403Handler);
-					break;
-
-				case HandlerControllerType.Http404Handler:
-					metaData = _controllersMetaStore.ControllersMetaData.FirstOrDefault(x => x.Role != null && x.Role.Is404Handler);
-					break;
-			}
-
-			return metaData;
-		}
-
-		/// <summary>
-		/// Determines whether controller can be executed on any page.
-		/// </summary>
-		/// <param name="metaData">The controller meta data.</param>
-		/// <returns></returns>
-		public bool IsAnyPageController(IControllerMetaData metaData)
-		{
-			if (metaData.Role != null)
-				if (metaData.Role.Is400Handler
-					|| metaData.Role.Is403Handler
-					|| metaData.Role.Is404Handler)
-					return false;
-
-			if (metaData.ExecParameters?.RouteInfo == null)
-				return true;
-
-			return string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.GetRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PostRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PutRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.PatchRoute) &&
-				   string.IsNullOrEmpty(metaData.ExecParameters.RouteInfo.DeleteRoute);
-		}
-
-		/// <summary>
-		/// Determines whether controller security rules violated.
-		/// </summary>
-		/// <param name="metaData">The controller meta data.</param>
-		/// <param name="user">The current request user.</param>
-		/// <returns></returns>
-		public SecurityRuleCheckResult IsSecurityRulesViolated(IControllerMetaData metaData, ClaimsPrincipal user)
-		{
-			if (metaData.Security == null)
-				return SecurityRuleCheckResult.Ok;
-
-			if (!metaData.Security.IsAuthorizationRequired)
-				return SecurityRuleCheckResult.Ok;
-
-			if (metaData.Security.RequiredUserRoles == null)
-				return user?.Identity == null || !user.Identity.IsAuthenticated ? SecurityRuleCheckResult.NotAuthenticated : SecurityRuleCheckResult.Ok;
-
-			if (user?.Identity == null || !user.Identity.IsAuthenticated)
-				return SecurityRuleCheckResult.NotAuthenticated;
-
-			return metaData.Security.RequiredUserRoles.Any(user.IsInRole) ? SecurityRuleCheckResult.Ok : SecurityRuleCheckResult.Forbidden;
-		}
+		return metaData.Security.RequiredUserRoles.Any(user.IsInRole) ? SecurityRuleCheckResult.Ok : SecurityRuleCheckResult.Forbidden;
 	}
 }

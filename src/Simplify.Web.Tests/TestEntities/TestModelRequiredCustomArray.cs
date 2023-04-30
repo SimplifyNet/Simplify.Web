@@ -1,10 +1,9 @@
 ﻿using Simplify.Web.ModelBinding.Attributes;
 
-namespace Simplify.Web.Tests.TestEntities
+namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModelRequiredCustomArray
 {
-	public class TestModelRequiredCustomArray
-	{
-		[Required]
-		public TestModelEMail[] Prop1 { get; set; }
-	}
+	[Required]
+	public TestModelEMail[] Prop1 { get; set; }
 }

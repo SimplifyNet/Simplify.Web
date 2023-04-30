@@ -4,60 +4,59 @@ using Moq;
 using NUnit.Framework;
 using Simplify.Web.Core.StaticFiles;
 
-namespace Simplify.Web.Tests.Core.StaticFiles
+namespace Simplify.Web.Tests.Core.StaticFiles;
+
+[TestFixture]
+public class StaticFilesRequestHandlerTests
 {
-	[TestFixture]
-	public class StaticFilesRequestHandlerTests
+	private StaticFilesRequestHandler _requestHandler;
+	private Mock<IStaticFileHandler> _fileHandler;
+	private Mock<IStaticFileResponseFactory> _responseFactory;
+	private Mock<IStaticFileResponse> _response;
+
+	private Mock<IOwinContext> _context;
+
+	[SetUp]
+	public void Initialize()
 	{
-		private StaticFilesRequestHandler _requestHandler;
-		private Mock<IStaticFileHandler> _fileHandler;
-		private Mock<IStaticFileResponseFactory> _responseFactory;
-		private Mock<IStaticFileResponse> _response;
+		_fileHandler = new Mock<IStaticFileHandler>();
 
-		private Mock<IOwinContext> _context;
+		_response = new Mock<IStaticFileResponse>();
 
-		[SetUp]
-		public void Initialize()
-		{
-			_fileHandler = new Mock<IStaticFileHandler>();
+		_responseFactory = new Mock<IStaticFileResponseFactory>();
+		_responseFactory.Setup(x => x.Create(It.IsAny<IOwinResponse>())).Returns(_response.Object);
 
-			_response = new Mock<IStaticFileResponse>();
+		_requestHandler = new StaticFilesRequestHandler(_fileHandler.Object, _responseFactory.Object);
 
-			_responseFactory = new Mock<IStaticFileResponseFactory>();
-			_responseFactory.Setup(x => x.Create(It.IsAny<IOwinResponse>())).Returns(_response.Object);
+		_context = new Mock<IOwinContext>();
+		_context.SetupGet(x => x.Request.Headers);
+	}
 
-			_requestHandler = new StaticFilesRequestHandler(_fileHandler.Object, _responseFactory.Object);
+	[Test]
+	public void ProcessRequest_CacheEnabled_SendNotModifiedCalled()
+	{
+		// Assign
+		_fileHandler.Setup(x => x.IsFileCanBeUsedFromCache(It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime>()))
+			.Returns(true);
 
-			_context = new Mock<IOwinContext>();
-			_context.SetupGet(x => x.Request.Headers);
-		}
+		// Act
+		_requestHandler.ProcessRequest(_context.Object);
 
-		[Test]
-		public void ProcessRequest_CacheEnabled_SendNotModifiedCalled()
-		{
-			// Assign
-			_fileHandler.Setup(x => x.IsFileCanBeUsedFromCache(It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime>()))
-				.Returns(true);
+		// Assert
+		_response.Verify(x => x.SendNotModified(It.IsAny<DateTime>(), It.IsAny<string>()));
+	}
 
-			// Act
-			_requestHandler.ProcessRequest(_context.Object);
+	[Test]
+	public void ProcessRequest_CacheDisabled_SendNotModifiedCalled()
+	{
+		// Assign
+		_fileHandler.Setup(x => x.IsFileCanBeUsedFromCache(It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime>()))
+			.Returns(false);
 
-			// Assert
-			_response.Verify(x => x.SendNotModified(It.IsAny<DateTime>(), It.IsAny<string>()));
-		}
+		// Act
+		_requestHandler.ProcessRequest(_context.Object);
 
-		[Test]
-		public void ProcessRequest_CacheDisabled_SendNotModifiedCalled()
-		{
-			// Assign
-			_fileHandler.Setup(x => x.IsFileCanBeUsedFromCache(It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime>()))
-				.Returns(false);
-
-			// Act
-			_requestHandler.ProcessRequest(_context.Object);
-
-			// Assert
-			_response.Verify(x => x.SendNew(It.IsAny<byte[]>(), It.IsAny<DateTime>(), It.IsAny<string>()));
-		}
+		// Assert
+		_response.Verify(x => x.SendNew(It.IsAny<byte[]>(), It.IsAny<DateTime>(), It.IsAny<string>()));
 	}
 }

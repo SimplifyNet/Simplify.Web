@@ -9,35 +9,34 @@ using Simplify.DI.Provider.SimpleInjector;
 using Simplify.Web.Meta;
 using Simplify.Web.Owin;
 
-namespace Simplify.Web.Examples.SelfHosted
+namespace Simplify.Web.Examples.SelfHosted;
+
+public class Startup
 {
-	public class Startup
+	public void Configuration(IAppBuilder app)
 	{
-		public void Configuration(IAppBuilder app)
+		// Exclude Simplify.Web from exclude assemblies to be able to load example controllers
+		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
+
+		var provider = new SimpleInjectorDIProvider();
+		DIContainer.Current = provider;
+
+		app.UseCookieAuthentication(new CookieAuthenticationOptions
 		{
-			// Exclude Simplify.Web from exclude assemblies to be able to load example controllers
-			SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
+			AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+			LoginPath = new PathString("/login")
+		});
 
-			var provider = new SimpleInjectorDIProvider();
-			DIContainer.Current = provider;
+		app.UseAesDataProtectorProvider();
 
-			app.UseCookieAuthentication(new CookieAuthenticationOptions
-			{
-				AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-				LoginPath = new PathString("/login")
-			});
+		app.UseSimplifyWeb();
 
-			app.UseAesDataProtectorProvider();
+		provider.Container.Verify();
 
-			app.UseSimplifyWeb();
+		SimplifyWebOwinMiddleware.OnException += Ex;
+	}
 
-			provider.Container.Verify();
-
-			SimplifyWebOwinMiddleware.OnException += Ex;
-		}
-
-		private static void Ex(Exception e)
-		{
-		}
+	private static void Ex(Exception e)
+	{
 	}
 }

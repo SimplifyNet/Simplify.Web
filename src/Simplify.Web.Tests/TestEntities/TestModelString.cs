@@ -1,6 +1,5 @@
-﻿namespace Simplify.Web.Tests.TestEntities
+﻿namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModel
 {
-	public class TestModel
-	{
-	}
 }

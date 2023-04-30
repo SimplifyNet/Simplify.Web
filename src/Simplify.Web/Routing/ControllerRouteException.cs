@@ -1,20 +1,19 @@
 ﻿using System;
 
-namespace Simplify.Web.Routing
+namespace Simplify.Web.Routing;
+
+/// <summary>
+/// Provides controller route exception
+/// </summary>
+[Serializable]
+public class ControllerRouteException : Exception
 {
 	/// <summary>
-	/// Provides controller route exception
+	/// Initializes a new instance of the <see cref="ControllerRouteException" /> class.
 	/// </summary>
-	[Serializable]
-	public class ControllerRouteException : Exception
+	/// <param name="message">The message that describes the error.</param>
+	public ControllerRouteException(string message)
+		: base(message)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ControllerRouteException" /> class.
-		/// </summary>
-		/// <param name="message">The message that describes the error.</param>
-		public ControllerRouteException(string message)
-			: base(message)
-		{
-		}
 	}
 }

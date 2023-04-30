@@ -1,15 +1,14 @@
-﻿namespace Simplify.Web.ModelBinding
+﻿namespace Simplify.Web.ModelBinding;
+
+/// <summary>
+/// Represent model binder
+/// </summary>
+public interface IModelBinder
 {
 	/// <summary>
-	/// Represent model binder
+	/// Binds the model.
 	/// </summary>
-	public interface IModelBinder
-	{
-		/// <summary>
-		/// Binds the model.
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="args">The <see cref="ModelBinderEventArgs{T}"/> instance containing the event data.</param>
-		void Bind<T>(ModelBinderEventArgs<T> args);
-	}
+	/// <typeparam name="T">Model type</typeparam>
+	/// <param name="args">The <see cref="ModelBinderEventArgs{T}"/> instance containing the event data.</param>
+	void Bind<T>(ModelBinderEventArgs<T> args);
 }

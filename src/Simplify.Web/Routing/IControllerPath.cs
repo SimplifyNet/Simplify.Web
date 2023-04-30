@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web.Routing
+namespace Simplify.Web.Routing;
+
+/// <summary>
+/// Represent parsed controller path
+/// </summary>
+public interface IControllerPath
 {
 	/// <summary>
-	/// Represent parsed controller path
+	/// Gets the controller path items.
 	/// </summary>
-	public interface IControllerPath
-	{
-		/// <summary>
-		/// Gets the controller path items.
-		/// </summary>
-		/// <value>
-		/// The controller path items.
-		/// </value>
-		IList<PathItem> Items { get; }
-	}
+	/// <value>
+	/// The controller path items.
+	/// </value>
+	IList<PathItem> Items { get; }
 }

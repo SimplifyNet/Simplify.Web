@@ -2,21 +2,20 @@
 
 #nullable disable
 
-namespace Simplify.Web.ModelBinding
+namespace Simplify.Web.ModelBinding;
+
+/// <summary>
+/// Represent model validation exceptions
+/// </summary>
+public class ModelValidationException : Exception
 {
 	/// <summary>
-	/// Represent model validation exceptions
+	/// Initializes a new instance of the <see cref="ModelValidationException" /> class.
 	/// </summary>
-	public class ModelValidationException : Exception
+	/// <param name="message">The message that describes the error.</param>
+	/// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+	public ModelValidationException(string message, Exception innerException = null)
+		: base(message, innerException)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ModelValidationException" /> class.
-		/// </summary>
-		/// <param name="message">The message that describes the error.</param>
-		/// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
-		public ModelValidationException(string message, Exception innerException = null)
-			: base(message, innerException)
-		{
-		}
 	}
 }

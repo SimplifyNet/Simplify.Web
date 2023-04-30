@@ -1,7 +1,6 @@
-﻿namespace Simplify.Web.Tests.TestEntities
+﻿namespace Simplify.Web.Tests.TestEntities;
+
+public class TestModelStringsArray
 {
-	public class TestModelStringsArray
-	{
-		public string[] Prop1 { get; set; }
-	}
+	public string[] Prop1 { get; set; }
 }

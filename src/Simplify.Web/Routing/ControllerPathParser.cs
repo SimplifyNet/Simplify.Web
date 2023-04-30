@@ -4,86 +4,85 @@ using System.Text.RegularExpressions;
 
 #nullable disable
 
-namespace Simplify.Web.Routing
+namespace Simplify.Web.Routing;
+
+/// <summary>
+/// Provides controller path parser
+/// </summary>
+public class ControllerPathParser : IControllerPathParser
 {
 	/// <summary>
-	/// Provides controller path parser
+	/// Parses the specified controller path.
 	/// </summary>
-	public class ControllerPathParser : IControllerPathParser
+	/// <param name="controllerPath">The controller path.</param>
+	/// <returns></returns>
+	/// <exception cref="ControllerRouteException">
+	/// Bad controller path:  + controllerPath
+	/// or
+	/// </exception>
+	public IControllerPath Parse(string controllerPath)
 	{
-		/// <summary>
-		/// Parses the specified controller path.
-		/// </summary>
-		/// <param name="controllerPath">The controller path.</param>
-		/// <returns></returns>
-		/// <exception cref="ControllerRouteException">
-		/// Bad controller path:  + controllerPath
-		/// or
-		/// </exception>
-		public IControllerPath Parse(string controllerPath)
+		var items = controllerPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+		var pathItems = new List<PathItem>();
+
+		foreach (var item in items)
 		{
-			var items = controllerPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-			var pathItems = new List<PathItem>();
-
-			foreach (var item in items)
+			if (item.Contains("{") || item.Contains("}") || item.Contains(":"))
 			{
-				if (item.Contains("{") || item.Contains("}") || item.Contains(":"))
+				var matches = Regex.Matches(item, @"^{[a-zA-Z0-9:_\-\[\]]+}$");
+
+				if (matches.Count == 0)
+					throw new ControllerRouteException("Bad controller path: " + controllerPath);
+
+				var subitem = item.Substring(1, item.Length - 2);
+
+				if (subitem.Contains(":"))
 				{
-					var matches = Regex.Matches(item, @"^{[a-zA-Z0-9:_\-\[\]]+}$");
+					var parameterData = subitem.Split(':');
+					var type = ParseParameterType(parameterData[1]);
 
-					if (matches.Count == 0)
-						throw new ControllerRouteException("Bad controller path: " + controllerPath);
+					if (type == null)
+						throw new ControllerRouteException(
+							$"Undefined controller parameter type '{parameterData[1]}', path: {controllerPath}");
 
-					var subitem = item.Substring(1, item.Length - 2);
-
-					if (subitem.Contains(":"))
-					{
-						var parameterData = subitem.Split(':');
-						var type = ParseParameterType(parameterData[1]);
-
-						if (type == null)
-							throw new ControllerRouteException(
-								$"Undefined controller parameter type '{parameterData[1]}', path: {controllerPath}");
-
-						pathItems.Add(new PathParameter(parameterData[0], type));
-					}
-					else
-						pathItems.Add(new PathParameter(subitem, typeof(string)));
+					pathItems.Add(new PathParameter(parameterData[0], type));
 				}
 				else
-					pathItems.Add(new PathSegment(item));
+					pathItems.Add(new PathParameter(subitem, typeof(string)));
 			}
-
-			return new ControllerPath(pathItems);
+			else
+				pathItems.Add(new PathSegment(item));
 		}
 
-		private static Type ParseParameterType(string typeData)
-		{
-			if (typeData == "int")
-				return typeof(int);
+		return new ControllerPath(pathItems);
+	}
 
-			if (typeData == "decimal")
-				return typeof(decimal);
+	private static Type ParseParameterType(string typeData)
+	{
+		if (typeData == "int")
+			return typeof(int);
 
-			if (typeData == "bool")
-				return typeof(bool);
+		if (typeData == "decimal")
+			return typeof(decimal);
 
-			if (typeData == "[]")
-				return typeof(string[]);
+		if (typeData == "bool")
+			return typeof(bool);
 
-			if (typeData == "string[]")
-				return typeof(string[]);
+		if (typeData == "[]")
+			return typeof(string[]);
 
-			if (typeData == "int[]")
-				return typeof(int[]);
+		if (typeData == "string[]")
+			return typeof(string[]);
 
-			if (typeData == "decimal[]")
-				return typeof(decimal[]);
+		if (typeData == "int[]")
+			return typeof(int[]);
 
-			if (typeData == "bool[]")
-				return typeof(bool[]);
+		if (typeData == "decimal[]")
+			return typeof(decimal[]);
 
-			return null;
-		}
+		if (typeData == "bool[]")
+			return typeof(bool[]);
+
+		return null;
 	}
 }
