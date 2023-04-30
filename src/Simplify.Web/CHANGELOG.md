@@ -10,6 +10,7 @@
 - Internal Simplify.Xml.Sources to 1.3.0
 - Internal Simplify.System.Sources to 1.6.1
 - Microsoft.Extensions.Configuration to 6.0.0
+- System.IO.Abstractions bump to 7.1.10
 
 ## [1.6.1] - 2022-04-15
 
