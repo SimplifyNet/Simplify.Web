@@ -1,18 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net462</TargetFrameworks>
+		<IsPackable>false</IsPackable>
+		<OutputPath>bin</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web example using Microsoft Katana server</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>1.0</Version>
-		<IsPackable>false</IsPackable>
-		<OutputPath>bin</OutputPath>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Owin.Host.SystemWeb" Version="4.0.1" />
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Owin.Host.SystemWeb" Version="4.2.2" />
 	</ItemGroup>
 </Project>

@@ -1,26 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net462</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<IsPackable>false</IsPackable>
+
 		<Authors>Alexander Krylkov</Authors>
 		<Product>Simplify</Product>
 		<Description>Simplify.Web self hosted example</Description>
 		<Copyright>Licensed under LGPL</Copyright>
-		<Version>1.1</Version>
-		<OutputType>Exe</OutputType>
-		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Owin.Hosting" Version="4.0.1" />
-		<PackageReference Include="Microsoft.Owin.Host.HttpListener" Version="4.0.1" />
-		<PackageReference Include="Microsoft.Owin.Security" Version="4.0.1" />
-		<PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.0.1" />
-		<PackageReference Include="Owin.Security.AesDataProtectorProvider" Version="1.1.2" />
-		<PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.2" />
-		<PackageReference Include="Simplify.DI.Provider.SimpleInjector" Version="1.5.0" />
-		<PackageReference Include="bootstrap" Version="3.3.7" PrivateAssets="All" />
-		<PackageReference Include="jQuery" Version="3.1.0" PrivateAssets="All" />
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Owin.Hosting" Version="4.2.2" />
+		<PackageReference Include="Microsoft.Owin.Host.HttpListener" Version="4.2.2" />
+		<PackageReference Include="Microsoft.Owin.Security" Version="4.2.2" />
+		<PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.2.2" />
+		<PackageReference Include="Owin.Security.AesDataProtectorProvider" Version="1.2.4" />
+		<PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
+		<PackageReference Include="Simplify.DI.Provider.SimpleInjector" Version="1.11.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="bootstrap" Version="3.3.7" PrivateAssets="All" />
+		<PackageReference Include="jQuery" Version="3.6.4" PrivateAssets="All" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="App_Data\Messages.en.xml">
@@ -135,7 +141,7 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Templates\User\Profile.tpl">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 </Project>

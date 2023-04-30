@@ -21,10 +21,6 @@
 
 		<PackageReleaseNotes>See https://github.com/SimplifyNet/Simplify.Web/tree/v1/src/Simplify.Web/CHANGELOG.md for details</PackageReleaseNotes>
 	</PropertyGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Diagnostics\ExceptionIDetails.html" />
-		<EmbeddedResource Include="Diagnostics\ExceptionInfoPage.html" />
-	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462' ">
 		<Reference Include="System" />
 		<Reference Include="System.Configuration" />
@@ -40,6 +36,10 @@
 		<PackageReference Include="Simplify.System.Sources" Version="1.2.0" PrivateAssets="All" />
 		<PackageReference Include="Simplify.Templates" Version="1.5.2" />
 		<PackageReference Include="Simplify.Xml.Sources" Version="1.1.0" PrivateAssets="All" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Diagnostics\ExceptionIDetails.html" />
+		<EmbeddedResource Include="Diagnostics\ExceptionInfoPage.html" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\Images\icon.png" Pack="true" Visible="false" PackagePath="" />
