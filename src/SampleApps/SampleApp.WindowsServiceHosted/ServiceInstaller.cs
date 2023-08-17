@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using Simplify.WindowsServices;
 
-namespace SampleApp.WindowsServiceHosted
+namespace SampleApp.WindowsServiceHosted;
+
+[RunInstaller(true)]
+public class ServiceInstaller : ServiceInstallerBase
 {
-	[RunInstaller(true)]
-	public class ServiceInstaller : ServiceInstallerBase
-	{
-	}
 }
