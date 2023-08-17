@@ -15,7 +15,7 @@ public abstract class AsyncController<T> : AsyncControllerBase
 	private T _model;
 
 	/// <summary>
-	/// Gets the model of current request.
+	/// Gets the model (and reads it synchronously, if it is null) of a current request.
 	/// </summary>
 	/// <value>
 	/// The current request model.
