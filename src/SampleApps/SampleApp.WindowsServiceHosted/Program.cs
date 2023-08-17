@@ -5,7 +5,7 @@ using Simplify.WindowsServices;
 
 namespace SampleApp.WindowsServiceHosted;
 
-internal class Program
+internal static class Program
 {
 	public static string[] Args { get; private set; }
 

@@ -31,7 +31,7 @@ public class TplTests
 	{
 		// Assign
 
-		var tplData = new Mock<Tpl>("test", null, 200) { CallBase = true };
+		var tplData = new Mock<Tpl>("test", null!, 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
@@ -49,7 +49,7 @@ public class TplTests
 	{
 		// Assign
 
-		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null, 200) { CallBase = true };
+		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null!, 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
@@ -101,7 +101,7 @@ public class TplTests
 	{
 		// Assign
 
-		var tplData = new Mock<Tpl>("test", null, 200) { CallBase = true };
+		var tplData = new Mock<Tpl>("test", null!, 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
