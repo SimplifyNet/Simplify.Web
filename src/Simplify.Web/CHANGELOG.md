@@ -1,5 +1,33 @@
 # Changelog
 
+## [4.7.0] - 2022-08-20
+
+### Removed
+
+- .NET 5 support
+- .NET Core 3.1 support
+- .NET Framework 4.6.2 support
+
+### Added
+
+- .NET Standard 2.1 support
+- `Created` response with HTTP 201 status (#226)
+- Additional comments
+
+### Dependencies
+
+- Simplify.DI bump to 4.2.10
+- Simplify.Templates bump to 2.0.1
+- Internal Simplify.Sting.Sources bump to 1.2.2
+- Internal Simplify.Xml.Sources bump to 1.3.1
+
+#### For target frameworks .NET Standard 2.1, .NET Standard 2.0, .NET Framework 4.8
+
+- Microsoft.Extensions.Configuration.Json bump to 3.1.32
+
+- Microsoft.AspNetCore.Http dependency removed
+- Microsoft.AspNetCore.Hosting.Abstractions dependency removed
+
 ## [4.6.0] - 2022-05-17
 
 ### Added

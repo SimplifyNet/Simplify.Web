@@ -9,7 +9,7 @@
 		<!-- Debug Angular to .NET proxying setup -->
 
 		<SpaRoot>ClientApp\</SpaRoot>
-		<SpaProxyServerUrl>https://localhost:5002</SpaProxyServerUrl>
+		<SpaProxyServerUrl>http://localhost:4200</SpaProxyServerUrl>
 		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 	</PropertyGroup>
 

@@ -2,16 +2,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Simplify.Web;
 
-namespace SampleApp.WindowsServiceHosted
-{
-	public class Startup
-	{
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-		{
-			if (env.IsDevelopment())
-				app.UseDeveloperExceptionPage();
+namespace SampleApp.WindowsServiceHosted;
 
-			app.UseSimplifyWebWithoutRegistrations();
-		}
+public class Startup
+{
+	public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+	{
+		if (env.IsDevelopment())
+			app.UseDeveloperExceptionPage();
+
+		app.UseSimplifyWebWithoutRegistrations();
 	}
 }

@@ -39,6 +39,13 @@ public abstract class ControllerBase : ActionModulesAccessor
 	protected Content Content(string content, string contentType, int statusCode = 200) => new(content, contentType, statusCode);
 
 	/// <summary>
+	/// Initializes a new instance of the <see cref="Created" /> class.
+	/// </summary>
+	/// <param name="content">The string content.</param>
+	/// <param name="contentType">Type of the content.</param>
+	protected Created Created(string content, string contentType = "text/plain") => new(content, contentType);
+
+	/// <summary>
 	/// Initializes a new instance of the <see cref="File" /> class.
 	/// </summary>
 	/// <param name="outputFileName">The name of the file.</param>

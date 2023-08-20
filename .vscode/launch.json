@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "SampleApp.Angular Launch",
+			"name": "SampleApp.Angular",
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Angular Example",
@@ -19,7 +19,7 @@
 			}
 		},
 		{
-			"name": "SampleApp.Classic Launch",
+			"name": "SampleApp.Classic",
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Classic Example",

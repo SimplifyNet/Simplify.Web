@@ -3,35 +3,34 @@ using SampleApp.WindowsServiceHosted.Setup;
 using Simplify.DI;
 using Simplify.WindowsServices;
 
-namespace SampleApp.WindowsServiceHosted
-{
-	internal class Program
-	{
-		public static string[] Args { get; private set; }
+namespace SampleApp.WindowsServiceHosted;
 
-		private static void Main(string[] args)
-		{
+internal static class Program
+{
+	public static string[] Args { get; private set; }
+
+	private static void Main(string[] args)
+	{
 #if DEBUG
-			global::System.Diagnostics.Debugger.Launch();
+		global::System.Diagnostics.Debugger.Launch();
 #endif
 
-			Args = args;
+		Args = args;
 
-			DIContainer.Current.RegisterAll().Verify();
+		DIContainer.Current.RegisterAll().Verify();
 
-			using var handler = new BasicServiceHandler<WebApplicationStartup>();
+		using var handler = new BasicServiceHandler<WebApplicationStartup>();
 
-			if (!handler.Start(args))
-				RunAsAConsoleApplication();
-		}
+		if (!handler.Start(args))
+			RunAsAConsoleApplication();
+	}
 
-		private static void RunAsAConsoleApplication()
-		{
-			using var scope = DIContainer.Current.BeginLifetimeScope();
+	private static void RunAsAConsoleApplication()
+	{
+		using var scope = DIContainer.Current.BeginLifetimeScope();
 
-			scope.Resolver.Resolve<WebApplicationStartup>().Run();
+		scope.Resolver.Resolve<WebApplicationStartup>().Run();
 
-			Console.ReadLine();
-		}
+		Console.ReadLine();
 	}
 }
