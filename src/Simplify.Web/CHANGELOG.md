@@ -19,6 +19,7 @@
 - Simplify.DI bump to 4.2.10
 - Simplify.Templates bump to 2.0.1
 - Internal Simplify.Sting.Sources bump to 1.2.2
+- Internal Simplify.System.Sources bump to 1.6.2
 - Internal Simplify.Xml.Sources bump to 1.3.1
 
 #### For target frameworks .NET Standard 2.1, .NET Standard 2.0, .NET Framework 4.8
