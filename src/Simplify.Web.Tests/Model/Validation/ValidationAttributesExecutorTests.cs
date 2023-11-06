@@ -96,4 +96,17 @@ public class ValidationAttributesExecutorTests
 		// Act
 		_validator.Validate(model, null!);
 	}
+
+	[Test]
+	public void Validate_Array_NoExceptions()
+	{
+		// Arrange
+		var model = new TestModel[]
+		{
+			new() { Prop1 = "test" }
+		};
+
+		// Act
+		_validator.Validate(model, null!);
+	}
 }
