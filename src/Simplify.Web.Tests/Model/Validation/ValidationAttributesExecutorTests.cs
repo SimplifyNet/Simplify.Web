@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using Simplify.Web.Model.Validation;
 using Simplify.Web.Tests.Model.Validation.Attributes;
 using Simplify.Web.Tests.TestEntities;
@@ -78,6 +79,19 @@ public class ValidationAttributesExecutorTests
 			StringProperty = "test",
 			IntProperty = 23
 		};
+
+		// Act
+		_validator.Validate(model, null!);
+	}
+
+	[Test]
+	public void Validate_IList_NoExceptions()
+	{
+		// Arrange
+		IList<TestModel> model = new List<TestModel>{
+		{
+			new() {Prop1 = "test"}
+		}};
 
 		// Act
 		_validator.Validate(model, null!);
