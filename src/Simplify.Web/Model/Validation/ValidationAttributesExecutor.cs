@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Simplify.DI;
@@ -49,8 +50,13 @@ public class ValidationAttributesExecutor : IModelValidator
 
 	private static bool IsSystemType(Type type) => type.Namespace?.StartsWith("System") ?? false;
 
+	private static bool IsGenericList(Type type) => type.IsGenericType && typeof(IList<>).IsAssignableFrom(type.GetGenericTypeDefinition());
+
 	private void Validate(Type type, object? value, IDIResolver resolver)
 	{
+		if (IsGenericList(type))
+			return;
+
 		if (Nesting)
 			if (type.BaseType != null && type.BaseType != typeof(object) && !IsSystemType(type.BaseType))
 				Validate(type.BaseType, value, resolver);
