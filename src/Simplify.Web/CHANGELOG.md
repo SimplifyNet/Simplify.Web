@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.7.1] - 2022-08-20
+
+### Fixed
+
+- Controller with `IList<T>` model validation exception (#240)
+
 ## [4.7.0] - 2022-08-20
 
 ### Removed
