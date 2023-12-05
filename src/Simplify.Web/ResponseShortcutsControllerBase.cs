@@ -8,7 +8,7 @@ using Simplify.Web.Responses;
 namespace Simplify.Web;
 
 /// <summary>
-/// Controllers base class with responses shortcuts
+/// Controllers base class with response shortcuts
 /// </summary>
 public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 {
