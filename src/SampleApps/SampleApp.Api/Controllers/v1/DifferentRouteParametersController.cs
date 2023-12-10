@@ -6,6 +6,10 @@ namespace SampleApp.Api.Controllers.v1;
 [Get("api/v1/different-route-parameters/{StringParam}/{IntParam:int}/{BoolParam:bool}/{StringArrayParam:string[]}")]
 public class DifferentRouteParametersController : Controllerv2
 {
-	public ControllerResponse Invoke(string stringParam) =>
-		Content($"String param: {stringParam}");
+	public ControllerResponse Invoke(string stringParam, int intParam, bool boolParam, string[] stringArrayParam) =>
+		Content($@"
+String param: {stringParam}
+Integer param: {intParam}
+bool param: {boolParam},
+String array param: {stringArrayParam}");
 }
