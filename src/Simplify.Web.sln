@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.Classic.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Web.RegistrationsTests", "Simplify.Web.RegistrationsTests\Simplify.Web.RegistrationsTests.csproj", "{E09A62C9-69A8-4254-92CD-DF4F37F2167F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.Api", "SampleApps\SampleApp.Api\SampleApp.Api.csproj", "{687D6102-0EC2-458C-9D86-CFE5DFA2D63A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{E09A62C9-69A8-4254-92CD-DF4F37F2167F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E09A62C9-69A8-4254-92CD-DF4F37F2167F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E09A62C9-69A8-4254-92CD-DF4F37F2167F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687D6102-0EC2-458C-9D86-CFE5DFA2D63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687D6102-0EC2-458C-9D86-CFE5DFA2D63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687D6102-0EC2-458C-9D86-CFE5DFA2D63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687D6102-0EC2-458C-9D86-CFE5DFA2D63A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{ACA3AA9D-DE1C-40FA-9E72-ADB1BCB82E13} = {F2E06097-CFA2-4167-BA38-6501BE7C72C8}
 		{F348C33D-B122-4FB7-AA6C-9555123FABF6} = {F2E06097-CFA2-4167-BA38-6501BE7C72C8}
 		{F2C305B5-3ECE-4F9F-8FED-302A49F56BAF} = {F2E06097-CFA2-4167-BA38-6501BE7C72C8}
+		{687D6102-0EC2-458C-9D86-CFE5DFA2D63A} = {F2E06097-CFA2-4167-BA38-6501BE7C72C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8B38954-EF24-4955-BDDD-55D041B5AC18}
