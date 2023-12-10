@@ -19,6 +19,23 @@
 			}
 		},
 		{
+			"name": "SampleApp.Api",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "Build Api Example",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net7.0/SampleApp.Api.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net7.0/",
+			"internalConsoleOptions": "openOnSessionStart",
+			"serverReadyAction": {
+				"action": "openExternally",
+				"pattern": "Now listening on",
+				"uriFormat": "http://localhost:5000/status"
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		},
+		{
 			"name": "SampleApp.Classic",
 			"type": "coreclr",
 			"request": "launch",

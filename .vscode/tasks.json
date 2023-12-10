@@ -1,39 +1,49 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-	{
-		"label": "Build Angular Example",
-		"command": "dotnet",
-		"type": "process",
-		"args": [
-			"build",
-			"${workspaceFolder}/src/SampleApps/SampleApp.Angular/SampleApp.Angular.csproj"
-		],
-		"problemMatcher": "$msCompile"
-	},
-	{
-		"label": "Build Classic Example",
-		"command": "dotnet",
-		"type": "process",
-		"args": [
-			"build",
-			"${workspaceFolder}/src/SampleApps/SampleApp.Classic/SampleApp.Classic.csproj"
-		],
-		"problemMatcher": "$msCompile"
-	},
-	{
-		"label": "Build",
-		"command": "dotnet",
-		"type": "process",
-		"args": [
-			"build",
-			"${workspaceFolder}/src/Simplify.Web.sln"
-		],
-		"problemMatcher": "$msCompile",
-		"group":
 		{
-			"kind": "build",
-			"isDefault": true
+			"label": "Build Angular Example",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/src/SampleApps/SampleApp.Angular/SampleApp.Angular.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Build Api Example",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/src/SampleApps/SampleApp.Api/SampleApp.Api.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Build Classic Example",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/src/SampleApps/SampleApp.Classic/SampleApp.Classic.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Build",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/src/Simplify.Web.sln"
+			],
+			"problemMatcher": "$msCompile",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
-	}]
+	]
 }
