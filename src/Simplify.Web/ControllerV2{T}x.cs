@@ -9,7 +9,7 @@ namespace Simplify.Web;
 /// <summary>
 /// Model controllers base class version 2
 /// </summary>
-public abstract class Controllerv2<T> : ResponseShortcutsControllerBase
+public abstract class ControllerV2<T> : ResponseShortcutsControllerBase
 	where T : class
 {
 	private T _model;
