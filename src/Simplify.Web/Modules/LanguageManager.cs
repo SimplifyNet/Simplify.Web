@@ -30,7 +30,7 @@ public class LanguageManager : ILanguageManager
 		if (TrySetLanguageFromCookie(context))
 			return;
 
-		if (!settings.AcceptBrowserLanguage || (settings.AcceptBrowserLanguage && !TrySetLanguageFromRequestHeader(context)))
+		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))
 			if (!SetCurrentLanguage(settings.DefaultLanguage))
 				Language = "iv";
 	}

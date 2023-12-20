@@ -38,12 +38,12 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public string DefaultLanguage { get; private set; } = "en";
 
 	/// <summary>
-	/// Gets a value indicating whether browser language should be accepted
+	/// Gets a value indicating whether HTTP header language should be accepted
 	/// </summary>
 	/// <value>
-	/// <c>true</c> if  browser language should be accepted; otherwise, <c>false</c>.
+	/// <c>true</c> if HTTP header language should be accepted; otherwise, <c>false</c>.
 	/// </value>
-	public bool AcceptBrowserLanguage { get; private set; }
+	public bool AcceptHeaderLanguage { get; private set; }
 
 	/// <summary>
 	/// Default templates directory path, for example: Templates, default value is "Templates"
@@ -166,13 +166,13 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		if (!string.IsNullOrEmpty(defaultLanguage))
 			DefaultLanguage = defaultLanguage;
 
-		var acceptBrowserLanguage = config[nameof(AcceptBrowserLanguage)];
+		var acceptHeaderLanguage = config[nameof(AcceptHeaderLanguage)];
 
-		if (string.IsNullOrEmpty(acceptBrowserLanguage))
+		if (string.IsNullOrEmpty(acceptHeaderLanguage))
 			return;
 
-		if (bool.TryParse(acceptBrowserLanguage, out var buffer))
-			AcceptBrowserLanguage = buffer;
+		if (bool.TryParse(acceptHeaderLanguage, out var buffer))
+			AcceptHeaderLanguage = buffer;
 	}
 
 	private void LoadTemplatesSettings(IConfiguration config)

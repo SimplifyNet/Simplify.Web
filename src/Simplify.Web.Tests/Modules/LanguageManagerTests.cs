@@ -84,11 +84,11 @@ public class LanguageManagerTests
 	}
 
 	[Test]
-	public void Constructor_HaveBrowserLanguageAndSettingIsEnabledCase1_LanguageSetFromHeader()
+	public void Constructor_HaveHeaderLanguageAndSettingIsEnabledCase1_LanguageSetFromHeader()
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.AcceptBrowserLanguage).Returns(true);
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
 		header.Append("Accept-Language", "ru-RU");
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
@@ -101,11 +101,11 @@ public class LanguageManagerTests
 	}
 
 	[Test]
-	public void Constructor_HaveBrowserLanguageAndSettingIsEnabledCase2_LanguageSetFromHeader()
+	public void Constructor_HaveHeaderLanguageAndSettingIsEnabledCase2_LanguageSetFromHeader()
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.AcceptBrowserLanguage).Returns(true);
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
 		header.Append("Accept-Language", "ru-RU;q=0.5");
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
@@ -118,7 +118,7 @@ public class LanguageManagerTests
 	}
 
 	[Test]
-	public void Constructor_HaveBrowserLanguageAndCookieLanguage_LanguageSetFromCookie()
+	public void Constructor_HaveHeaderLanguageAndCookieLanguage_LanguageSetFromCookie()
 	{
 		// Assign
 
@@ -126,7 +126,7 @@ public class LanguageManagerTests
 		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("fr");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
-		_settings.SetupGet(x => x.AcceptBrowserLanguage).Returns(true);
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
 		header.Append("Accept-Language", "ru-RU");
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
@@ -143,7 +143,7 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.AcceptBrowserLanguage).Returns(true);
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
 
