@@ -6,21 +6,15 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides template response (loads template and puts it to DataCollector)
 /// </summary>
-public class StaticTpl : ControllerResponse
+/// <remarks>
+/// Initializes a new instance of the <see cref="Tpl" /> class.
+/// </remarks>
+/// <param name="templateFileName">Name of the template file.</param>
+/// <param name="title">The title.</param>
+/// <param name="statusCode">The HTTP response status code.</param>
+/// <exception cref="ArgumentNullException"></exception>
+public class StaticTpl(string templateFileName, string? title = null, int statusCode = 200) : ControllerResponse
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Tpl" /> class.
-	/// </summary>
-	/// <param name="templateFileName">Name of the template file.</param>
-	/// <param name="title">The title.</param>
-	/// <param name="statusCode">The HTTP response status code.</param>
-	/// <exception cref="ArgumentNullException"></exception>
-	public StaticTpl(string templateFileName, string? title = null, int statusCode = 200)
-	{
-		TemplateFileName = templateFileName ?? throw new ArgumentNullException(nameof(templateFileName));
-		Title = title;
-		StatusCode = statusCode;
-	}
 
 	/// <summary>
 	/// Gets the name of the template file.
@@ -28,7 +22,7 @@ public class StaticTpl : ControllerResponse
 	/// <value>
 	/// The name of the template file.
 	/// </value>
-	public string TemplateFileName { get; }
+	public string TemplateFileName { get; } = templateFileName ?? throw new ArgumentNullException(nameof(templateFileName));
 
 	/// <summary>
 	/// Gets the HTTP response status code.
@@ -36,7 +30,7 @@ public class StaticTpl : ControllerResponse
 	/// <value>
 	/// The HTTP response status code.
 	/// </value>
-	public int StatusCode { get; }
+	public int StatusCode { get; } = statusCode;
 
 	/// <summary>
 	/// Gets the name of the string table title item.
@@ -44,7 +38,7 @@ public class StaticTpl : ControllerResponse
 	/// <value>
 	/// The name of the string table title item.
 	/// </value>
-	private string? Title { get; }
+	private string? Title { get; } = title;
 
 	/// <summary>
 	/// Processes this response
