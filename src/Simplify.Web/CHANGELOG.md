@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.8.0] - 2023-12-20
+
+### Changed
+
+- ***!Important!*** Setting language from cookie on requests disabled by default, to enable set `AcceptCookieLanguage` setting to `true in `SimplifyWebSettings` (#246)
+- `AcceptBrowserLanguage` setting renamed to `AcceptHeaderLanguage` (#246)
+- The way framework checks that applying language is valid
+
+### Fixed
+
+- Invariant language setting and check
+
+### Added
+
+- Set content type `text/plain` for all string responses by default (#247)
+- `AcceptCookieLanguage` setting
+
 ## [4.7.1] - 2022-11-07
 
 ### Fixed
