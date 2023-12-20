@@ -193,4 +193,17 @@ public class LanguageManagerTests
 		// Assert
 		Assert.AreEqual("en", _languageManager.Language);
 	}
+
+	[Test]
+	public void Constructor_BadDefaultLanguage_InvariantLanguageSet()
+	{
+		// Arrange
+		_settings.SetupGet(x => x.DefaultLanguage).Returns("badlanguage");
+
+		// Act
+		_languageManager = new LanguageManager(_settings.Object, _context.Object);
+
+		// Assert
+		Assert.AreEqual("iv", _languageManager.Language);
+	}
 }

@@ -16,6 +16,11 @@ public class LanguageManager : ILanguageManager
 	/// </summary>
 	public const string CookieLanguageFieldName = "language";
 
+	/// <summary>
+	/// Language field name in request header
+	/// </summary>
+	public const string HeaderLanguageFieldName = "Accept-Language";
+
 	private readonly IResponseCookies _responseCookies;
 
 	/// <summary>
@@ -32,7 +37,7 @@ public class LanguageManager : ILanguageManager
 
 		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))
 			if (!SetCurrentLanguage(settings.DefaultLanguage))
-				Language = "iv";
+				SetCurrentLanguage("iv");
 	}
 
 	/// <summary>
@@ -87,7 +92,7 @@ public class LanguageManager : ILanguageManager
 
 	private bool TrySetLanguageFromRequestHeader(HttpContext context)
 	{
-		var languages = context.Request.Headers["Accept-Language"];
+		var languages = context.Request.Headers[HeaderLanguageFieldName];
 
 		if (languages.Count == 0)
 			return false;
