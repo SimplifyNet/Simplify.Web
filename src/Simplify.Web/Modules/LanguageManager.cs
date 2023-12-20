@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
+using Simplify.System.Diagnostics;
 using Simplify.Web.Settings;
 
 namespace Simplify.Web.Modules;
@@ -16,6 +17,11 @@ public class LanguageManager : ILanguageManager
 	/// </summary>
 	public const string CookieLanguageFieldName = "language";
 
+	/// <summary>
+	/// Language field name in request header
+	/// </summary>
+	public const string HeaderLanguageFieldName = "Accept-Language";
+
 	private readonly IResponseCookies _responseCookies;
 
 	/// <summary>
@@ -27,12 +33,12 @@ public class LanguageManager : ILanguageManager
 	{
 		_responseCookies = context.Response.Cookies;
 
-		if (TrySetLanguageFromCookie(context))
+		if (settings.AcceptCookieLanguage && TrySetLanguageFromCookie(context))
 			return;
 
-		if (!settings.AcceptBrowserLanguage || (settings.AcceptBrowserLanguage && !TrySetLanguageFromRequestHeader(context)))
+		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))
 			if (!SetCurrentLanguage(settings.DefaultLanguage))
-				Language = "iv";
+				SetInvariantCulture();
 	}
 
 	/// <summary>
@@ -65,17 +71,44 @@ public class LanguageManager : ILanguageManager
 	{
 		try
 		{
-			Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
-			Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+#if NET6_0
+			CultureInfo.GetCultureInfo(language, true);
+#else
+			if (!CultureExists(language))
+				return false;
+#endif
 
-			Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-
-			return true;
 		}
 		catch
 		{
 			return false;
 		}
+
+		Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+		Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+
+		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+		return true;
+	}
+
+	private void SetInvariantCulture()
+	{
+		Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+	}
+
+	private static bool CultureExists(string name)
+	{
+		var availableCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+
+		foreach (CultureInfo culture in availableCultures)
+			if (culture.Name.Equals(name))
+				return true;
+
+		return false;
 	}
 
 	private bool TrySetLanguageFromCookie(HttpContext context)
@@ -87,7 +120,7 @@ public class LanguageManager : ILanguageManager
 
 	private bool TrySetLanguageFromRequestHeader(HttpContext context)
 	{
-		var languages = context.Request.Headers["Accept-Language"];
+		var languages = context.Request.Headers[HeaderLanguageFieldName];
 
 		if (languages.Count == 0)
 			return false;

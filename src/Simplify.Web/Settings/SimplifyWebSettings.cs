@@ -16,7 +16,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	/// </summary>
 	public SimplifyWebSettings(IConfiguration configuration)
 	{
-		var config = configuration.GetSection("SimplifyWebSettings");
+		var config = configuration.GetSection(nameof(SimplifyWebSettings));
 
 		if (!config.GetChildren().Any())
 			return;
@@ -38,12 +38,20 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public string DefaultLanguage { get; private set; } = "en";
 
 	/// <summary>
-	/// Gets a value indicating whether browser language should be accepted
+	/// Gets a value indicating whether cookie language should be accepted
 	/// </summary>
 	/// <value>
-	/// <c>true</c> if  browser language should be accepted; otherwise, <c>false</c>.
+	/// <c>true</c> if cookie language should be accepted; otherwise, <c>false</c>.
 	/// </value>
-	public bool AcceptBrowserLanguage { get; private set; }
+	public bool AcceptCookieLanguage { get; private set; }
+
+	/// <summary>
+	/// Gets a value indicating whether HTTP header language should be accepted
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if HTTP header language should be accepted; otherwise, <c>false</c>.
+	/// </value>
+	public bool AcceptHeaderLanguage { get; private set; }
 
 	/// <summary>
 	/// Default templates directory path, for example: Templates, default value is "Templates"
@@ -166,13 +174,21 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		if (!string.IsNullOrEmpty(defaultLanguage))
 			DefaultLanguage = defaultLanguage;
 
-		var acceptBrowserLanguage = config[nameof(AcceptBrowserLanguage)];
+		var acceptCookieLanguage = config[nameof(AcceptCookieLanguage)];
 
-		if (string.IsNullOrEmpty(acceptBrowserLanguage))
+		bool buffer;
+
+		if (!string.IsNullOrEmpty(acceptCookieLanguage))
+			if (bool.TryParse(acceptCookieLanguage, out buffer))
+				AcceptCookieLanguage = buffer;
+
+		var acceptHeaderLanguage = config[nameof(AcceptHeaderLanguage)];
+
+		if (string.IsNullOrEmpty(acceptHeaderLanguage))
 			return;
 
-		if (bool.TryParse(acceptBrowserLanguage, out var buffer))
-			AcceptBrowserLanguage = buffer;
+		if (bool.TryParse(acceptHeaderLanguage, out buffer))
+			AcceptHeaderLanguage = buffer;
 	}
 
 	private void LoadTemplatesSettings(IConfiguration config)
