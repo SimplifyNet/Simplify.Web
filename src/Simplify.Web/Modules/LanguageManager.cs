@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
+using Simplify.System.Diagnostics;
 using Simplify.Web.Settings;
 
 namespace Simplify.Web.Modules;
@@ -37,7 +38,7 @@ public class LanguageManager : ILanguageManager
 
 		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))
 			if (!SetCurrentLanguage(settings.DefaultLanguage))
-				SetCurrentLanguage("iv");
+				SetInvariantCulture();
 	}
 
 	/// <summary>
@@ -70,17 +71,27 @@ public class LanguageManager : ILanguageManager
 	{
 		try
 		{
-			Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
-			Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
-
-			Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-
-			return true;
+			CultureInfo.GetCultureInfo(language, true);
 		}
 		catch
 		{
 			return false;
 		}
+
+		Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+		Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+
+		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+		return true;
+	}
+
+	private void SetInvariantCulture()
+	{
+		Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
 	}
 
 	private bool TrySetLanguageFromCookie(HttpContext context)
