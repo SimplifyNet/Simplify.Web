@@ -71,7 +71,13 @@ public class LanguageManager : ILanguageManager
 	{
 		try
 		{
+#if NET6_0
 			CultureInfo.GetCultureInfo(language, true);
+#else
+			if (!CultureExists(language))
+				return false;
+#endif
+
 		}
 		catch
 		{
@@ -92,6 +98,17 @@ public class LanguageManager : ILanguageManager
 		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+	}
+
+	private static bool CultureExists(string name)
+	{
+		var availableCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+
+		foreach (CultureInfo culture in availableCultures)
+			if (culture.Name.Equals(name))
+				return true;
+
+		return false;
 	}
 
 	private bool TrySetLanguageFromCookie(HttpContext context)
