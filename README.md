@@ -186,13 +186,10 @@ public class LoggedUserPanelView : View
 Below is the list of sample applications showing different variations of Simplify.Web usage:
 
 - [Only as an API backend with Angular + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Angular)
-- [Simple Kestrel-based Application with backend page](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Kestrel)
 - [Kestrel-based Application with backend HTML generation, localization, authentication](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Classic)
 
 ![Simplify](https://raw.githubusercontent.com/SimplifyNet/Simplify.Web/master/images/screenshots/sample-app-classic.png)
 
-- [Only as an API backend with Vue.js + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Vue)
-- [Only as an API backend with Vue.js + Element UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Vue.Element)
 - [Simple Kestrel-based Application hosted as windows-service](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.WindowsServiceHosted)
 
 ## Contributing
