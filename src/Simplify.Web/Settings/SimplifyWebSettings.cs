@@ -16,7 +16,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	/// </summary>
 	public SimplifyWebSettings(IConfiguration configuration)
 	{
-		var config = configuration.GetSection("SimplifyWebSettings");
+		var config = configuration.GetSection(nameof(SimplifyWebSettings));
 
 		if (!config.GetChildren().Any())
 			return;
@@ -36,6 +36,14 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	/// Default language, for example: "en", "ru", "de" etc., default value is "en"
 	/// </summary>
 	public string DefaultLanguage { get; private set; } = "en";
+
+	/// <summary>
+	/// Gets a value indicating whether cookie language should be accepted
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if cookie language should be accepted; otherwise, <c>false</c>.
+	/// </value>
+	public bool AcceptCookieLanguage { get; private set; }
 
 	/// <summary>
 	/// Gets a value indicating whether HTTP header language should be accepted
@@ -166,12 +174,20 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		if (!string.IsNullOrEmpty(defaultLanguage))
 			DefaultLanguage = defaultLanguage;
 
+		var acceptCookieLanguage = config[nameof(AcceptCookieLanguage)];
+
+		bool buffer;
+
+		if (!string.IsNullOrEmpty(acceptCookieLanguage))
+			if (bool.TryParse(acceptCookieLanguage, out buffer))
+				AcceptCookieLanguage = buffer;
+
 		var acceptHeaderLanguage = config[nameof(AcceptHeaderLanguage)];
 
 		if (string.IsNullOrEmpty(acceptHeaderLanguage))
 			return;
 
-		if (bool.TryParse(acceptHeaderLanguage, out var buffer))
+		if (bool.TryParse(acceptHeaderLanguage, out buffer))
 			AcceptHeaderLanguage = buffer;
 	}
 

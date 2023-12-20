@@ -27,7 +27,7 @@ public class LanguageManager : ILanguageManager
 	{
 		_responseCookies = context.Response.Cookies;
 
-		if (TrySetLanguageFromCookie(context))
+		if (settings.AcceptCookieLanguage && TrySetLanguageFromCookie(context))
 			return;
 
 		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))

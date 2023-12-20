@@ -23,9 +23,9 @@ public class LanguageManagerTests
 	{
 		_settings = new Mock<ISimplifyWebSettings>();
 		_context = new Mock<HttpContext>();
+		_responseCookies = new Mock<IResponseCookies>();
 
 		_settings.SetupGet(x => x.DefaultLanguage).Returns("en");
-		_responseCookies = new Mock<IResponseCookies>();
 
 		_context.SetupGet(x => x.Request.Cookies).Returns(Mock.Of<IRequestCookieCollection>());
 		_context.SetupGet(x => x.Response.Cookies).Returns(_responseCookies.Object);
@@ -34,22 +34,28 @@ public class LanguageManagerTests
 	}
 
 	[Test]
-	public void Constructor_NoRequestCookieLanguage_DefaultLanguageSet()
+	public void Constructor_NoRequestCookieLanguageAndCookieLanguageIsEnabled_DefaultLanguageSet()
 	{
+		// Arrange
+		_settings.SetupGet(x => x.AcceptCookieLanguage).Returns(true);
+
 		// Assert
 		Assert.AreEqual("en", _languageManager.Language);
 	}
 
 	[Test]
-	public void Constructor_HaveRequestCookie_CurrentLanguageSet()
+	public void Constructor_HaveRequestCookieLanguageAndCookieLanguageIsEnabled_CurrentLanguageSet()
 	{
 		// Assign
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("ru");
-		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("ru");
+
+		_settings.SetupGet(x => x.AcceptCookieLanguage).Returns(true);
 		_settings.SetupGet(x => x.DefaultLanguage).Returns("en");
+
+		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 		// Act
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
@@ -70,8 +76,9 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.DefaultLanguage).Returns("en");
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
+
+		_settings.SetupGet(x => x.DefaultLanguage).Returns("en");
 
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
@@ -88,9 +95,11 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+
 		header.Append("Accept-Language", "ru-RU");
+
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
 
 		// Act
@@ -105,9 +114,11 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+
 		header.Append("Accept-Language", "ru-RU;q=0.5");
+
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
 
 		// Act
@@ -118,17 +129,21 @@ public class LanguageManagerTests
 	}
 
 	[Test]
-	public void Constructor_HaveHeaderLanguageAndCookieLanguage_LanguageSetFromCookie()
+	public void Constructor_HaveHeaderLanguageAndCookieLanguageAndCookieLanguageIsEnabled_LanguageSetFromCookie()
 	{
 		// Assign
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("fr");
-		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
-
-		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+
 		header.Append("Accept-Language", "ru-RU");
+
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("fr");
+
+		_settings.SetupGet(x => x.AcceptCookieLanguage).Returns(true);
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
+
+		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
 
 		// Act
@@ -139,12 +154,37 @@ public class LanguageManagerTests
 	}
 
 	[Test]
-	public void Constructor_NoBrowserLanguage_DefaultLanguageSet()
+	public void Constructor_HaveHeaderLanguageAndCookieLanguageAndCookieLanguageIsDisabled_LanguageSetFromHeader()
 	{
 		// Assign
 
-		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
+		var cookieCollection = new Mock<IRequestCookieCollection>();
 		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+
+		header.Append("Accept-Language", "ru-RU");
+
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == LanguageManager.CookieLanguageFieldName)]).Returns("fr");
+
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
+
+		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
+		_context.SetupGet(x => x.Request.Headers).Returns(header);
+
+		// Act
+		_languageManager = new LanguageManager(_settings.Object, _context.Object);
+
+		// Assert
+		Assert.AreEqual("ru", _languageManager.Language);
+	}
+
+	[Test]
+	public void Constructor_NoHeaderLanguage_DefaultLanguageSet()
+	{
+		// Assign
+
+		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+
+		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
 
 		// Act

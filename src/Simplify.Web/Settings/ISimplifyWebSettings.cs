@@ -13,6 +13,14 @@ public interface ISimplifyWebSettings
 	string DefaultLanguage { get; }
 
 	/// <summary>
+	/// Gets a value indicating whether cookie language should be accepted
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if cookie language should be accepted; otherwise, <c>false</c>.
+	/// </value>
+	bool AcceptCookieLanguage { get; }
+
+	/// <summary>
 	/// Gets a value indicating whether HTTP header language should be accepted
 	/// </summary>
 	/// <value>
