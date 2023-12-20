@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.8.1] - 2023-12-20
+
+### Fixed
+
+- Missing Set content type `text/plain` for all string responses by default for shortcut methods (#247)
+
 ## [4.8.0] - 2023-12-20
 
 ### Changed

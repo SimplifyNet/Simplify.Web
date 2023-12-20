@@ -28,7 +28,7 @@ public abstract class ControllerBase : ActionModulesAccessor
 	/// <param name="content">The string content.</param>
 	/// <param name="statusCode">The HTTP response status code.</param>
 	/// <param name="contentType">Type of the content.</param>
-	protected Content Content(string content, int statusCode = 200, string contentType = null) => new(content, statusCode, contentType);
+	protected Content Content(string content, int statusCode = 200, string contentType = "text/plain") => new(content, statusCode, contentType);
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Responses.Content" /> class.
@@ -119,7 +119,7 @@ public abstract class ControllerBase : ActionModulesAccessor
 	/// <param name="statusCode">The HTTP response status code.</param>
 	/// <param name="responseData">The response data.</param>
 	/// <param name="contentType">Type of the content.</param>
-	protected StatusCode StatusCode(int statusCode, string responseData = null, string contentType = null) => new(statusCode, responseData, contentType);
+	protected StatusCode StatusCode(int statusCode, string responseData = null, string contentType = "text/plain") => new(statusCode, responseData, contentType);
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ViewModel{T}" /> class.
