@@ -4,7 +4,7 @@
 
 ### Changed
 
-- ***!Important!*** Setting language from cookie on requests disabled by default, to enable set `AcceptCookieLanguage` setting to `true in `SimplifyWebSettings` (#246)
+- ***!Important!*** Setting language from cookie on requests disabled by default, to enable set `AcceptCookieLanguage` setting to `true` in `SimplifyWebSettings` (#246)
 - `AcceptBrowserLanguage` setting renamed to `AcceptHeaderLanguage` (#246)
 - The way framework checks that applying language is valid
 
