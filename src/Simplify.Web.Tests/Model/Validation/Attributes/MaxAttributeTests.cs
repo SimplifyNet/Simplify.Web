@@ -13,7 +13,7 @@ public class MaxAttributeTests : AttributesTestBase
 	public void SetupAttribute() => Attr = new MaxAttribute(MaxValue);
 
 	[Test]
-	public void Validate_MaxValue_Ok()
+	public void Validate_BelowMaxValue_Ok()
 	{
 		// Act & Assert
 		TestAttributeForValidValue(10);
