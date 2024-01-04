@@ -5,26 +5,26 @@ using Simplify.DI;
 namespace Simplify.Web.Model.Validation.Attributes;
 
 /// <summary>
-/// Sets maximum required property value
+/// Sets minimum required property value
 /// </summary>
 [AttributeUsage(AttributeTargets.Property)]
-public class MaxAttribute : ValidationAttribute
+public class MinAttribute : ValidationAttribute
 {
 	/// <summary>
-	/// Initializes a new instance of the <see cref="MaxAttribute"/> class.
+	/// Initializes a new instance of the <see cref="MinAttribute"/> class.
 	/// </summary>
-	/// <param name="maxValue">Maximum value of the property.</param>
+	/// <param name="minValue">Minimum value of the property.</param>
 	/// <param name="errorMessage">The error message.</param>
 	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
-	public MaxAttribute(IComparable maxValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) => MaxValue = maxValue;
+	public MinAttribute(IComparable minValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) => MinValue = minValue;
 
 	/// <summary>
-	/// Gets or sets the maximum value of the property.
+	/// Gets or sets the minimum value of the property.
 	/// </summary>
 	/// <value>
-	/// The maximum value of the property.
+	/// The minimum value of the property.
 	/// </value>
-	public IComparable MaxValue { get; }
+	public IComparable MinValue { get; }
 
 	/// <summary>
 	/// Validates the specified property value.
@@ -34,13 +34,13 @@ public class MaxAttribute : ValidationAttribute
 	/// <param name="resolver">The objects resolver, useful if you need to retrieve some dependencies to perform validation.</param>
 	public override void Validate(object? value, PropertyInfo propertyInfo, IDIResolver resolver)
 	{
-		if (value is not IComparable comparableValue || comparableValue.GetType() != MaxValue.GetType())
+		if (value is not IComparable comparableValue || comparableValue.GetType() != MinValue.GetType())
 			return;
 		
 		TryThrowCustomOrStringTableException(resolver);
 
-		if (comparableValue.CompareTo(MaxValue) > 0)
+		if (comparableValue.CompareTo(MinValue) < 0)
 			throw new ModelValidationException(
-				$"Property '{propertyInfo.Name}' required maximum value is {MaxValue}, actual value: {value}");
+				$"Property '{propertyInfo.Name}' required minimum value is {MinValue}, actual value: {value}");
 	}
 }

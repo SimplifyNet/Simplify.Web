@@ -4,34 +4,34 @@ using Simplify.Web.Model.Validation.Attributes;
 namespace Simplify.Web.Tests.Model.Validation.Attributes;
 
 [TestFixture]
-public class MaxAttributeTests : AttributesTestBase
+public class MinAttributeTests : AttributesTestBase
 {
-	public const int MaxValue = 12;
+	public const int MinValue = 12;
 
 	[OneTimeSetUp]
-	public void SetupAttribute() => Attr = new MaxAttribute(MaxValue);
+	public void SetupAttribute() => Attr = new MinAttribute(MinValue);
 
 	[Test]
-	public void Validate_BelowMaxValue_Ok()
+	public void Validate_AboveMinValue_Ok()
 	{
 		// Act & Assert
-		TestAttributeForValidValue(10);
+		TestAttributeForValidValue(15);
 	}
 	
 	[Test]
-	public void Validate_MaxValueEqualsValue_Ok()
+	public void Validate_MinValueEqualsValue_Ok()
 	{
 		// Act & Assert
 		TestAttributeForValidValue(12);
 	}
 	
 	[Test]
-	public void Validate_AboveMaxValue_ExceptionThrown()
+	public void Validate_BelowMinValue_ExceptionThrown()
 	{
 		// Assign
 
-		var value = 15;
-		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required maximum value is {MaxValue}, actual value: {value}";
+		var value = 8;
+		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required minimum value is {MinValue}, actual value: {value}";
 
 		// Act & Assert
 		TestAttribute(value, defaultMessage);
@@ -48,6 +48,6 @@ public class MaxAttributeTests : AttributesTestBase
 	public void Validate_DifferentTypes_NoExceptions()
 	{
 		// Act & Assert
-		TestAttributeForValidValue((decimal)10.5);
+		TestAttributeForValidValue((decimal)12.5);
 	}
 }
