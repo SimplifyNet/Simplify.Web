@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Simplify.Web.Model.Validation.Attributes;
 
@@ -45,9 +46,26 @@ public class MinAttributeTests : AttributesTestBase
 	}
 	
 	[Test]
-	public void Validate_DifferentTypes_NoExceptions()
+	public void Validate_DifferentTypes_ExceptionThrown()
 	{
+		// Assign
+
+		var value = 12.5;
+		var defaultMessage = "Type mismatch. The minimum value and property value should be of the same type.";
+
 		// Act & Assert
-		TestAttributeForValidValue((decimal)12.5);
+		TestAttribute(value, defaultMessage); 
+	}
+	
+	[Test]
+	public void Validate_ValueTypeNotInheritIComparable_ExceptionThrown()
+	{
+		// Assign
+
+		var value = new object();
+		var defaultMessage = $"The type of specified property value must be inherited from {typeof(IComparable)}";
+
+		// Act & Assert
+		TestAttribute(value, defaultMessage);
 	}
 }
