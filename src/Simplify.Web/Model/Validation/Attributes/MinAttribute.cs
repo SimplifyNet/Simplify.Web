@@ -38,7 +38,7 @@ public class MinAttribute : ValidationAttribute
 			return;
 		
 		if (value is not IComparable comparableValue)
-			throw new ModelValidationException($"The type of specified property value must be inherited from {typeof(IComparable)}");
+			throw new ArgumentException($"The type of specified property value must be inherited from {typeof(IComparable)}");
 
 		ValidateTypesMatching(comparableValue);
 		
@@ -52,6 +52,6 @@ public class MinAttribute : ValidationAttribute
 	private void ValidateTypesMatching(IComparable comparableValue)
 	{
 		if (comparableValue.GetType() != MinValue.GetType())
-			throw new ModelValidationException("Type mismatch. The minimum value and property value should be of the same type.");
+			throw new ArgumentException("Type mismatch. The minimum value and property value should be of the same type.");
 	}
 }
