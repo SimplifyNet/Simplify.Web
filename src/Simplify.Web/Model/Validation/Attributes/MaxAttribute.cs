@@ -34,13 +34,24 @@ public class MaxAttribute : ValidationAttribute
 	/// <param name="resolver">The objects resolver, useful if you need to retrieve some dependencies to perform validation.</param>
 	public override void Validate(object? value, PropertyInfo propertyInfo, IDIResolver resolver)
 	{
-		if (value is not IComparable comparableValue || comparableValue.GetType() != MaxValue.GetType())
+		if (value == null)
 			return;
+		
+		if (value is not IComparable comparableValue)
+			throw new ArgumentException($"The type of specified property value must be inherited from {typeof(IComparable)}");
+
+		ValidateTypesMatching(comparableValue);
 		
 		TryThrowCustomOrStringTableException(resolver);
 
 		if (comparableValue.CompareTo(MaxValue) > 0)
 			throw new ModelValidationException(
 				$"Property '{propertyInfo.Name}' required maximum value is {MaxValue}, actual value: {value}");
+	}
+	
+	private void ValidateTypesMatching(IComparable comparableValue)
+	{
+		if (comparableValue.GetType() != MaxValue.GetType())
+			throw new ArgumentException("Type mismatch. The maximum value and property value should be of the same type.");
 	}
 }

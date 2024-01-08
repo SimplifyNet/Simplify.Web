@@ -34,13 +34,24 @@ public class MinAttribute : ValidationAttribute
 	/// <param name="resolver">The objects resolver, useful if you need to retrieve some dependencies to perform validation.</param>
 	public override void Validate(object? value, PropertyInfo propertyInfo, IDIResolver resolver)
 	{
-		if (value is not IComparable comparableValue || comparableValue.GetType() != MinValue.GetType())
+		if (value == null)
 			return;
+		
+		if (value is not IComparable comparableValue)
+			throw new ArgumentException($"The type of specified property value must be inherited from {typeof(IComparable)}");
+
+		ValidateTypesMatching(comparableValue);
 		
 		TryThrowCustomOrStringTableException(resolver);
 
 		if (comparableValue.CompareTo(MinValue) < 0)
 			throw new ModelValidationException(
 				$"Property '{propertyInfo.Name}' required minimum value is {MinValue}, actual value: {value}");
+	}
+	
+	private void ValidateTypesMatching(IComparable comparableValue)
+	{
+		if (comparableValue.GetType() != MinValue.GetType())
+			throw new ArgumentException("Type mismatch. The minimum value and property value should be of the same type.");
 	}
 }

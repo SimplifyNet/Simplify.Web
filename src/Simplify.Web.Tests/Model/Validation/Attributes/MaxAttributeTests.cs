@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Simplify.Web.Model.Validation.Attributes;
 
@@ -45,9 +46,16 @@ public class MaxAttributeTests : AttributesTestBase
 	}
 	
 	[Test]
-	public void Validate_DifferentTypes_NoExceptions()
+	public void Validate_DifferentTypes_ExceptionThrown()
 	{
 		// Act & Assert
-		TestAttributeForValidValue((decimal)10.5);
+		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(15.2));
+	}
+	
+	[Test]
+	public void Validate_ValueTypeNotInheritIComparable_ExceptionThrown()
+	{
+		// Act & Assert
+		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(new object()));
 	}
 }
