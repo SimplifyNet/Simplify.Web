@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.9.0] - 2024-01-08
+
+### Added
+
+- Add Model Validation Attribute For Range Of Numbers (#236)
+- Add Model Validation Attributes For Min Max (#251)
+
 ## [4.8.1] - 2023-12-20
 
 ### Fixed
