@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Code Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
 
       - name: Install DotNet
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
 
       - name: Restore Dependencies
         run: dotnet restore
@@ -34,7 +34,7 @@ jobs:
         run: dotnet pack Simplify.Web/Simplify.Web.csproj --no-build -c Release -o ./publish
 
       - name: Create packages artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: Packages
           path: ./src/publish/

@@ -1,5 +1,35 @@
 # Changelog
 
+## [4.9.0] - 2024-01-08
+
+### Added
+
+- Add Model Validation Attribute For Range Of Numbers (#236)
+- Add Model Validation Attributes For Min Max (#251)
+
+## [4.8.1] - 2023-12-20
+
+### Fixed
+
+- Missing Set content type `text/plain` for all string responses by default for shortcut methods (#247)
+
+## [4.8.0] - 2023-12-20
+
+### Changed
+
+- ***!Important!*** Setting language from cookie on requests disabled by default, to enable set `AcceptCookieLanguage` setting to `true` in `SimplifyWebSettings` (#246)
+- `AcceptBrowserLanguage` setting renamed to `AcceptHeaderLanguage` (#246)
+- The way framework checks that applying language is valid
+
+### Fixed
+
+- Invariant language setting and check
+
+### Added
+
+- Set content type `text/plain` for all string responses by default (#247)
+- `AcceptCookieLanguage` setting
+
 ## [4.7.1] - 2022-11-07
 
 ### Fixed

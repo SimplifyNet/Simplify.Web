@@ -6,16 +6,14 @@ namespace Simplify.Web.Modules;
 /// <summary>
 /// Provides language manager provider
 /// </summary>
-public class LanguageManagerProvider : ILanguageManagerProvider
+/// <remarks>
+/// Initializes a new instance of the <see cref="LanguageManagerProvider" /> class.
+/// </remarks>
+/// <param name="settings">The settings.</param>
+public class LanguageManagerProvider(ISimplifyWebSettings settings) : ILanguageManagerProvider
 {
-	private readonly ISimplifyWebSettings _settings;
+	private readonly ISimplifyWebSettings _settings = settings;
 	private ILanguageManager? _languageManager;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="LanguageManagerProvider" /> class.
-	/// </summary>
-	/// <param name="settings">The settings.</param>
-	public LanguageManagerProvider(ISimplifyWebSettings settings) => _settings = settings;
 
 	/// <summary>
 	/// Creates the language manager instance.
