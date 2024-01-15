@@ -40,8 +40,9 @@ public class ControllersMetaStore(IControllerMetaDataFactory metaDataFactory) : 
 
 			var controllersMetaContainers = new List<IControllerMetaData>();
 
-			var types = SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller>();
-
+			var types = SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller2>();
+			types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(Controller2<>))).ToList();
+			types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller>()).ToList();
 			types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom<AsyncController>()).ToList();
 			types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(Controller<>))).ToList();
 			types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(AsyncController<>))).ToList();
