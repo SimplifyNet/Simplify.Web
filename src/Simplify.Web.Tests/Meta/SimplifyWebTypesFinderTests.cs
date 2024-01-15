@@ -71,6 +71,25 @@ public class SimplifyWebTypesFinderTests
 		Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestController2", types[0].FullName);
 	}
 
+
+	[Test]
+	public void FindTypesDerivedFrom_Controller2With1TypeDerived_1TestControllersReturned()
+	{
+		// Assign
+
+		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
+		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Add("DynamicProxyGenAssembly2");
+		SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
+
+		// Act
+		var types = SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller2>();
+
+		// Assert
+
+		Assert.AreEqual(1, types.Count);
+		Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestControllerV2", types[0].FullName);
+	}
+
 	[Test]
 	public void FindTypesDerivedFrom_NoDerivedTypes_NullReturned()
 	{
