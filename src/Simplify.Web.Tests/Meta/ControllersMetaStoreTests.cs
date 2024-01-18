@@ -24,27 +24,27 @@ public class ControllersMetaStoreTests
 		var store = new ControllersMetaStore(factory.Object);
 
 		factory.SetupSequence(x => x.CreateControllerMetaData(It.IsAny<Type>()))
+			.Returns(new ControllerMetaData(typeof(TestControllerV2)))
+			.Returns(new ControllerMetaData(typeof(TestControllerV2WithModel)))
 			.Returns(new ControllerMetaData(typeof(TestController1), new ControllerExecParameters(null, 2)))
 			.Returns(new ControllerMetaData(typeof(TestController6)))
 			.Returns(new ControllerMetaData(typeof(TestController2), new ControllerExecParameters(null, 1)))
 			.Returns(new ControllerMetaData(typeof(TestController4)))
-			.Returns(new ControllerMetaData(typeof(TestController5)))
-			.Returns(new ControllerMetaData(typeof(TestControllerV2)))
-			.Returns(new ControllerMetaData(typeof(TestControllerV2WithModel)));
+			.Returns(new ControllerMetaData(typeof(TestController5)));
 
 		// Act
 		var metaData = store.ControllersMetaData;
 
 		// Assert
 
-		Assert.AreEqual(7, metaData.Count);
-
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestControllerV2))));
+		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestControllerV2WithModel))));
 		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController1))));
 		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController2))));
 		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController4))));
 		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController5))));
 		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestController6))));
-		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestControllerV2))));
-		factory.Verify(x => x.CreateControllerMetaData(It.Is<Type>(t => t == typeof(TestControllerV2WithModel))));
+
+		Assert.AreEqual(7, metaData.Count);
 	}
 }
