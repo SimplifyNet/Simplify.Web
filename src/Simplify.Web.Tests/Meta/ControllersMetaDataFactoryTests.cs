@@ -42,4 +42,21 @@ public class ControllersMetaDataFactoryTests
 		Assert.AreEqual("Admin", roles[0]);
 		Assert.AreEqual("User", roles[1]);
 	}
+
+	[Test]
+	public void CreateControllerMetaData_TestControllerV2_PropertiesSetCorrectly()
+	{
+		// Arrange
+		var factory = new ControllerMetaDataFactory();
+
+		// Act
+
+		var metaData = factory.CreateControllerMetaData(typeof(TestControllerV2));
+
+		// Assert
+
+		Assert.That(metaData.ExecParameters, Is.Not.Null);
+		Assert.That(metaData.ControllerType.Name, Is.EqualTo("TestControllerV2"));
+		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Get).Value, Is.EqualTo("/testaction"));
+	}
 }
