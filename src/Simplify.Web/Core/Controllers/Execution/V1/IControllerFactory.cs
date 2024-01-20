@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
-namespace Simplify.Web.Core.Controllers.Execution.Building;
+namespace Simplify.Web.Core.Controllers.Execution.V1;
 
 /// <summary>
 /// Represent controller factory

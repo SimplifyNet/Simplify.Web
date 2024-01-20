@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
-using Simplify.Web.Core.Controllers.Execution.V1;
 using Simplify.Web.Meta;
 
-namespace Simplify.Web.Core.Controllers.Execution;
+namespace Simplify.Web.Core.Controllers.Execution.V1;
 
 /// <summary>
-/// Provides controller executor, handles creation and execution of controllers
+///  Provides v1 controllers executor
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="ControllerExecutor"/> class.
-/// </remarks>
 /// <param name="controllerFactory">The controller factory.</param>
-/// <param name="controllerResponseBuilder">The controller response builder.</param>
-public class ControllerExecutor(IControllerFactory controllerFactory, IControllerResponseBuilder controllerResponseBuilder) : IControllerExecutor
+public class ControllerExecutor1(IControllerFactory controllerFactory) : IVersionedControllerExecutor
 {
 	private readonly IControllerFactory _controllerFactory = controllerFactory;
-	private readonly IControllerResponseBuilder _controllerResponseBuilder = controllerResponseBuilder;
+
+	/// <summary>
+	/// Gets the controller version
+	/// </summary>
+	public short Version => 1;
 
 	/// <summary>
 	/// Creates and executes the specified controller.
@@ -28,7 +27,7 @@ public class ControllerExecutor(IControllerFactory controllerFactory, IControlle
 	/// <param name="context">The context.</param>
 	/// <param name="routeParameters">The route parameters.</param>
 	/// <returns></returns>
-	public async Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
+	public async Task<ControllerResponse?> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
 		IDictionary<string, object>? routeParameters = null)
 	{
 		ControllerResponse? response = null;
@@ -49,11 +48,6 @@ public class ControllerExecutor(IControllerFactory controllerFactory, IControlle
 				}
 		}
 
-		if (response == null)
-			return ControllerResponseResult.Default;
-
-		_controllerResponseBuilder.BuildControllerResponseProperties(response, resolver);
-
-		return await response.Process();
+		return response;
 	}
 }

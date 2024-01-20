@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
 
-namespace Simplify.Web.Core.Controllers.Execution.Building;
+namespace Simplify.Web.Core.Controllers.Execution.V1;
 
 /// <summary>
 /// Controller factory
