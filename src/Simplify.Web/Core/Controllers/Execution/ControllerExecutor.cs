@@ -10,23 +10,15 @@ namespace Simplify.Web.Core.Controllers.Execution;
 /// <summary>
 /// Provides controller executor, handles creation and execution of controllers
 /// </summary>
-public class ControllerExecutor : IControllerExecutor
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllerExecutor"/> class.
+/// </remarks>
+/// <param name="controllerFactory">The controller factory.</param>
+/// <param name="controllerResponseBuilder">The controller response builder.</param>
+public class ControllerExecutor(IControllerFactory controllerFactory, IControllerResponseBuilder controllerResponseBuilder) : IControllerExecutor
 {
-	private readonly IControllerFactory _controllerFactory;
-	private readonly IControllerResponseBuilder _controllerResponseBuilder;
-
-	private readonly IList<Task<ControllerResponse>> _controllersResponses = new List<Task<ControllerResponse>>();
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllerExecutor"/> class.
-	/// </summary>
-	/// <param name="controllerFactory">The controller factory.</param>
-	/// <param name="controllerResponseBuilder">The controller response builder.</param>
-	public ControllerExecutor(IControllerFactory controllerFactory, IControllerResponseBuilder controllerResponseBuilder)
-	{
-		_controllerFactory = controllerFactory;
-		_controllerResponseBuilder = controllerResponseBuilder;
-	}
+	private readonly IControllerFactory _controllerFactory = controllerFactory;
+	private readonly IControllerResponseBuilder _controllerResponseBuilder = controllerResponseBuilder;
 
 	/// <summary>
 	/// Creates and executes the specified controller.
@@ -37,7 +29,7 @@ public class ControllerExecutor : IControllerExecutor
 	/// <param name="routeParameters">The route parameters.</param>
 	/// <returns></returns>
 	public async Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
-		dynamic? routeParameters = null)
+		IDictionary<string, object>? routeParameters = null)
 	{
 		ControllerResponse? response = null;
 		var controller = _controllerFactory.CreateController(controllerMetaData.ControllerType, resolver, context, routeParameters);
@@ -45,16 +37,16 @@ public class ControllerExecutor : IControllerExecutor
 		switch (controller)
 		{
 			case SyncControllerBase syncController:
-			{
-				response = syncController.Invoke();
-				break;
-			}
+				{
+					response = syncController.Invoke();
+					break;
+				}
 
 			case AsyncControllerBase asyncController:
-			{
-				response = await asyncController.Invoke();
-				break;
-			}
+				{
+					response = await asyncController.Invoke();
+					break;
+				}
 		}
 
 		if (response == null)

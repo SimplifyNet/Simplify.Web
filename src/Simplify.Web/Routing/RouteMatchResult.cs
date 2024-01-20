@@ -1,20 +1,17 @@
-﻿namespace Simplify.Web.Routing;
+﻿using System.Collections.Generic;
+
+namespace Simplify.Web.Routing;
 
 /// <summary>
 /// Provides HTTP route matching result
 /// </summary>
-public class RouteMatchResult : IRouteMatchResult
+/// <remarks>
+/// Initializes a new instance of the <see cref="RouteMatchResult" /> class.
+/// </remarks>
+/// <param name="matched">if set to <c>true</c> then it means what matching was successful.</param>
+/// <param name="routeParameters">The route parameters.</param>
+public class RouteMatchResult(bool matched = false, IDictionary<string, object>? routeParameters = null) : IRouteMatchResult
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RouteMatchResult" /> class.
-	/// </summary>
-	/// <param name="matched">if set to <c>true</c> then it means what matching was successful.</param>
-	/// <param name="routeParameters">The route parameters.</param>
-	public RouteMatchResult(bool matched = false, dynamic? routeParameters = null)
-	{
-		Success = matched;
-		RouteParameters = routeParameters;
-	}
 
 	/// <summary>
 	/// Gets a value indicating whether the route was matched successfully
@@ -22,7 +19,7 @@ public class RouteMatchResult : IRouteMatchResult
 	/// <value>
 	/// <c>true</c> if the route was matched successfully; otherwise, <c>false</c>.
 	/// </value>
-	public bool Success { get; }
+	public bool Success { get; } = matched;
 
 	/// <summary>
 	/// Gets the route parsed parameters.
@@ -30,5 +27,5 @@ public class RouteMatchResult : IRouteMatchResult
 	/// <value>
 	/// The route parsed parameters.
 	/// </value>
-	public dynamic? RouteParameters { get; }
+	public IDictionary<string, object>? RouteParameters { get; } = routeParameters;
 }

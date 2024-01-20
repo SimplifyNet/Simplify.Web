@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Meta;
@@ -19,5 +20,5 @@ public interface IControllerExecutor
 	/// <param name="routeParameters">The route parameters.</param>
 	/// <returns></returns>
 	Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
-		dynamic? routeParameters = null);
+		IDictionary<string, object>? routeParameters = null);
 }

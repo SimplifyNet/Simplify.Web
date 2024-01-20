@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
@@ -17,5 +18,5 @@ public interface IControllerFactory
 	/// <param name="context">The context.</param>
 	/// <param name="routeParameters">The route parameters.</param>
 	/// <returns></returns>
-	ControllerBase CreateController(Type controllerType, IDIResolver resolver, HttpContext context, dynamic? routeParameters = null);
+	ControllerBase CreateController(Type controllerType, IDIResolver resolver, HttpContext context, IDictionary<string, object>? routeParameters = null);
 }

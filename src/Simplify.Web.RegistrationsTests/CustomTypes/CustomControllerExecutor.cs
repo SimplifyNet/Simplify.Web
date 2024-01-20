@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
@@ -9,6 +10,6 @@ namespace Simplify.Web.RegistrationsTests.CustomTypes;
 
 public class CustomControllerExecutor : IControllerExecutor
 {
-	public Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context, dynamic? routeParameters = null) =>
+	public Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context, IDictionary<string, object>? routeParameters = null) =>
 		throw new NotImplementedException();
 }

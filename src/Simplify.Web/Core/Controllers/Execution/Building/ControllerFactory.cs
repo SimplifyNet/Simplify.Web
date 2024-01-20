@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
@@ -19,7 +20,7 @@ public class ControllerFactory : ActionModulesAccessorBuilder, IControllerFactor
 	/// <param name="routeParameters">The route parameters.</param>
 	/// <returns></returns>
 	public ControllerBase CreateController(Type controllerType, IDIResolver resolver, HttpContext context,
-		dynamic? routeParameters = null)
+		IDictionary<string, object>? routeParameters = null)
 	{
 		var controller = (ControllerBase)resolver.Resolve(controllerType);
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
@@ -10,24 +11,17 @@ namespace Simplify.Web.Core.Controllers;
 /// <summary>
 /// Provides controllers processor
 /// </summary>
-public class ControllersProcessor : IControllersProcessor
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllersProcessor" /> class.
+/// </remarks>
+/// <param name="controllersAgent">The controllers agent.</param>
+/// <param name="controllerExecutor">The controller executor.</param>
+/// <param name="redirector">The redirector.</param>
+public class ControllersProcessor(IControllersAgent controllersAgent, IControllerExecutor controllerExecutor, IRedirector redirector) : IControllersProcessor
 {
-	private readonly IControllersAgent _agent;
-	private readonly IControllerExecutor _controllerExecutor;
-	private readonly IRedirector _redirector;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllersProcessor" /> class.
-	/// </summary>
-	/// <param name="controllersAgent">The controllers agent.</param>
-	/// <param name="controllerExecutor">The controller executor.</param>
-	/// <param name="redirector">The redirector.</param>
-	public ControllersProcessor(IControllersAgent controllersAgent, IControllerExecutor controllerExecutor, IRedirector redirector)
-	{
-		_agent = controllersAgent;
-		_controllerExecutor = controllerExecutor;
-		_redirector = redirector;
-	}
+	private readonly IControllersAgent _agent = controllersAgent;
+	private readonly IControllerExecutor _controllerExecutor = controllerExecutor;
+	private readonly IRedirector _redirector = redirector;
 
 	/// <summary>
 	/// Process controllers for current HTTP request
@@ -76,7 +70,7 @@ public class ControllersProcessor : IControllersProcessor
 		return ControllersProcessorResult.Ok;
 	}
 
-	private async Task<ControllersProcessorResult> ProcessController(IControllerMetaData controller, IDIResolver resolver, HttpContext context, dynamic routeParameters)
+	private async Task<ControllersProcessorResult> ProcessController(IControllerMetaData controller, IDIResolver resolver, HttpContext context, IDictionary<string, object>? routeParameters)
 	{
 		var result = await _controllerExecutor.Execute(controller, resolver, context, routeParameters);
 

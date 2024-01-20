@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Routing;
+﻿using System.Collections.Generic;
+
+namespace Simplify.Web.Routing;
 
 /// <summary>
 /// Represent HTTP route matching result
@@ -19,5 +21,5 @@ public interface IRouteMatchResult
 	/// <value>
 	/// The route parsed parameters.
 	/// </value>
-	dynamic? RouteParameters { get; }
+	IDictionary<string, object>? RouteParameters { get; }
 }
