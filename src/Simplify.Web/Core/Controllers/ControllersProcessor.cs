@@ -37,7 +37,7 @@ public class ControllersProcessor : IControllersProcessor
 	/// <returns></returns>
 	public async Task<ControllersProcessorResult> ProcessControllers(IDIResolver resolver, HttpContext context)
 	{
-		var atleastOneNonAnyPageControllerMatched = false;
+		var atLeastOneNonAnyPageControllerMatched = false;
 
 		foreach (var controller in _agent.GetStandardControllersMetaData())
 		{
@@ -60,10 +60,10 @@ public class ControllersProcessor : IControllersProcessor
 				return result;
 
 			if (!_agent.IsAnyPageController(controller))
-				atleastOneNonAnyPageControllerMatched = true;
+				atLeastOneNonAnyPageControllerMatched = true;
 		}
 
-		if (!atleastOneNonAnyPageControllerMatched)
+		if (!atLeastOneNonAnyPageControllerMatched)
 		{
 			var result = await ProcessOnlyAnyPageControllersMatched(resolver, context);
 
@@ -76,9 +76,9 @@ public class ControllersProcessor : IControllersProcessor
 		return ControllersProcessorResult.Ok;
 	}
 
-	private async Task<ControllersProcessorResult> ProcessController(IControllerMetaData controllerType, IDIResolver resolver, HttpContext context, dynamic routeParameters)
+	private async Task<ControllersProcessorResult> ProcessController(IControllerMetaData controller, IDIResolver resolver, HttpContext context, dynamic routeParameters)
 	{
-		var result = await _controllerExecutor.Execute(controllerType, resolver, context, routeParameters);
+		var result = await _controllerExecutor.Execute(controller, resolver, context, routeParameters);
 
 		if (result == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;
