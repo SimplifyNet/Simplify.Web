@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
-using Simplify.DI;
-using Simplify.Web.Core.AccessorsBuilding;
+﻿using Simplify.Web.Core.AccessorsBuilding;
 
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-/// Controller factory
+/// Provides v1 controller factory
 /// </summary>
 public class Controller1Factory : ActionModulesAccessorBuilder, IController1Factory
 {
 	/// <summary>
 	/// Creates the controller.
 	/// </summary>
-	/// <param name="controllerType">Type of the controller.</param>
-	/// <param name="resolver">The DI container resolver.</param>
-	/// <param name="context">The context.</param>
-	/// <param name="routeParameters">The route parameters.</param>
-	/// <returns></returns>
-	public ControllerBase CreateController(Type controllerType, IDIResolver resolver, HttpContext context,
-		IDictionary<string, object>? routeParameters = null)
+	/// <param name="args">The controller execution args.</param>
+	/// <returns>The controller.</returns>
+	public ControllerBase CreateController(IControllerExecutionArgs args)
 	{
-		var controller = (ControllerBase)resolver.Resolve(controllerType);
+		var controller = (ControllerBase)args.Resolver.Resolve(args.ControllerMetaData.ControllerType);
 
-		BuildActionModulesAccessorProperties(controller, resolver);
+		BuildActionModulesAccessorProperties(controller, args.Resolver);
 
-		controller.RouteParameters = routeParameters;
+		controller.RouteParameters = args.RouteParameters;
 
 		return controller;
 	}

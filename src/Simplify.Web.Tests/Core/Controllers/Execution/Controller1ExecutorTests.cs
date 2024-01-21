@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
-using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Meta;
 using Simplify.Web.Tests.TestEntities;
 
 namespace Simplify.Web.Tests.Core.Controllers.Execution;
@@ -14,11 +9,12 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution;
 [TestFixture]
 public class Controller1ExecutorTests
 {
+	private readonly IControllerExecutionArgs _args = Mock.Of<IControllerExecutionArgs>();
+
 	private Controller1Executor _executor = null!;
 	private Mock<IController1Factory> _controllerFactory = null!;
 
 	private Mock<Controller> _syncController = null!;
-
 	private Mock<AsyncController> _asyncController = null!;
 	private Mock<Controller<TestModel>> _syncModelController = null!;
 	private Mock<AsyncController<TestModel>> _asyncModelController = null!;
@@ -43,22 +39,14 @@ public class Controller1ExecutorTests
 		var response = Mock.Of<ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()))
+			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
 					.Returns(_syncController.Object);
-
 		// Act
-		var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
+		var result = await _executor.Execute(_args);
 
 		// Assert
 
-		_controllerFactory.Verify(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()));
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)));
 
 		_syncController.Verify(x => x.Invoke());
 
@@ -73,25 +61,18 @@ public class Controller1ExecutorTests
 		var response = Mock.Of<ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()))
+			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
 					.Returns(_syncController.Object);
 
 		_syncController.Setup(x => x.Invoke())
 			.Returns(response);
 
 		// Act
-		var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
+		var result = await _executor.Execute(_args);
 
 		// Assert
 
-		_controllerFactory.Verify(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()));
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)));
 
 		_syncController.Verify(x => x.Invoke());
 
@@ -106,31 +87,23 @@ public class Controller1ExecutorTests
 		var response = Mock.Of<ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()))
+			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
 					.Returns(_syncModelController.Object);
 
 		_syncModelController.Setup(x => x.Invoke())
 			.Returns(response);
 
 		// Act
-		var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
+		var result = await _executor.Execute(_args);
 
 		// Assert
 
-		_controllerFactory.Verify(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()));
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)));
 
 		_syncModelController.Verify(x => x.Invoke());
 
 		Assert.That(result, Is.EqualTo(response));
 	}
-
 
 	[Test]
 	public async Task Execute_AsyncControllerWithResponse_InvokedAndResponseReturned()
@@ -140,25 +113,18 @@ public class Controller1ExecutorTests
 		var response = Mock.Of<ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()))
+			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
 					.Returns(_asyncController.Object);
 
 		_asyncController.Setup(x => x.Invoke())
 			.Returns(Task.FromResult(response)!);
 
 		// Act
-		var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
+		var result = await _executor.Execute(_args);
 
 		// Assert
 
-		_controllerFactory.Verify(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()));
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)));
 
 		_asyncController.Verify(x => x.Invoke());
 
@@ -173,25 +139,18 @@ public class Controller1ExecutorTests
 		var response = Mock.Of<ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()))
+			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
 					.Returns(_asyncModelController.Object);
 
 		_asyncModelController.Setup(x => x.Invoke())
 			.Returns(Task.FromResult(response)!);
 
 		// Act
-		var result = await _executor.Execute(Mock.Of<IControllerMetaData>(), null!, null!);
+		var result = await _executor.Execute(_args);
 
 		// Assert
 
-		_controllerFactory.Verify(x =>
-			x.CreateController(It.IsAny<Type>(),
-				It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(),
-				It.IsAny<IDictionary<string, object>>()));
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)));
 
 		_asyncModelController.Verify(x => x.Invoke());
 

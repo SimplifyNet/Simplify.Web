@@ -4,7 +4,7 @@ using Simplify.Web.Core.AccessorsBuilding;
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-/// Provides controller response builder
+/// Provides controller response builder.
 /// </summary>
 public class ControllerResponseBuilder : ActionModulesAccessorBuilder, IControllerResponseBuilder
 {

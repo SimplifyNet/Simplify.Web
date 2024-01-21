@@ -1,37 +1,30 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Simplify.DI;
 using Simplify.Web.Meta;
 
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-///  Provides v1 controllers executor
+///  Provides v1 controller executor.
 /// </summary>
-/// <param name="controllerFactory">The controller factory.</param>
+/// <param name="controllerFactory">The v1 controller factory.</param>
 public class Controller1Executor(IController1Factory controllerFactory) : IVersionedControllerExecutor
 {
 	private readonly IController1Factory _controllerFactory = controllerFactory;
 
 	/// <summary>
-	/// Gets the controller version
+	/// Gets the controller version.
 	/// </summary>
 	public ControllerVersion Version => ControllerVersion.V1;
 
 	/// <summary>
-	/// Creates and executes the specified controller.
+	/// Creates and executes the controller.
 	/// </summary>
-	/// <param name="controllerMetaData">Type of the controller.</param>
-	/// <param name="resolver">The DI container resolver.</param>
-	/// <param name="context">The context.</param>
-	/// <param name="routeParameters">The route parameters.</param>
-	/// <returns></returns>
-	public async Task<ControllerResponse?> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
-		IDictionary<string, object>? routeParameters = null)
+	/// <param name="args">The controller execution args.</param>
+	/// <returns>The controller response.</returns>
+	public async Task<ControllerResponse?> Execute(IControllerExecutionArgs args)
 	{
 		ControllerResponse? response = null;
-		var controller = _controllerFactory.CreateController(controllerMetaData.ControllerType, resolver, context, routeParameters);
+		var controller = _controllerFactory.CreateController(args);
 
 		switch (controller)
 		{

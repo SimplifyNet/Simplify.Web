@@ -1,57 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Simplify.DI;
 using Simplify.Web.Meta;
 
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-/// Provides controller executor, handles creation and execution of controllers
+/// Provides controller executor, handles creation and execution of controllers.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="ControllerExecutor"/> class.
-/// </remarks>
-/// <param name="controllerFactory">The controller factory.</param>
-/// <param name="controllerResponseBuilder">The controller response builder.</param>
-public class ControllerExecutor(IController1Factory controllerFactory, IControllerResponseBuilder controllerResponseBuilder) : IControllerExecutor
+public class ControllerExecutor : IControllerExecutor
 {
-	private readonly IController1Factory _controllerFactory = controllerFactory;
-	private readonly IControllerResponseBuilder _controllerResponseBuilder = controllerResponseBuilder;
+	private readonly IList<IVersionedControllerExecutor> _controllerExecutors;
+	private readonly IControllerResponseBuilder _controllerResponseBuilder;
 
 	/// <summary>
-	/// Creates and executes the specified controller.
+	/// Initializes a new instance of the <see cref="ControllerExecutor"/> class.
 	/// </summary>
-	/// <param name="controllerMetaData">Type of the controller.</param>
-	/// <param name="resolver">The DI container resolver.</param>
-	/// <param name="context">The context.</param>
-	/// <param name="routeParameters">The route parameters.</param>
-	/// <returns></returns>
-	public async Task<ControllerResponseResult> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
-		IDictionary<string, object>? routeParameters = null)
+	/// <param name="controllerExecutors">The controller executors</param>
+	/// <param name="controllerResponseBuilder">The controller response builder</param>
+	public ControllerExecutor(IList<IVersionedControllerExecutor> controllerExecutors, IControllerResponseBuilder controllerResponseBuilder)
 	{
-		ControllerResponse? response = null;
-		var controller = _controllerFactory.CreateController(controllerMetaData.ControllerType, resolver, context, routeParameters);
+		foreach (var item in Enum.GetValues(typeof(ControllerVersion)))
+			if (controllerExecutors.All(x => x.Version != (ControllerVersion)item))
+				throw new InvalidOperationException($"The Simplify.Web versioned executor for version '{item}' is not found");
 
-		switch (controller)
-		{
-			case SyncControllerBase syncController:
-				{
-					response = syncController.Invoke();
-					break;
-				}
+		_controllerExecutors = controllerExecutors;
+		_controllerResponseBuilder = controllerResponseBuilder;
+	}
 
-			case AsyncControllerBase asyncController:
-				{
-					response = await asyncController.Invoke();
-					break;
-				}
-		}
+	/// <summary>
+	/// Creates and executes the controller.
+	/// </summary>
+	/// <param name="args">The controller execution args.</param>
+	/// <returns>The controller response.</returns>
+	public async Task<ControllerResponseResult> Execute(IControllerExecutionArgs args)
+	{
+		var executor = _controllerExecutors.First(x => x.Version == args.ControllerMetaData.Version);
+
+		var response = await executor.Execute(args);
 
 		if (response == null)
 			return ControllerResponseResult.Default;
 
-		_controllerResponseBuilder.BuildControllerResponseProperties(response, resolver);
+		_controllerResponseBuilder.BuildControllerResponseProperties(response, args.Resolver);
 
 		return await response.Process();
 	}

@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Simplify.DI;
 using Simplify.Web.Meta;
 
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-///  Provides v1 controllers executor
+///  Provides v2 controllers executor.
 /// </summary>
 /// <param name="controllerFactory">The controller factory.</param>
 public class Controller2Executor(IController2Factory controllerFactory) : IVersionedControllerExecutor
@@ -21,15 +18,12 @@ public class Controller2Executor(IController2Factory controllerFactory) : IVersi
 	public ControllerVersion Version => ControllerVersion.V2;
 
 	/// <summary>
-	/// Creates and executes the specified controller.
+	/// Creates and executes the controller.
 	/// </summary>
-	/// <param name="controllerMetaData">Type of the controller.</param>
-	/// <param name="resolver">The DI container resolver.</param>
-	/// <param name="context">The context.</param>
-	/// <param name="routeParameters">The route parameters.</param>
+	/// <param name="args">The controller execution args.</param>
+	/// <returns>The controller response.</returns>
 	/// <returns></returns>
-	public Task<ControllerResponse?> Execute(IControllerMetaData controllerMetaData, IDIResolver resolver, HttpContext context,
-		IDictionary<string, object>? routeParameters = null)
+	public Task<ControllerResponse?> Execute(IControllerExecutionArgs args)
 	{
 		throw new NotImplementedException();
 	}

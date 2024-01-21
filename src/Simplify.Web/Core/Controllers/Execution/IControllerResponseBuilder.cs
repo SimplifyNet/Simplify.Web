@@ -3,7 +3,7 @@
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-/// Represent controller response builder
+/// Represents controller response builder.
 /// </summary>
 public interface IControllerResponseBuilder
 {

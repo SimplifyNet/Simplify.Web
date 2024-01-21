@@ -48,7 +48,7 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 			if (securityResult == SecurityRuleCheckResult.Forbidden)
 				return await ProcessForbiddenSecurityRule(resolver, context);
 
-			var result = await ProcessController(controller, resolver, context, matcherResult.RouteParameters);
+			var result = await ProcessController(new ControllerExecutionArgs(controller, resolver, context, matcherResult.RouteParameters));
 
 			if (result != ControllersProcessorResult.Ok)
 				return result;
@@ -70,9 +70,9 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 		return ControllersProcessorResult.Ok;
 	}
 
-	private async Task<ControllersProcessorResult> ProcessController(IControllerMetaData controller, IDIResolver resolver, HttpContext context, IDictionary<string, object>? routeParameters)
+	private async Task<ControllersProcessorResult> ProcessController(IControllerExecutionArgs args)
 	{
-		var result = await _controllerExecutor.Execute(controller, resolver, context, routeParameters);
+		var result = await _controllerExecutor.Execute(args);
 
 		if (result == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;
@@ -90,7 +90,7 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 		if (http404Controller == null)
 			return ControllersProcessorResult.Http404;
 
-		var handlerControllerResult = await _controllerExecutor.Execute(http404Controller, resolver, context);
+		var handlerControllerResult = await _controllerExecutor.Execute(new ControllerExecutionArgs(http404Controller, resolver, context));
 
 		if (handlerControllerResult == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;
@@ -108,7 +108,7 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 		if (http403Controller == null)
 			return ControllersProcessorResult.Http403;
 
-		var handlerControllerResult = await _controllerExecutor.Execute(http403Controller, resolver, context);
+		var handlerControllerResult = await _controllerExecutor.Execute(new ControllerExecutionArgs(http403Controller, resolver, context));
 
 		if (handlerControllerResult == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;

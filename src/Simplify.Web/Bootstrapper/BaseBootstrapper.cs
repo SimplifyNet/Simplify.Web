@@ -54,11 +54,15 @@ public class BaseBootstrapper
 
 		RegisterSimplifyWebSettings();
 		RegisterViewFactory();
-		RegisterControllerFactory();
+		RegisterController1Factory();
+		RegisterController2Factory();
 		RegisterControllerPathParser();
 		RegisterRouteMatcher();
 		RegisterControllersAgent();
 		RegisterControllerResponseBuilder();
+		RegisterController1Executor();
+		RegisterController2Executor();
+		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
 		RegisterControllersProcessor();
 		RegisterEnvironment();
@@ -130,7 +134,7 @@ public class BaseBootstrapper
 			.AddJsonFile("appsettings.json", true)
 			.AddJsonFile($"appsettings.{environmentName}.json", true);
 
-		BootstrapperFactory.ContainerProvider.Register<IConfiguration>(p => builder.Build(), LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<IConfiguration>(r => builder.Build(), LifetimeType.Singleton);
 	}
 
 	/// <summary>
@@ -141,7 +145,7 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IControllersMetaStore)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register(p => ControllersMetaStore.Current, LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register(r => ControllersMetaStore.Current, LifetimeType.Singleton);
 	}
 
 	/// <summary>
@@ -152,7 +156,7 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IViewsMetaStore)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register(p => ViewsMetaStore.Current, LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register(r => ViewsMetaStore.Current, LifetimeType.Singleton);
 	}
 
 	/// <summary>
@@ -178,14 +182,25 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the controller factory.
+	/// Registers the controller v1 factory.
 	/// </summary>
-	public virtual void RegisterControllerFactory()
+	public virtual void RegisterController1Factory()
 	{
 		if (TypesToExclude.Contains(typeof(IController1Factory)))
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IController1Factory, Controller1Factory>(LifetimeType.Singleton);
+	}
+
+	/// <summary>
+	/// Registers the controller v1 factory.
+	/// </summary>
+	public virtual void RegisterController2Factory()
+	{
+		if (TypesToExclude.Contains(typeof(IController2Factory)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IController2Factory, Controller2Factory>(LifetimeType.Singleton);
 	}
 
 	/// <summary>
@@ -233,6 +248,43 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
+	/// Registers the controller v1 executor.
+	/// </summary>
+	public virtual void RegisterController1Executor()
+	{
+		if (TypesToExclude.Contains(typeof(Controller1Executor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<Controller1Executor>(LifetimeType.Singleton);
+	}
+
+	/// <summary>
+	/// Registers the controller v1 executor.
+	/// </summary>
+	public virtual void RegisterController2Executor()
+	{
+		if (TypesToExclude.Contains(typeof(Controller2Executor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<Controller2Executor>(LifetimeType.Singleton);
+	}
+
+	/// <summary>
+	/// Registers the versioned controller executors list.
+	/// </summary>
+	public virtual void RegisterVersionedControllerExecutorsList()
+	{
+		if (TypesToExclude.Contains(typeof(IList<IVersionedControllerExecutor>)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IList<IVersionedControllerExecutor>>(r => new List<IVersionedControllerExecutor>
+		{
+			r.Resolve<Controller1Executor>(),
+			r.Resolve<Controller2Executor>()
+		}, LifetimeType.Singleton);
+	}
+
+	/// <summary>
 	/// Registers the controller executor.
 	/// </summary>
 	public virtual void RegisterControllerExecutor()
@@ -240,7 +292,7 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IControllerExecutor)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>();
+		BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>(LifetimeType.Singleton);
 	}
 
 	/// <summary>
@@ -262,8 +314,8 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IEnvironment)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IEnvironment>(
-			p => new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", p.Resolve<ISimplifyWebSettings>()));
+		BootstrapperFactory.ContainerProvider.Register<IEnvironment>(r =>
+			new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", r.Resolve<ISimplifyWebSettings>()));
 	}
 
 	/// <summary>
@@ -274,7 +326,7 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(ILanguageManagerProvider)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(p => new LanguageManagerProvider(p.Resolve<ISimplifyWebSettings>()));
+		BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(r => new LanguageManagerProvider(r.Resolve<ISimplifyWebSettings>()));
 	}
 
 	/// <summary>
@@ -285,13 +337,16 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(ITemplateFactory)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(
-			p =>
+		BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(r =>
 			{
-				var settings = p.Resolve<ISimplifyWebSettings>();
+				var settings = r.Resolve<ISimplifyWebSettings>();
 
-				return new TemplateFactory(p.Resolve<IEnvironment>(), p.Resolve<ILanguageManagerProvider>(),
-					settings.DefaultLanguage, settings.TemplatesMemoryCache, settings.LoadTemplatesFromAssembly);
+				return new TemplateFactory(
+					r.Resolve<IEnvironment>(),
+					r.Resolve<ILanguageManagerProvider>(),
+					settings.DefaultLanguage,
+					settings.TemplatesMemoryCache,
+					settings.LoadTemplatesFromAssembly);
 			});
 	}
 
@@ -303,13 +358,15 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IFileReader)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IFileReader>(
-			p =>
+		BootstrapperFactory.ContainerProvider.Register<IFileReader>(r =>
 			{
-				var settings = p.Resolve<ISimplifyWebSettings>();
+				var settings = r.Resolve<ISimplifyWebSettings>();
 
-				return new FileReader(p.Resolve<IEnvironment>().DataPhysicalPath, p.Resolve<ISimplifyWebSettings>().DefaultLanguage,
-					p.Resolve<ILanguageManagerProvider>(), settings.DisableFileReaderCache);
+				return new FileReader(
+					r.Resolve<IEnvironment>().DataPhysicalPath,
+					r.Resolve<ISimplifyWebSettings>().DefaultLanguage,
+					r.Resolve<ILanguageManagerProvider>(),
+					settings.DisableFileReaderCache);
 			});
 	}
 
@@ -321,12 +378,16 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IStringTable)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IStringTable>(
-			p =>
+		BootstrapperFactory.ContainerProvider.Register<IStringTable>(r =>
 			{
-				var settings = p.Resolve<ISimplifyWebSettings>();
-				return new StringTable(settings.StringTableFiles, settings.DefaultLanguage, p.Resolve<ILanguageManagerProvider>(),
-					p.Resolve<IFileReader>(), settings.StringTableMemoryCache);
+				var settings = r.Resolve<ISimplifyWebSettings>();
+
+				return new StringTable(
+					settings.StringTableFiles,
+					settings.DefaultLanguage,
+					r.Resolve<ILanguageManagerProvider>(),
+					r.Resolve<IFileReader>(),
+					settings.StringTableMemoryCache);
 			});
 	}
 
@@ -338,11 +399,14 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IDataCollector)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IDataCollector>(p =>
+		BootstrapperFactory.ContainerProvider.Register<IDataCollector>(r =>
 		{
-			var settings = p.Resolve<ISimplifyWebSettings>();
+			var settings = r.Resolve<ISimplifyWebSettings>();
 
-			return new DataCollector(settings.DefaultMainContentVariableName, settings.DefaultTitleVariableName, p.Resolve<IStringTable>());
+			return new DataCollector(
+				settings.DefaultMainContentVariableName,
+				settings.DefaultTitleVariableName,
+				r.Resolve<IStringTable>());
 		});
 	}
 
@@ -431,10 +495,10 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IStaticFileHandler)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IStaticFileHandler>(
-			p =>
-				new StaticFileHandler(p.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
-					p.Resolve<IEnvironment>().SitePhysicalPath));
+		BootstrapperFactory.ContainerProvider.Register<IStaticFileHandler>(r =>
+			new StaticFileHandler(
+				r.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
+				r.Resolve<IEnvironment>().SitePhysicalPath));
 	}
 
 	/// <summary>
@@ -456,10 +520,11 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IRequestHandler)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IRequestHandler>(
-				p =>
-					new RequestHandler(p.Resolve<IControllersRequestHandler>(),
-						p.Resolve<IStaticFilesRequestHandler>(), p.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
+		BootstrapperFactory.ContainerProvider.Register<IRequestHandler>(r =>
+			new RequestHandler(
+				r.Resolve<IControllersRequestHandler>(),
+				r.Resolve<IStaticFilesRequestHandler>(),
+				r.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
 	}
 
 	/// <summary>
@@ -481,9 +546,10 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IContextVariablesSetter)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IContextVariablesSetter>(
-				p =>
-					new ContextVariablesSetter(p.Resolve<IDataCollector>(), p.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
+		BootstrapperFactory.ContainerProvider.Register<IContextVariablesSetter>(r =>
+			new ContextVariablesSetter(
+				r.Resolve<IDataCollector>(),
+				r.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
 	}
 
 	/// <summary>
@@ -505,7 +571,7 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IRedirector)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IRedirector>(p => new Redirector(p.Resolve<IWebContextProvider>().Get()));
+		BootstrapperFactory.ContainerProvider.Register<IRedirector>(r => new Redirector(r.Resolve<IWebContextProvider>().Get()));
 	}
 
 	/// <summary>
@@ -516,7 +582,7 @@ public class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IModelHandler)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IModelHandler>(p => new HttpModelHandler(p.Resolve<IWebContextProvider>().Get()));
+		BootstrapperFactory.ContainerProvider.Register<IModelHandler>(r => new HttpModelHandler(r.Resolve<IWebContextProvider>().Get()));
 	}
 
 	/// <summary>

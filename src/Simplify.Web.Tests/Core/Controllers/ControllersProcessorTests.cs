@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using Simplify.DI;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Meta;
@@ -19,7 +16,7 @@ namespace Simplify.Web.Tests.Core.Controllers;
 [TestFixture]
 public class ControllersProcessorTests
 {
-	private readonly IDictionary<string, object> _routeParameters = new ExpandoObject()!;
+	private readonly IDictionary<string, object> _routeParameters = new Dictionary<string, object>();
 	private ControllersProcessor _processor = null!;
 	private Mock<IControllersAgent> _agent = null!;
 	private Mock<IControllerExecutor> _controllersExecutor = null!;
@@ -60,7 +57,7 @@ public class ControllersProcessorTests
 	[Test]
 	public async Task ProcessControllers_NoControllersMatchedNo404Controller_404Returned()
 	{
-		// Assign
+		// Arrange
 		_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult());
 
 		// Act
@@ -68,17 +65,17 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Http404, result);
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()), Times.Never);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Http404));
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))),
+			Times.Never);
 	}
 
 	[Test]
 	public async Task ProcessControllers_NoControllersMatchedButHave404Controller_404ControllerExecuted()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult());
 		_agent.Setup(
@@ -90,14 +87,14 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Ok, result);
-		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()), Times.Never);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Ok));
 
 		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))),
+			Times.Never);
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)));
 
 		_redirector.VerifySet(x => x.PreviousPageUrl = It.IsAny<string>(), Times.Never);
 	}
@@ -105,72 +102,68 @@ public class ControllersProcessorTests
 	[Test]
 	public async Task ProcessControllers_NoControllersMatchedButHave404ControllerRawResult_404ControllerExecutedRawReturned()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult());
-		_agent.Setup(
-				x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http404Handler)))
+		_agent.Setup(x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http404Handler)))
 			.Returns(new ControllerMetaData(typeof(TestController2)));
 
-		_controllersExecutor.Setup(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(Task.FromResult(ControllerResponseResult.RawOutput));
+		_controllersExecutor.Setup(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2))))
+				.Returns(Task.FromResult(ControllerResponseResult.RawOutput));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.RawOutput, result);
-		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()), Times.Never);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.RawOutput));
 
 		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))),
+			Times.Never);
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)));
 	}
 
 	[Test]
 	public async Task ProcessControllers_NoControllersMatchedButHave404ControllerRedirect_404ControllerExecutedRedirectReturned()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult());
-		_agent.Setup(
-				x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http404Handler)))
+		_agent.Setup(x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http404Handler)))
 			.Returns(new ControllerMetaData(typeof(TestController2)));
 
-		_controllersExecutor.Setup(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>())).Returns(Task.FromResult(ControllerResponseResult.Redirect));
+		_controllersExecutor.Setup(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2))))
+				.Returns(Task.FromResult(ControllerResponseResult.Redirect));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Redirect, result);
-		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()), Times.Never);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Redirect));
 
 		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))),
+			Times.Never);
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)));
 	}
 
 	[Test]
 	public async Task ProcessControllers_OnlyAnyPageControllerMatchedButHave404Controller_404ControllerExecuted()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult(true));
-		_agent.Setup(
-				x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http404Handler)))
+		_agent.Setup(x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http404Handler)))
 			.Returns(new ControllerMetaData(typeof(TestController2)));
+
 		_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(true);
 
 		// Act
@@ -178,22 +171,21 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Ok, result);
-		_agent.Verify(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>()));
-		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()));
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Ok));
 
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
+		_agent.Verify(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>()));
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))));
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)));
 	}
 
 	[Test]
 	public async Task ProcessControllers_StandardControllerMatched_Executed()
 	{
-		// Assign
+		// Arrange
 		_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
 
 		// Act
@@ -201,36 +193,33 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Ok, result);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Ok));
 
 		_agent.Verify(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>()));
 
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters)));
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))));
 
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)), Times.Never);
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)),
+			Times.Never);
 
 		_redirector.Verify(x => x.SetPreviousPageUrlToCurrentPage());
-
-		// Check
-		//_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()));
 	}
 
 	[Test]
 	public async Task ProcessControllers_StandardControllersOneIsMatchedNull_ExecutedOnce()
 	{
-		// Assign
+		// Arrange
 
-		_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
-		_agent.SetupSequence(
-				x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>()))
-			.Returns(new RouteMatchResult(true, _routeParameters))
-			.Returns((IRouteMatchResult?)null);
+		_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>()))
+			.Returns(false);
+
+		_agent.SetupSequence(x =>
+			 x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>()))
+				.Returns(new RouteMatchResult(true, _routeParameters))
+				.Returns((IRouteMatchResult?)null);
+
 		_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>
 		{
 			_metaData,
@@ -242,26 +231,23 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Ok, result);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Ok));
+
 		_agent.Verify(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>()), Times.Once);
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters)), Times.Once);
 
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)), Times.Never);
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)),
+			Times.Once);
 
-		// Check
-		//_controllersExecutor.Verify(x => x.ProcessAsyncControllersResponses(It.IsAny<IDIContainerProvider>()), Times.Once);
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)),
+			Times.Never);
 	}
 
 	[Test]
 	public async Task ProcessControllers_StandardControllerMatchedReturnsRawData_ReturnedRawDataSubsequentNotExecuted()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
 		_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>
@@ -270,28 +256,26 @@ public class ControllersProcessorTests
 			_metaData
 		});
 
-		_controllersExecutor.Setup(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters))).Returns(
-			Task.FromResult(ControllerResponseResult.RawOutput));
+		_controllersExecutor.Setup(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)))
+				.Returns(Task.FromResult(ControllerResponseResult.RawOutput));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.RawOutput, result);
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters)), Times.Once);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.RawOutput));
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)),
+			Times.Once);
 	}
 
 	[Test]
 	public async Task ProcessControllers_StandardControllerMatchedReturnsRedirect_ReturnedRedirectSubsequentNotExecuted()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.IsAnyPageController(It.IsAny<IControllerMetaData>())).Returns(false);
 		_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>
@@ -300,28 +284,26 @@ public class ControllersProcessorTests
 			_metaData
 		});
 
-		_controllersExecutor.Setup(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters))).Returns(
-			Task.FromResult(ControllerResponseResult.Redirect));
+		_controllersExecutor.Setup(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)))
+				.Returns(Task.FromResult(ControllerResponseResult.Redirect));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Redirect, result);
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == _routeParameters)), Times.Once);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Redirect));
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)),
+			Times.Once);
 	}
 
 	[Test]
 	public async Task ProcessControllers_NotAuthenticated_ReturnedHttp401()
 	{
-		// Assign
+		// Arrange
 		_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.NotAuthenticated);
 
 		// Act
@@ -329,18 +311,18 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Http401, result);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Http401));
+
 		_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>()));
 	}
 
 	[Test]
 	public async Task ProcessControllers_ForbiddenHave403Controller_403ControllerExecuted()
 	{
-		// Assign
+		// Arrange
 
 		_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.Forbidden);
-		_agent.Setup(
-				x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http403Handler)))
+		_agent.Setup(x => x.GetHandlerController(It.Is<HandlerControllerType>(d => d == HandlerControllerType.Http403Handler)))
 			.Returns(new ControllerMetaData(typeof(TestController2)));
 
 		// Act
@@ -348,23 +330,24 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Ok, result);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Ok));
+
 		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()), Times.Never);
-		_controllersExecutor.Verify(
-			x =>
-				x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController2)), It.IsAny<IDIContainerProvider>(),
-					It.IsAny<HttpContext>(), It.Is<IDictionary<string, Object>>(d => d == null)));
-		_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>()));
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))),
+			Times.Never);
+
+		_controllersExecutor.Verify(x =>
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2) && t.RouteParameters == null)));
 
 		_redirector.VerifySet(x => x.PreviousPageUrl = It.IsAny<string>(), Times.Never);
+
+		_agent.Verify(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>()));
 	}
 
 	[Test]
 	public async Task ProcessControllers_ForbiddenNotHave403Controller_Http403Returned()
 	{
-		// Assign
+		// Arrange
 		_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>())).Returns(SecurityRuleCheckResult.Forbidden);
 
 		// Act
@@ -372,10 +355,12 @@ public class ControllersProcessorTests
 
 		// Assert
 
-		Assert.AreEqual(ControllersProcessorResult.Http403, result);
+		Assert.That(result, Is.EqualTo(ControllersProcessorResult.Http403));
+
 		_controllersExecutor.Verify(x =>
-			x.Execute(It.Is<IControllerMetaData>(t => t.ControllerType == typeof(TestController1)), It.IsAny<IDIContainerProvider>(),
-				It.IsAny<HttpContext>(), It.IsAny<IDictionary<string, Object>>()), Times.Never);
-		_agent.Setup(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>()));
+			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1))),
+			Times.Never);
+
+		_agent.Verify(x => x.IsSecurityRulesViolated(It.IsAny<IControllerMetaData>(), It.IsAny<ClaimsPrincipal>()));
 	}
 }

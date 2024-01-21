@@ -16,7 +16,7 @@ public interface IControllerMetaData
 	Type ControllerType { get; }
 
 	/// <summary>
-	/// Gets the controller version
+	/// Gets the controller version.
 	/// </summary>
 	public ControllerVersion Version { get; }
 
