@@ -10,21 +10,15 @@ namespace Simplify.Web.Core.Controllers;
 /// <summary>
 /// Provides controllers agent
 /// </summary>
-public class ControllersAgent : IControllersAgent
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllersAgent" /> class.
+/// </remarks>
+/// <param name="controllersMetaStore">The controllers meta store.</param>
+/// <param name="routeMatcher">The route matcher.</param>
+public class ControllersAgent(IControllersMetaStore controllersMetaStore, IRouteMatcher routeMatcher) : IControllersAgent
 {
-	private readonly IControllersMetaStore _controllersMetaStore;
-	private readonly IRouteMatcher _routeMatcher;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllersAgent" /> class.
-	/// </summary>
-	/// <param name="controllersMetaStore">The controllers meta store.</param>
-	/// <param name="routeMatcher">The route matcher.</param>
-	public ControllersAgent(IControllersMetaStore controllersMetaStore, IRouteMatcher routeMatcher)
-	{
-		_controllersMetaStore = controllersMetaStore;
-		_routeMatcher = routeMatcher;
-	}
+	private readonly IControllersMetaStore _controllersMetaStore = controllersMetaStore;
+	private readonly IRouteMatcher _routeMatcher = routeMatcher;
 
 	/// <summary>
 	/// Gets the standard controllers meta data.
