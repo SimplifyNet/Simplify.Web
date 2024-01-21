@@ -5,7 +5,7 @@ using Simplify.Web.Modules.Data.Html;
 namespace Simplify.Web;
 
 /// <summary>
-/// Modules accessor base class
+/// Provides modules accessor base class
 /// </summary>
 public abstract class ModulesAccessor : ViewAccessor
 {
