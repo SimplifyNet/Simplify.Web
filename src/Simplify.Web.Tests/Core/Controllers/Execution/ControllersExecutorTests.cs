@@ -6,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using Simplify.DI;
 using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Core.Controllers.Execution.V1;
 using Simplify.Web.Meta;
 using Simplify.Web.Tests.TestEntities;
 
@@ -16,7 +15,7 @@ namespace Simplify.Web.Tests.Core.Controllers.Execution;
 public class ControllersExecutorTests
 {
 	private ControllerExecutor _executor = null!;
-	private Mock<IControllerFactory> _controllerFactory = null!;
+	private Mock<IController1Factory> _controllerFactory = null!;
 	private Mock<IControllerResponseBuilder> _controllerResponseBuilder = null!;
 
 	private Mock<Controller> _syncController = null!;
@@ -29,7 +28,7 @@ public class ControllersExecutorTests
 	[SetUp]
 	public void Initialize()
 	{
-		_controllerFactory = new Mock<IControllerFactory>();
+		_controllerFactory = new Mock<IController1Factory>();
 		_controllerResponseBuilder = new Mock<IControllerResponseBuilder>();
 		_executor = new ControllerExecutor(_controllerFactory.Object, _controllerResponseBuilder.Object);
 

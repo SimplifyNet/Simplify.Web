@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
 
-namespace Simplify.Web.Core.Controllers.Execution.V1;
+namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
 /// Controller factory
 /// </summary>
-public class ControllerFactory : ActionModulesAccessorBuilder, IControllerFactory
+public class Controller1Factory : ActionModulesAccessorBuilder, IController1Factory
 {
 	/// <summary>
 	/// Creates the controller.

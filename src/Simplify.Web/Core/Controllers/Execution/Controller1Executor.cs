@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Meta;
 
-namespace Simplify.Web.Core.Controllers.Execution.V1;
+namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
 ///  Provides v1 controllers executor
 /// </summary>
 /// <param name="controllerFactory">The controller factory.</param>
-public class ControllerExecutor1(IControllerFactory controllerFactory) : IVersionedControllerExecutor
+public class Controller1Executor1(IController1Factory controllerFactory) : IVersionedControllerExecutor
 {
-	private readonly IControllerFactory _controllerFactory = controllerFactory;
+	private readonly IController1Factory _controllerFactory = controllerFactory;
 
 	/// <summary>
 	/// Gets the controller version

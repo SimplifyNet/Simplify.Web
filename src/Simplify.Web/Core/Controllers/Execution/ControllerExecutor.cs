@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
-using Simplify.Web.Core.Controllers.Execution.V1;
 using Simplify.Web.Meta;
 
 namespace Simplify.Web.Core.Controllers.Execution;
@@ -15,9 +14,9 @@ namespace Simplify.Web.Core.Controllers.Execution;
 /// </remarks>
 /// <param name="controllerFactory">The controller factory.</param>
 /// <param name="controllerResponseBuilder">The controller response builder.</param>
-public class ControllerExecutor(IControllerFactory controllerFactory, IControllerResponseBuilder controllerResponseBuilder) : IControllerExecutor
+public class ControllerExecutor(IController1Factory controllerFactory, IControllerResponseBuilder controllerResponseBuilder) : IControllerExecutor
 {
-	private readonly IControllerFactory _controllerFactory = controllerFactory;
+	private readonly IController1Factory _controllerFactory = controllerFactory;
 	private readonly IControllerResponseBuilder _controllerResponseBuilder = controllerResponseBuilder;
 
 	/// <summary>

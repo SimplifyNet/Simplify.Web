@@ -6,7 +6,6 @@ using Simplify.DI;
 using Simplify.Web.Core;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Core.Controllers.Execution.V1;
 using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Core.StaticFiles;
 using Simplify.Web.Core.Views;
@@ -89,7 +88,7 @@ public class SimplifyWebRegistrationsOverride
 	/// <param name="registrator">IOC Container registrator</param>
 	public SimplifyWebRegistrationsOverride OverrideControllerFactory(Action<IDIRegistrator> registrator)
 	{
-		_actions.Add(typeof(IControllerFactory), registrator);
+		_actions.Add(typeof(IController1Factory), registrator);
 
 		return this;
 	}

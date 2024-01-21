@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
-namespace Simplify.Web.Core.Controllers.Execution.V2;
+namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
 /// Represent controller factory
 /// </summary>
-public interface IControllerFactory
+public interface IController2Factory
 {
 	/// <summary>
 	/// Creates the controller.

@@ -6,7 +6,6 @@ using Simplify.DI;
 using Simplify.Web.Core;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Core.Controllers.Execution.V1;
 using Simplify.Web.Core.PageAssembly;
 using Simplify.Web.Core.StaticFiles;
 using Simplify.Web.Core.Views;
@@ -183,10 +182,10 @@ public class BaseBootstrapper
 	/// </summary>
 	public virtual void RegisterControllerFactory()
 	{
-		if (TypesToExclude.Contains(typeof(IControllerFactory)))
+		if (TypesToExclude.Contains(typeof(IController1Factory)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IControllerFactory, ControllerFactory>(LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<IController1Factory, Controller1Factory>(LifetimeType.Singleton);
 	}
 
 	/// <summary>
