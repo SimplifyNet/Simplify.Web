@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Simplify.Web.Attributes;
 
 /// <summary>
-/// Indicates whether controller requires user authorization
+/// Indicates whether controller requires user authorization.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
 public class AuthorizeAttribute : Attribute

@@ -3,16 +3,15 @@
 namespace Simplify.Web.Attributes;
 
 /// <summary>
-/// Set controller request route path
+/// Set controller request route path.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="GetAttribute"/> class.
+/// </remarks>
+/// <param name="route">The route.</param>
 [AttributeUsage(AttributeTargets.Class)]
-public class ControllerRouteAttribute : Attribute
+public class ControllerRouteAttribute(string route) : Attribute
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="GetAttribute"/> class.
-	/// </summary>
-	/// <param name="route">The route.</param>
-	public ControllerRouteAttribute(string route) => Route = route;
 
 	/// <summary>
 	/// Gets the route.
@@ -20,5 +19,5 @@ public class ControllerRouteAttribute : Attribute
 	/// <value>
 	/// The route.
 	/// </value>
-	public string Route { get; }
+	public string Route { get; } = route;
 }

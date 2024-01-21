@@ -3,16 +3,13 @@
 namespace Simplify.Web.Attributes;
 
 /// <summary>
-/// Set controller HTTP DELETE request route path
+/// Set controller HTTP DELETE request route path.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="DeleteAttribute"/> class.
+/// </remarks>
+/// <param name="route">The route.</param>
 [AttributeUsage(AttributeTargets.Class)]
-public class DeleteAttribute : ControllerRouteAttribute
+public class DeleteAttribute(string route) : ControllerRouteAttribute(route)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="DeleteAttribute"/> class.
-	/// </summary>
-	/// <param name="route">The route.</param>
-	public DeleteAttribute(string route) : base(route)
-	{
-	}
 }

@@ -23,13 +23,13 @@ using Simplify.Web.Settings;
 namespace Simplify.Web.Bootstrapper;
 
 /// <summary>
-/// Base and default Simplify.Web bootstrapper
+/// Base and default Simplify.Web bootstrapper.
 /// </summary>
 // ReSharper disable once ClassTooBig
 public class BaseBootstrapper
 {
 	/// <summary>
-	/// Provides `Simplify.Web` types to exclude from registrations
+	/// Provides `Simplify.Web` types to exclude from registrations.
 	/// </summary>
 	protected IEnumerable<Type> TypesToExclude { get; private set; } = new List<Type>();
 
@@ -102,10 +102,8 @@ public class BaseBootstrapper
 	public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
 	{
 		foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
-					 .Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
-		{
+			.Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
 			BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
-		}
 	}
 
 	/// <summary>
@@ -114,7 +112,8 @@ public class BaseBootstrapper
 	/// <param name="typesToIgnore">The types to ignore.</param>
 	public virtual void RegisterViews(IEnumerable<Type> typesToIgnore)
 	{
-		foreach (var viewType in ViewsMetaStore.Current.ViewsTypes.Where(viewType => typesToIgnore.All(x => x != viewType)))
+		foreach (var viewType in ViewsMetaStore.Current.ViewsTypes
+			.Where(viewType => typesToIgnore.All(x => x != viewType)))
 			BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
 	}
 
@@ -193,7 +192,7 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the controller v1 factory.
+	/// Registers the controller v2 factory.
 	/// </summary>
 	public virtual void RegisterController2Factory()
 	{
@@ -259,7 +258,7 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the controller v1 executor.
+	/// Registers the controller v2 executor.
 	/// </summary>
 	public virtual void RegisterController2Executor()
 	{
@@ -338,16 +337,16 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(r =>
-			{
-				var settings = r.Resolve<ISimplifyWebSettings>();
+		{
+			var settings = r.Resolve<ISimplifyWebSettings>();
 
-				return new TemplateFactory(
-					r.Resolve<IEnvironment>(),
-					r.Resolve<ILanguageManagerProvider>(),
-					settings.DefaultLanguage,
-					settings.TemplatesMemoryCache,
-					settings.LoadTemplatesFromAssembly);
-			});
+			return new TemplateFactory(
+				r.Resolve<IEnvironment>(),
+				r.Resolve<ILanguageManagerProvider>(),
+				settings.DefaultLanguage,
+				settings.TemplatesMemoryCache,
+				settings.LoadTemplatesFromAssembly);
+		});
 	}
 
 	/// <summary>
@@ -359,15 +358,15 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IFileReader>(r =>
-			{
-				var settings = r.Resolve<ISimplifyWebSettings>();
+		{
+			var settings = r.Resolve<ISimplifyWebSettings>();
 
-				return new FileReader(
-					r.Resolve<IEnvironment>().DataPhysicalPath,
-					r.Resolve<ISimplifyWebSettings>().DefaultLanguage,
-					r.Resolve<ILanguageManagerProvider>(),
-					settings.DisableFileReaderCache);
-			});
+			return new FileReader(
+				r.Resolve<IEnvironment>().DataPhysicalPath,
+				r.Resolve<ISimplifyWebSettings>().DefaultLanguage,
+				r.Resolve<ILanguageManagerProvider>(),
+				settings.DisableFileReaderCache);
+		});
 	}
 
 	/// <summary>
@@ -379,16 +378,16 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IStringTable>(r =>
-			{
-				var settings = r.Resolve<ISimplifyWebSettings>();
+		{
+			var settings = r.Resolve<ISimplifyWebSettings>();
 
-				return new StringTable(
-					settings.StringTableFiles,
-					settings.DefaultLanguage,
-					r.Resolve<ILanguageManagerProvider>(),
-					r.Resolve<IFileReader>(),
-					settings.StringTableMemoryCache);
-			});
+			return new StringTable(
+				settings.StringTableFiles,
+				settings.DefaultLanguage,
+				r.Resolve<ILanguageManagerProvider>(),
+				r.Resolve<IFileReader>(),
+				settings.StringTableMemoryCache);
+		});
 	}
 
 	/// <summary>

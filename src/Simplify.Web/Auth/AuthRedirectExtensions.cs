@@ -3,7 +3,7 @@
 namespace Simplify.Web.Auth;
 
 /// <summary>
-/// Provides authentication redirection extensions
+/// Provides authentication redirection extensions.
 /// </summary>
 public static class AuthRedirectExtensions
 {

@@ -3,16 +3,13 @@
 namespace Simplify.Web.Attributes;
 
 /// <summary>
-/// Set controller HTTP PATCH request route path
+/// Set controller HTTP PATCH request route path.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="PatchAttribute"/> class.
+/// </remarks>
+/// <param name="route">The route.</param>
 [AttributeUsage(AttributeTargets.Class)]
-public class PatchAttribute : ControllerRouteAttribute
+public class PatchAttribute(string route) : ControllerRouteAttribute(route)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PatchAttribute"/> class.
-	/// </summary>
-	/// <param name="route">The route.</param>
-	public PatchAttribute(string route) : base(route)
-	{
-	}
 }

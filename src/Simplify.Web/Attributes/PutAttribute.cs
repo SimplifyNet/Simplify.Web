@@ -3,16 +3,13 @@
 namespace Simplify.Web.Attributes;
 
 /// <summary>
-/// Set controller HTTP PUT request route path
+/// Set controller HTTP PUT request route path.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="PutAttribute"/> class.
+/// </remarks>
+/// <param name="route">The route.</param>
 [AttributeUsage(AttributeTargets.Class)]
-public class PutAttribute : ControllerRouteAttribute
+public class PutAttribute(string route) : ControllerRouteAttribute(route)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PutAttribute"/> class.
-	/// </summary>
-	/// <param name="route">The route.</param>
-	public PutAttribute(string route) : base(route)
-	{
-	}
 }

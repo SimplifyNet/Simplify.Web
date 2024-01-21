@@ -3,16 +3,13 @@
 namespace Simplify.Web.Attributes;
 
 /// <summary>
-/// Set controller HTTP OPTIONS request route path
+/// Set controller HTTP OPTIONS request route path.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="OptionsAttribute"/> class.
+/// </remarks>
+/// <param name="route">The route.</param>
 [AttributeUsage(AttributeTargets.Class)]
-public class OptionsAttribute : ControllerRouteAttribute
+public class OptionsAttribute(string route) : ControllerRouteAttribute(route)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="OptionsAttribute"/> class.
-	/// </summary>
-	/// <param name="route">The route.</param>
-	public OptionsAttribute(string route) : base(route)
-	{
-	}
 }

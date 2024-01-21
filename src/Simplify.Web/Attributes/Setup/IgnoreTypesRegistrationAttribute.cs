@@ -3,16 +3,15 @@
 namespace Simplify.Web.Attributes.Setup;
 
 /// <summary>
-/// Specify controllers or views types which should be ignored from DI container registration
+/// Specify controllers or views types which should be ignored from DI container registration.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="IgnoreTypesRegistrationAttribute"/> class.
+/// </remarks>
+/// <param name="types">Controllers or views types which should be ignored from DI container registration</param>
 [AttributeUsage(AttributeTargets.Class)]
-public class IgnoreTypesRegistrationAttribute : Attribute
+public class IgnoreTypesRegistrationAttribute(params Type[] types) : Attribute
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="IgnoreTypesRegistrationAttribute"/> class.
-	/// </summary>
-	/// <param name="types">Controllers or views types which should be ignored from DI container registration</param>
-	public IgnoreTypesRegistrationAttribute(params Type[] types) => Types = types;
 
 	/// <summary>
 	/// Gets the types of controllers.
@@ -20,5 +19,5 @@ public class IgnoreTypesRegistrationAttribute : Attribute
 	/// <value>
 	/// The types of controllers.
 	/// </value>
-	public Type[] Types { get; }
+	public Type[] Types { get; } = types;
 }

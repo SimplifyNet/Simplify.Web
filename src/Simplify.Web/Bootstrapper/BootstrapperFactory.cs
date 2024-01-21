@@ -5,7 +5,7 @@ using Simplify.Web.Meta;
 namespace Simplify.Web.Bootstrapper;
 
 /// <summary>
-/// Bootstrapper factory
+/// Bootstrapper factory.
 /// </summary>
 public static class BootstrapperFactory
 {
