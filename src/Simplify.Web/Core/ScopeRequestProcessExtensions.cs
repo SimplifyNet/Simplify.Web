@@ -5,7 +5,7 @@ using Simplify.DI;
 namespace Simplify.Web.Core;
 
 /// <summary>
-/// Provides request execution by Simplify.Web
+/// Provides request execution by Simplify.Web.
 /// </summary>
 public static class ScopeRequestProcessExtensions
 {

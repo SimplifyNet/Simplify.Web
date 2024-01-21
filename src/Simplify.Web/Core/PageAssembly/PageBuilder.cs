@@ -5,23 +5,17 @@ using Simplify.Web.Modules.Data;
 namespace Simplify.Web.Core.PageAssembly;
 
 /// <summary>
-/// Provides web-page builder
+/// Provides web-page builder.
 /// </summary>
-public class PageBuilder : IPageBuilder
+/// <remarks>
+/// Initializes a new instance of the <see cref="PageBuilder" /> class.
+/// </remarks>
+/// <param name="templateFactory">The template factory.</param>
+/// <param name="dataCollector">The data collector.</param>
+public class PageBuilder(ITemplateFactory templateFactory, IDataCollector dataCollector) : IPageBuilder
 {
-	private readonly ITemplateFactory _templateFactory;
-	private readonly IDataCollector _dataCollector;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PageBuilder" /> class.
-	/// </summary>
-	/// <param name="templateFactory">The template factory.</param>
-	/// <param name="dataCollector">The data collector.</param>
-	public PageBuilder(ITemplateFactory templateFactory, IDataCollector dataCollector)
-	{
-		_templateFactory = templateFactory;
-		_dataCollector = dataCollector;
-	}
+	private readonly ITemplateFactory _templateFactory = templateFactory;
+	private readonly IDataCollector _dataCollector = dataCollector;
 
 	/// <summary>
 	/// Builds a web page

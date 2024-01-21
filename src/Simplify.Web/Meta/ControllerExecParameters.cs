@@ -3,7 +3,7 @@
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Provides controller execution parameters
+/// Provides controller execution parameters,
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerExecParameters" /> class.

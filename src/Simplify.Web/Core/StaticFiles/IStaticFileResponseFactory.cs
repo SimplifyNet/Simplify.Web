@@ -3,7 +3,7 @@
 namespace Simplify.Web.Core.StaticFiles;
 
 /// <summary>
-/// Represent static file response factory
+/// Represent static file response factory.
 /// </summary>
 public interface IStaticFileResponseFactory
 {

@@ -5,21 +5,19 @@ using Simplify.DI;
 namespace Simplify.Web.Model.Validation.Attributes;
 
 /// <summary>
-/// Sets minimum required property length
+/// Sets minimum required property length.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="MinLengthAttribute" /> class.
+/// </remarks>
+/// <param name="minimumPropertyLength">Minimum length of the property.</param>
+/// <param name="errorMessage">The error message.</param>
+/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
 [AttributeUsage(AttributeTargets.Property)]
-public class MinLengthAttribute : ValidationAttribute
+public class MinLengthAttribute(int minimumPropertyLength,
+	string? errorMessage = null,
+	bool isMessageFromStringTable = true) : ValidationAttribute(errorMessage, isMessageFromStringTable)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="MinLengthAttribute" /> class.
-	/// </summary>
-	/// <param name="minimumPropertyLength">Minimum length of the property.</param>
-	/// <param name="errorMessage">The error message.</param>
-	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
-	public MinLengthAttribute(int minimumPropertyLength,
-		string? errorMessage = null,
-		bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) =>
-		MinimumPropertyLength = minimumPropertyLength;
 
 	/// <summary>
 	/// Gets or sets the minimum length of the property.
@@ -27,7 +25,7 @@ public class MinLengthAttribute : ValidationAttribute
 	/// <value>
 	/// The minimum length of the property.
 	/// </value>
-	public int MinimumPropertyLength { get; }
+	public int MinimumPropertyLength { get; } = minimumPropertyLength;
 
 	/// <summary>
 	/// Validates the specified property value.

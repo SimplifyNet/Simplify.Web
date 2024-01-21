@@ -5,19 +5,16 @@ using Simplify.DI;
 namespace Simplify.Web.Model.Validation.Attributes;
 
 /// <summary>
-/// Indicates what this property should be not null or empty
+/// Indicates what this property should be not null or empty.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="RequiredAttribute"/> class.
+/// </remarks>
+/// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
+/// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>
 [AttributeUsage(AttributeTargets.Property)]
-public class RequiredAttribute : ValidationAttribute
+public class RequiredAttribute(string? errorMessage = null, bool isMessageFromStringTable = true) : ValidationAttribute(errorMessage, isMessageFromStringTable)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RequiredAttribute"/> class.
-	/// </summary>
-	/// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
-	/// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>
-	public RequiredAttribute(string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
-	{
-	}
 
 	/// <summary>
 	/// Validates the specified property value.

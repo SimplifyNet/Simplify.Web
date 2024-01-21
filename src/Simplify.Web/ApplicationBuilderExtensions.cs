@@ -8,15 +8,14 @@ using Simplify.Web.RequestPipeline;
 namespace Simplify.Web;
 
 /// <summary>
-/// IApplicationBuilder Simplify.Web extensions
+/// IApplicationBuilder Simplify.Web extensions.
 /// </summary>
 public static class ApplicationBuilderExtensions
 {
 	/// <summary>
-	/// Performs Simplify.Web bootstrapper registrations and adds Simplify.Web to the OWIN pipeline as a terminal middleware
+	/// Performs Simplify.Web bootstrapper registrations and adds Simplify.Web to the OWIN pipeline as a terminal middleware.
 	/// </summary>
 	/// <param name="builder">The OWIN builder.</param>
-	/// <returns></returns>
 	public static IApplicationBuilder UseSimplifyWeb(this IApplicationBuilder builder)
 	{
 		try
@@ -37,10 +36,9 @@ public static class ApplicationBuilderExtensions
 	}
 
 	/// <summary>
-	/// Adds Simplify.Web to the OWIN pipeline as a terminal middleware without bootstrapper registrations (useful when you want to control bootstrapper registrations manually)
+	/// Adds Simplify.Web to the OWIN pipeline as a terminal middleware without bootstrapper registrations (useful when you want to control bootstrapper registrations manually).
 	/// </summary>
 	/// <param name="builder">The builder.</param>
-	/// <returns></returns>
 	public static IApplicationBuilder UseSimplifyWebWithoutRegistrations(this IApplicationBuilder builder)
 	{
 		try
@@ -60,10 +58,9 @@ public static class ApplicationBuilderExtensions
 	}
 
 	/// <summary>
-	/// Performs Simplify.Web bootstrapper registrations and adds Simplify.Web to the OWIN pipeline as a non-terminal middleware
+	/// Performs Simplify.Web bootstrapper registrations and adds Simplify.Web to the OWIN pipeline as a non-terminal middleware.
 	/// </summary>
 	/// <param name="builder">The OWIN builder.</param>
-	/// <returns></returns>
 	public static IApplicationBuilder UseSimplifyWebNonTerminal(this IApplicationBuilder builder)
 	{
 		try
@@ -84,10 +81,9 @@ public static class ApplicationBuilderExtensions
 	}
 
 	/// <summary>
-	/// Adds Simplify.Web to the OWIN pipeline as a non-terminal middleware without bootstrapper registrations
+	/// Adds Simplify.Web to the OWIN pipeline as a non-terminal middleware without bootstrapper registrations.
 	/// </summary>
 	/// <param name="builder">The OWIN builder.</param>
-	/// <returns></returns>
 	public static IApplicationBuilder UseSimplifyWebNonTerminalWithoutRegistrations(this IApplicationBuilder builder)
 	{
 		try

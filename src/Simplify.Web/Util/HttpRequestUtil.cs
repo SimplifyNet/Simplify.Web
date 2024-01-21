@@ -6,7 +6,7 @@ using Simplify.Web.Meta;
 namespace Simplify.Web.Util;
 
 /// <summary>
-/// Provides OWIN and HTTP related utility functions
+/// Provides OWIN and HTTP related utility functions.
 /// </summary>
 public static class HttpRequestUtil
 {

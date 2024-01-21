@@ -6,18 +6,17 @@ using Simplify.DI;
 namespace Simplify.Web.Model.Validation.Attributes;
 
 /// <summary>
-/// Indicates what this property should match regular expression
+/// Indicates what this property should match regular expression.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="RegexAttribute" /> class.
+/// </remarks>
+/// <param name="regexString">The regex string.</param>
+/// <param name="errorMessage">The error message.</param>
+/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
 [AttributeUsage(AttributeTargets.Property)]
-public class RegexAttribute : ValidationAttribute
+public class RegexAttribute(string regexString, string? errorMessage = null, bool isMessageFromStringTable = true) : ValidationAttribute(errorMessage, isMessageFromStringTable)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RegexAttribute" /> class.
-	/// </summary>
-	/// <param name="regexString">The regex string.</param>
-	/// <param name="errorMessage">The error message.</param>
-	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
-	public RegexAttribute(string regexString, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) => RegexString = regexString;
 
 	/// <summary>
 	/// Gets or sets the regex string.
@@ -25,7 +24,7 @@ public class RegexAttribute : ValidationAttribute
 	/// <value>
 	/// The regex string.
 	/// </value>
-	public string RegexString { get; set; }
+	public string RegexString { get; set; } = regexString;
 
 	/// <summary>
 	/// Validates the specified property value.

@@ -7,26 +7,21 @@ using Simplify.Web.Core.StaticFiles;
 namespace Simplify.Web.Core;
 
 /// <summary>
-/// Provides OWIN HTTP request handler
+/// Provides OWIN HTTP request handler.
 /// </summary>
-public class RequestHandler : IRequestHandler
+/// <remarks>
+/// Initializes a new instance of the <see cref="RequestHandler" /> class.
+/// </remarks>
+/// <param name="controllersRequestHandler">The controllers request handler.</param>
+/// <param name="staticFilesRequestHandler">The static files request handler.</param>
+/// <param name="staticFilesHandling">Sets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only.</param>
+public class RequestHandler(IControllersRequestHandler controllersRequestHandler,
+	IStaticFilesRequestHandler staticFilesRequestHandler,
+	bool staticFilesHandling) : IRequestHandler
 {
-	private readonly IControllersRequestHandler _controllersRequestHandler;
-	private readonly IStaticFilesRequestHandler _staticFilesRequestHandler;
-	private readonly bool _staticFilesHandling;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RequestHandler" /> class.
-	/// </summary>
-	/// <param name="controllersRequestHandler">The controllers request handler.</param>
-	/// <param name="staticFilesRequestHandler">The static files request handler.</param>
-	/// <param name="staticFilesHandling">Sets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only.</param>
-	public RequestHandler(IControllersRequestHandler controllersRequestHandler, IStaticFilesRequestHandler staticFilesRequestHandler, bool staticFilesHandling)
-	{
-		_controllersRequestHandler = controllersRequestHandler;
-		_staticFilesRequestHandler = staticFilesRequestHandler;
-		_staticFilesHandling = staticFilesHandling;
-	}
+	private readonly IControllersRequestHandler _controllersRequestHandler = controllersRequestHandler;
+	private readonly IStaticFilesRequestHandler _staticFilesRequestHandler = staticFilesRequestHandler;
+	private readonly bool _staticFilesHandling = staticFilesHandling;
 
 	/// <summary>
 	/// Processes the OWIN HTTP request.

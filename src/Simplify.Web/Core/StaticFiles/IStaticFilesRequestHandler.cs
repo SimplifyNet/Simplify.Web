@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 namespace Simplify.Web.Core.StaticFiles;
 
 /// <summary>
-/// Represent static files request handler
+/// Represent static files request handler.
 /// </summary>
 public interface IStaticFilesRequestHandler
 {

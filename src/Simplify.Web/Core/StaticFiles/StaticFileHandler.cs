@@ -9,24 +9,18 @@ using Simplify.Web.Util;
 namespace Simplify.Web.Core.StaticFiles;
 
 /// <summary>
-/// Provides static file handler
+/// Provides static file handler.
 /// </summary>
 /// <seealso cref="IStaticFileHandler" />
-public class StaticFileHandler : IStaticFileHandler
+/// <remarks>
+/// Initializes a new instance of the <see cref="StaticFileHandler"/> class.
+/// </remarks>
+/// <param name="staticFilesPaths">The static files paths.</param>
+/// <param name="sitePhysicalPath">The site physical path.</param>
+public class StaticFileHandler(IList<string> staticFilesPaths, string sitePhysicalPath) : IStaticFileHandler
 {
-	private readonly IList<string> _staticFilesPaths;
-	private readonly string _sitePhysicalPath;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="StaticFileHandler"/> class.
-	/// </summary>
-	/// <param name="staticFilesPaths">The static files paths.</param>
-	/// <param name="sitePhysicalPath">The site physical path.</param>
-	public StaticFileHandler(IList<string> staticFilesPaths, string sitePhysicalPath)
-	{
-		_staticFilesPaths = staticFilesPaths;
-		_sitePhysicalPath = sitePhysicalPath;
-	}
+	private readonly IList<string> _staticFilesPaths = staticFilesPaths;
+	private readonly string _sitePhysicalPath = sitePhysicalPath;
 
 	/// <summary>
 	/// Determines whether  relative file path is a static file route path.
@@ -34,7 +28,9 @@ public class StaticFileHandler : IStaticFileHandler
 	/// <param name="relativeFilePath">The relative file path.</param>
 	/// <returns></returns>
 	public bool IsStaticFileRoutePath(string relativeFilePath) =>
-		_staticFilesPaths.Where(relativeFilePath.ToLower().StartsWith).Any(_ => File.Exists(_sitePhysicalPath + relativeFilePath));
+		_staticFilesPaths
+			.Where(relativeFilePath.ToLower().StartsWith)
+			.Any(_ => File.Exists(_sitePhysicalPath + relativeFilePath));
 
 	/// <summary>
 	/// Gets If-Modified-Since time header from headers collection.
@@ -52,8 +48,8 @@ public class StaticFileHandler : IStaticFileHandler
 	/// <returns></returns>
 	public bool IsFileCanBeUsedFromCache(string cacheControlHeader, DateTime? ifModifiedSinceHeader, DateTime fileLastModifiedTime) =>
 		!HttpRequestUtil.IsNoCacheRequested(cacheControlHeader)
-		&& ifModifiedSinceHeader != null
-		&& fileLastModifiedTime <= ifModifiedSinceHeader.Value;
+			&& ifModifiedSinceHeader != null
+			&& fileLastModifiedTime <= ifModifiedSinceHeader.Value;
 
 	/// <summary>
 	/// Gets the relative file path of request.

@@ -6,7 +6,7 @@ using Simplify.Web.Modules;
 namespace Simplify.Web.Core.Views;
 
 /// <summary>
-/// View factory
+/// View factory.
 /// </summary>
 public class ViewFactory : ModulesAccessorBuilder, IViewFactory
 {

@@ -10,34 +10,29 @@ namespace Simplify.Web.Modules.Data;
 /// <summary>
 /// Localizable text items string table.
 /// </summary>
-public sealed class StringTable : IStringTable
+/// <remarks>
+/// Load string table with current language.
+/// </remarks>
+/// <param name="stringTableFiles">The string table files.</param>
+/// <param name="defaultLanguage">The default language.</param>
+/// <param name="languageManagerProvider">The language manager provider.</param>
+/// <param name="fileReader">The file reader.</param>
+/// <param name="memoryCache">Enable memory cache.</param>
+public sealed class StringTable(IList<string> stringTableFiles,
+	string defaultLanguage,
+	ILanguageManagerProvider languageManagerProvider,
+	IFileReader fileReader,
+	bool memoryCache = false) : IStringTable
 {
 	private static readonly IDictionary<string, IDictionary<string, object?>> Cache = new Dictionary<string, IDictionary<string, object?>>();
 	private static readonly object Locker = new();
 
-	private readonly IList<string> _stringTableFiles;
-	private readonly string _defaultLanguage;
-	private readonly ILanguageManagerProvider _languageManagerProvider;
-	private readonly IFileReader _fileReader;
-	private readonly bool _memoryCache;
+	private readonly IList<string> _stringTableFiles = stringTableFiles;
+	private readonly string _defaultLanguage = defaultLanguage;
+	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
+	private readonly IFileReader _fileReader = fileReader;
+	private readonly bool _memoryCache = memoryCache;
 	private ILanguageManager _languageManager = null!;
-
-	/// <summary>
-	/// Load string table with current language
-	/// </summary>
-	/// <param name="stringTableFiles">The string table files.</param>
-	/// <param name="defaultLanguage">The default language.</param>
-	/// <param name="languageManagerProvider">The language manager provider.</param>
-	/// <param name="fileReader">The file reader.</param>
-	/// <param name="memoryCache">Enable memory cache.</param>
-	public StringTable(IList<string> stringTableFiles, string defaultLanguage, ILanguageManagerProvider languageManagerProvider, IFileReader fileReader, bool memoryCache = false)
-	{
-		_stringTableFiles = stringTableFiles;
-		_defaultLanguage = defaultLanguage;
-		_languageManagerProvider = languageManagerProvider;
-		_fileReader = fileReader;
-		_memoryCache = memoryCache;
-	}
 
 	/// <summary>
 	/// String table items
@@ -55,24 +50,25 @@ public sealed class StringTable : IStringTable
 	}
 
 	/// <summary>
-	/// Get enum associated value from string table by enum type + enum element name
+	/// Get enum associated value from string table by enum type + enum element name.
 	/// </summary>
-	/// <typeparam name="T">Enum</typeparam>
-	/// <param name="enumValue">Enum value</param>
-	/// <returns>associated value</returns>
+	/// <typeparam name="T">Enum.</typeparam>
+	/// <param name="enumValue">Enum value.</param>
+	/// <returns>Associated value.</returns>
 	public string? GetAssociatedValue<T>(T enumValue) where T : struct
 	{
 		var currentItems = (IDictionary<string, object>)Items;
 		var enumItemName = enumValue.GetType().Name + "." + Enum.GetName(typeof(T), enumValue);
 
-		return currentItems.ContainsKey(enumItemName) ? currentItems[enumItemName] as string : null;
+		return currentItems.ContainsKey(enumItemName)
+			? currentItems[enumItemName] as string
+			: null;
 	}
 
 	/// <summary>
 	/// Gets the item from string table.
 	/// </summary>
 	/// <param name="itemName">Name of the item.</param>
-	/// <returns></returns>
 	public string? GetItem(string itemName)
 	{
 		var currentItems = (IDictionary<string, object>)Items;
@@ -111,11 +107,11 @@ public sealed class StringTable : IStringTable
 			return;
 
 		foreach (var item in stringTable.Root.XPathSelectElements("item").Where(x =>
-		         {
-			         var key = (string?)x.Attribute("name");
+				 {
+					 var key = (string?)x.Attribute("name");
 
-			         return x.HasAttributes && key != null && !currentItems.ContainsKey(key);
-		         }))
+					 return x.HasAttributes && key != null && !currentItems.ContainsKey(key);
+				 }))
 			currentItems.Add((string)item.Attribute("name")!, string.IsNullOrEmpty(item.Value) ? (string?)item.Attribute("value") : item.InnerXml().Trim());
 	}
 
@@ -143,7 +139,8 @@ public sealed class StringTable : IStringTable
 
 	private bool TryGetStringTableFromCache()
 	{
-		if (!Cache.ContainsKey(_languageManager.Language)) return false;
+		if (!Cache.ContainsKey(_languageManager.Language))
+			return false;
 
 		Items = Cache[_languageManager.Language];
 

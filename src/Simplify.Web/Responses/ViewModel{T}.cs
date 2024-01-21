@@ -4,25 +4,18 @@ using Simplify.Templates.Model;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides view model response
+/// Provides view model response.
 /// </summary>
-public class ViewModel<T> : ControllerResponse
+/// <remarks>
+/// Initializes a new instance of the <see cref="ViewModel{T}" /> class.
+/// </remarks>
+/// <param name="templateFileName">Name of the template file.</param>
+/// <param name="viewModel">The view model.</param>
+/// <param name="title">The title.</param>
+/// <param name="statusCode">The HTTP response status code.</param>
+public class ViewModel<T>(string templateFileName, T viewModel, string? title = null, int statusCode = 200) : ControllerResponse
 	where T : class
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ViewModel{T}" /> class.
-	/// </summary>
-	/// <param name="templateFileName">Name of the template file.</param>
-	/// <param name="viewModel">The view model.</param>
-	/// <param name="title">The title.</param>
-	/// <param name="statusCode">The HTTP response status code.</param>
-	public ViewModel(string templateFileName, T viewModel, string? title = null, int statusCode = 200)
-	{
-		TemplateFileName = templateFileName;
-		Model = viewModel;
-		Title = title;
-		StatusCode = statusCode;
-	}
 
 	/// <summary>
 	/// Gets the name of the template file.
@@ -30,7 +23,7 @@ public class ViewModel<T> : ControllerResponse
 	/// <value>
 	/// The name of the template file.
 	/// </value>
-	public string TemplateFileName { get; }
+	public string TemplateFileName { get; } = templateFileName;
 
 	/// <summary>
 	/// Gets the model.
@@ -38,7 +31,7 @@ public class ViewModel<T> : ControllerResponse
 	/// <value>
 	/// The model.
 	/// </value>
-	public T Model { get; }
+	public T Model { get; } = viewModel;
 
 	/// <summary>
 	/// Gets or sets the title.
@@ -46,7 +39,7 @@ public class ViewModel<T> : ControllerResponse
 	/// <value>
 	/// The title.
 	/// </value>
-	public string? Title { get; set; }
+	public string? Title { get; set; } = title;
 
 	/// <summary>
 	/// Gets the HTTP response status code.
@@ -54,10 +47,10 @@ public class ViewModel<T> : ControllerResponse
 	/// <value>
 	/// The HTTP response status code.
 	/// </value>
-	public int StatusCode { get; }
+	public int StatusCode { get; } = statusCode;
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	public override Task<ControllerResponseResult> Process()
 	{

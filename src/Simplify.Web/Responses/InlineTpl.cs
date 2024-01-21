@@ -5,7 +5,7 @@ using Simplify.Templates;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides template response (puts data to DataCollector specified variable)
+/// Provides template response (puts data to DataCollector specified variable).
 /// </summary>
 public class InlineTpl : ControllerResponse
 {
@@ -56,7 +56,7 @@ public class InlineTpl : ControllerResponse
 	public string? Data { get; }
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	public override Task<ControllerResponseResult> Process()
 	{

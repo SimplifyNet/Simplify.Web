@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides HTTP route parser and matcher
+/// Provides HTTP route parser and matcher.
 /// </summary>
-public class RouteMatcher : IRouteMatcher
+/// <remarks>
+/// Initializes a new instance of the <see cref="RouteMatcher"/> class.
+/// </remarks>
+/// <param name="controllerPathParser">The controller path parser.</param>
+public class RouteMatcher(IControllerPathParser controllerPathParser) : IRouteMatcher
 {
-	private readonly IControllerPathParser _controllerPathParser;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RouteMatcher"/> class.
-	/// </summary>
-	/// <param name="controllerPathParser">The controller path parser.</param>
-	public RouteMatcher(IControllerPathParser controllerPathParser) => _controllerPathParser = controllerPathParser;
+	private readonly IControllerPathParser _controllerPathParser = controllerPathParser;
 
 	/// <summary>
 	/// Matches the current path with controller path.
@@ -40,7 +37,7 @@ public class RouteMatcher : IRouteMatcher
 		if (currentPathItems.Length != controllerPathParsed.Items.Count)
 			return new RouteMatchResult();
 
-		IDictionary<string, object> routeParameters = new ExpandoObject()!;
+		IDictionary<string, object> routeParameters = new Dictionary<string, object>()!;
 
 		for (var i = 0; i < controllerPathParsed.Items.Count; i++)
 		{

@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides Created controller string response with 201 HTTP Status Code
+/// Provides Created controller string response with 201 HTTP Status Code.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="Created" /> class.

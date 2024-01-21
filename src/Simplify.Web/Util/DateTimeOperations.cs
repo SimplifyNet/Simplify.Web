@@ -3,12 +3,12 @@
 namespace Simplify.Web.Util;
 
 /// <summary>
-/// Provides DateTime utility methods
+/// Provides DateTime utility methods.
 /// </summary>
 public static class DateTimeOperations
 {
 	/// <summary>
-	/// Removes milliseconds from DataTime
+	/// Removes milliseconds from DataTime.
 	/// </summary>
 	/// <param name="dt">Date and time.</param>
 	/// <returns></returns>

@@ -4,7 +4,7 @@ using Simplify.Web.Core.Views;
 namespace Simplify.Web;
 
 /// <summary>
-/// View accessor base class
+/// View accessor base class.
 /// </summary>
 public abstract class ViewAccessor
 {
@@ -12,10 +12,10 @@ public abstract class ViewAccessor
 	internal virtual IDIResolver Resolver { get; set; } = null!;
 
 	/// <summary>
-	/// Gets view instance
+	/// Gets view instance.
 	/// </summary>
 	/// <typeparam name="T">View instance to get</typeparam>
-	/// <returns>View instance</returns>
+	/// <returns>View instance.</returns>
 	public virtual T GetView<T>()
 		where T : View
 	{

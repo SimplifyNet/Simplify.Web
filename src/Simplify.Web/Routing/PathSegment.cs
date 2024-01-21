@@ -1,15 +1,12 @@
 ﻿namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides path segment element
+/// Provides path segment element.
 /// </summary>
-public class PathSegment : PathItem
+/// <remarks>
+/// Initializes a new instance of the <see cref="PathSegment"/> class.
+/// </remarks>
+/// <param name="name">The segment name.</param>
+public class PathSegment(string name) : PathItem(name)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PathSegment"/> class.
-	/// </summary>
-	/// <param name="name">The segment name.</param>
-	public PathSegment(string name) : base(name)
-	{
-	}
 }

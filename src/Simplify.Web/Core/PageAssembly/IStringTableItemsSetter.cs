@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Core.PageAssembly;
 
 /// <summary>
-/// Represent string table items setter
+/// Represent string table items setter.
 /// </summary>
 public interface IStringTableItemsSetter
 {

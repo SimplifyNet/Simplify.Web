@@ -3,16 +3,15 @@
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides path parameter element
+/// Provides path parameter element.
 /// </summary>
-public class PathParameter : PathItem
+/// <remarks>
+/// Initializes a new instance of the <see cref="PathParameter"/> class.
+/// </remarks>
+/// <param name="name">The name of path parameter.</param>
+/// <param name="type">The type of path parameter.</param>
+public class PathParameter(string name, Type type) : PathItem(name)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PathParameter"/> class.
-	/// </summary>
-	/// <param name="name">The name of path parameter.</param>
-	/// <param name="type">The type of path parameter.</param>
-	public PathParameter(string name, Type type) : base(name) => Type = type;
 
 	/// <summary>
 	/// Gets the type of path parameter.
@@ -20,5 +19,5 @@ public class PathParameter : PathItem
 	/// <value>
 	/// The type of path parameter.
 	/// </value>
-	public Type Type { get; }
+	public Type Type { get; } = type;
 }

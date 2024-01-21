@@ -4,7 +4,7 @@ using Simplify.Web.Diagnostics.Templates;
 namespace Simplify.Web.Diagnostics;
 
 /// <summary>
-/// Provides HTTP 500 error page generator
+/// Provides HTTP 500 error page generator.
 /// </summary>
 public static class ErrorPageGenerator
 {

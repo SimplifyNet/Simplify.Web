@@ -13,7 +13,7 @@ using Simplify.Web.Settings;
 namespace Simplify.Web.RequestPipeline;
 
 /// <summary>
-/// Simplify.Web request execution root
+/// Simplify.Web request execution root.
 /// </summary>
 public static class SimplifyWebRequestMiddleware
 {
@@ -68,6 +68,7 @@ public static class SimplifyWebRequestMiddleware
 			return false;
 
 		OnException(e);
+
 		return true;
 	}
 

@@ -1,26 +1,18 @@
 ﻿namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Provides controller route information
+/// Provides controller route information.
 /// </summary>
-public class ControllerRouteInfo
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllerRouteInfo" /> class.
+/// </remarks>
+/// <param name="getRoute">The HTTP GET request route.</param>
+/// <param name="postRoute">The HTTP POST request route.</param>
+/// <param name="putRoute">The HTTP PUT request route.</param>
+/// <param name="patchRoute">The HTTP PATCH route.</param>
+/// <param name="deleteRoute">The HTTP DELETE route.</param>
+public class ControllerRouteInfo(string? getRoute = null, string? postRoute = null, string? putRoute = null, string? patchRoute = null, string? deleteRoute = null)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllerRouteInfo" /> class.
-	/// </summary>
-	/// <param name="getRoute">The HTTP GET request route.</param>
-	/// <param name="postRoute">The HTTP POST request route.</param>
-	/// <param name="putRoute">The HTTP PUT request route.</param>
-	/// <param name="patchRoute">The HTTP PATCH route.</param>
-	/// <param name="deleteRoute">The HTTP DELETE route.</param>
-	public ControllerRouteInfo(string? getRoute = null, string? postRoute = null, string? putRoute = null, string? patchRoute = null, string? deleteRoute = null)
-	{
-		GetRoute = getRoute;
-		PostRoute = postRoute;
-		PutRoute = putRoute;
-		PatchRoute = patchRoute;
-		DeleteRoute = deleteRoute;
-	}
 
 	/// <summary>
 	/// Gets or sets the HTTP GET route.
@@ -28,7 +20,7 @@ public class ControllerRouteInfo
 	/// <value>
 	/// The HTTP GET route.
 	/// </value>
-	public string? GetRoute { get; set; }
+	public string? GetRoute { get; set; } = getRoute;
 
 	/// <summary>
 	/// Gets or sets the HTTP POST route.
@@ -36,7 +28,7 @@ public class ControllerRouteInfo
 	/// <value>
 	/// The HTTP POST route.
 	/// </value>
-	public string? PostRoute { get; set; }
+	public string? PostRoute { get; set; } = postRoute;
 
 	/// <summary>
 	/// Gets or sets the HTTP PUT route.
@@ -44,7 +36,7 @@ public class ControllerRouteInfo
 	/// <value>
 	/// The HTTP PUT route.
 	/// </value>
-	public string? PutRoute { get; set; }
+	public string? PutRoute { get; set; } = putRoute;
 
 	/// <summary>
 	/// Gets or sets the HTTP PATCH route.
@@ -52,7 +44,7 @@ public class ControllerRouteInfo
 	/// <value>
 	/// The HTTP PATCH route.
 	/// </value>
-	public string? PatchRoute { get; set; }
+	public string? PatchRoute { get; set; } = patchRoute;
 
 	/// <summary>
 	/// Gets or sets the HTTP DELETE route.
@@ -60,5 +52,5 @@ public class ControllerRouteInfo
 	/// <value>
 	/// The HTTP DELETE route.
 	/// </value>
-	public string? DeleteRoute { get; set; }
+	public string? DeleteRoute { get; set; } = deleteRoute;
 }

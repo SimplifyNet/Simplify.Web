@@ -3,18 +3,16 @@
 namespace Simplify.Web.Core.StaticFiles;
 
 /// <summary>
-/// Provides static file response factory
+/// Provides static file response factory.
 /// </summary>
 /// <seealso cref="IStaticFileResponseFactory" />
-public class StaticFileResponseFactory : IStaticFileResponseFactory
+/// <remarks>
+/// Initializes a new instance of the <see cref="StaticFileResponseFactory"/> class.
+/// </remarks>
+/// <param name="responseWriter">The response writer.</param>
+public class StaticFileResponseFactory(IResponseWriter responseWriter) : IStaticFileResponseFactory
 {
-	private readonly IResponseWriter _responseWriter;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="StaticFileResponseFactory"/> class.
-	/// </summary>
-	/// <param name="responseWriter">The response writer.</param>
-	public StaticFileResponseFactory(IResponseWriter responseWriter) => _responseWriter = responseWriter;
+	private readonly IResponseWriter _responseWriter = responseWriter;
 
 	/// <summary>
 	/// Creates the static file response.

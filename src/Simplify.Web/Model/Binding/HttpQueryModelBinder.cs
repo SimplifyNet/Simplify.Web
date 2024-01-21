@@ -6,7 +6,7 @@ using Simplify.Web.Model.Binding.Parsers;
 namespace Simplify.Web.Model.Binding;
 
 /// <summary>
-/// Provides HTTP query to model binding
+/// Provides HTTP query to model binding.
 /// </summary>
 public class HttpQueryModelBinder : IModelBinder
 {

@@ -6,7 +6,7 @@ using Simplify.Web.Routing;
 namespace Simplify.Web.Core.Controllers;
 
 /// <summary>
-/// Represent controllers agent
+/// Represent controllers agent.
 /// </summary>
 public interface IControllersAgent
 {

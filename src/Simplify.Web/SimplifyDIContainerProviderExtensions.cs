@@ -6,7 +6,7 @@ using Simplify.Web.Bootstrapper;
 namespace Simplify.Web;
 
 /// <summary>
-/// Provides Simplify.Web extensions for Simplify.DI container provider
+/// Provides Simplify.Web extensions for Simplify.DI container provider.
 /// </summary>
 public static class SimplifyDIContainerProviderExtensions
 {
@@ -15,13 +15,16 @@ public static class SimplifyDIContainerProviderExtensions
 	/// </summary>
 	/// <param name="containerProvider">The container provider.</param>
 	/// <param name="registrationsOverride">The `Simplify.Web` types registrations override</param>
-	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider, Action<SimplifyWebRegistrationsOverride>? registrationsOverride = null)
+	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider,
+		Action<SimplifyWebRegistrationsOverride>? registrationsOverride = null)
 	{
 		BootstrapperFactory.ContainerProvider = containerProvider;
 
 		BootstrapperFactory
 			.CreateBootstrapper()
-			.Register(registrationsOverride != null ? PerformTypesOverride(registrationsOverride) : null);
+			.Register(registrationsOverride != null
+				? PerformTypesOverride(registrationsOverride)
+				: null);
 
 		return containerProvider;
 	}

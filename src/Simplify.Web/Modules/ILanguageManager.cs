@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Represent current language controller and information container
+/// Represent current language controller and information container.
 /// </summary>
 public interface ILanguageManager
 {
@@ -11,14 +11,14 @@ public interface ILanguageManager
 	string Language { get; }
 
 	/// <summary>
-	/// Set site cookie language value
+	/// Set site cookie language value.
 	/// </summary>
-	/// <param name="language">Language code</param>
+	/// <param name="language">Language code.</param>
 	void SetCookieLanguage(string language);
 
 	/// <summary>
-	/// Set language only for current request
+	/// Set language only for current request.
 	/// </summary>
-	/// <param name="language">Language code</param>
+	/// <param name="language">Language code.</param>
 	bool SetCurrentLanguage(string language);
 }

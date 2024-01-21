@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web;
 
 /// <summary>
-/// View base class
+/// View base class.
 /// </summary>
 public abstract class View : ModulesAccessor
 {
@@ -14,7 +14,7 @@ public abstract class View : ModulesAccessor
 	public virtual string Language { get; internal set; } = null!;
 
 	/// <summary>
-	/// Site root url, for example: http://mysite.com or http://localhost/mysite/
+	/// Site root url, for example: http://mysite.com or http://localhost/mysite/.
 	/// </summary>
 	public string SiteUrl { get; internal set; } = null!;
 }

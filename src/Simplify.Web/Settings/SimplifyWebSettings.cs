@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 namespace Simplify.Web.Settings;
 
 /// <summary>
-/// Simplify.Web settings
+/// Simplify.Web settings.
 /// </summary>
 /// <seealso cref="ISimplifyWebSettings" />
 public sealed class SimplifyWebSettings : ISimplifyWebSettings
@@ -33,12 +33,12 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	}
 
 	/// <summary>
-	/// Default language, for example: "en", "ru", "de" etc., default value is "en"
+	/// Default language, for example: "en", "ru", "de" etc., default value is "en".
 	/// </summary>
 	public string DefaultLanguage { get; private set; } = "en";
 
 	/// <summary>
-	/// Gets a value indicating whether cookie language should be accepted
+	/// Gets a value indicating whether cookie language should be accepted.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if cookie language should be accepted; otherwise, <c>false</c>.
@@ -46,7 +46,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public bool AcceptCookieLanguage { get; private set; }
 
 	/// <summary>
-	/// Gets a value indicating whether HTTP header language should be accepted
+	/// Gets a value indicating whether HTTP header language should be accepted.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if HTTP header language should be accepted; otherwise, <c>false</c>.
@@ -54,12 +54,12 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public bool AcceptHeaderLanguage { get; private set; }
 
 	/// <summary>
-	/// Default templates directory path, for example: Templates, default value is "Templates"
+	/// Default templates directory path, for example: Templates, default value is "Templates".
 	/// </summary>
 	public string DefaultTemplatesPath { get; private set; } = "Templates";
 
 	/// <summary>
-	/// Gets a value indicating whether all templates should be loaded from assembly
+	/// Gets a value indicating whether all templates should be loaded from assembly.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if all templates should be loaded from assembly; otherwise, <c>false</c>.
@@ -67,10 +67,10 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public bool LoadTemplatesFromAssembly { get; private set; }
 
 	/// <summary>
-	/// Gets or sets the master page template file name
+	/// Gets or sets the master page template file name.
 	/// </summary>
 	/// <value>
-	/// The name of the master page template file
+	/// The name of the master page template file.
 	/// </value>
 	public string DefaultMasterTemplateFileName { get; private set; } = "Master.tpl";
 
@@ -96,12 +96,12 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public string DefaultStyle { get; private set; } = "Main";
 
 	/// <summary>
-	/// Data directory path, default value is "App_Data"
+	/// Data directory path, default value is "App_Data".
 	/// </summary>
 	public string DataPath { get; private set; } = "App_Data";
 
 	/// <summary>
-	/// Gets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only
+	/// Gets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only.
 	/// </summary>
 	public bool StaticFilesEnabled { get; private set; } = true;
 
@@ -124,7 +124,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		= new List<string> { "StringTable.xml" };
 
 	/// <summary>
-	/// Gets or sets a value indicating whether site title postfix should be set automatically
+	/// Gets or sets a value indicating whether site title postfix should be set automatically.
 	/// </summary>
 	public bool DisableAutomaticSiteTitleSet { get; private set; }
 

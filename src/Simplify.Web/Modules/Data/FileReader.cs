@@ -7,9 +7,17 @@ using System.Xml.Linq;
 namespace Simplify.Web.Modules.Data;
 
 /// <summary>
-/// Provides localizable files reader, reads the files from data folder
+/// Provides localizable files reader, reads the files from data folder.
 /// </summary>
-public class FileReader : IFileReader
+/// <remarks>
+/// Initializes a new instance of the <see cref="FileReader" /> class.
+/// </remarks>
+/// <param name="dataPhysicalPath">The data physical path.</param>
+/// <param name="defaultLanguage">The default language.</param>
+/// <param name="languageManagerProvider">The language manager provider.</param>
+/// <param name="disableCache">Disable FileReader cache.</param>
+public class FileReader(string dataPhysicalPath, string defaultLanguage, ILanguageManagerProvider languageManagerProvider,
+	bool disableCache = false) : IFileReader
 {
 	private static readonly IDictionary<KeyValuePair<string, string>, XDocument?> XmlCache =
 		new Dictionary<KeyValuePair<string, string>, XDocument?>();
@@ -19,28 +27,12 @@ public class FileReader : IFileReader
 
 	private static readonly object Locker = new();
 
-	private readonly string _dataPhysicalPath;
-	private readonly string _defaultLanguage;
-	private readonly ILanguageManagerProvider _languageManagerProvider;
-	private readonly bool _disableCache;
+	private readonly string _dataPhysicalPath = dataPhysicalPath;
+	private readonly string _defaultLanguage = defaultLanguage;
+	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
+	private readonly bool _disableCache = disableCache;
 
 	private ILanguageManager _languageManager = null!;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="FileReader" /> class.
-	/// </summary>
-	/// <param name="dataPhysicalPath">The data physical path.</param>
-	/// <param name="defaultLanguage">The default language.</param>
-	/// <param name="languageManagerProvider">The language manager provider.</param>
-	/// <param name="disableCache">Disable FileReader cache.</param>
-	public FileReader(string dataPhysicalPath, string defaultLanguage, ILanguageManagerProvider languageManagerProvider,
-		bool disableCache = false)
-	{
-		_dataPhysicalPath = dataPhysicalPath;
-		_defaultLanguage = defaultLanguage;
-		_languageManagerProvider = languageManagerProvider;
-		_disableCache = disableCache;
-	}
 
 	/// <summary>
 	/// Clears the cache.
@@ -62,7 +54,7 @@ public class FileReader : IFileReader
 	#region Paths
 
 	/// <summary>
-	/// Get file path
+	/// Get file path.
 	/// </summary>
 	/// <param name="fileName">File name</param>
 	/// <returns>
@@ -71,11 +63,11 @@ public class FileReader : IFileReader
 	public string GetFilePath(string fileName) => GetFilePath(fileName, _languageManager.Language);
 
 	/// <summary>
-	/// Get extension data file path for specific language
+	/// Get extension data file path for specific language.
 	/// </summary>
-	/// <param name="fileName">File name</param>
-	/// <param name="language">File language</param>
-	/// <returns>File path</returns>
+	/// <param name="fileName">File name.</param>
+	/// <param name="language">File language.</param>
+	/// <returns>File path.</returns>
 	public string GetFilePath(string? fileName, string? language)
 	{
 		if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException(nameof(fileName));
@@ -97,9 +89,9 @@ public class FileReader : IFileReader
 	#region Text
 
 	/// <summary>
-	/// Load text from a file located in data folder
+	/// Load text from a file located in data folder.
 	/// </summary>
-	/// <param name="fileName">File name</param>
+	/// <param name="fileName">File name.</param>
 	/// <param name="memoryCache">Load file from memory cache if possible.</param>
 	/// <returns>
 	/// Text from a file
@@ -107,10 +99,10 @@ public class FileReader : IFileReader
 	public string? LoadTextDocument(string fileName, bool memoryCache = false) => LoadTextDocument(fileName, _languageManager.Language, memoryCache);
 
 	/// <summary>
-	/// Load text from a file with specific language located in data folder
+	/// Load text from a file with specific language located in data folder.
 	/// </summary>
-	/// <param name="fileName">File name</param>
-	/// <param name="language">File language</param>
+	/// <param name="fileName">File name.</param>
+	/// <param name="language">File language.</param>
 	/// <param name="memoryCache">Load file from memory cache if possible.</param>
 	/// <returns>
 	/// Text from a file
@@ -128,13 +120,17 @@ public class FileReader : IFileReader
 			if (LoadTextFileFromFileSystem(fileName, language, out data))
 				return data;
 
-			return LoadTextFileFromFileSystem(fileName, _defaultLanguage, out data) ? data : null;
+			return LoadTextFileFromFileSystem(fileName, _defaultLanguage, out data)
+				? data
+				: null;
 		}
 
 		if (LoadTextFileCached(fileName, language, out data))
 			return data;
 
-		return LoadTextFileCached(fileName, _defaultLanguage, out data) ? data : null;
+		return LoadTextFileCached(fileName, _defaultLanguage, out data)
+			? data
+			: null;
 	}
 
 	#endregion Text
@@ -167,7 +163,7 @@ public class FileReader : IFileReader
 			throw new ArgumentNullException(nameof(fileName));
 
 		if (!fileName.EndsWith(".xml"))
-			fileName = fileName + ".xml";
+			fileName += ".xml";
 
 		XDocument? data;
 
@@ -176,13 +172,17 @@ public class FileReader : IFileReader
 			if (LoadXDocumentFromFileSystem(fileName, language, out data))
 				return data;
 
-			return LoadXDocumentFromFileSystem(fileName, _defaultLanguage, out data) ? data : null;
+			return LoadXDocumentFromFileSystem(fileName, _defaultLanguage, out data)
+				? data
+				: null;
 		}
 
 		if (LoadXDocumentCached(fileName, language, out data))
 			return data;
 
-		return LoadXDocumentCached(fileName, _defaultLanguage, out data) ? data : null;
+		return LoadXDocumentCached(fileName, _defaultLanguage, out data)
+			? data
+			: null;
 	}
 
 	#endregion XML
@@ -197,6 +197,7 @@ public class FileReader : IFileReader
 			return false;
 
 		data = cacheItem.Value;
+
 		return true;
 	}
 
@@ -210,6 +211,7 @@ public class FileReader : IFileReader
 			return false;
 
 		data = cacheItem.Value;
+
 		return true;
 	}
 
@@ -223,6 +225,7 @@ public class FileReader : IFileReader
 			return false;
 
 		data = File.ReadAllText(filePath);
+
 		return true;
 	}
 
@@ -253,6 +256,7 @@ public class FileReader : IFileReader
 			return false;
 
 		data = XDocument.Parse(internalData!);
+
 		return true;
 	}
 

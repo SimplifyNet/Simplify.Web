@@ -9,7 +9,7 @@ using Simplify.Web.Model.Binding.Attributes;
 namespace Simplify.Web.Model.Binding.Parsers;
 
 /// <summary>
-/// Provides list of key value pair to model binding
+/// Provides list of key value pair to model binding.
 /// </summary>
 public static class ListToModelParser
 {
@@ -49,14 +49,18 @@ public static class ListToModelParser
 	{
 		var attributes = propertyInfo.GetCustomAttributes(typeof(BindPropertyAttribute), false);
 
-		return attributes.Length == 0 ? null : ((BindPropertyAttribute)attributes[0]).FieldName;
+		return attributes.Length == 0
+		 ? null
+		 : ((BindPropertyAttribute)attributes[0]).FieldName;
 	}
 
 	private static string TryGetFormat(ICustomAttributeProvider propertyInfo)
 	{
 		var attributes = propertyInfo.GetCustomAttributes(typeof(FormatAttribute), false);
 
-		return attributes.Length == 0 ? null : ((FormatAttribute)attributes[0]).Format;
+		return attributes.Length == 0
+			? null
+			: ((FormatAttribute)attributes[0]).Format;
 	}
 
 	private static bool IsExcluded(ICustomAttributeProvider propertyInfo) =>

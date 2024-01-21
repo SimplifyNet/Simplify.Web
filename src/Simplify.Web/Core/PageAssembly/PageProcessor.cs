@@ -5,23 +5,17 @@ using Simplify.DI;
 namespace Simplify.Web.Core.PageAssembly;
 
 /// <summary>
-/// Provides page processor
+/// Provides page processor.
 /// </summary>
-public class PageProcessor : IPageProcessor
+/// <remarks>
+/// Initializes a new instance of the <see cref="PageProcessor"/> class.
+/// </remarks>
+/// <param name="pageBuilder">The page builder.</param>
+/// <param name="responseWriter">The response writer.</param>
+public class PageProcessor(IPageBuilder pageBuilder, IResponseWriter responseWriter) : IPageProcessor
 {
-	private readonly IPageBuilder _pageBuilder;
-	private readonly IResponseWriter _responseWriter;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PageProcessor"/> class.
-	/// </summary>
-	/// <param name="pageBuilder">The page builder.</param>
-	/// <param name="responseWriter">The response writer.</param>
-	public PageProcessor(IPageBuilder pageBuilder, IResponseWriter responseWriter)
-	{
-		_pageBuilder = pageBuilder;
-		_responseWriter = responseWriter;
-	}
+	private readonly IPageBuilder _pageBuilder = pageBuilder;
+	private readonly IResponseWriter _responseWriter = responseWriter;
 
 	/// <summary>
 	/// Processes (build web-page and send to client, process current page state) the current web-page

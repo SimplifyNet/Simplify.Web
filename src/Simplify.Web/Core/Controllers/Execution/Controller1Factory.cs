@@ -3,7 +3,7 @@
 namespace Simplify.Web.Core.Controllers.Execution;
 
 /// <summary>
-/// Provides v1 controller factory
+/// Provides v1 controller factory.
 /// </summary>
 public class Controller1Factory : ActionModulesAccessorBuilder, IController1Factory
 {

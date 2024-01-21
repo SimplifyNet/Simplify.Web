@@ -3,17 +3,17 @@
 namespace Simplify.Web.Settings;
 
 /// <summary>
-/// Represent Simplify.Web settings
+/// Represent Simplify.Web settings.
 /// </summary>
 public interface ISimplifyWebSettings
 {
 	/// <summary>
-	/// Default language, for example: "en", "ru", "de" etc., default value is "en"
+	/// Default language, for example: "en", "ru", "de" etc., default value is "en".
 	/// </summary>
 	string DefaultLanguage { get; }
 
 	/// <summary>
-	/// Gets a value indicating whether cookie language should be accepted
+	/// Gets a value indicating whether cookie language should be accepted.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if cookie language should be accepted; otherwise, <c>false</c>.
@@ -21,7 +21,7 @@ public interface ISimplifyWebSettings
 	bool AcceptCookieLanguage { get; }
 
 	/// <summary>
-	/// Gets a value indicating whether HTTP header language should be accepted
+	/// Gets a value indicating whether HTTP header language should be accepted.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if HTTP header language should be accepted; otherwise, <c>false</c>.
@@ -29,12 +29,12 @@ public interface ISimplifyWebSettings
 	bool AcceptHeaderLanguage { get; }
 
 	/// <summary>
-	/// Default templates directory path, for example: Templates, default value is "Templates"
+	/// Default templates directory path, for example: Templates, default value is "Templates".
 	/// </summary>
 	string DefaultTemplatesPath { get; }
 
 	/// <summary>
-	/// Gets a value indicating whether all templates should be loaded from assembly
+	/// Gets a value indicating whether all templates should be loaded from assembly.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if all templates should be loaded from assembly; otherwise, <c>false</c>.
@@ -42,10 +42,10 @@ public interface ISimplifyWebSettings
 	bool LoadTemplatesFromAssembly { get; }
 
 	/// <summary>
-	/// Gets or sets the master page template file name
+	/// Gets or sets the master page template file name.
 	/// </summary>
 	/// <value>
-	/// The name of the master page template file
+	/// The name of the master page template file.
 	/// </value>
 	string DefaultMasterTemplateFileName { get; }
 
@@ -71,12 +71,12 @@ public interface ISimplifyWebSettings
 	string DefaultStyle { get; }
 
 	/// <summary>
-	/// Data directory path, for example: default value is "App_Data"
+	/// Data directory path, for example: default value is "App_Data".
 	/// </summary>
 	string DataPath { get; }
 
 	/// <summary>
-	/// Gets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only
+	/// Gets a value indicating whether Simplify.Web static files processing is enabled or controllers requests should be processed only.
 	/// </summary>
 	bool StaticFilesEnabled { get; }
 
@@ -97,7 +97,7 @@ public interface ISimplifyWebSettings
 	IList<string> StringTableFiles { get; }
 
 	/// <summary>
-	/// Gets or sets a value indicating whether site title postfix should be set automatically
+	/// Gets or sets a value indicating whether site title postfix should be set automatically.
 	/// </summary>
 	bool DisableAutomaticSiteTitleSet { get; }
 

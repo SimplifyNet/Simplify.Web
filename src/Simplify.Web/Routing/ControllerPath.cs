@@ -3,15 +3,14 @@
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides parsed controller path
+/// Provides parsed controller path.
 /// </summary>
-public class ControllerPath : IControllerPath
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllerPath"/> class.
+/// </remarks>
+/// <param name="items">The items.</param>
+public class ControllerPath(IList<PathItem> items) : IControllerPath
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllerPath"/> class.
-	/// </summary>
-	/// <param name="items">The items.</param>
-	public ControllerPath(IList<PathItem> items) => Items = items;
 
 	/// <summary>
 	/// Gets the controller path items.
@@ -19,5 +18,5 @@ public class ControllerPath : IControllerPath
 	/// <value>
 	/// The controller path items.
 	/// </value>
-	public IList<PathItem> Items { get; }
+	public IList<PathItem> Items { get; } = items;
 }

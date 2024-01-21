@@ -3,7 +3,7 @@
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Provides controller security information
+/// Provides controller security information.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerSecurity" /> class.

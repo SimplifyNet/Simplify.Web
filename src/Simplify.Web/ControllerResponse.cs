@@ -4,7 +4,7 @@ using Simplify.Web.Core;
 namespace Simplify.Web;
 
 /// <summary>
-/// Provides controllers responses base class
+/// Provides controllers responses base class.
 /// </summary>
 public abstract class ControllerResponse : ActionModulesAccessor
 {

@@ -7,7 +7,7 @@ using Simplify.Web.Attributes.Setup;
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Loads and stores controllers meta information
+/// Loads and stores controllers meta information.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllersMetaStore"/> class.

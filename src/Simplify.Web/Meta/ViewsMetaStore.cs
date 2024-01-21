@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Loads and stores views meta information
+/// Loads and stores views meta information.
 /// </summary>
 public class ViewsMetaStore : IViewsMetaStore
 {
@@ -12,19 +12,16 @@ public class ViewsMetaStore : IViewsMetaStore
 	private IList<Type>? _viewsTypes;
 
 	/// <summary>
-	/// Current views meta store
+	/// Current views meta store.
 	/// </summary>
 	public static IViewsMetaStore Current
 	{
-		get
-		{
-			return _current ??= new ViewsMetaStore();
-		}
+		get => _current ??= new ViewsMetaStore();
 		set => _current = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
 	/// <summary>
-	/// Current domain views types
+	/// Current domain views types.
 	/// </summary>
 	/// <returns></returns>
 	public IList<Type> ViewsTypes

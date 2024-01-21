@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides empty controller response with 204 status code
+/// Provides empty controller response with 204 status code.
 /// </summary>
 public class NoContent : StatusCode
 {

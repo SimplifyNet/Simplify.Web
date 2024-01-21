@@ -5,7 +5,7 @@ using System.IO;
 namespace Simplify.Web.Util;
 
 /// <summary>
-/// Provide mime type utility functions
+/// Provide mime type utility functions.
 /// </summary>
 public static class MimeTypeAssistant
 {

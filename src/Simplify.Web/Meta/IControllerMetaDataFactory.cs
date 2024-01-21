@@ -3,7 +3,7 @@
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Represent controller meta-data creator
+/// Represent controller meta-data creator.
 /// </summary>
 public interface IControllerMetaDataFactory
 {

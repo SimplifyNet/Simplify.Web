@@ -3,7 +3,7 @@
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides HTTP route matching result
+/// Provides HTTP route matching result.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="RouteMatchResult" /> class.
@@ -14,7 +14,7 @@ public class RouteMatchResult(bool matched = false, IDictionary<string, object>?
 {
 
 	/// <summary>
-	/// Gets a value indicating whether the route was matched successfully
+	/// Gets a value indicating whether the route was matched successfully.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if the route was matched successfully; otherwise, <c>false</c>.

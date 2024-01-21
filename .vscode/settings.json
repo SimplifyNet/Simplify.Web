@@ -5,9 +5,12 @@
 		"appsettings",
 		"ASPNETCORE",
 		"Bootstrapper",
+		"cacheable",
 		"Catched",
 		"cref",
 		"HOSTINGSTARTUPASSEMBLIES",
+		"localizable",
+		"mscorlib",
 		"OWIN",
 		"Redirector",
 		"registrator"

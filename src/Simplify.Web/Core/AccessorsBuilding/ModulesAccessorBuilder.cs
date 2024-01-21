@@ -6,7 +6,7 @@ using Simplify.Web.Modules.Data.Html;
 namespace Simplify.Web.Core.AccessorsBuilding;
 
 /// <summary>
-/// Provides builder for ModulesAccessor objects
+/// Provides builder for ModulesAccessor objects.
 /// </summary>
 public class ModulesAccessorBuilder : ViewAccessorBuilder
 {

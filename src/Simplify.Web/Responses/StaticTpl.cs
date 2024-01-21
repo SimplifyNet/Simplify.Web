@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides template response (loads template and puts it to DataCollector)
+/// Provides template response (loads template and puts it to DataCollector).
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="Tpl" /> class.
@@ -41,7 +41,7 @@ public class StaticTpl(string templateFileName, string? title = null, int status
 	private string? Title { get; } = title;
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	public override Task<ControllerResponseResult> Process()
 	{

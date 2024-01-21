@@ -2,23 +2,22 @@
 using System.Globalization;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
-using Simplify.System.Diagnostics;
 using Simplify.Web.Settings;
 
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Current language controller and information container
+/// Current language controller and information container.
 /// </summary>
 public class LanguageManager : ILanguageManager
 {
 	/// <summary>
-	/// Language field name in user cookies
+	/// Language field name in user cookies.
 	/// </summary>
 	public const string CookieLanguageFieldName = "language";
 
 	/// <summary>
-	/// Language field name in request header
+	/// Language field name in request header.
 	/// </summary>
 	public const string HeaderLanguageFieldName = "Accept-Language";
 
@@ -64,9 +63,9 @@ public class LanguageManager : ILanguageManager
 	}
 
 	/// <summary>
-	/// Set language only for current request
+	/// Set language only for current request.
 	/// </summary>
-	/// <param name="language">Language code</param>
+	/// <param name="language">Language code.</param>
 	public bool SetCurrentLanguage(string language)
 	{
 		try

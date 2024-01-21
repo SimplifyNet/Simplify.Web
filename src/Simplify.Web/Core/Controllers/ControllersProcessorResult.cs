@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Core.Controllers;
 
 /// <summary>
-/// Controllers processor result types
+/// Controllers processor result types.
 /// </summary>
 public enum ControllersProcessorResult
 {

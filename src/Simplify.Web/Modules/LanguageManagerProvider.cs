@@ -4,7 +4,7 @@ using Simplify.Web.Settings;
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Provides language manager provider
+/// Provides language manager provider.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="LanguageManagerProvider" /> class.

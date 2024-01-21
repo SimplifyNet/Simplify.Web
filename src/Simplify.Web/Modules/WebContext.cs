@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Http;
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Provides web context
+/// Provides web context.
 /// </summary>
 public class WebContext : IWebContext
 {
-	private readonly SemaphoreSlim _formReadSemaphore = new SemaphoreSlim(1, 1);
-	private readonly SemaphoreSlim _requestBodyReadSemaphore = new SemaphoreSlim(1, 1);
+	private readonly SemaphoreSlim _formReadSemaphore = new(1, 1);
+	private readonly SemaphoreSlim _requestBodyReadSemaphore = new(1, 1);
 
 	private IFormCollection? _form;
 	private string? _requestBody;
@@ -38,12 +38,12 @@ public class WebContext : IWebContext
 	}
 
 	/// <summary>
-	/// Current web-site route, for example: "/" or "/user/delete/15"
+	/// Current web-site route, for example: "/" or "/user/delete/15".
 	/// </summary>
 	public string Route { get; }
 
 	/// <summary>
-	/// Site root url, for example: http://mysite.com or http://localhost/mysite/
+	/// Site root url, for example: http://mysite.com or http://localhost/mysite/.
 	/// </summary>
 	public string SiteUrl { get; }
 

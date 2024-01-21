@@ -4,7 +4,7 @@ using Simplify.Web.Core.Views;
 namespace Simplify.Web.Core.AccessorsBuilding;
 
 /// <summary>
-/// Provides builder for ViewAccessor objects construction
+/// Provides builder for ViewAccessor objects construction.
 /// </summary>
 public abstract class ViewAccessorBuilder
 {

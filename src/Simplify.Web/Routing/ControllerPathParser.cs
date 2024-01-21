@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides controller path parser
+/// Provides controller path parser.
 /// </summary>
 public class ControllerPathParser : IControllerPathParser
 {
@@ -37,11 +37,8 @@ public class ControllerPathParser : IControllerPathParser
 				if (subItem.Contains(":"))
 				{
 					var parameterData = subItem.Split(':');
-					var type = ParseParameterType(parameterData[1]);
-
-					if (type == null)
-						throw new ControllerRouteException(
-							$"Undefined controller parameter type '{parameterData[1]}', path: {controllerPath}");
+					var type = ParseParameterType(parameterData[1])
+						?? throw new ControllerRouteException($"Undefined controller parameter type '{parameterData[1]}', path: {controllerPath}");
 
 					pathItems.Add(new PathParameter(parameterData[0], type));
 				}

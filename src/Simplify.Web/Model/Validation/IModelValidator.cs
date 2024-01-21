@@ -3,7 +3,7 @@
 namespace Simplify.Web.Model.Validation;
 
 /// <summary>
-/// Represent model validator
+/// Represent model validator.
 /// </summary>
 public interface IModelValidator
 {

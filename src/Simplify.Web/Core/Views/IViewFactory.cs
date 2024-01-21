@@ -4,7 +4,7 @@ using Simplify.DI;
 namespace Simplify.Web.Core.Views;
 
 /// <summary>
-/// Represent view factory
+/// Represent view factory.
 /// </summary>
 public interface IViewFactory
 {

@@ -3,7 +3,7 @@
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides controller string response
+/// Provides controller string response.
 /// </summary>
 public class Content : ControllerResponse
 {
@@ -58,7 +58,7 @@ public class Content : ControllerResponse
 	public int StatusCode { get; }
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	public override async Task<ControllerResponseResult> Process()
 	{

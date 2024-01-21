@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 namespace Simplify.Web.Core;
 
 /// <summary>
-/// Providers response writer
+/// Providers response writer.
 /// </summary>
 public class ResponseWriter : IResponseWriter
 {

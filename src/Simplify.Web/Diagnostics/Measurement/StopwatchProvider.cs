@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace Simplify.Web.Diagnostics.Measurement;
 
 /// <summary>
-/// Provides stopwatch provider
+/// Provides stopwatch provider.
 /// </summary>
 public class StopwatchProvider : IStopwatchProvider
 {
@@ -16,6 +16,7 @@ public class StopwatchProvider : IStopwatchProvider
 	public void StartMeasurement()
 	{
 		_stopwatch = new Stopwatch();
+
 		_stopwatch.Start();
 	}
 
@@ -29,6 +30,7 @@ public class StopwatchProvider : IStopwatchProvider
 			throw new InvalidOperationException("Measurement has not been started");
 
 		_stopwatch.Stop();
+
 		return _stopwatch.Elapsed;
 	}
 }

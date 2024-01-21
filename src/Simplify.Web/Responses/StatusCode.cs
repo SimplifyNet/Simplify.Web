@@ -3,7 +3,7 @@
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides controller response with exact status code and optional string data (send only specified string to response or empty body)
+/// Provides controller response with exact status code and optional string data (send only specified string to response or empty body).
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="StatusCode" /> class.
@@ -39,7 +39,7 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 	public int Code { get; } = statusCode;
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	public override async Task<ControllerResponseResult> Process()
 	{

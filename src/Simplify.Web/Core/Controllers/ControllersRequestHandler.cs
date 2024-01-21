@@ -7,26 +7,19 @@ using Simplify.Web.Modules;
 namespace Simplify.Web.Core.Controllers;
 
 /// <summary>
-/// Provides controllers HTTP request handler
+/// Provides controllers HTTP request handler.
 /// </summary>
-public class ControllersRequestHandler : IControllersRequestHandler
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllersRequestHandler" /> class.
+/// </remarks>
+/// <param name="controllersProcessor">The controllers request handler.</param>
+/// <param name="pageProcessor">The page processor.</param>
+/// <param name="redirector">The redirector.</param>
+public class ControllersRequestHandler(IControllersProcessor controllersProcessor, IPageProcessor pageProcessor, IRedirector redirector) : IControllersRequestHandler
 {
-	private readonly IControllersProcessor _controllersProcessor;
-	private readonly IPageProcessor _pageProcessor;
-	private readonly IRedirector _redirector;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllersRequestHandler" /> class.
-	/// </summary>
-	/// <param name="controllersProcessor">The controllers request handler.</param>
-	/// <param name="pageProcessor">The page processor.</param>
-	/// <param name="redirector">The redirector.</param>
-	public ControllersRequestHandler(IControllersProcessor controllersProcessor, IPageProcessor pageProcessor, IRedirector redirector)
-	{
-		_controllersProcessor = controllersProcessor;
-		_pageProcessor = pageProcessor;
-		_redirector = redirector;
-	}
+	private readonly IControllersProcessor _controllersProcessor = controllersProcessor;
+	private readonly IPageProcessor _pageProcessor = pageProcessor;
+	private readonly IRedirector _redirector = redirector;
 
 	/// <summary>
 	/// Gets or sets a value indicating whether Simplify.Web is terminal middleware.

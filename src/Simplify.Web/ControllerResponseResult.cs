@@ -1,22 +1,22 @@
 ﻿namespace Simplify.Web;
 
 /// <summary>
-/// Provides controller response result types
+/// Provides controller response result types.
 /// </summary>
 public enum ControllerResponseResult
 {
 	/// <summary>
-	/// The default result (no special processing required)
+	/// The default result (no special processing required).
 	/// </summary>
 	Default,
 
 	/// <summary>
-	/// The execution should be stopped, because raw output will be sent to the client
+	/// The execution should be stopped, because raw output will be sent to the client.
 	/// </summary>
 	RawOutput,
 
 	/// <summary>
-	/// The execution should be stopped, because the client will be redirected to the new URL
+	/// The execution should be stopped, because the client will be redirected to the new URL.
 	/// </summary>
 	Redirect
 }

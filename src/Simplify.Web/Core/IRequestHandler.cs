@@ -5,7 +5,7 @@ using Simplify.DI;
 namespace Simplify.Web.Core;
 
 /// <summary>
-/// Represent OWIN HTTP request handler
+/// Represent OWIN HTTP request handler.
 /// </summary>
 public interface IRequestHandler
 {

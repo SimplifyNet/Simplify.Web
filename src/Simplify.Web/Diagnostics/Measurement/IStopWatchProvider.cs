@@ -3,7 +3,7 @@
 namespace Simplify.Web.Diagnostics.Measurement;
 
 /// <summary>
-/// Represent stopwatch provider
+/// Represent stopwatch provider.
 /// </summary>
 public interface IStopwatchProvider
 {

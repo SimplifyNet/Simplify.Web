@@ -4,7 +4,7 @@ using System.Globalization;
 namespace Simplify.Web.Model.Binding.Parsers;
 
 /// <summary>
-/// Provides string to specified type parsing
+/// Provides string to specified type parsing.
 /// </summary>
 public class StringToSpecifiedObjectParser
 {
@@ -62,7 +62,10 @@ public class StringToSpecifiedObjectParser
 	/// </summary>
 	/// <param name="value">The value.</param>
 	/// <returns></returns>
-	public static string? ParseString(string value) => string.IsNullOrEmpty(value) ? null : value;
+	public static string? ParseString(string value) =>
+		string.IsNullOrEmpty(value)
+			? null
+			: value;
 
 	/// <summary>
 	/// Parses the boolean from string.

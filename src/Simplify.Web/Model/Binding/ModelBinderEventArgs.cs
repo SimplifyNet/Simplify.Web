@@ -6,15 +6,14 @@ using Simplify.Web.Modules;
 namespace Simplify.Web.Model.Binding;
 
 /// <summary>
-/// Provides model binder event arguments
+/// Provides model binder event arguments.
 /// </summary>
-public class ModelBinderEventArgs<T> : EventArgs
+/// <remarks>
+/// Initializes a new instance of the <see cref="ModelBinderEventArgs{T}"/> class.
+/// </remarks>
+/// <param name="context">The context.</param>
+public class ModelBinderEventArgs<T>(IWebContext context) : EventArgs
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ModelBinderEventArgs{T}"/> class.
-	/// </summary>
-	/// <param name="context">The context.</param>
-	public ModelBinderEventArgs(IWebContext context) => Context = context;
 
 	/// <summary>
 	/// Gets the model.
@@ -30,7 +29,7 @@ public class ModelBinderEventArgs<T> : EventArgs
 	/// <value>
 	/// The context.
 	/// </value>
-	public IWebContext Context { get; }
+	public IWebContext Context { get; } = context;
 
 	/// <summary>
 	/// Gets a value indicating whether model was bound.

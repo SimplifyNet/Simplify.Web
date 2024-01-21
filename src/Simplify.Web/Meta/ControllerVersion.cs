@@ -1,7 +1,7 @@
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Provides controller version
+/// Provides controller version.
 /// </summary>
 public enum ControllerVersion
 {

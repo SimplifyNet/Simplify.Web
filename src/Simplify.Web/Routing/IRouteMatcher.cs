@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Represent HTTP route parser and matcher
+/// Represent HTTP route parser and matcher.
 /// </summary>
 public interface IRouteMatcher
 {

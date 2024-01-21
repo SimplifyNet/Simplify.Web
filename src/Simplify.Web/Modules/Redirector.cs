@@ -6,22 +6,26 @@ using Microsoft.AspNetCore.Http.Extensions;
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Provides website redirection manager, which controls current user location, url to previous page and url to specified page
+/// Provides website redirection manager, which controls current user location, url to previous page and url to specified page.
 /// </summary>
-public class Redirector : IRedirector
+/// <remarks>
+/// Initializes a new instance of the <see cref="Redirector"/> class.
+/// </remarks>
+/// <param name="context">The context.</param>
+public class Redirector(IWebContext context) : IRedirector
 {
 	/// <summary>
-	/// The previous page URL cookie field name
+	/// The previous page URL cookie field name.
 	/// </summary>
 	public const string PreviousPageUrlCookieFieldName = "PreviousPageUrl";
 
 	/// <summary>
-	/// The redirect URL cookie field name
+	/// The redirect URL cookie field name.
 	/// </summary>
 	public const string RedirectUrlCookieFieldName = "RedirectUrl";
 
 	/// <summary>
-	/// The login return URL cookie field name
+	/// The login return URL cookie field name.
 	/// </summary>
 	public const string LoginReturnUrlCookieFieldName = "LoginReturnUrl";
 
@@ -30,13 +34,7 @@ public class Redirector : IRedirector
 	/// </summary>
 	public const string PreviousNavigatedUrlCookieFieldName = "PreviousNavigatedUrl";
 
-	private readonly IWebContext _context;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Redirector"/> class.
-	/// </summary>
-	/// <param name="context">The context.</param>
-	public Redirector(IWebContext context) => _context = context;
+	private readonly IWebContext _context = context;
 
 	/// <summary>
 	/// Gets or sets the previous page url.

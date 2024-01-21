@@ -7,7 +7,7 @@ using Simplify.Web.Util;
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Controller meta-data information
+/// Controller meta-data information.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerMetaData" /> class.
@@ -26,7 +26,7 @@ public class ControllerMetaData(Type controllerType) : IControllerMetaData
 	/// <summary>
 	/// Gets the controller version
 	/// </summary>
-	public ControllerVersion Version { get; }// = version;
+	public ControllerVersion Version { get; } // TODO version calculation
 
 	/// <summary>
 	/// Gets the controller execute parameters.
@@ -98,7 +98,9 @@ public class ControllerMetaData(Type controllerType) : IControllerMetaData
 		if (attributes.Length > 0)
 			http404 = true;
 
-		return http403 || http404 ? new ControllerRole(http400, http403, http404) : null;
+		return http403 || http404
+				? new ControllerRole(http400, http403, http404)
+				: null;
 	}
 
 	private static ControllerSecurity? GetControllerSecurity(ICustomAttributeProvider controllerType)
@@ -114,6 +116,8 @@ public class ControllerMetaData(Type controllerType) : IControllerMetaData
 			requiredUserRoles = ((AuthorizeAttribute)attributes[0]).RequiredUserRoles;
 		}
 
-		return isAuthorizationRequired ? new ControllerSecurity(true, requiredUserRoles) : null;
+		return isAuthorizationRequired
+			? new ControllerSecurity(true, requiredUserRoles)
+			: null;
 	}
 }

@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Modules.Data.Html;
 
 /// <summary>
-/// Various HTML generation classes container
+/// Various HTML generation classes container.
 /// </summary>
 public sealed class HtmlWrapper : IHtmlWrapper
 {

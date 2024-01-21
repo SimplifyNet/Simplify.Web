@@ -5,7 +5,7 @@ using Simplify.Templates;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides template response (puts data to DataCollector)
+/// Provides template response (puts data to DataCollector).
 /// </summary>
 public class Tpl : ControllerResponse
 {

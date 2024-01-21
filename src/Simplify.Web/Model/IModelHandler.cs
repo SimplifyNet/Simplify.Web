@@ -4,7 +4,7 @@ using Simplify.DI;
 namespace Simplify.Web.Model;
 
 /// <summary>
-/// Represent model handler
+/// Represent model handler.
 /// </summary>
 public interface IModelHandler
 {

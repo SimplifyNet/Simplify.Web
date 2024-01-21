@@ -6,19 +6,16 @@ using Simplify.String;
 namespace Simplify.Web.Model.Validation.Attributes;
 
 /// <summary>
-/// Indicates that this property should be a valid email address
+/// Indicates that this property should be a valid email address.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="EMailAttribute"/> class.
+/// </remarks>
+/// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
+/// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>
 [AttributeUsage(AttributeTargets.Property)]
-public class EMailAttribute : ValidationAttribute
+public class EMailAttribute(string? errorMessage = null, bool isMessageFromStringTable = true) : ValidationAttribute(errorMessage, isMessageFromStringTable)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="EMailAttribute"/> class.
-	/// </summary>
-	/// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
-	/// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>
-	public EMailAttribute(string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable)
-	{
-	}
 
 	/// <summary>
 	/// Validates the specified property value.

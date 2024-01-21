@@ -7,28 +7,26 @@ using System.Linq;
 namespace Simplify.Web.Modules.Data.Html;
 
 /// <summary>
-/// HTML select control lists generator
+/// HTML select control lists generator.
 /// Usable <see cref="StringTable"/> items:
 /// "HtmlListDefaultItemLabel"
 /// </summary>
-public sealed class ListsGenerator : IListsGenerator
+/// <remarks>
+/// Initializes a new instance of the <see cref="ListsGenerator"/> class.
+/// </remarks>
+/// <param name="stringTable">The string table.</param>
+public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 {
-	private readonly IStringTable _stringTable;
+	private readonly IStringTable _stringTable = stringTable;
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="ListsGenerator"/> class.
+	/// Generate number selected HTML list.
 	/// </summary>
-	/// <param name="stringTable">The string table.</param>
-	public ListsGenerator(IStringTable stringTable) => _stringTable = stringTable;
-
-	/// <summary>
-	/// Generate number selected HTML list
-	/// </summary>
-	/// <param name="length">Length of a list</param>
-	/// <param name="selectedNumber">Selected list number</param>
-	/// <param name="startNumber">Start number of a list</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns></returns>
+	/// <param name="length">Length of a list.</param>
+	/// <param name="selectedNumber">Selected list number.</param>
+	/// <param name="startNumber">Start number of a list.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateNumbersList(int length, int? selectedNumber = 0, int startNumber = 0, bool displayNotSelectedMessage = false)
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedNumber == null) : "";
@@ -40,11 +38,11 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate hours selector HTML list in 24 hour format (from 0 to 23)
+	/// Generate hours selector HTML list in 24 hour format (from 0 to 23).
 	/// </summary>
-	/// <param name="selectedHour">Selected hour</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns>HTML list</returns>
+	/// <param name="selectedHour">Selected hour.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateHoursList(int selectedHour = -1, bool displayNotSelectedMessage = false)
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedHour == -1) : "";
@@ -56,11 +54,11 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate minutes selector HTML list (from 0 to 59)
+	/// Generate minutes selector HTML list (from 0 to 59).
 	/// </summary>
-	/// <param name="selectedMinute">Selected minute</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns>HTML list</returns>
+	/// <param name="selectedMinute">Selected minute.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateMinutesList(int selectedMinute = -1, bool displayNotSelectedMessage = false)
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMinute == -1) : "";
@@ -72,11 +70,11 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate days selector HTML list (from 1 to 31)
+	/// Generate days selector HTML list (from 1 to 31).
 	/// </summary>
-	/// <param name="selectedDay">Selected day</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns>HTML list</returns>
+	/// <param name="selectedDay">Selected day.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateDaysList(int selectedDay = -1, bool displayNotSelectedMessage = true)
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedDay == -1) : "";
@@ -88,11 +86,11 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate months selector HTML list (from 0 to 11)
+	/// Generate months selector HTML list (from 0 to 11).
 	/// </summary>
-	/// <param name="selectedMonth">Selected month</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns>HTML list</returns>
+	/// <param name="selectedMonth">Selected month.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateMonthsList(int selectedMonth = -1, bool displayNotSelectedMessage = true)
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMonth == -1) : "";
@@ -106,11 +104,11 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate months selector HTML list (from 1 to 12)
+	/// Generate months selector HTML list (from 1 to 12).
 	/// </summary>
-	/// <param name="selectedMonth">Selected month</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns>HTML list</returns>
+	/// <param name="selectedMonth">Selected month.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateMonthsListFrom1(int selectedMonth = -1, bool displayNotSelectedMessage = true)
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMonth == -1) : "";
@@ -124,14 +122,14 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate years selector HTML list (from current year to -<paramref name="numberOfYears" />)
+	/// Generate years selector HTML list (from current year to -<paramref name="numberOfYears" />).
 	/// </summary>
-	/// <param name="numberOfYears">Number of years in list</param>
-	/// <param name="selectedYear">Selected year</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
+	/// <param name="numberOfYears">Number of years in list.</param>
+	/// <param name="selectedYear">Selected year.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	/// <param name="currentYear">The current year.</param>
 	/// <returns>
-	/// HTML list
+	/// HTML list.
 	/// </returns>
 	public string GenerateYearsListToPast(int numberOfYears, int selectedYear = -1, bool displayNotSelectedMessage = true, int? currentYear = null)
 	{
@@ -145,12 +143,12 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate years selector HTML list (from current year to +<paramref name="numberOfYears" />)
+	/// Generate years selector HTML list (from current year to +<paramref name="numberOfYears" />).
 	/// </summary>
-	/// <param name="numberOfYears">Number of years in list</param>
+	/// <param name="numberOfYears">Number of years in list.</param>
 	/// <param name="currentYear">The current year.</param>
 	/// <returns>
-	/// HTML list
+	/// HTML list.
 	/// </returns>
 	public string GenerateYearsListToFuture(int numberOfYears, int? currentYear = null)
 	{
@@ -164,15 +162,17 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generic list generator
+	/// Generic list generator.
 	/// </summary>
-	/// <typeparam name="T">Item type to generate list from</typeparam>
-	/// <param name="items">List of items</param>
-	/// <param name="id">Item ID field</param>
-	/// <param name="name">Item name field</param>
-	/// <param name="selectedItem">Selected item</param>
-	/// <param name="generateEmptyListItem">Generate empty list item</param>
-	/// <returns></returns>
+	/// <typeparam name="T">Item type to generate list from.</typeparam>
+	/// <param name="items">List of items.</param>
+	/// <param name="id">Item ID field.</param>
+	/// <param name="name">Item name field.</param>
+	/// <param name="selectedItem">Selected item.</param>
+	/// <param name="generateEmptyListItem">Generate empty list item.</param>
+	/// <returns>
+	/// HTML list.
+	/// </returns>
 	public string GenerateList<T>(IList<T> items, Func<T, string> id, Func<T, string> name, T selectedItem = null, bool generateEmptyListItem = false)
 		where T : class
 	{
@@ -186,12 +186,12 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate HTML list from enum items
+	/// Generate HTML list from enum items.
 	/// </summary>
-	/// <typeparam name="T">Enum type</typeparam>
-	/// <param name="selectedItem">Selected enum item</param>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <returns>HTML list</returns>
+	/// <typeparam name="T">Enum type.</typeparam>
+	/// <param name="selectedItem">Selected enum item.</param>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateListFromEnum<T>(T selectedItem = default(T), bool displayNotSelectedMessage = true)
 		where T : struct
 	{
@@ -207,12 +207,12 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generate HTML list from enum items
+	/// Generate HTML list from enum items.
 	/// </summary>
-	/// <typeparam name="T">Enum type</typeparam>
-	/// <param name="displayNotSelectedMessage">Display not selected message in list or not</param>
-	/// <param name="selectNotSelectedMessage">Is not selected message should be selected</param>
-	/// <returns>HTML list</returns>
+	/// <typeparam name="T">Enum type.</typeparam>
+	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+	/// <param name="selectNotSelectedMessage">Is not selected message should be selected.</param>
+	/// <returns>HTML list.</returns>
 	public string GenerateListFromEnum<T>(bool displayNotSelectedMessage = true, bool selectNotSelectedMessage = true)
 		where T : struct
 	{
@@ -227,15 +227,13 @@ public sealed class ListsGenerator : IListsGenerator
 	}
 
 	/// <summary>
-	/// Generating empty HTML list item
+	/// Generating empty HTML list item.
 	/// </summary>
-	/// <returns></returns>
 	public string GenerateEmptyListItem() => "<option value=''>&nbsp;</option>";
 
 	/// <summary>
-	/// Generating HTML list default item
+	/// Generating HTML list default item.
 	/// </summary>
-	/// <returns></returns>
 	public string GenerateDefaultListItem(bool isSelected = true) =>
 		string.Format("<option value=''{1}>{0}</option>", _stringTable.GetItem("HtmlListDefaultItemLabel"), isSelected ? " selected='selected'" : "");
 }

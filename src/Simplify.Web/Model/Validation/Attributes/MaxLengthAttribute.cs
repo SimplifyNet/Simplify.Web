@@ -5,21 +5,19 @@ using Simplify.DI;
 namespace Simplify.Web.Model.Validation.Attributes;
 
 /// <summary>
-/// Sets maximum required property length
+/// Sets maximum required property length.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="MaxLengthAttribute" /> class.
+/// </remarks>
+/// <param name="maximumPropertyLength">Maximum length of the property.</param>
+/// <param name="errorMessage">The error message.</param>
+/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
 [AttributeUsage(AttributeTargets.Property)]
-public class MaxLengthAttribute : ValidationAttribute
+public class MaxLengthAttribute(int maximumPropertyLength,
+	string? errorMessage = null,
+	bool isMessageFromStringTable = true) : ValidationAttribute(errorMessage, isMessageFromStringTable)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="MaxLengthAttribute" /> class.
-	/// </summary>
-	/// <param name="maximumPropertyLength">Maximum length of the property.</param>
-	/// <param name="errorMessage">The error message.</param>
-	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
-	public MaxLengthAttribute(int maximumPropertyLength,
-		string? errorMessage = null,
-		bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) =>
-		MaximumPropertyLength = maximumPropertyLength;
 
 	/// <summary>
 	/// Gets or sets the maximum length of the property.
@@ -27,7 +25,7 @@ public class MaxLengthAttribute : ValidationAttribute
 	/// <value>
 	/// The maximum length of the property.
 	/// </value>
-	public int MaximumPropertyLength { get; set; }
+	public int MaximumPropertyLength { get; set; } = maximumPropertyLength;
 
 	/// <summary>
 	/// Validates the specified property value.

@@ -5,26 +5,19 @@ using Microsoft.AspNetCore.Http;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides Http file response (send file to response)
+/// Provides Http file response (send file to response).
 /// </summary>
-public class File : ControllerResponse
+/// <remarks>
+/// Initializes a new instance of the <see cref="File" /> class.
+/// </remarks>
+/// <param name="outputFileName">The name of the file.</param>
+/// <param name="contentType">Type of the content.</param>
+/// <param name="data">The data of the file.</param>
+/// <param name="statusCode">The HTTP response status code.</param>
+/// <exception cref="ArgumentNullException">
+/// </exception>
+public class File(string outputFileName, string contentType, byte[] data, int statusCode = 200) : ControllerResponse
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="File" /> class.
-	/// </summary>
-	/// <param name="outputFileName">The name of the file.</param>
-	/// <param name="contentType">Type of the content.</param>
-	/// <param name="data">The data of the file.</param>
-	/// <param name="statusCode">The HTTP response status code.</param>
-	/// <exception cref="ArgumentNullException">
-	/// </exception>
-	public File(string outputFileName, string contentType, byte[] data, int statusCode = 200)
-	{
-		OutputFileName = outputFileName ?? throw new ArgumentNullException(nameof(outputFileName));
-		ContentType = contentType ?? throw new ArgumentNullException(nameof(contentType));
-		Data = data ?? throw new ArgumentNullException(nameof(data));
-		StatusCode = statusCode;
-	}
 
 	/// <summary>
 	/// Gets the name of the output file.
@@ -32,7 +25,7 @@ public class File : ControllerResponse
 	/// <value>
 	/// The name of the output file.
 	/// </value>
-	public string OutputFileName { get; }
+	public string OutputFileName { get; } = outputFileName ?? throw new ArgumentNullException(nameof(outputFileName));
 
 	/// <summary>
 	/// Gets the type of the content.
@@ -40,7 +33,7 @@ public class File : ControllerResponse
 	/// <value>
 	/// The type of the content.
 	/// </value>
-	public string ContentType { get; }
+	public string ContentType { get; } = contentType ?? throw new ArgumentNullException(nameof(contentType));
 
 	/// <summary>
 	/// Gets the data.
@@ -48,7 +41,7 @@ public class File : ControllerResponse
 	/// <value>
 	/// The data.
 	/// </value>
-	public byte[] Data { get; }
+	public byte[] Data { get; } = data ?? throw new ArgumentNullException(nameof(data));
 
 	/// <summary>
 	/// Gets the HTTP response status code.
@@ -56,10 +49,10 @@ public class File : ControllerResponse
 	/// <value>
 	/// The HTTP response status code.
 	/// </value>
-	public int StatusCode { get; set; }
+	public int StatusCode { get; set; } = statusCode;
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	public override async Task<ControllerResponseResult> Process()
 	{

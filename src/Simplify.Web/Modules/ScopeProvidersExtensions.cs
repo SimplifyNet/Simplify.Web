@@ -5,7 +5,7 @@ using Simplify.Web.Modules.Data;
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Simplify.Web providers extensions
+/// Simplify.Web providers extensions.
 /// </summary>
 public static class ScopeProvidersExtensions
 {
@@ -14,7 +14,6 @@ public static class ScopeProvidersExtensions
 	/// </summary>
 	/// <param name="scope">The scope.</param>
 	/// <param name="context">The context.</param>
-	/// <returns></returns>
 	public static ILifetimeScope SetupProviders(this ILifetimeScope scope, HttpContext context)
 	{
 		scope.Resolver.Resolve<IWebContextProvider>().Setup(context);

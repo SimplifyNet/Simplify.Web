@@ -7,7 +7,7 @@ using Simplify.Web.Model;
 namespace Simplify.Web;
 
 /// <summary>
-/// Model controllers base class version 2
+/// Model controllers base class version 2.
 /// </summary>
 public abstract class Controller2<T> : ResponseShortcutsControllerBase
 	where T : class

@@ -3,17 +3,13 @@
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Provides controller route exception
+/// Provides controller route exception.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="ControllerRouteException" /> class.
+/// </remarks>
+/// <param name="message">The message that describes the error.</param>
 [Serializable]
-public class ControllerRouteException : Exception
+public class ControllerRouteException(string message) : Exception(message)
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ControllerRouteException" /> class.
-	/// </summary>
-	/// <param name="message">The message that describes the error.</param>
-	public ControllerRouteException(string message)
-		: base(message)
-	{
-	}
 }

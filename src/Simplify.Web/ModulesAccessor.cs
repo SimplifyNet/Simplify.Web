@@ -5,15 +5,15 @@ using Simplify.Web.Modules.Data.Html;
 namespace Simplify.Web;
 
 /// <summary>
-/// Provides modules accessor base class
+/// Provides modules accessor base class.
 /// </summary>
 public abstract class ModulesAccessor : ViewAccessor
 {
 	/// <summary>
-	/// Various HTML generation classes container
+	/// Various HTML generation classes container.
 	/// </summary>
 	/// <value>
-	/// The various HTML generation classes container
+	/// The various HTML generation classes container.
 	/// </value>
 	public virtual IHtmlWrapper Html { get; internal set; } = null!;
 

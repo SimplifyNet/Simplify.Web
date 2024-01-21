@@ -1,12 +1,12 @@
 ﻿namespace Simplify.Web.Modules.Data;
 
 /// <summary>
-/// Represent string table
+/// Represent string table.
 /// </summary>
 public interface IStringTable
 {
 	/// <summary>
-	/// String table items
+	/// String table items.
 	/// </summary>
 	dynamic Items { get; }
 
@@ -16,17 +16,16 @@ public interface IStringTable
 	void Setup();
 
 	/// <summary>
-	/// Get enum associated value from string table by enum type + enum element name
+	/// Get enum associated value from string table by enum type + enum element name.
 	/// </summary>
-	/// <typeparam name="T">Enum</typeparam>
-	/// <param name="enumValue">Enum value</param>
-	/// <returns>associated value</returns>
+	/// <typeparam name="T">Enum.</typeparam>
+	/// <param name="enumValue">Enum value.</param>
+	/// <returns>Associated value.</returns>
 	string? GetAssociatedValue<T>(T enumValue) where T : struct;
 
 	/// <summary>
 	/// Gets the item from string table.
 	/// </summary>
 	/// <param name="itemName">Name of the item.</param>
-	/// <returns></returns>
 	string? GetItem(string itemName);
 }

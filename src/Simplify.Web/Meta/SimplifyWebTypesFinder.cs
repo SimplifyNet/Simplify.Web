@@ -7,7 +7,7 @@ using Simplify.Web.Attributes.Setup;
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Provides Simplify.Web types finder among all loaded assemblies
+/// Provides Simplify.Web types finder among all loaded assemblies.
 /// </summary>
 public static class SimplifyWebTypesFinder
 {
@@ -133,7 +133,9 @@ public static class SimplifyWebTypesFinder
 	{
 		var types = new List<Type>();
 
-		foreach (var assembly in assemblies.Where(assembly => !ExcludedAssembliesPrefixes.Any(prefix => assembly.FullName != null && assembly.FullName.StartsWith(prefix))))
+		foreach (var assembly in assemblies
+			.Where(assembly => !ExcludedAssembliesPrefixes
+			.Any(prefix => assembly.FullName != null && assembly.FullName.StartsWith(prefix))))
 			types.AddRange(assembly.GetTypes());
 
 		return types;

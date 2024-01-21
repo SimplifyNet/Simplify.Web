@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Simplify.Web.Core.StaticFiles;
 
 /// <summary>
-/// Represent static file response
+/// Represent static file response.
 /// </summary>
 public interface IStaticFileResponse
 {

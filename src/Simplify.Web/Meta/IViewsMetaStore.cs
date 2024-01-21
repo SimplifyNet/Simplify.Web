@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Represent views meta store
+/// Represent views meta store.
 /// </summary>
 public interface IViewsMetaStore
 {

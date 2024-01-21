@@ -4,7 +4,7 @@ using Simplify.Web.Modules;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides controller redirect response (redirects the client to specified URL.)
+/// Provides controller redirect response (redirects the client to specified URL.).
 /// </summary>
 public class Redirect : ControllerResponse
 {
@@ -50,7 +50,7 @@ public class Redirect : ControllerResponse
 	public string? Url { get; }
 
 	/// <summary>
-	/// Processes this response
+	/// Processes this response.
 	/// </summary>
 	/// <returns></returns>
 	public override Task<ControllerResponseResult> Process()

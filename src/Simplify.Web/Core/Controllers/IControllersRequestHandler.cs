@@ -5,7 +5,7 @@ using Simplify.DI;
 namespace Simplify.Web.Core.Controllers;
 
 /// <summary>
-/// Represent controllers HTTP request handler
+/// Represent controllers HTTP request handler.
 /// </summary>
 public interface IControllersRequestHandler
 {

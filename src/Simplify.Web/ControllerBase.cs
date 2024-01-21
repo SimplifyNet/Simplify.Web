@@ -1,14 +1,9 @@
 ﻿#nullable disable
 
-using System;
-using Simplify.Templates;
-using Simplify.Web.Modules;
-using Simplify.Web.Responses;
-
 namespace Simplify.Web;
 
 /// <summary>
-/// Controllers base class
+/// Controllers base class.
 /// </summary>
 public abstract class ControllerBase : ResponseShortcutsControllerBase
 {

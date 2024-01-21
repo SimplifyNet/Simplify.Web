@@ -7,24 +7,18 @@ using Simplify.Web.Util;
 namespace Simplify.Web.Core.StaticFiles;
 
 /// <summary>
-/// Provides static file response
+/// Provides static file response.
 /// </summary>
 /// <seealso cref="IStaticFileResponse" />
-public class StaticFileResponse : IStaticFileResponse
+/// <remarks>
+/// Initializes a new instance of the <see cref="StaticFileResponse"/> class.
+/// </remarks>
+/// <param name="response">The response.</param>
+/// <param name="responseWriter">The response writer.</param>
+public class StaticFileResponse(HttpResponse response, IResponseWriter responseWriter) : IStaticFileResponse
 {
-	private readonly HttpResponse _response;
-	private readonly IResponseWriter _responseWriter;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="StaticFileResponse"/> class.
-	/// </summary>
-	/// <param name="response">The response.</param>
-	/// <param name="responseWriter">The response writer.</param>
-	public StaticFileResponse(HttpResponse response, IResponseWriter responseWriter)
-	{
-		_response = response;
-		_responseWriter = responseWriter;
-	}
+	private readonly HttpResponse _response = response;
+	private readonly IResponseWriter _responseWriter = responseWriter;
 
 	/// <summary>
 	/// Sends the not modified static file response.

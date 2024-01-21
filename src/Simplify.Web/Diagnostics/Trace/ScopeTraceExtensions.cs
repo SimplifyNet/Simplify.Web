@@ -8,7 +8,7 @@ using Simplify.Web.Settings;
 namespace Simplify.Web.Diagnostics.Trace;
 
 /// <summary>
-/// Provides trace extensions for requests
+/// Provides trace extensions for requests.
 /// </summary>
 public static class ScopeTraceExtensions
 {

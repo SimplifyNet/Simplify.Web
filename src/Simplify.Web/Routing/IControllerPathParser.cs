@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Represent controller path parser
+/// Represent controller path parser.
 /// </summary>
 public interface IControllerPathParser
 {

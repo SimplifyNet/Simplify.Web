@@ -3,7 +3,7 @@
 namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Represent controllers meta store
+/// Represent controllers meta store.
 /// </summary>
 public interface IControllersMetaStore
 {

@@ -6,7 +6,7 @@ using Simplify.Web.Model.Binding.Parsers;
 namespace Simplify.Web.Model.Binding;
 
 /// <summary>
-/// Provides form data to object (model) binding
+/// Provides form data to object (model) binding.
 /// </summary>
 public class HttpFormModelBinder : IModelBinder
 {

@@ -3,7 +3,7 @@
 namespace Simplify.Web.Diagnostics.Measurement;
 
 /// <summary>
-/// Provides measurement extensions
+/// Provides measurement extensions.
 /// </summary>
 public static class ScopeMeasurementExtensions
 {

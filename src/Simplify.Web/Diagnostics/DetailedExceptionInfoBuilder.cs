@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Simplify.Web.Diagnostics;
 
 /// <summary>
-/// Provides detailed exception info builder
+/// Provides detailed exception info builder.
 /// </summary>
 public static class DetailedExceptionInfoBuilder
 {
@@ -29,9 +29,9 @@ public static class DetailedExceptionInfoBuilder
 			: $"[{fileLineNumber}:{fileColumnNumber}]";
 
 		var result = (htmlFormatting ? "<b>" : "")
-		             + $"{positionPrefix} {e.GetType()} : {e.Message}"
-		             + (htmlFormatting ? "</b>" : "")
-		             + $"{Environment.NewLine}{trace}{BuildInnerExceptionData(1, e.InnerException, htmlFormatting)}";
+					 + $"{positionPrefix} {e.GetType()} : {e.Message}"
+					 + (htmlFormatting ? "</b>" : "")
+					 + $"{Environment.NewLine}{trace}{BuildInnerExceptionData(1, e.InnerException, htmlFormatting)}";
 
 		if (htmlFormatting)
 			result = result.Replace(Environment.NewLine, "<br />");
@@ -61,8 +61,8 @@ public static class DetailedExceptionInfoBuilder
 			: "";
 
 		return (htmlFormatting ? "<br /><b>" : "")
-		       + $"[Inner Exception{levelText}]{positionPrefix} {e.GetType()} : {e.Message}"
-		       + (htmlFormatting ? "</b>" : "")
-		       + $"{Environment.NewLine}{trace}{BuildInnerExceptionData(currentLevel + 1, e.InnerException, htmlFormatting)}";
+			   + $"[Inner Exception{levelText}]{positionPrefix} {e.GetType()} : {e.Message}"
+			   + (htmlFormatting ? "</b>" : "")
+			   + $"{Environment.NewLine}{trace}{BuildInnerExceptionData(currentLevel + 1, e.InnerException, htmlFormatting)}";
 	}
 }

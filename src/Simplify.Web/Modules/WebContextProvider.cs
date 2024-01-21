@@ -3,7 +3,7 @@
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Provides web context provider
+/// Provides web context provider.
 /// </summary>
 public class WebContextProvider : IWebContextProvider
 {

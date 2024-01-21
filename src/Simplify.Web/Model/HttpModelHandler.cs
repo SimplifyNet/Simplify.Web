@@ -10,19 +10,17 @@ using Simplify.Web.Modules;
 namespace Simplify.Web.Model;
 
 /// <summary>
-/// Provides model handling
+/// Provides model handling.
 /// </summary>
-public class HttpModelHandler : IModelHandler
+/// <remarks>
+/// Initializes a new instance of the <see cref="HttpModelHandler"/> class.
+/// </remarks>
+/// <param name="context">The context.</param>
+public class HttpModelHandler(IWebContext context) : IModelHandler
 {
-	private readonly IWebContext _context;
+	private readonly IWebContext _context = context;
 
 	private object? _model;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="HttpModelHandler"/> class.
-	/// </summary>
-	/// <param name="context">The context.</param>
-	public HttpModelHandler(IWebContext context) => _context = context;
 
 	/// <summary>
 	/// Gets the model binders types.

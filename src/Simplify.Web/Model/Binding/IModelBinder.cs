@@ -3,7 +3,7 @@
 namespace Simplify.Web.Model.Binding;
 
 /// <summary>
-/// Represent model binder
+/// Represent model binder.
 /// </summary>
 public interface IModelBinder
 {

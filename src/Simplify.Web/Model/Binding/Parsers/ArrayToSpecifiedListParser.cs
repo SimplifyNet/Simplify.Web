@@ -6,7 +6,7 @@ using System.Reflection;
 namespace Simplify.Web.Model.Binding.Parsers;
 
 /// <summary>
-/// Provides string array to list parsing
+/// Provides string array to list parsing.
 /// </summary>
 public class ArrayToSpecifiedListParser
 {
@@ -84,7 +84,7 @@ public class ArrayToSpecifiedListParser
 			var methodInfo = listType.GetMethod("Add")!;
 
 			foreach (var value in values)
-				methodInfo.Invoke(list, new[] { StringToSpecifiedObjectParser.ParseEnum(value, parsingType) });
+				methodInfo.Invoke(list, [StringToSpecifiedObjectParser.ParseEnum(value, parsingType)]);
 
 			return list;
 		}
@@ -101,6 +101,8 @@ public class ArrayToSpecifiedListParser
 	{
 		var genericTypeArguments = type.GetTypeInfo().GenericTypeArguments;
 
-		return genericTypeArguments.Length > 0 ? genericTypeArguments[0] : null;
+		return genericTypeArguments.Length > 0
+			? genericTypeArguments[0]
+			: null;
 	}
 }

@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Http;
 namespace Simplify.Web.Modules;
 
 /// <summary>
-/// Represent web context
+/// Represent web context/
 /// </summary>
 public interface IWebContext
 {
 	/// <summary>
-	/// Current web-site route, for example: "/" or "/user/delete/15"
+	/// Current web-site route, for example: "/" or "/user/delete/15"/
 	/// </summary>
 	string Route { get; }
 
 	/// <summary>
-	/// Site root url, for example: http://mysite.com or http://localhost/mysite/
+	/// Site root url, for example: http://mysite.com or http://localhost/mysite//
 	/// </summary>
 	string SiteUrl { get; }
 

@@ -5,7 +5,7 @@ using Simplify.Web.Modules.Data;
 namespace Simplify.Web.Core.AccessorsBuilding;
 
 /// <summary>
-/// Provides builder for ActionModulesAccessor objects
+/// Provides builder for ActionModulesAccessor objects.
 /// </summary>
 public class ActionModulesAccessorBuilder : ModulesAccessorBuilder
 {

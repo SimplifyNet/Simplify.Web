@@ -4,7 +4,7 @@ using Simplify.Web.Modules.Data;
 namespace Simplify.Web;
 
 /// <summary>
-/// Action modules accessor base class
+/// Action modules accessor base class.
 /// </summary>
 public class ActionModulesAccessor : ModulesAccessor
 {

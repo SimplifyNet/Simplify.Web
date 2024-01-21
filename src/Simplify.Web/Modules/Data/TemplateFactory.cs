@@ -10,37 +10,32 @@ using Simplify.Templates;
 namespace Simplify.Web.Modules.Data;
 
 /// <summary>
-/// Web-site cacheable text templates loader
+/// Web-site cacheable text templates loader.
 /// </summary>
-public sealed class TemplateFactory : ITemplateFactory
+/// <remarks>
+/// Initializes a new instance of the <see cref="TemplateFactory" /> class.
+/// </remarks>
+/// <param name="environment">The environment.</param>
+/// <param name="languageManagerProvider">The language manager provider.</param>
+/// <param name="defaultLanguage">The default language.</param>
+/// <param name="templatesMemoryCache">if set to <c>true</c> them loaded templates will be cached in memory.</param>
+/// <param name="loadTemplatesFromAssembly">if set to <c>true</c> then all templates will be loaded from assembly.</param>
+public sealed class TemplateFactory(IEnvironment environment,
+	ILanguageManagerProvider languageManagerProvider,
+	string defaultLanguage,
+	bool templatesMemoryCache = false,
+	bool loadTemplatesFromAssembly = false) : ITemplateFactory
 {
 	private static readonly IDictionary<KeyValuePair<string, string>, string> Cache = new Dictionary<KeyValuePair<string, string>, string>();
 	private static readonly object Locker = new();
 	private readonly SemaphoreSlim _cacheSemaphore = new(1, 1);
 
-	private readonly IEnvironment _environment;
-	private readonly ILanguageManagerProvider _languageManagerProvider;
-	private readonly string _defaultLanguage;
-	private readonly bool _templatesMemoryCache;
-	private readonly bool _loadTemplatesFromAssembly;
+	private readonly IEnvironment _environment = environment;
+	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
+	private readonly string _defaultLanguage = defaultLanguage;
+	private readonly bool _templatesMemoryCache = templatesMemoryCache;
+	private readonly bool _loadTemplatesFromAssembly = loadTemplatesFromAssembly;
 	private ILanguageManager _languageManager = null!;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="TemplateFactory" /> class.
-	/// </summary>
-	/// <param name="environment">The environment.</param>
-	/// <param name="languageManagerProvider">The language manager provider.</param>
-	/// <param name="defaultLanguage">The default language.</param>
-	/// <param name="templatesMemoryCache">if set to <c>true</c> them loaded templates will be cached in memory.</param>
-	/// <param name="loadTemplatesFromAssembly">if set to <c>true</c> then all templates will be loaded from assembly.</param>
-	public TemplateFactory(IEnvironment environment, ILanguageManagerProvider languageManagerProvider, string defaultLanguage, bool templatesMemoryCache = false, bool loadTemplatesFromAssembly = false)
-	{
-		_environment = environment;
-		_languageManagerProvider = languageManagerProvider;
-		_defaultLanguage = defaultLanguage;
-		_templatesMemoryCache = templatesMemoryCache;
-		_loadTemplatesFromAssembly = loadTemplatesFromAssembly;
-	}
 
 	/// <summary>
 	/// Setups the template factory.
@@ -48,10 +43,10 @@ public sealed class TemplateFactory : ITemplateFactory
 	public void Setup() => _languageManager = _languageManagerProvider.Get();
 
 	/// <summary>
-	/// Load web-site template from a file
+	/// Load web-site template from a file.
 	/// </summary>
-	/// <param name="fileName">Template file name</param>
-	/// <returns>Template class with loaded template</returns>
+	/// <param name="fileName">Template file name.</param>
+	/// <returns>Template class with loaded template.</returns>
 	public ITemplate Load(string fileName)
 	{
 		var filePath = BuildFilePath(fileName);

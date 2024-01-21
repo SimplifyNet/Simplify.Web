@@ -9,20 +9,19 @@ using Simplify.Web.Model.Validation.Attributes;
 namespace Simplify.Web.Model.Validation;
 
 /// <summary>
-/// Provides object properties validator
+/// Provides object properties validator.
 /// </summary>
-public class ValidationAttributesExecutor : IModelValidator
+/// <remarks>
+/// Initializes a new instance of the <see cref="ValidationAttributesExecutor"/> class.
+/// </remarks>
+/// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.</param>
+public class ValidationAttributesExecutor(bool nesting = true) : IModelValidator
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ValidationAttributesExecutor"/> class.
-	/// </summary>
-	/// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.</param>
-	public ValidationAttributesExecutor(bool nesting = true) => Nesting = nesting;
 
 	/// <summary>
 	/// Gets a value indicating whether <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.
 	/// </summary>
-	public bool Nesting { get; }
+	public bool Nesting { get; } = nesting;
 
 	/// <summary>
 	/// Validates the specified model.

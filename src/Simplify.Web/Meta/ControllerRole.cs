@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Controller specific roles
+/// Controller specific roles.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerRole" /> class.

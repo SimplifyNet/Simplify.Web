@@ -8,7 +8,7 @@ using Simplify.Web.Util;
 namespace Simplify.Web.Core.Controllers;
 
 /// <summary>
-/// Provides controllers agent
+/// Provides controllers agent.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllersAgent" /> class.
@@ -45,7 +45,9 @@ public class ControllersAgent(IControllersMetaStore controllersMetaStore, IRoute
 
 		var item = controllerMetaData.ExecParameters.Routes.FirstOrDefault(x => x.Key == HttpRequestUtil.HttpMethodStringToHttpMethod(httpMethod));
 
-		return default(KeyValuePair<HttpMethod, string>).Equals(item) ? null : _routeMatcher.Match(sourceRoute, item.Value);
+		return default(KeyValuePair<HttpMethod, string>).Equals(item)
+			? null
+			: _routeMatcher.Match(sourceRoute, item.Value);
 	}
 
 	/// <summary>
@@ -94,12 +96,17 @@ public class ControllersAgent(IControllersMetaStore controllersMetaStore, IRoute
 			return SecurityRuleCheckResult.Ok;
 
 		if (metaData.Security.RequiredUserRoles == null || !metaData.Security.RequiredUserRoles.Any())
-			return user?.Identity == null || !user.Identity.IsAuthenticated ? SecurityRuleCheckResult.NotAuthenticated : SecurityRuleCheckResult.Ok;
+			return user?.Identity == null ||
+				!user.Identity.IsAuthenticated
+					? SecurityRuleCheckResult.NotAuthenticated
+					: SecurityRuleCheckResult.Ok;
 
 		if (user?.Identity == null || !user.Identity.IsAuthenticated)
 			return SecurityRuleCheckResult.NotAuthenticated;
 
-		return metaData.Security.RequiredUserRoles.Any(user.IsInRole) ? SecurityRuleCheckResult.Ok : SecurityRuleCheckResult.Forbidden;
+		return metaData.Security.RequiredUserRoles.Any(user.IsInRole)
+			? SecurityRuleCheckResult.Ok
+			: SecurityRuleCheckResult.Forbidden;
 	}
 
 	private static IList<IControllerMetaData> SortControllersMetaContainers(IEnumerable<IControllerMetaData> controllersMetaContainers) =>

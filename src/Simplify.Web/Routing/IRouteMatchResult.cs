@@ -3,12 +3,12 @@
 namespace Simplify.Web.Routing;
 
 /// <summary>
-/// Represent HTTP route matching result
+/// Represent HTTP route matching result.
 /// </summary>
 public interface IRouteMatchResult
 {
 	/// <summary>
-	/// Gets a value indicating whether the route was matched successfully
+	/// Gets a value indicating whether the route was matched successfully.
 	/// </summary>
 	/// <value>
 	/// <c>true</c> if the route was matched successfully; otherwise, <c>false</c>.
