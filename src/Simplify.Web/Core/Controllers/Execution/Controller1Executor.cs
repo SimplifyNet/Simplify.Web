@@ -10,7 +10,7 @@ namespace Simplify.Web.Core.Controllers.Execution;
 ///  Provides v1 controllers executor
 /// </summary>
 /// <param name="controllerFactory">The controller factory.</param>
-public class Controller1Executor1(IController1Factory controllerFactory) : IVersionedControllerExecutor
+public class Controller1Executor(IController1Factory controllerFactory) : IVersionedControllerExecutor
 {
 	private readonly IController1Factory _controllerFactory = controllerFactory;
 
