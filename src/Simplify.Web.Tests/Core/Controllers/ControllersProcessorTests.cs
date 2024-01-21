@@ -26,7 +26,7 @@ public class ControllersProcessorTests
 	private Mock<IRedirector> _redirector = null!;
 	private Mock<HttpContext> _context = null!;
 
-	private ControllerMetaData _metaData = null!;
+	private IControllerMetaData _metaData = null!;
 
 	[SetUp]
 	public void Initialize()
@@ -38,8 +38,8 @@ public class ControllersProcessorTests
 
 		_context = new Mock<HttpContext>();
 
-		_metaData = new ControllerMetaData(typeof(TestController1),
-			new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/foo/bar" } }));
+		_metaData = Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) &&
+			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/foo/bar" } }, 0));
 
 		_agent.Setup(x => x.MatchControllerRoute(It.IsAny<IControllerMetaData>(), It.IsAny<string>(), It.IsAny<string>())).Returns(new RouteMatchResult(true, _routeParameters));
 		_agent.Setup(x => x.GetStandardControllersMetaData()).Returns(() => new List<IControllerMetaData>

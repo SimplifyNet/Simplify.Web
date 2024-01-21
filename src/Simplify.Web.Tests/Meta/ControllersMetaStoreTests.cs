@@ -24,13 +24,13 @@ public class ControllersMetaStoreTests
 		var store = new ControllersMetaStore(factory.Object);
 
 		factory.SetupSequence(x => x.CreateControllerMetaData(It.IsAny<Type>()))
-			.Returns(new ControllerMetaData(typeof(TestControllerV2)))
-			.Returns(new ControllerMetaData(typeof(TestControllerV2WithModel)))
-			.Returns(new ControllerMetaData(typeof(TestController1), new ControllerExecParameters(null, 2)))
-			.Returns(new ControllerMetaData(typeof(TestController6)))
-			.Returns(new ControllerMetaData(typeof(TestController2), new ControllerExecParameters(null, 1)))
-			.Returns(new ControllerMetaData(typeof(TestController4)))
-			.Returns(new ControllerMetaData(typeof(TestController5)));
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestControllerV2)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestControllerV2WithModel)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) && x.ExecParameters == new ControllerExecParameters(null, 2)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController6)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController2) && x.ExecParameters == new ControllerExecParameters(null, 1)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController4)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController5)));
 
 		// Act
 		var metaData = store.ControllersMetaData;

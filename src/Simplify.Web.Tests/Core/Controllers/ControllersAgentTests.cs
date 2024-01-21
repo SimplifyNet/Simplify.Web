@@ -29,23 +29,25 @@ public class ControllersAgentTests
 	[Test]
 	public void GetStandardControllersMetaData_StandardControllerAndAll40xControllers_OnlyStandardReturned()
 	{
-		// Assign
+		// Arrange
 
-		_metaStore.SetupGet(x => x.ControllersMetaData)
-			.Returns(new List<IControllerMetaData>
+		var metaStore = Mock.Of<IControllersMetaStore>(x => x.ControllersMetaData ==
+			new List<IControllerMetaData>
 			{
-				new ControllerMetaData(null!),
-				new ControllerMetaData(null!, null, new ControllerRole(true)),
-				new ControllerMetaData(null!, null, new ControllerRole(false, true)),
-				new ControllerMetaData(null!, null, new ControllerRole(false, false, true))
+				Mock.Of<IControllerMetaData>(),
+				Mock.Of<IControllerMetaData>(x => x.Role == new ControllerRole(true, false, false)),
+				Mock.Of<IControllerMetaData>(x => x.Role == new ControllerRole(false, true, false)),
+				Mock.Of<IControllerMetaData>(x => x.Role == new ControllerRole(false, false, true))
 			});
 
-		_agent = new ControllersAgent(_metaStore.Object, _routeMatcher.Object);
+		var routeMatcher = Mock.Of<IRouteMatcher>();
 
 		// Act
-		var items = _agent.GetStandardControllersMetaData();
+		var items = new ControllersAgent(metaStore, routeMatcher)
+			.GetStandardControllersMetaData();
 
 		// Assert
+
 		Assert.AreEqual(1, items.Count);
 		Assert.IsNull(items.First().Role);
 	}
@@ -53,21 +55,24 @@ public class ControllersAgentTests
 	[Test]
 	public void GetStandardControllersMetaData_DifferentPriorities_RunOrderingRespected()
 	{
-		// Assign
+		// Arrange
 
-		_metaStore.SetupGet(x => x.ControllersMetaData)
-			.Returns(new List<IControllerMetaData>
+		var metaStore = Mock.Of<IControllersMetaStore>(x => x.ControllersMetaData ==
+			new List<IControllerMetaData>
 			{
-				new ControllerMetaData(typeof(TestController1), new ControllerExecParameters(null, 2)),
-				new ControllerMetaData(typeof(TestController2), new ControllerExecParameters(null, 1)),
-				new ControllerMetaData(typeof(TestController4)),
-				new ControllerMetaData(typeof(TestController5))
+				Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) && x.ExecParameters == new ControllerExecParameters(null, 2)),
+				Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController2) && x.ExecParameters == new ControllerExecParameters(null, 1)),
+				Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController4)),
+				Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController5)),
 			});
 
-		_agent = new ControllersAgent(_metaStore.Object, _routeMatcher.Object);
+		var routeMatcher = Mock.Of<IRouteMatcher>();
 
 		// Act
-		var items = _agent.GetStandardControllersMetaData();
+		var items = new ControllersAgent(metaStore, routeMatcher)
+			.GetStandardControllersMetaData();
+
+		// Assert
 
 		Assert.AreEqual(4, items.Count);
 		Assert.AreEqual("TestController4", items[0].ControllerType.Name);
@@ -79,112 +84,74 @@ public class ControllersAgentTests
 	[Test]
 	public void MatchControllerRoute_NoControllerExecParameters_MatchCalled()
 	{
+		// Arrange
+
+		var controller = Mock.Of<IControllerMetaData>();
+		var sourceRoute = "/foo";
+		var httpMethod = "GET";
+
 		// Act
-		_agent.MatchControllerRoute(new ControllerMetaData(null!), "/foo", "GET");
+		_agent.MatchControllerRoute(controller, sourceRoute, httpMethod);
 
 		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/foo"), It.Is<string>(s => s == null)));
+		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == sourceRoute), It.Is<string>(s => s == null)));
 	}
 
 	[Test]
 	public void MatchControllerRoute_NoControllerRouteData_MatchCalled()
 	{
+		// Arrange
+
+		var controller = Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) &&
+			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, string>(), 0));
+
+		var sourceRoute = "/foo";
+		var httpMethod = "GET";
+
 		// Act
-		_agent.MatchControllerRoute(new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string>())), "/foo", "GET");
+		_agent.MatchControllerRoute(controller, sourceRoute, httpMethod);
 
 		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/foo"), It.Is<string>(s => s == null)));
+		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == sourceRoute), It.Is<string>(s => s == null)));
 	}
 
-	[Test]
-	public void MatchControllerRoute_GetControllerRouteGetMethod_MatchCalled()
+	[TestCase("/foo", HttpMethod.Get, "/bar", "GET")]
+	[TestCase("/foo", HttpMethod.Post, "/bar", "POST")]
+	[TestCase("/foo", HttpMethod.Put, "/bar", "PUT")]
+	[TestCase("/foo", HttpMethod.Patch, "/bar", "PATCH")]
+	[TestCase("/foo", HttpMethod.Delete, "/bar", "DELETE")]
+	[TestCase("/foo", HttpMethod.Options, "/bar", "OPTIONS")]
+	public void MatchControllerRoute_SpecifiedControllerRouteSpecifiedMethod_MatchCalled(string controllerRoute,
+		HttpMethod controllerHttpMethod,
+		string sourceRoute,
+		string httpMethod)
 	{
+		// Arrange
+
+		var controller = Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) &&
+			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, string> { { controllerHttpMethod, controllerRoute } }, 0));
+
 		// Act
-		_agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/foo" } })), "/bar", "GET");
+		_agent.MatchControllerRoute(controller, sourceRoute, httpMethod);
 
 		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
+		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == sourceRoute), It.Is<string>(s => s == controllerRoute)));
 	}
 
-	[Test]
-	public void MatchControllerRoute_PostControllerRoutePostMethod_MatchCalled()
+	[TestCase("/foo", HttpMethod.Post, "/bar", "GET")]
+	[TestCase("/foo", HttpMethod.Get, "/bar", "FOO")]
+	public void MatchControllerRoute_SpecifiedControllerRouteSpecifiedMethod_MatchNotCalled(string controllerRoute,
+		HttpMethod controllerHttpMethod,
+		string sourceRoute,
+		string httpMethod)
 	{
+		// Arrange
+
+		var controller = Mock.Of<IControllerMetaData>(x =>
+			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, string> { { controllerHttpMethod, controllerRoute } }, 0));
+
 		// Act
-		_agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Post, "/foo" } })), "/bar", "POST");
-
-		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
-	}
-
-	[Test]
-	public void MatchControllerRoute_PutControllerRoutePutMethod_MatchCalled()
-	{
-		// Act
-		_agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/foo" } })), "/bar",
-			"PUT");
-
-		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
-	}
-
-	[Test]
-	public void MatchControllerRoute_PatchControllerRoutePatchMethod_MatchCalled()
-	{
-		// Act
-		_agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Patch, "/foo" } })), "/bar",
-			"PATCH");
-
-		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
-	}
-
-	[Test]
-	public void MatchControllerRoute_DeleteControllerRouteDeleteMethod_MatchCalled()
-	{
-		// Act
-		_agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Delete, "/foo" } })),
-			"/bar", "DELETE");
-
-		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
-	}
-
-	[Test]
-	public void MatchControllerRoute_OptionsControllerRouteOptionsMethod_MatchCalled()
-	{
-		// Act
-		_agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Options, "/foo" } })),
-			"/bar", "OPTIONS");
-
-		// Assert
-		_routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == "/bar"), It.Is<string>(s => s == "/foo")));
-	}
-
-	[Test]
-	public void MatchControllerRoute_PostControllerRouteGetMethod_MatchNotCalled()
-	{
-		// Act
-		var result = _agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Post, "/foo" } })), "/bar", "GET");
-
-		// Assert
-
-		Assert.IsNull(result);
-		_routeMatcher.Verify(x => x.Match(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-	}
-
-	[Test]
-	public void MatchControllerRoute_UndefinedMethod_MatchNotCalled()
-	{
-		// Act
-		var result = _agent.MatchControllerRoute(
-			new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/foo" } })), "/bar", "FOO");
+		var result = _agent.MatchControllerRoute(controller, sourceRoute, httpMethod);
 
 		// Assert
 
@@ -195,13 +162,16 @@ public class ControllersAgentTests
 	[Test]
 	public void GetHandlerController_NoController_Null()
 	{
-		// Assign
+		// Arrange
 
-		_metaStore.SetupGet(x => x.ControllersMetaData).Returns(new List<IControllerMetaData>());
-		_agent = new ControllersAgent(_metaStore.Object, _routeMatcher.Object);
+		var metaStore = Mock.Of<IControllersMetaStore>(x => x.ControllersMetaData == new List<IControllerMetaData>());
+		var agent = new ControllersAgent(metaStore, null!);
 
-		// Act & Assert
-		Assert.IsNull(_agent.GetHandlerController(HandlerControllerType.Http404Handler));
+		// Act
+		var result = agent.GetHandlerController(HandlerControllerType.Http404Handler);
+
+		// Assert
+		Assert.That(result, Is.Null);
 	}
 
 	[Test]
@@ -209,235 +179,260 @@ public class ControllersAgentTests
 	{
 		// Assign
 
-		_metaStore.SetupGet(x => x.ControllersMetaData).Returns(new List<IControllerMetaData>
+		var metaStore = Mock.Of<IControllersMetaStore>(x => x.ControllersMetaData == new List<IControllerMetaData>
 		{
-			new ControllerMetaData(null!, null, new ControllerRole(false, false, true))
+			Mock.Of<IControllerMetaData>(x => x.Role == new ControllerRole(false, false, true))
 		});
 
-		_agent = new ControllersAgent(_metaStore.Object, _routeMatcher.Object);
+		_agent = new ControllersAgent(metaStore, _routeMatcher.Object);
 
 		// Act
 		var metaData = _agent.GetHandlerController(HandlerControllerType.Http404Handler)!;
 
 		// Assert
 
-		Assert.IsTrue(metaData.Role!.Is404Handler);
+		Assert.That(metaData.Role!.Is404Handler, Is.True);
 	}
 
 	[Test]
 	public void IsAnyPageController_AnyPageController_True()
 	{
-		// Assign
-		var metaData = new ControllerMetaData(null!);
+		// Arrange
+		var metaData = Mock.Of<IControllerMetaData>();
 
-		// Act & Assert
-		Assert.IsTrue(_agent.IsAnyPageController(metaData));
+		// Act
+		var result = _agent.IsAnyPageController(metaData);
+
+		// Asset
+		Assert.That(result, Is.True);
 	}
 
 	[Test]
 	public void IsAnyPageController_AnyPageControllerWithEmptyRoutes_True()
 	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, new ControllerExecParameters(null));
+		// Arrange
+		var metaData = Mock.Of<IControllerMetaData>(x => x.ExecParameters == new ControllerExecParameters(null, 0));
 
-		// Act & Assert
-		Assert.IsTrue(_agent.IsAnyPageController(metaData));
+		// Act
+		var result = _agent.IsAnyPageController(metaData);
+
+		// Asset
+		Assert.That(result, Is.True);
 	}
 
 	[Test]
 	public void IsAnyPageController_404Handler_False()
 	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, null, new ControllerRole(false, false, true));
+		// Arrange
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Role == new ControllerRole(false, false, true));
 
-		// Act & Assert
-		Assert.IsFalse(_agent.IsAnyPageController(metaData));
+		// Act
+		var result = _agent.IsAnyPageController(metaData);
+
+		// Asset
+		Assert.That(result, Is.False);
 	}
 
-	[Test]
-	public void IsAnyPageController_GetRoute_False()
+	[TestCase("/", HttpMethod.Get)]
+	[TestCase("/", HttpMethod.Post)]
+	[TestCase("/", HttpMethod.Put)]
+	[TestCase("/", HttpMethod.Patch)]
+	[TestCase("/", HttpMethod.Delete)]
+	[TestCase("/", HttpMethod.Options)]
+	public void IsAnyPageController_GetRoute_False(string controllerRoute,
+		HttpMethod controllerHttpMethod)
 	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/" } }));
+		// Arrange
+		var metaData = Mock.Of<IControllerMetaData>(x =>
+			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, string> { { controllerHttpMethod, controllerRoute } }, 0));
 
-		// Act & Assert
-		Assert.IsFalse(_agent.IsAnyPageController(metaData));
-	}
+		// Act
+		var result = _agent.IsAnyPageController(metaData);
 
-	[Test]
-	public void IsAnyPageController_PostRoute_False()
-	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Post, "/" } }));
-
-		// Act & Assert
-		Assert.IsFalse(_agent.IsAnyPageController(metaData));
-	}
-
-	[Test]
-	public void IsAnyPageController_PutRoute_False()
-	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Put, "/" } }));
-
-		// Act & Assert
-		Assert.IsFalse(_agent.IsAnyPageController(metaData));
-	}
-
-	[Test]
-	public void IsAnyPageController_PatchRoute_False()
-	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Patch, "/" } }));
-
-		// Act & Assert
-		Assert.IsFalse(_agent.IsAnyPageController(metaData));
-	}
-
-	[Test]
-	public void IsAnyPageController_DeleteRoute_False()
-	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Delete, "/" } }));
-
-		// Act & Assert
-		Assert.IsFalse(_agent.IsAnyPageController(metaData));
+		// Asset
+		Assert.That(result, Is.False);
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_NoSecurityRules_Ok()
 	{
-		// Assign
-		var metaData = new ControllerMetaData(null!);
+		// Arrange
+		var metaData = Mock.Of<IControllerMetaData>();
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, null!));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, null!);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.Ok));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_AuthorizationRequiredNotAuthorized_NotAuthenticated()
 	{
-		// Assign
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true));
+		// Arrange
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, null));
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.NotAuthenticated, _agent.IsSecurityRulesViolated(metaData, null!));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, null!);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.NotAuthenticated));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_AuthorizationRequiredAuthorized_Ok()
 	{
-		// Assign
+		// Arrange
 
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true));
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, null));
+
 		var claims = new List<Claim>
 		{
-			new Claim(ClaimTypes.Name, "Foo")
+			new(ClaimTypes.Name, "Foo")
 		};
 
 		var id = new ClaimsIdentity(claims, "test");
 		var user = new ClaimsPrincipal(id);
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, user));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, user);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.Ok));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedNoGroups_Forbidden()
 	{
-		// Assign
+		// Arrange
 
-		var metaData = new ControllerMetaData(null!, null, null,
-			new ControllerSecurity(true, new List<string> { "Admin", "User" }));
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, new List<string>
+		{
+			"Admin",
+			"User"
+		}));
 
 		var claims = new List<Claim>
 		{
-			new Claim(ClaimTypes.Name, "Foo")
+			new(ClaimTypes.Name, "Foo")
 		};
 
 		var id = new ClaimsIdentity(claims, "test");
 		var user = new ClaimsPrincipal(id);
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.Forbidden, _agent.IsSecurityRulesViolated(metaData, user));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, user);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.Forbidden));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedNotInGroup_Forbidden()
 	{
-		// Assign
+		// Arrange
 
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true, new List<string> { "Admin" }));
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, new List<string>
+		{
+			"Admin"
+		}));
+
 		var claims = new List<Claim>
 		{
-			new Claim(ClaimTypes.Name, "Foo"),
-			new Claim(ClaimTypes.Role, "User")
+			new(ClaimTypes.Name, "Foo"),
+			new(ClaimTypes.Role, "User")
 		};
 
 		var id = new ClaimsIdentity(claims, "test");
 		var user = new ClaimsPrincipal(id);
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.Forbidden, _agent.IsSecurityRulesViolated(metaData, user));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, user);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.Forbidden));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupNotAuthorized_NotAuthenticated()
 	{
-		// Assign
+		// Arrange
 
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true, new List<string> { "Admin, User" }));
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, new List<string>
+		{
+			"Admin",
+			"User"
+		}));
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.NotAuthenticated, _agent.IsSecurityRulesViolated(metaData, null!));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, null!);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.NotAuthenticated));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_AuthorizationRequiredWithGroupAuthorizedInGroup_Ok()
 	{
-		// Assign
+		// Arrange
 
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true, new List<string> { "Admin", "User" }));
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, new List<string>
+		{
+			"Admin",
+			"User"
+		}));
+
 		var claims = new List<Claim>
 		{
-			new Claim(ClaimTypes.Name, "Foo"),
-			new Claim(ClaimTypes.Role, "User")
+			new(ClaimTypes.Name, "Foo"),
+			new(ClaimTypes.Role, "User")
 		};
 
 		var id = new ClaimsIdentity(claims, "test");
 		var user = new ClaimsPrincipal(id);
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.Ok, _agent.IsSecurityRulesViolated(metaData, user));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, user);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.Ok));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_UserExistNotAuthenticatedUser_NotAuthenticated()
 	{
-		// Assign
+		// Arrange
 
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true));
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, null));
 
-		var id = new Mock<IIdentity>();
-		id.Setup(x => x.IsAuthenticated).Returns(false);
-		var user = new ClaimsPrincipal(id.Object);
+		var id = Mock.Of<IIdentity>(x => x.IsAuthenticated == false);
+		var user = new ClaimsPrincipal(id);
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.NotAuthenticated, _agent.IsSecurityRulesViolated(metaData, user));
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, user);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.NotAuthenticated));
 	}
 
 	[Test]
 	public void IsSecurityRulesViolated_UserExistNotAuthenticatedUserWithAllowedUserRoles_NotAuthenticated()
 	{
-		// Assign
 
-		var metaData = new ControllerMetaData(null!, null, null, new ControllerSecurity(true, new List<string> { "User" }));
+		// Arrange
 
-		var id = new Mock<IIdentity>();
-		id.Setup(x => x.IsAuthenticated).Returns(false);
-		var user = new ClaimsPrincipal(id.Object);
+		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, new List<string>
+			{
+				"User"
+			}));
 
-		// Act & Assert
-		Assert.AreEqual(SecurityRuleCheckResult.NotAuthenticated, _agent.IsSecurityRulesViolated(metaData, user));
+		var id = Mock.Of<IIdentity>(x => x.IsAuthenticated == false);
+		var user = new ClaimsPrincipal(id);
+
+		// Act
+		var result = _agent.IsSecurityRulesViolated(metaData, user);
+
+		// Asset
+		Assert.That(result, Is.EqualTo(SecurityRuleCheckResult.NotAuthenticated));
 	}
 }
