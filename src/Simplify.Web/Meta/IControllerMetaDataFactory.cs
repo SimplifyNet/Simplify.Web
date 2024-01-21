@@ -12,5 +12,5 @@ public interface IControllerMetaDataFactory
 	/// </summary>
 	/// <param name="controllerType">Type of the controller.</param>
 	/// <returns></returns>
-	ControllerMetaData CreateControllerMetaData(Type controllerType);
+	IControllerMetaData CreateControllerMetaData(Type controllerType);
 }

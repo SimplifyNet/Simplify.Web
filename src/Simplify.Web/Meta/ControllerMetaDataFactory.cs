@@ -16,8 +16,11 @@ public class ControllerMetaDataFactory : IControllerMetaDataFactory
 	/// </summary>
 	/// <param name="controllerType">Type of the controller.</param>
 	/// <returns></returns>
-	public ControllerMetaData CreateControllerMetaData(Type controllerType) =>
-		new(controllerType, GetControllerExecParameters(controllerType), GetControllerRole(controllerType), GetControllerSecurity(controllerType));
+	public IControllerMetaData CreateControllerMetaData(Type controllerType) =>
+		new ControllerMetaData(controllerType,
+		GetControllerExecParameters(controllerType),
+		GetControllerRole(controllerType),
+		GetControllerSecurity(controllerType));
 
 	private static ControllerExecParameters? GetControllerExecParameters(ICustomAttributeProvider controllerType)
 	{
