@@ -12,9 +12,9 @@ namespace Simplify.Web.Core.Controllers.Execution;
 public interface IVersionedControllerExecutor
 {
 	/// <summary>
-	/// Gets the controller version
+	/// Gets the supported controller version
 	/// </summary>
-	public short Version { get; }
+	public ControllerVersion Version { get; }
 
 	/// <summary>
 	/// Creates and executes the specified controller.

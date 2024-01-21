@@ -18,7 +18,7 @@ public class Controller2Executor(IController2Factory controllerFactory) : IVersi
 	/// <summary>
 	/// Gets the controller version
 	/// </summary>
-	public short Version => 1;
+	public ControllerVersion Version => ControllerVersion.V2;
 
 	/// <summary>
 	/// Creates and executes the specified controller.

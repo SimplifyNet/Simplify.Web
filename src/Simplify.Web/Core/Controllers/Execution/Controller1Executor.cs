@@ -17,7 +17,7 @@ public class Controller1Executor1(IController1Factory controllerFactory) : IVers
 	/// <summary>
 	/// Gets the controller version
 	/// </summary>
-	public short Version => 1;
+	public ControllerVersion Version => ControllerVersion.V1;
 
 	/// <summary>
 	/// Creates and executes the specified controller.

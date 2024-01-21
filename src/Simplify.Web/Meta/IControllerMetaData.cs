@@ -16,6 +16,11 @@ public interface IControllerMetaData
 	Type ControllerType { get; }
 
 	/// <summary>
+	/// Gets the controller version
+	/// </summary>
+	public ControllerVersion Version { get; }
+
+	/// <summary>
 	/// Gets the controller execute parameters.
 	/// </summary>
 	ControllerExecParameters? ExecParameters { get; }
