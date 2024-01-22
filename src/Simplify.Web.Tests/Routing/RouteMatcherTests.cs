@@ -26,7 +26,7 @@ public class RouteMatcherTests
 		var result2 = _matcher.Match("", "/test");
 
 		// Assert
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 		Assert.IsFalse(result2.Success);
 	}
 
@@ -37,7 +37,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/test", null);
 
 		// Assert
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 	}
 
 	[Test]
@@ -49,7 +49,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/", "/");
 
 		// Assert
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 	}
 
 	[Test]
@@ -63,7 +63,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/foo", "/foo");
 
 		// Assert
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 	}
 
 	[Test]
@@ -77,7 +77,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/foo", "/bar");
 
 		// Assert
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 	}
 
 	[Test]
@@ -91,7 +91,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/foo/bar/test", "/foo");
 
 		// Assert
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 	}
 
 	[Test]
@@ -106,7 +106,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/foo", "/foo/bar/test");
 
 		// Assert
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 	}
 
 	[Test]
@@ -123,7 +123,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 		Assert.AreEqual("testuser", routeParameters["userName"]);
 	}
 
@@ -139,7 +139,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 	}
 
 	[Test]
@@ -159,7 +159,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/user/testuser", "/foo/{test}/{userName}");
 
 		// Assert
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 	}
 
 	[Test]
@@ -176,7 +176,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 		Assert.AreEqual("user", routeParameters["userName"]);
 	}
 
@@ -191,7 +191,7 @@ public class RouteMatcherTests
 		var result = _matcher.Match("/foo", "/{id:int}");
 
 		// Assert
-		Assert.IsFalse(result.Success);
+		Assert.That(result.Success, Is.False);
 	}
 
 	[Test]
@@ -208,7 +208,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 		Assert.AreEqual("foo", routeParameters["test"]);
 		Assert.AreEqual("bar", routeParameters["name"]);
 	}
@@ -227,7 +227,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 		Assert.AreEqual(15, routeParameters["id"]);
 	}
 
@@ -245,7 +245,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 		Assert.AreEqual((decimal)15, routeParameters["id"]);
 	}
 
@@ -263,7 +263,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 		Assert.AreEqual(true, routeParameters["foo"]);
 	}
 
@@ -281,7 +281,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 
 		var items = (IList<string>)routeParameters["foo"];
 
@@ -305,7 +305,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 
 		var items = (IList<int>)routeParameters["foo"];
 
@@ -329,7 +329,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 
 		var items = (IList<decimal>)routeParameters["foo"];
 
@@ -353,7 +353,7 @@ public class RouteMatcherTests
 
 		// Assert
 
-		Assert.IsTrue(result.Success);
+		Assert.That(result.Success, Is.True);
 
 		var items = (IList<bool>)routeParameters["foo"];
 
