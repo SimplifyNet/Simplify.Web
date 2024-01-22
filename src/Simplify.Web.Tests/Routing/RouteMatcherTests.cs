@@ -325,13 +325,13 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/1,2,3", "/{foo:decimal[]}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
 
-		var items = (IList<decimal>)routeParameters.foo;
+		var items = (IList<decimal>)routeParameters["foo"];
 
 		Assert.AreEqual(3, items.Count);
 		Assert.AreEqual(1, items[0]);
@@ -349,13 +349,13 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/true,false,asdasd", "/{foo:bool[]}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
 
-		var items = (IList<bool>)routeParameters.foo;
+		var items = (IList<bool>)routeParameters["foo"];
 
 		Assert.AreEqual(2, items.Count);
 		Assert.AreEqual(true, items[0]);
