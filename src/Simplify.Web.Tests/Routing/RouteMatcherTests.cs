@@ -119,12 +119,12 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/user/testuser", "/user/{userName}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
-		Assert.AreEqual("testuser", routeParameters.userName);
+		Assert.AreEqual("testuser", routeParameters["userName"]);
 	}
 
 	[Test]
@@ -172,12 +172,12 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/user", "/{userName}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
-		Assert.AreEqual("user", routeParameters.userName);
+		Assert.AreEqual("user", routeParameters["userName"]);
 	}
 
 	[Test]
@@ -204,13 +204,13 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/foo/bar", "/{test}/{name}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
-		Assert.AreEqual("foo", routeParameters.test);
-		Assert.AreEqual("bar", routeParameters.name);
+		Assert.AreEqual("foo", routeParameters["test"]);
+		Assert.AreEqual("bar", routeParameters["name"]);
 	}
 
 	[Test]
@@ -223,12 +223,12 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/15", "/{id}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
-		Assert.AreEqual(15, routeParameters.id);
+		Assert.AreEqual(15, routeParameters["id"]);
 	}
 
 	[Test]
@@ -241,12 +241,12 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/15", "/{id}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
-		Assert.AreEqual((decimal)15, routeParameters.id);
+		Assert.AreEqual((decimal)15, routeParameters["id"]);
 	}
 
 	[Test]
@@ -259,12 +259,12 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/true", "/{foo:bool}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
-		Assert.AreEqual(true, routeParameters.foo);
+		Assert.AreEqual(true, routeParameters["foo"]);
 	}
 
 	[Test]
@@ -277,13 +277,13 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/hello,world,test", "/{foo:[]}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
 
-		var items = (IList<string>)routeParameters.foo;
+		var items = (IList<string>)routeParameters["foo"];
 
 		Assert.AreEqual(3, items.Count);
 		Assert.AreEqual("hello", items[0]);
@@ -301,13 +301,13 @@ public class RouteMatcherTests
 		// Act
 
 		var result = _matcher.Match("/1,2,3", "/{foo:int[]}");
-		var routeParameters = (dynamic)result.RouteParameters!;
+		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.IsTrue(result.Success);
 
-		var items = (IList<int>)routeParameters.foo;
+		var items = (IList<int>)routeParameters["foo"];
 
 		Assert.AreEqual(3, items.Count);
 		Assert.AreEqual(1, items[0]);
