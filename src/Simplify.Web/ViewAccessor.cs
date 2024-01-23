@@ -16,7 +16,7 @@ public abstract class ViewAccessor
 	/// </summary>
 	/// <typeparam name="T">View instance to get</typeparam>
 	/// <returns>View instance.</returns>
-	public virtual T GetView<T>()
+	public T GetView<T>()
 		where T : View
 	{
 		var type = typeof(T);
