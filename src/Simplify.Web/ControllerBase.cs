@@ -14,4 +14,12 @@ public abstract class ControllerBase : ResponseShortcutsControllerBase
 	/// The route parameters.
 	/// </value>
 	public virtual dynamic RouteParameters { get; internal set; }
+
+	/// <summary>
+	/// Gets the string table.
+	/// </summary>
+	/// <value>
+	/// The string table.
+	/// </value>
+	public virtual dynamic StringTable { get; internal set; } = null!;
 }

@@ -1,4 +1,6 @@
-﻿using Simplify.Web.Core.AccessorsBuilding;
+﻿using Simplify.DI;
+using Simplify.Web.Core.AccessorsBuilding;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Core.Controllers.Execution;
 
@@ -19,6 +21,7 @@ public class Controller1Factory : ActionModulesAccessorBuilder, IController1Fact
 		BuildActionModulesAccessorProperties(controller, args.Resolver);
 
 		controller.RouteParameters = args.RouteParameters;
+		controller.StringTable = args.Resolver.Resolve<IStringTable>().Items;
 
 		return controller;
 	}

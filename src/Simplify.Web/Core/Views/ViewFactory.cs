@@ -2,6 +2,7 @@
 using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
 using Simplify.Web.Modules;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Core.Views;
 
@@ -24,6 +25,7 @@ public class ViewFactory : ModulesAccessorBuilder, IViewFactory
 
 		view.Language = resolver.Resolve<ILanguageManagerProvider>().Get().Language;
 		view.SiteUrl = resolver.Resolve<IWebContextProvider>().Get().SiteUrl;
+		view.StringTable = resolver.Resolve<IStringTable>().Items;
 
 		return view;
 	}

@@ -23,14 +23,6 @@ public abstract class ModulesAccessor : ViewAccessor
 	public virtual IEnvironment Environment { get; internal set; } = null!;
 
 	/// <summary>
-	/// Gets the string table.
-	/// </summary>
-	/// <value>
-	/// The string table.
-	/// </value>
-	public virtual dynamic StringTable { get; internal set; } = null!;
-
-	/// <summary>
 	/// Gets the string table manager.
 	/// </summary>
 	/// <value>

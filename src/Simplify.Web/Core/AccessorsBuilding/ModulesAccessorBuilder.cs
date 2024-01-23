@@ -22,7 +22,6 @@ public class ModulesAccessorBuilder : ViewAccessorBuilder
 		modulesAccessor.Environment = resolver.Resolve<IEnvironment>();
 
 		var stringTable = resolver.Resolve<IStringTable>();
-		modulesAccessor.StringTable = stringTable.Items;
 		modulesAccessor.StringTableManager = stringTable;
 
 		modulesAccessor.TemplateFactory = resolver.Resolve<ITemplateFactory>();
