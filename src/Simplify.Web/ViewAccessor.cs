@@ -8,8 +8,8 @@ namespace Simplify.Web;
 /// </summary>
 public abstract class ViewAccessor
 {
-	internal virtual IViewFactory ViewFactory { get; set; } = null!;
-	internal virtual IDIResolver Resolver { get; set; } = null!;
+	internal IViewFactory ViewFactory { get; set; } = null!;
+	internal IDIResolver Resolver { get; set; } = null!;
 
 	/// <summary>
 	/// Gets view instance.
