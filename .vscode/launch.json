@@ -23,8 +23,8 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Api Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net7.0/SampleApp.Api.dll",
-			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net7.0/",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net8.0/SampleApp.Api.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net8.0/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {
 				"action": "openExternally",
@@ -51,6 +51,15 @@
 			"env": {
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			}
-		}
+		},
+		{
+			"name": "Simplify.Web.Benchmark",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "Build",
+			"program": "${workspaceFolder}/src/Simplify.Web.Benchmark/bin/Debug/net8.0/Simplify.Web.Benchmark.dll",
+			"cwd": "${workspaceFolder}/src/Simplify.Web.Benchmark/bin/Debug/net8.0/",
+			"internalConsoleOptions": "openOnSessionStart"
+		},
 	]
 }
