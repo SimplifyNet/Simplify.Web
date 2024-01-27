@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using BenchmarkDotNet.Attributes;
@@ -7,52 +6,79 @@ namespace Simplify.Web.Benchmark;
 
 [MemoryDiagnoser]
 public class ExpandoObjectAndDictionaryBenchmarks
+
 {
-	private const int NumValues = 1;
+	[Params(1, 5, 20, 100, 300, 1000)]
+	public int NumValues;
 
 	[Benchmark]
-	public void ExpandoObjectTest()
+	public void ExpandoBased_Combined_Test()
 	{
 		var expandoObject = CreateAndFillExpando();
 
-		dynamic expandoDynamicField = expandoObject;
-
-		for (int i = 0; i < NumValues; i++)
-		{
-			string value = expandoDynamicField.Key0;
-			Trace.WriteLine(value);
-		}
-
-		var expandoDictionaryField = expandoObject;
-
-		for (int i = 0; i < NumValues; i++)
-		{
-			string value = expandoDictionaryField[$"Key{i}"].ToString();
-			Trace.WriteLine(value);
-		}
+		TestDynamic(expandoObject);
+		TesDictionary(expandoObject);
 	}
 
 	[Benchmark]
-	public void DictionaryTest()
+	public void ExpandoBased_Dynamic_Test()
+	{
+		var expandoObject = CreateAndFillExpando();
+
+		TestDynamic(expandoObject);
+	}
+
+	[Benchmark]
+	public void ExpandoBased_Dictionary_Test()
+	{
+		var expandoObject = CreateAndFillExpando();
+
+		TesDictionary(expandoObject);
+	}
+
+	[Benchmark]
+	public void DictionaryBased_Combined_Test()
 	{
 		var dictionary = CreateAndFillDictionary();
 
-		dynamic dictionaryDynamicField = ToExpando(dictionary);
+		TestDynamic(ToExpando(dictionary));
+		TesDictionary(dictionary);
+	}
 
+	[Benchmark]
+	public void DictionaryBased_Expando_Test()
+	{
+		var dictionary = CreateAndFillDictionary();
+
+		TestDynamic(ToExpando(dictionary));
+	}
+
+	[Benchmark]
+	public void DictionaryBased_Dictionary_Test()
+	{
+		var dictionary = CreateAndFillDictionary();
+
+		TesDictionary(dictionary);
+	}
+	private void TestDynamic(dynamic list)
+	{
 		for (int i = 0; i < NumValues; i++)
 		{
-			string value = dictionaryDynamicField.Key0;
-			Trace.WriteLine(value);
-		}
-
-		for (int i = 0; i < NumValues; i++)
-		{
-			string value = dictionary[$"Key{i}"].ToString();
+			string value = list.Key0;
 			Trace.WriteLine(value);
 		}
 	}
 
-	private static IDictionary<string, object> CreateAndFillExpando()
+	private void TesDictionary(IDictionary<string, object> list)
+	{
+		for (int i = 0; i < NumValues; i++)
+		{
+			string value = list[$"Key{i}"].ToString();
+			Trace.WriteLine(value);
+		}
+	}
+
+	private IDictionary<string, object> CreateAndFillExpando()
 	{
 		var expandoDict = (IDictionary<string, object>)new ExpandoObject();
 
@@ -62,7 +88,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 		return expandoDict;
 	}
 
-	private static Dictionary<string, object> CreateAndFillDictionary()
+	private Dictionary<string, object> CreateAndFillDictionary()
 	{
 		var dictionary = new Dictionary<string, object>();
 
