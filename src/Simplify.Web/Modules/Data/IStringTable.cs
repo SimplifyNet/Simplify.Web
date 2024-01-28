@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Modules.Data;
+﻿using System.Collections.Generic;
+
+namespace Simplify.Web.Modules.Data;
 
 /// <summary>
 /// Represent string table.
@@ -8,7 +10,7 @@ public interface IStringTable
 	/// <summary>
 	/// String table items.
 	/// </summary>
-	dynamic Items { get; }
+	IDictionary<string, object?> Items { get; }
 
 	/// <summary>
 	/// Setups this string table.

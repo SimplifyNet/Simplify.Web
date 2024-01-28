@@ -37,7 +37,7 @@ public sealed class StringTable(IList<string> stringTableFiles,
 	/// <summary>
 	/// String table items
 	/// </summary>
-	public dynamic Items { get; private set; } = null!;
+	public IDictionary<string, object?> Items { get; private set; } = null!;
 
 	/// <summary>
 	/// Setups this string table.

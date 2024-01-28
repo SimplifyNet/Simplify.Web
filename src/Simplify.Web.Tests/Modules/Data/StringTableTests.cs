@@ -60,7 +60,7 @@ public class StringTableTests
 		_stringTable.Setup();
 
 		// Assert
-		Assert.AreEqual("Your site title!", _stringTable.Items.SiteTitle);
+		Assert.That(_stringTable.Items["SiteTitle"], Is.EqualTo("Your site title!"));
 	}
 
 	[Test]
@@ -94,7 +94,7 @@ public class StringTableTests
 		_stringTable.Setup();
 
 		// Assert
-		Assert.AreEqual("Your site title!", _stringTable.Items.SiteTitle);
+		Assert.That(_stringTable.Items["SiteTitle"], Is.EqualTo("Your site title!"));
 	}
 
 	[Test]
@@ -112,8 +112,8 @@ public class StringTableTests
 
 		// Assert
 
-		Assert.AreEqual("Foo", _stringTable.Items.Item1);
-		Assert.AreEqual("BarDef", _stringTable.Items.Item2);
+		Assert.That(_stringTable.Items["Item1"], Is.EqualTo("Foo"));
+		Assert.That(_stringTable.Items["Item2"], Is.EqualTo("BarDef"));
 	}
 
 	[Test]
@@ -179,6 +179,6 @@ public class StringTableTests
 		// Assert
 
 		_fileReader.Verify(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
-		Assert.AreEqual("Your site title!", _stringTable.Items.SiteTitle);
+		Assert.That(_stringTable.Items["SiteTitle"], Is.EqualTo("Your site title!"));
 	}
 }
