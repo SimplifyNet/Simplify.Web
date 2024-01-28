@@ -6,6 +6,8 @@ using NUnit.Framework;
 
 #nullable disable
 
+namespace Simplify.Web.Tests.Benchmark;
+
 [TestFixture]
 [Category("Benchmark")]
 public class ExpandoVsDictionaryBenchmark
