@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 
 namespace Simplify.Web.Routing;
@@ -37,7 +38,7 @@ public class RouteMatcher(IControllerPathParser controllerPathParser) : IRouteMa
 		if (currentPathItems.Length != controllerPathParsed.Items.Count)
 			return new RouteMatchResult();
 
-		IDictionary<string, object> routeParameters = new Dictionary<string, object>()!;
+		IDictionary<string, object> routeParameters = new ExpandoObject()!;
 
 		for (var i = 0; i < controllerPathParsed.Items.Count; i++)
 		{
