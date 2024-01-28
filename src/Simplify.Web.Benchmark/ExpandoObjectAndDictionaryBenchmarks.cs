@@ -17,7 +17,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 		var expandoObject = CreateAndFillExpando();
 
 		TestDynamic(expandoObject);
-		TesDictionary(expandoObject);
+		TestDictionary(expandoObject);
 	}
 
 	[Benchmark]
@@ -33,7 +33,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 	{
 		var expandoObject = CreateAndFillExpando();
 
-		TesDictionary(expandoObject);
+		TestDictionary(expandoObject);
 	}
 
 	[Benchmark]
@@ -42,7 +42,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 		var dictionary = CreateAndFillDictionary();
 
 		TestDynamic(ToExpando(dictionary));
-		TesDictionary(dictionary);
+		TestDictionary(dictionary);
 	}
 
 	[Benchmark]
@@ -58,8 +58,9 @@ public class ExpandoObjectAndDictionaryBenchmarks
 	{
 		var dictionary = CreateAndFillDictionary();
 
-		TesDictionary(dictionary);
+		TestDictionary(dictionary);
 	}
+
 	private void TestDynamic(dynamic list)
 	{
 		for (int i = 0; i < NumValues; i++)
@@ -69,7 +70,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 		}
 	}
 
-	private void TesDictionary(IDictionary<string, object> list)
+	private void TestDictionary(IDictionary<string, object> list)
 	{
 		for (int i = 0; i < NumValues; i++)
 		{
