@@ -7,7 +7,7 @@ using Simplify.Web.Model;
 namespace Simplify.Web;
 
 /// <summary>
-/// Synchronous model controllers base class version 1.
+/// User synchronous model controllers base class version 1.
 /// </summary>
 public abstract class Controller<T> : SyncControllerBase
 	where T : class
