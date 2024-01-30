@@ -1,4 +1,5 @@
-﻿using Simplify.DI;
+﻿using System.Dynamic;
+using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
 using Simplify.Web.Modules.Data;
 
@@ -20,7 +21,7 @@ public class Controller1Factory : ActionModulesAccessorBuilder, IController1Fact
 
 		BuildActionModulesAccessorProperties(controller, args.Resolver);
 
-		controller.RouteParameters = args.RouteParameters;
+		controller.RouteParameters = args.RouteParameters ?? new ExpandoObject()!;
 		controller.StringTable = args.Resolver.Resolve<IStringTable>().Items;
 
 		return controller;

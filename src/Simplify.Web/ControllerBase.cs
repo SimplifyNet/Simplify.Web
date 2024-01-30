@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-namespace Simplify.Web;
+﻿namespace Simplify.Web;
 
 /// <summary>
 /// Controllers base class.
@@ -13,7 +11,7 @@ public abstract class ControllerBase : ResponseShortcutsControllerBase
 	/// <value>
 	/// The route parameters.
 	/// </value>
-	public virtual dynamic RouteParameters { get; internal set; }
+	public virtual dynamic RouteParameters { get; internal set; } = null!;
 
 	/// <summary>
 	/// Gets the string table.
