@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0] - Unreleased
+
+### Added
+
+- Version 2 controllers
+
+### Changed
+
+- RouteParameters defaulted to empty ExpandoObject to exclude NRE
+- Internal restructure for v2 controllers implementation (controller executors and factories separate and change)
+
 ## [4.9.0] - 2024-01-08
 
 ### Added
