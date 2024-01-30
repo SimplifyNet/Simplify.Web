@@ -11,5 +11,5 @@ public class DifferentRouteParametersController : Controller2
 String param: {stringParam}
 Integer param: {intParam}
 bool param: {boolParam},
-String array param: {stringArrayParam}");
+String array param: {string.Join(", ", stringArrayParam)}");
 }
