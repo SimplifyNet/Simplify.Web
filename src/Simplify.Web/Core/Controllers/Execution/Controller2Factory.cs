@@ -1,5 +1,7 @@
 ﻿using System;
+using Simplify.DI;
 using Simplify.Web.Core.AccessorsBuilding;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Core.Controllers.Execution;
 
@@ -15,6 +17,12 @@ public class Controller2Factory : ActionModulesAccessorBuilder, IController2Fact
 	/// <returns>The controller.</returns>
 	public ResponseShortcutsControllerBase CreateController(IControllerExecutionArgs args)
 	{
-		throw new NotImplementedException();
+		var controller = (Controller2Base)args.Resolver.Resolve(args.ControllerMetaData.ControllerType);
+
+		BuildActionModulesAccessorProperties(controller, args.Resolver);
+
+		controller.StringTable = args.Resolver.Resolve<IStringTable>().Items;
+
+		return controller;
 	}
 }

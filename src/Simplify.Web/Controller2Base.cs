@@ -13,5 +13,5 @@ public abstract class Controller2Base : ResponseShortcutsControllerBase
 	/// <value>
 	/// The string table.
 	/// </value>
-	public virtual IDictionary<string, object> StringTable { get; internal set; } = null!;
+	public virtual IDictionary<string, object?> StringTable { get; internal set; } = null!;
 }
