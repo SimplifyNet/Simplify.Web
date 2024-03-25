@@ -9,7 +9,7 @@ using Simplify.Web.Core.Controllers.Execution;
 using Simplify.Web.Meta;
 using Simplify.Web.Modules;
 using Simplify.Web.Routing;
-using Simplify.Web.Tests.TestEntities;
+using Simplify.Web.Tests.Core.Controllers.TestTypes;
 
 namespace Simplify.Web.Tests.Core.Controllers;
 

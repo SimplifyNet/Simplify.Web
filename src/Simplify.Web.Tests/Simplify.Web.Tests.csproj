@@ -10,6 +10,9 @@
 		<Copyright>Licensed under LGPL</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\Simplify.Web\Simplify.Web.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="coverlet.msbuild" Version="6.0.*">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,9 +22,6 @@
 		<PackageReference Include="NUnit" Version="3.14.*" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.5.*" />
 		<PackageReference Include="Simplify.Xml" Version="1.3.*" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Templates\Test.tpl" />

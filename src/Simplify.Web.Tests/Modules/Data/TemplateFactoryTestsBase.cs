@@ -4,7 +4,6 @@ using Simplify.Web.Modules;
 
 namespace Simplify.Web.Tests.Modules.Data;
 
-[TestFixture]
 public class TemplateFactoryTestsBase
 {
 	protected Mock<IEnvironment> Environment = null!;

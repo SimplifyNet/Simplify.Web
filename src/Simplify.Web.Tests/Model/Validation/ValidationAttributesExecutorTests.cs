@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using Simplify.Web.Model.Validation;
 using Simplify.Web.Tests.Model.Validation.Attributes;
-using Simplify.Web.Tests.TestEntities;
-using Simplify.Web.Tests.TestEntities.Inheritance;
-using Simplify.Web.Tests.TestEntities.Nesting;
+using Simplify.Web.Tests.Model.Validation.TestTypes;
+using Simplify.Web.Tests.Model.Validation.TestTypes.Inheritance;
+using Simplify.Web.Tests.Model.Validation.TestTypes.Nesting;
 
 namespace Simplify.Web.Tests.Model.Validation;
 

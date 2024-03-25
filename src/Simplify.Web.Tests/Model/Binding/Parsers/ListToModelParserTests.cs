@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Binding.Parsers;
-using Simplify.Web.Tests.TestEntities;
+using Simplify.Web.Tests.Model.Binding.Parsers.ListToModelParserTestTypes;
 
 namespace Simplify.Web.Tests.Model.Binding.Parsers;
 

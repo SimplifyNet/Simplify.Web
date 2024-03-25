@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Binding.Parsers;
-using Simplify.Web.Tests.TestEntities;
+using Simplify.Web.Tests.Model.Binding.Parsers.TestTypes;
 
 namespace Simplify.Web.Tests.Model.Binding.Parsers;
 

@@ -7,7 +7,7 @@ using NUnit.Framework;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Meta;
 using Simplify.Web.Routing;
-using Simplify.Web.Tests.TestEntities;
+using Simplify.Web.Tests.Core.Controllers.TestTypes;
 
 namespace Simplify.Web.Tests.Core.Controllers;
 
@@ -418,7 +418,6 @@ public class ControllersAgentTests
 	[Test]
 	public void IsSecurityRulesViolated_UserExistNotAuthenticatedUserWithAllowedUserRoles_NotAuthenticated()
 	{
-
 		// Arrange
 
 		var metaData = Mock.Of<IControllerMetaData>(x => x.Security == new ControllerSecurity(true, new List<string>

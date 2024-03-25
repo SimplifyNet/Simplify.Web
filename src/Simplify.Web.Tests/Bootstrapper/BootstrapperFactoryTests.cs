@@ -38,6 +38,6 @@ public class BootstrapperFactoryTests
 
 		// Assert
 
-		Assert.AreEqual("Simplify.Web.Tests.TestEntities.TestBootstrapper", bootstrapper.GetType().FullName);
+		Assert.AreEqual("Simplify.Web.Tests.Bootstrapper.TestTypes.TestBootstrapper", bootstrapper.GetType().FullName);
 	}
 }
