@@ -26,12 +26,12 @@ public class ControllersMetaDataFactoryTests
 		// Assert
 
 		Assert.AreEqual("TestController1", metaData.ControllerType.Name);
-		Assert.AreEqual("/testaction", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Get).Value);
-		Assert.AreEqual("/testaction1", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Post).Value);
-		Assert.AreEqual("/testaction2", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Put).Value);
-		Assert.AreEqual("/testaction3", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Patch).Value);
-		Assert.AreEqual("/testaction4", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Delete).Value);
-		Assert.AreEqual("/testaction5", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Options).Value);
+		Assert.AreEqual("/test-action", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Get).Value);
+		Assert.AreEqual("/test-action1", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Post).Value);
+		Assert.AreEqual("/test-action2", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Put).Value);
+		Assert.AreEqual("/test-action3", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Patch).Value);
+		Assert.AreEqual("/test-action4", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Delete).Value);
+		Assert.AreEqual("/test-action5", metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Options).Value);
 		Assert.IsTrue(metaData.Role.Is400Handler);
 		Assert.IsTrue(metaData.Role.Is403Handler);
 		Assert.IsTrue(metaData.Role.Is404Handler);
@@ -56,6 +56,6 @@ public class ControllersMetaDataFactoryTests
 
 		Assert.That(metaData.ExecParameters, Is.Not.Null);
 		Assert.That(metaData.ControllerType.Name, Is.EqualTo("TestControllerV2"));
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Get).Value, Is.EqualTo("/testaction"));
+		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Get).Value, Is.EqualTo("/test-action"));
 	}
 }

@@ -3,12 +3,12 @@ using Simplify.Web.Attributes;
 
 namespace Simplify.Web.Meta.Tests.TestTypes;
 
-[Get("/testaction")]
-[Post("/testaction1")]
-[Put("/testaction2")]
-[Patch("/testaction3")]
-[Delete("/testaction4")]
-[Options("/testaction5")]
+[Get("/test-action")]
+[Post("/test-action1")]
+[Put("/test-action2")]
+[Patch("/test-action3")]
+[Delete("/test-action4")]
+[Options("/test-action5")]
 [Http400]
 [Http403]
 [Http404]
