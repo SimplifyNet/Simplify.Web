@@ -80,6 +80,17 @@ public class ExpandoVsDictionaryBenchmark
 		Console.WriteLine($"Overall Performance Time: {overallStopwatch.ElapsedMilliseconds} ms");
 	}
 
+	private static ExpandoObject ToExpando(IDictionary<string, object> dictionary)
+	{
+		var expando = new ExpandoObject();
+		var expandoDict = (IDictionary<string, object>)expando;
+
+		foreach (var kvp in dictionary)
+			expandoDict[kvp.Key] = kvp.Value;
+
+		return expando;
+	}
+
 	private void TestDynamic(dynamic list, int numValues)
 	{
 		for (int i = 0; i < numValues; i++)
@@ -116,16 +127,5 @@ public class ExpandoVsDictionaryBenchmark
 			dictionary[$"Key{i}"] = $"Value{i}";
 
 		return dictionary;
-	}
-
-	private static ExpandoObject ToExpando(IDictionary<string, object> dictionary)
-	{
-		var expando = new ExpandoObject();
-		var expandoDict = (IDictionary<string, object>)expando;
-
-		foreach (var kvp in dictionary)
-			expandoDict[kvp.Key] = kvp.Value;
-
-		return expando;
 	}
 }
