@@ -2,7 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Tests.Core.Controllers.Execution.Controller1ExecutorTestTypes;
+using Simplify.Web.Tests.Core.Controllers.Execution.TestTypes;
 
 namespace Simplify.Web.Tests.Core.Controllers.Execution;
 
