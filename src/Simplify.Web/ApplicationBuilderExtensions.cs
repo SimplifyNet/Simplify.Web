@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Simplify.Web.Bootstrapper;
-using Simplify.Web.Core2;
 using Simplify.Web.Middleware;
 
 namespace Simplify.Web;
@@ -98,9 +98,9 @@ public static class ApplicationBuilderExtensions
 	private static void RegisterAsNonTerminal(this IApplicationBuilder builder) =>
 		builder.Use(async (context, next) =>
 		{
-			var result = await SimplifyWebRequestMiddleware.InvokeAsNonTerminal(context);
+			await SimplifyWebRequestMiddleware.InvokeAsNonTerminal(context);
 
-			if (result == RequestHandlingStatus.Unhandled)
+			if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
 				await next.Invoke();
 		});
 
