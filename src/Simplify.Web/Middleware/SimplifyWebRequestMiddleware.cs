@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
-using Simplify.Web.Core;
+using Simplify.Web.Core2;
 using Simplify.Web.Diagnostics;
 using Simplify.Web.Diagnostics.Measurement;
 using Simplify.Web.Diagnostics.Trace;
 using Simplify.Web.Modules;
 using Simplify.Web.Settings;
 
-namespace Simplify.Web.RequestPipeline;
+namespace Simplify.Web.Middleware;
 
 /// <summary>
 /// Simplify.Web request execution root.
@@ -27,21 +27,27 @@ public static class SimplifyWebRequestMiddleware
 	/// </summary>
 	public static event TraceEventHandler? OnTrace;
 
+	public static Task<RequestHandlingStatus> InvokeAsTerminal(Microsoft.AspNetCore.Http.HttpContext context) => Invoke(context, true);
+
+	public static Task<RequestHandlingStatus> InvokeAsNonTerminal(Microsoft.AspNetCore.Http.HttpContext context) => Invoke(context, false);
+
 	/// <summary>
 	/// Process an individual request.
 	/// </summary>
-	/// <param name="context"></param>
-	/// <returns></returns>
-	public static async Task<RequestHandlingStatus> Invoke(HttpContext context)
+	/// <param name="context">The context.</param>
+	/// <param name="isTerminalMiddleware">if set to <c>true</c> [is terminal middleware].</param>
+	public static async Task<RequestHandlingStatus> Invoke(Microsoft.AspNetCore.Http.HttpContext context, bool isTerminalMiddleware)
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
+
+		var localContext = new Core2.Http.HttpContext(context, isTerminalMiddleware);
 
 		try
 		{
 			return await scope.StartMeasurements()
 				.Trace(context, OnTrace)
-				.SetupProviders(context)
-				.ProcessRequest(context);
+				.SetupProviders(localContext)
+				.ProcessRequest(localContext);
 		}
 		catch (Exception e)
 		{
@@ -58,7 +64,7 @@ public static class SimplifyWebRequestMiddleware
 
 			await context.WriteErrorResponse(scope, e);
 
-			return RequestHandlingStatus.RequestWasHandled;
+			return RequestHandlingStatus.Handled;
 		}
 	}
 
@@ -72,7 +78,7 @@ public static class SimplifyWebRequestMiddleware
 		return true;
 	}
 
-	private static async Task WriteErrorResponse(this HttpContext context, ILifetimeScope scope, Exception e)
+	private static async Task WriteErrorResponse(this Microsoft.AspNetCore.Http.HttpContext context, ILifetimeScope scope, Exception e)
 	{
 		var webContext = scope.Resolver.Resolve<IWebContextProvider>().Get();
 

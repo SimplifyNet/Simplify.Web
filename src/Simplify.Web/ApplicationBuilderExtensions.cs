@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Simplify.Web.Bootstrapper;
-using Simplify.Web.Core;
-using Simplify.Web.Core.Controllers;
-using Simplify.Web.RequestPipeline;
+using Simplify.Web.Core2;
+using Simplify.Web.Middleware;
 
 namespace Simplify.Web;
 
@@ -20,10 +19,9 @@ public static class ApplicationBuilderExtensions
 	{
 		try
 		{
-			ControllersRequestHandler.TerminalMiddleware = true;
 			BootstrapperFactory.CreateBootstrapper().Register();
 
-			RegisterAsTerminal(builder);
+			builder.RegisterAsTerminal();
 
 			return builder;
 		}
@@ -43,9 +41,7 @@ public static class ApplicationBuilderExtensions
 	{
 		try
 		{
-			ControllersRequestHandler.TerminalMiddleware = true;
-
-			RegisterAsTerminal(builder);
+			builder.RegisterAsTerminal();
 
 			return builder;
 		}
@@ -65,10 +61,9 @@ public static class ApplicationBuilderExtensions
 	{
 		try
 		{
-			ControllersRequestHandler.TerminalMiddleware = false;
 			BootstrapperFactory.CreateBootstrapper().Register();
 
-			Register(builder);
+			builder.RegisterAsNonTerminal();
 
 			return builder;
 		}
@@ -88,9 +83,7 @@ public static class ApplicationBuilderExtensions
 	{
 		try
 		{
-			ControllersRequestHandler.TerminalMiddleware = false;
-
-			Register(builder);
+			builder.RegisterAsNonTerminal();
 
 			return builder;
 		}
@@ -102,14 +95,14 @@ public static class ApplicationBuilderExtensions
 		}
 	}
 
-	private static void Register(IApplicationBuilder builder) =>
+	private static void RegisterAsNonTerminal(this IApplicationBuilder builder) =>
 		builder.Use(async (context, next) =>
 		{
-			var result = await SimplifyWebRequestMiddleware.Invoke(context);
+			var result = await SimplifyWebRequestMiddleware.InvokeAsNonTerminal(context);
 
-			if (result == RequestHandlingStatus.RequestWasUnhandled)
+			if (result == RequestHandlingStatus.Unhandled)
 				await next.Invoke();
 		});
 
-	private static void RegisterAsTerminal(IApplicationBuilder builder) => builder.Run(SimplifyWebRequestMiddleware.Invoke);
+	private static void RegisterAsTerminal(this IApplicationBuilder builder) => builder.Run(SimplifyWebRequestMiddleware.InvokeAsTerminal);
 }
