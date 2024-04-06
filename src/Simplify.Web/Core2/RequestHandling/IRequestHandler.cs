@@ -5,5 +5,5 @@ namespace Simplify.Web.Core2.RequestHandling;
 
 public interface IRequestHandler
 {
-	Task Execute(IHttpContext context, RequestHandler next);
+	Task ExecuteAsync(IHttpContext context, RequestHandler next);
 }

@@ -15,6 +15,6 @@ public static class ScopeRequestProcessExtensions
 	/// </summary>
 	/// <param name="scope">The scope.</param>
 	/// <param name="context">The context.</param>
-	public static Task ProcessRequest(this ILifetimeScope scope, IHttpContext context) =>
-		scope.Resolver.Resolve<IRequestHandlingPipeline>().Execute(context);
+	public static Task ProcessRequestAsync(this ILifetimeScope scope, IHttpContext context) =>
+		scope.Resolver.Resolve<IRequestHandlingPipeline>().ExecuteAsync(context);
 }

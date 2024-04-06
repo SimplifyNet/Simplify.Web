@@ -20,5 +20,5 @@ public interface IStaticFileRequestHandler
 	/// </summary>
 	/// <param name="context">The context.</param>
 	/// <returns></returns>
-	Task Execute(IHttpContext context);
+	Task ExecuteAsync(IHttpContext context);
 }

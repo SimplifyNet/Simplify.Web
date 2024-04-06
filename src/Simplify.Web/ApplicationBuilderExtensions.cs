@@ -98,11 +98,11 @@ public static class ApplicationBuilderExtensions
 	private static void RegisterAsNonTerminal(this IApplicationBuilder builder) =>
 		builder.Use(async (context, next) =>
 		{
-			await SimplifyWebRequestMiddleware.InvokeAsNonTerminal(context);
+			await SimplifyWebRequestMiddleware.InvokeAsNonTerminalAsync(context);
 
 			if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
 				await next.Invoke();
 		});
 
-	private static void RegisterAsTerminal(this IApplicationBuilder builder) => builder.Run(SimplifyWebRequestMiddleware.InvokeAsTerminal);
+	private static void RegisterAsTerminal(this IApplicationBuilder builder) => builder.Run(SimplifyWebRequestMiddleware.InvokeAsTerminalAsync);
 }

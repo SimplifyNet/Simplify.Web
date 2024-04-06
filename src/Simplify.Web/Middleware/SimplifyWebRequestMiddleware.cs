@@ -27,16 +27,16 @@ public static class SimplifyWebRequestMiddleware
 	/// </summary>
 	public static event TraceEventHandler? OnTrace;
 
-	public static Task InvokeAsTerminal(HttpContext context) => Invoke(context, true);
+	public static Task InvokeAsTerminalAsync(HttpContext context) => InvokeAsync(context, true);
 
-	public static Task InvokeAsNonTerminal(HttpContext context) => Invoke(context, false);
+	public static Task InvokeAsNonTerminalAsync(HttpContext context) => InvokeAsync(context, false);
 
 	/// <summary>
 	/// Process an individual request.
 	/// </summary>
 	/// <param name="context">The context.</param>
 	/// <param name="isTerminalMiddleware">if set to <c>true</c> [is terminal middleware].</param>
-	public static async Task Invoke(HttpContext context, bool isTerminalMiddleware)
+	public static async Task InvokeAsync(HttpContext context, bool isTerminalMiddleware)
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
 
@@ -47,7 +47,7 @@ public static class SimplifyWebRequestMiddleware
 			await scope.StartMeasurements()
 				.Trace(context, OnTrace)
 				.SetupProviders(localContext)
-				.ProcessRequest(localContext);
+				.ProcessRequestAsync(localContext);
 		}
 		catch (Exception e)
 		{
@@ -62,7 +62,7 @@ public static class SimplifyWebRequestMiddleware
 				e = exception;
 			}
 
-			await context.WriteErrorResponse(scope, e);
+			await context.WriteErrorResponseAsync(scope, e);
 		}
 	}
 
@@ -76,7 +76,7 @@ public static class SimplifyWebRequestMiddleware
 		return true;
 	}
 
-	private static async Task WriteErrorResponse(this HttpContext context, ILifetimeScope scope, Exception e)
+	private static async Task WriteErrorResponseAsync(this HttpContext context, ILifetimeScope scope, Exception e)
 	{
 		var webContext = scope.Resolver.Resolve<IWebContextProvider>().Get();
 
