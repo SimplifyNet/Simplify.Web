@@ -40,7 +40,7 @@ public static class SimplifyWebRequestMiddleware
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
 
-		var localContext = new Core2.Http.HttpContext(context, isTerminalMiddleware);
+		var localContext = new DefaultHttpContext(context, isTerminalMiddleware);
 
 		try
 		{

@@ -8,7 +8,7 @@ namespace Simplify.Web.Core2;
 /// <summary>
 /// Provides core request handling by Simplify.Web.
 /// </summary>
-public static class ScopeRequestProcessExtensions
+public static class LifetimeScopeRequestHandlingExtensions
 {
 	/// <summary>
 	/// Runs the requests handling pipeline.
