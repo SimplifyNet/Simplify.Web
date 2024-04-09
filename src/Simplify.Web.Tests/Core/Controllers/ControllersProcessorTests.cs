@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using Simplify.Web.Core.Controllers;
 using Simplify.Web.Core.Controllers.Execution;
+using Simplify.Web.Core2.Http;
 using Simplify.Web.Meta;
 using Simplify.Web.Modules;
 using Simplify.Web.Routing;

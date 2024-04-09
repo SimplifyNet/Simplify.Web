@@ -5,6 +5,7 @@ using System.Security.Principal;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Core.Controllers;
+using Simplify.Web.Core2.Http;
 using Simplify.Web.Meta;
 using Simplify.Web.Routing;
 using Simplify.Web.Tests.Core.Controllers.TestTypes;
