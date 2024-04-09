@@ -6,7 +6,7 @@ namespace Simplify.Web.Core2.Controllers;
 
 public interface IControllersProcessingContext
 {
-	public IHttpContext Context { get; set; }
+	public IHttpContext Context { get; }
 
 	public IReadOnlyList<IControllerMetaData> AllMatchedControllers { get; }
 	public IReadOnlyList<IControllerMetaData> RouteSpecificControllers { get; }

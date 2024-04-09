@@ -7,11 +7,11 @@ namespace Simplify.Web.Core2.Controllers.Processing;
 
 public interface IControllerProcessingContext
 {
-	public IControllerMetaData ControllerMetaData { get; set; }
+	public IControllerMetaData ControllerMetaData { get; }
 
-	public SecurityStatus SecurityStatus { get; set; }
+	public SecurityStatus SecurityStatus { get; }
 
-	public IHttpContext Context { get; set; }
+	public IHttpContext Context { get; }
 
 	public IDictionary<string, object>? RouteParameters { get; }
 }

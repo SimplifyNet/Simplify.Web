@@ -13,6 +13,7 @@ public class StaticFilesHandler(IStaticFileRequestHandler handler) : IRequestHan
 			return;
 
 		await handler.ExecuteAsync(context);
+
 		stopProcessing();
 	}
 }
