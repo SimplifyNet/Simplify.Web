@@ -8,10 +8,10 @@ namespace Simplify.Web.Core2.Controllers.Routing.Matcher;
 public interface IRouteMatchResult
 {
 	/// <summary>
-	/// Gets a value indicating whether the route was matched successfully.
+	/// Gets a value indicating whether the route was matched.
 	/// </summary>
 	/// <value>
-	/// <c>true</c> if the route was matched successfully; otherwise, <c>false</c>.
+	/// <c>true</c> if the route was matched; otherwise, <c>false</c>.
 	/// </value>
 	bool Success { get; }
 
