@@ -7,7 +7,7 @@ public class ControllersRequestHandler(IControllerProcessingPipeline processingP
 {
 	public async Task HandleAsync(IControllersProcessingContext context)
 	{
-		foreach (var controllerMetaData in context.AllMatchedControllers)
-			await processingPipeline.Execute(argsFactory.Create(controllerMetaData, context.Context, context.RouteParameters));
+		foreach (var controller in context.MatchedControllers)
+			await processingPipeline.Execute(argsFactory.Create(controller, context.Context));
 	}
 }
