@@ -7,9 +7,9 @@ namespace Simplify.Web.Meta2;
 /// </summary>
 public interface IControllersMetaStore
 {
-	/// <summary>
-	/// Current domain controllers metadata
-	/// </summary>
-	/// <returns></returns>
-	IList<IControllerMetaData> ControllersMetaData { get; }
+	IList<IControllerMetaData> StandardControllers { get; }
+
+	IControllerMetaData Controller400 { get; }
+	IControllerMetaData Controller403 { get; }
+	IControllerMetaData Controller404 { get; }
 }
