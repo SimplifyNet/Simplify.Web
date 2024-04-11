@@ -8,6 +8,8 @@ namespace Simplify.Web.Meta2;
 public interface IControllersMetaStore
 {
 	IList<IControllerMetaData> StandardControllers { get; }
+	IList<IControllerMetaData> RoutedControllers { get; }
+	IList<IControllerMetaData> GlobalControllers { get; }
 
 	IControllerMetaData Controller400 { get; }
 	IControllerMetaData Controller403 { get; }
