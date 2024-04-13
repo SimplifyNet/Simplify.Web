@@ -1,6 +1,6 @@
 using Simplify.Web.Core2.Controllers.Processing;
 
-namespace Simplify.Web.Core2.Controllers.Execution;
+namespace Simplify.Web.Core2.Controllers.Execution.Extensions;
 
 public static class ControllerProcessingContextExtensions
 {

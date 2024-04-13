@@ -3,7 +3,7 @@ using Simplify.Web.Meta2;
 
 namespace Simplify.Web.Core2.Controllers.Routing;
 
-public class MatchedController(IControllerMetaData metaData, IDictionary<string, object>? routeParameters) : IMatchedController
+public class MatchedController(IControllerMetaData metaData, IDictionary<string, object>? routeParameters = null) : IMatchedController
 {
 	public IControllerMetaData MetaData { get; } = metaData;
 
