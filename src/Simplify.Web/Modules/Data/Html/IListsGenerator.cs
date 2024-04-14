@@ -11,7 +11,7 @@ namespace Simplify.Web.Modules.Data.Html;
 public interface IListsGenerator
 {
 	/// <summary>
-	/// Generate a number selected HTML list.
+	/// Generates a number selected HTML list.
 	/// </summary>
 	/// <param name="length">Length of a list.</param>
 	/// <param name="selectedNumber">Selected list number.</param>
@@ -23,42 +23,42 @@ public interface IListsGenerator
 		bool displayNotSelectedMessage = false);
 
 	/// <summary>
-	/// Generate an hour selector HTML list in 24 hours format (from 0 to 23).
+	/// Generates an hour selector HTML list in 24 hours format (from 0 to 23).
 	/// </summary>
 	/// <param name="selectedHour">Selected hour.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	string GenerateHoursList(int selectedHour = -1, bool displayNotSelectedMessage = false);
 
 	/// <summary>
-	/// Generate a minute selector HTML list (from 0 to 59).
+	/// Generates a minute selector HTML list (from 0 to 59).
 	/// </summary>
 	/// <param name="selectedMinute">Selected minute.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	string GenerateMinutesList(int selectedMinute = -1, bool displayNotSelectedMessage = false);
 
 	/// <summary>
-	/// Generate a day selector HTML list (from 1 to 31).
+	/// Generates a day selector HTML list (from 1 to 31).
 	/// </summary>
 	/// <param name="selectedDay">Selected day.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	string GenerateDaysList(int selectedDay = -1, bool displayNotSelectedMessage = true);
 
 	/// <summary>
-	/// Generate a month selector HTML list (from 0 to 11).
+	/// Generates a month selector HTML list (from 0 to 11).
 	/// </summary>
 	/// <param name="selectedMonth">Selected month.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	string GenerateMonthsList(int selectedMonth = -1, bool displayNotSelectedMessage = true);
 
 	/// <summary>
-	/// Generate a month selector HTML list (from 1 to 12).
+	/// Generates a month selector HTML list (from 1 to 12).
 	/// </summary>
 	/// <param name="selectedMonth">Selected month.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	string GenerateMonthsListFrom1(int selectedMonth = -1, bool displayNotSelectedMessage = true);
 
 	/// <summary>
-	/// Generate a year selector HTML list (from current year to -<paramref name="numberOfYears" />).
+	/// Generates a year selector HTML list (from current year to -<paramref name="numberOfYears" />).
 	/// </summary>
 	/// <param name="numberOfYears">Number of years in list.</param>
 	/// <param name="selectedYear">Selected year.</param>
@@ -70,7 +70,7 @@ public interface IListsGenerator
 		int? currentYear = null);
 
 	/// <summary>
-	/// Generate a year selector HTML list (from current year to +<paramref name="numberOfYears" />).
+	/// Generates a year selector HTML list (from current year to +<paramref name="numberOfYears" />).
 	/// </summary>
 	/// <param name="numberOfYears">Number of years in list.</param>
 	/// <param name="currentYear">The current year.</param>
@@ -92,7 +92,7 @@ public interface IListsGenerator
 		where T : class;
 
 	/// <summary>
-	/// Generate an HTML list from enum items.
+	/// Generates an HTML list from enum items.
 	/// </summary>
 	/// <typeparam name="T">Enum type.</typeparam>
 	/// <param name="selectedItem">Selected enum item.</param>
@@ -100,7 +100,7 @@ public interface IListsGenerator
 	string GenerateListFromEnum<T>(T selectedItem, bool displayNotSelectedMessage = true) where T : struct;
 
 	/// <summary>
-	/// Generate an HTML list from enum items.
+	/// Generates an HTML list from enum items.
 	/// </summary>
 	/// <typeparam name="T">Enum typ.e</typeparam>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
@@ -109,12 +109,12 @@ public interface IListsGenerator
 		where T : struct;
 
 	/// <summary>
-	/// Generate an empty HTML list item.
+	/// Generates an empty HTML list item.
 	/// </summary>
 	string GenerateEmptyListItem();
 
 	/// <summary>
-	/// Generate an HTML list default item.
+	/// Generates an HTML list default item.
 	/// </summary>
 	string GenerateDefaultListItem(bool isSelected = true);
 }

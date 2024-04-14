@@ -6,7 +6,7 @@
 public interface IHtmlWrapper
 {
 	/// <summary>
-	/// Get the HTML ComboBox lists generator.
+	/// Gets the HTML ComboBox lists generator.
 	/// </summary>
 	IListsGenerator ListsGenerator { get; }
 }
