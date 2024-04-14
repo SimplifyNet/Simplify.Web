@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Simplify.Web.Old.Model.Validation;
-using Simplify.Web.Tests.Model.Validation.TestTypes.Inheritance;
 using Simplify.Web.Tests.Old.Model.Validation.Attributes;
 using Simplify.Web.Tests.Old.Model.Validation.TestTypes;
 using Simplify.Web.Tests.Old.Model.Validation.TestTypes.Inheritance;

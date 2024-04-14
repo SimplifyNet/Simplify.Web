@@ -1,5 +1,5 @@
 ﻿using Simplify.DI;
-using Simplify.Web;
+using Simplify.Web.Old;
 
 namespace SampleApp.WindowsServiceHosted.Setup;
 
