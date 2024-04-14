@@ -2,7 +2,7 @@
 using Simplify.Web.Core;
 using Simplify.Web.Core2.Controllers.Response.Injectors;
 
-namespace Simplify.Web.Core2.Controllers.Response;
+namespace Simplify.Web.Core2.Controllers.Response.Injectors;
 
 
 /// <summary>
