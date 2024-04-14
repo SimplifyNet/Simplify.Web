@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Simplify.Web.Old.Http;
+using Simplify.Web.Http;
 using Simplify.Web.Old.Meta;
 using Simplify.Web.Old.Routing;
 using Simplify.Web.Old.Util;

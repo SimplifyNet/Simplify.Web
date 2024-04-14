@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Old.Http;
+namespace Simplify.Web.Http;
 
 /// <summary>
 /// Represents local Simplify.Web HTTP context

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Old.Http;
+namespace Simplify.Web.Http;
 
 /// <summary>
 /// Provides local Simplify.Web HTTP context

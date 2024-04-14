@@ -1,5 +1,5 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Old.Http;
+using Simplify.Web.Http;
 using Simplify.Web.Old.Modules.Data;
 
 namespace Simplify.Web.Old.Modules;
