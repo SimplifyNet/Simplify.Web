@@ -1,5 +1,5 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Core2.Http;
+using Simplify.Web.Http;
 using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Modules;

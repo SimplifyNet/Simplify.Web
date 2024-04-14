@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Core2.Http.Writers;
+namespace Simplify.Web.Http.Writers;
 
 /// <summary>
 /// Provides default response writer.

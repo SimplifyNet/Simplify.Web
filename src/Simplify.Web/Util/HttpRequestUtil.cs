@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Core2.Http;
+using Simplify.Web.Http;
 using Simplify.Web.Meta;
 
 namespace Simplify.Web.Util;

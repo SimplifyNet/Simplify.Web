@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
-using Simplify.Web.Core2.Http;
+using Simplify.Web.Http;
 using Simplify.Web.Meta.Tests.TestTypes;
 
 namespace Simplify.Web.Meta.Tests;

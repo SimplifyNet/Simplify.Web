@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Simplify.Web.Attributes;
-using Simplify.Web.Core2.Http;
+using Simplify.Web.Http;
 
 namespace Simplify.Web.Util;
 

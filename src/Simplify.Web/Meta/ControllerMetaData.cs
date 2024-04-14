@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Simplify.Web.Attributes;
-using Simplify.Web.Core2.Http;
+using Simplify.Web.Http;
 using Simplify.Web.Util;
 
 namespace Simplify.Web.Meta;

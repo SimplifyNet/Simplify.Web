@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Core2.Http;
+namespace Simplify.Web.Http;
 
 public class DefaultHttpContext(HttpContext context, bool isTerminalMiddleware) : IHttpContext
 {
