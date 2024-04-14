@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Simplify.Web.Meta;
 
-namespace Simplify.Web.Core2.Controllers.Processing.Security.Rules;
+namespace Simplify.Web.Core2.Controllers.Security.Rules;
 
 public class RoleAuthorizationRule : ISecurityRule
 {

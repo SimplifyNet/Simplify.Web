@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Simplify.Web.Core2.Controllers.Execution;
 using Simplify.Web.Core2.Controllers.Execution.Extensions;
 using Simplify.Web.Core2.Controllers.Processing.Context;
-using Simplify.Web.Core2.Controllers.Processing.Security;
 using Simplify.Web.Core2.Controllers.Response.Injectors;
 using Simplify.Web.Meta2;
 

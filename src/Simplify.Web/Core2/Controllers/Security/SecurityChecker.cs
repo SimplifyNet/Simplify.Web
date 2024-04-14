@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Simplify.Web.Meta;
 
-namespace Simplify.Web.Core2.Controllers.Processing.Security;
+namespace Simplify.Web.Core2.Controllers.Security;
 
 public class SecurityChecker(IList<ISecurityRule> checks) : ISecurityChecker
 {

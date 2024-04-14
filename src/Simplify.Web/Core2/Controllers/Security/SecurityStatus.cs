@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Core2.Controllers.Processing.Security;
+﻿namespace Simplify.Web.Core2.Controllers.Security;
 
 /// <summary>
 /// Security rules check result.
