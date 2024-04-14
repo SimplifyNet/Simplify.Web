@@ -1,13 +1,13 @@
-﻿using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Modules.Data;
-using Simplify.Web.Old.Modules.Data.Html;
+﻿using Simplify.Web.Modules.Data;
+using Simplify.Web.Modules.Data.Html;
+using Simplify.Web.Modules.Environment;
 
 namespace Simplify.Web;
 
 /// <summary>
 /// Provides the modules accessor base class.
 /// </summary>
-public abstract class ModulesAccessor : Old.ViewAccessor
+public abstract class ModulesAccessor : ViewAccessor
 {
 	/// <summary>
 	/// Gets the various HTML generation classes container.

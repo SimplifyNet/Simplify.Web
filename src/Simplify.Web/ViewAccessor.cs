@@ -1,5 +1,4 @@
-﻿using Simplify.Web.Old;
-using Simplify.Web.Views;
+﻿using Simplify.Web.Views;
 
 namespace Simplify.Web;
 
