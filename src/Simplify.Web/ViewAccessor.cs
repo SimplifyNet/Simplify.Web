@@ -4,7 +4,7 @@ using Simplify.Web.Views;
 namespace Simplify.Web;
 
 /// <summary>
-/// Provides View accessor base class.
+/// Provides the view accessor base class.
 /// </summary>
 public abstract class ViewAccessor
 {
