@@ -6,17 +6,8 @@ using Simplify.Web.Core2.Controllers.Response.Injectors;
 
 namespace Simplify.Web.Core2.Controllers.Processing.Stages;
 
-public class ControllerExecutionHandler(IControllerExecutorResolver resolver, IControllerResponsePropertiesInjector propertiesInjector) : IControllerProcessingStage
+public class ControllerExecutionHandler(IControllerExecutorResolver resolver, IControllerResponsePropertiesInjector propertiesInjector)
+	: BaseControllerProcessor(resolver, propertiesInjector), IControllerProcessingStage
 {
-	public async Task Execute(IControllerProcessingContext context, Action stopProcessing)
-	{
-		var response = await resolver.Resolve(context.Controller.MetaData).Execute(context.ToControllerExecutionArgs());
-
-		if (response == null)
-			return;
-
-		propertiesInjector.Inject(response);
-
-		var responseResult = await response.ExecuteAsync();
-	}
+	public Task Execute(IControllerProcessingContext context, Action stopProcessing) => ExecuteAndHandleResponse(context.ToControllerExecutionArgs(), stopProcessing);
 }
