@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Simplify.DI;
-using Simplify.Web.Core2.RequestHandling;
 using Simplify.Web.Http;
 
-namespace Simplify.Web.Core2;
+namespace Simplify.Web.Core2.RequestHandling;
 
 /// <summary>
 /// Provides core request handling by Simplify.Web.

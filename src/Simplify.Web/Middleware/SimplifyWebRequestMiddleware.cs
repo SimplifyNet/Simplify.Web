@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
-using Simplify.Web.Core2;
+using Simplify.Web.Core2.RequestHandling;
 using Simplify.Web.Diagnostics;
 using Simplify.Web.Diagnostics.Measurement;
 using Simplify.Web.Diagnostics.Trace;
