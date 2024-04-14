@@ -4,6 +4,7 @@ using Simplify.Web.Core2.Controllers.Execution;
 using Simplify.Web.Core2.Controllers.Execution.Extensions;
 using Simplify.Web.Core2.Controllers.Processing.Context;
 using Simplify.Web.Core2.Controllers.Response.Injectors;
+using Simplify.Web.Core2.Controllers.Security;
 using Simplify.Web.Meta2;
 
 namespace Simplify.Web.Core2.Controllers.Processing.Stages;
