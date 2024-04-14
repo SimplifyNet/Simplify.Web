@@ -3,9 +3,9 @@ using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Simplify.DI;
-using Simplify.Web.Settings;
+using Simplify.Web.Old.Settings;
 
-namespace Simplify.Web.Diagnostics.Trace;
+namespace Simplify.Web.Old.Diagnostics.Trace;
 
 /// <summary>
 /// Provides trace extensions for requests.

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Simplify.Web.Model.Binding;
-using Simplify.Web.Model.Binding.Parsers;
+using Simplify.Web.Old.Model.Binding;
+using Simplify.Web.Old.Model.Binding.Parsers;
 using Simplify.Web.Tests.Old.Model.Binding.Parsers.ListToModelParserTestTypes;
 
 namespace Simplify.Web.Tests.Old.Model.Binding.Parsers;

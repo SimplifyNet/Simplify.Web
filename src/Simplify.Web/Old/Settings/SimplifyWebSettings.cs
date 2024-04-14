@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 
-namespace Simplify.Web.Settings;
+namespace Simplify.Web.Old.Settings;
 
 /// <summary>
 /// Simplify.Web settings.

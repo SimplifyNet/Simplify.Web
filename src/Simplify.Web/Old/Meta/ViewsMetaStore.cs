@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Old.Meta;
 
 /// <summary>
 /// Loads and stores views meta information.

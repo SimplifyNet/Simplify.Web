@@ -4,10 +4,10 @@ using System.Security.Claims;
 using System.Security.Principal;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Core.Controllers;
-using Simplify.Web.Http;
-using Simplify.Web.Meta;
-using Simplify.Web.Routing;
+using Simplify.Web.Old.Core.Controllers;
+using Simplify.Web.Old.Http;
+using Simplify.Web.Old.Meta;
+using Simplify.Web.Old.Routing;
 using Simplify.Web.Tests.Old.Core.Controllers.TestTypes;
 
 namespace Simplify.Web.Tests.Old.Core.Controllers;

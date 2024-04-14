@@ -4,9 +4,9 @@ using Moq;
 using NUnit.Framework;
 using Simplify.DI;
 using Simplify.Templates;
-using Simplify.Web.Core.PageAssembly;
-using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Core.PageAssembly;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
 
 namespace Simplify.Web.Tests.Old.Core.PageAssembly;
 

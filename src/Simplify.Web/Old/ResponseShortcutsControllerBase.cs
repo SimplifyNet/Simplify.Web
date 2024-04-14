@@ -2,10 +2,10 @@
 
 using System;
 using Simplify.Templates;
-using Simplify.Web.Modules;
-using Simplify.Web.Responses;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Responses;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Controllers base class with response shortcuts.

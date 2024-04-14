@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Util;
+using Simplify.Web.Old.Util;
 
-namespace Simplify.Web.Core.StaticFiles;
+namespace Simplify.Web.Old.Core.StaticFiles;
 
 /// <summary>
 /// Provides static file handler.

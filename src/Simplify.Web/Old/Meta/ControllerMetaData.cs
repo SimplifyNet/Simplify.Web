@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Simplify.Web.Attributes;
-using Simplify.Web.Http;
-using Simplify.Web.Util;
+using Simplify.Web.Old.Attributes;
+using Simplify.Web.Old.Http;
+using Simplify.Web.Old.Util;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Old.Meta;
 
 /// <summary>
 /// Controller meta-data information.

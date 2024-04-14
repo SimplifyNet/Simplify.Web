@@ -1,5 +1,6 @@
 ﻿using System;
-using Simplify.Web.Attributes;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Attributes;
 
 namespace Simplify.Web.Tests.Old.Model.Binding.Parsers.TestTypes;
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml.XPath;
 using Simplify.Xml;
 
-namespace Simplify.Web.Modules.Data;
+namespace Simplify.Web.Old.Modules.Data;
 
 /// <summary>
 /// Localizable text items string table.

@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using RangeAttribute = Simplify.Web.Model.Validation.Attributes.RangeAttribute;
+using RangeAttribute = Simplify.Web.Old.Model.Validation.Attributes.RangeAttribute;
 
 namespace Simplify.Web.Tests.Old.Model.Validation.Attributes;
 

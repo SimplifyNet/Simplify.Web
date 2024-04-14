@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
-namespace Simplify.Web.Core.PageAssembly;
+namespace Simplify.Web.Old.Core.PageAssembly;
 
 /// <summary>
 /// Provides page processor.

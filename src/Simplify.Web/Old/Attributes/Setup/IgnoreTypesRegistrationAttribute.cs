@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Attributes.Setup;
+namespace Simplify.Web.Old.Attributes.Setup;
 
 /// <summary>
 /// Specify controllers or views types which should be ignored from DI container registration.

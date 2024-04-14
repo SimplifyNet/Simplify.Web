@@ -1,7 +1,7 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Core.AccessorsBuilding;
+using Simplify.Web.Old.Core.AccessorsBuilding;
 
-namespace Simplify.Web.Core.Controllers.Execution;
+namespace Simplify.Web.Old.Core.Controllers.Execution;
 
 /// <summary>
 /// Provides controller response builder.

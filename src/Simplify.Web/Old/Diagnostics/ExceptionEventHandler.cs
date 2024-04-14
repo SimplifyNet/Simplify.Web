@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Diagnostics;
+namespace Simplify.Web.Old.Diagnostics;
 
 /// <summary>
 /// Catched exceptions delegate.

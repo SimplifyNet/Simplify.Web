@@ -1,6 +1,4 @@
 ﻿using Simplify.Web;
-using Simplify.Web.Attributes;
-using Simplify.Web.Responses;
 
 namespace SampleApp.WindowsServiceHosted.Controllers;
 

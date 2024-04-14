@@ -1,10 +1,11 @@
 using NUnit.Framework;
 using Simplify.DI;
 using Simplify.DI.Provider.DryIoc;
-using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.RegistrationsTests.CustomTypes;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Core.Controllers.Execution;
+using Simplify.Web.RegistrationsTests.Old.CustomTypes;
 
-namespace Simplify.Web.RegistrationsTests;
+namespace Simplify.Web.RegistrationsTests.Old;
 
 [TestFixture]
 public class SimplifyDIContainerProviderExtensionsTests
@@ -18,7 +19,7 @@ public class SimplifyDIContainerProviderExtensionsTests
 
 		container.RegisterSimplifyWeb(x =>
 		{
-			x.OverrideControllerExecutor(r => r.Register<IControllerExecutor, CustomControllerExecutor>());
+			x.OverrideControllerExecutor(r => DIRegistratorExtensions.Register<IControllerExecutor, CustomControllerExecutor>(r));
 		});
 
 		// Act

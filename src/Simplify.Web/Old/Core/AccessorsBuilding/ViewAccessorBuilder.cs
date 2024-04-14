@@ -1,7 +1,7 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Core.Views;
+using Simplify.Web.Old.Core.Views;
 
-namespace Simplify.Web.Core.AccessorsBuilding;
+namespace Simplify.Web.Old.Core.AccessorsBuilding;
 
 /// <summary>
 /// Provides builder for ViewAccessor objects construction.

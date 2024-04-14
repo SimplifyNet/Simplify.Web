@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Model.Binding.Attributes;
+namespace Simplify.Web.Old.Model.Binding.Attributes;
 
 /// <summary>
 /// Sets format for parsing (for example, date time format).

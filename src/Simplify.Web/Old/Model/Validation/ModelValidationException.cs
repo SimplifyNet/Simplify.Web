@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Model.Validation;
+namespace Simplify.Web.Old.Model.Validation;
 
 /// <summary>
 /// Represent model validation exceptions.

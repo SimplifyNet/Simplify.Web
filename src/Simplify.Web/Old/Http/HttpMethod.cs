@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Http;
+﻿namespace Simplify.Web.Old.Http;
 
 /// <summary>
 /// Provides HTTP methods used in Simplify.Web.

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Core.StaticFiles;
+using Simplify.Web.Old.Core.StaticFiles;
 
 namespace Simplify.Web.Tests.Old.Core.StaticFiles;
 

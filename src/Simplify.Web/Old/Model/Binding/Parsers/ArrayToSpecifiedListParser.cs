@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Simplify.Web.Model.Binding.Parsers;
+namespace Simplify.Web.Old.Model.Binding.Parsers;
 
 /// <summary>
 /// Provides string array to list parsing.

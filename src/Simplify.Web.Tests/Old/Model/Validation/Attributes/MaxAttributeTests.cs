@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Simplify.Web.Model.Validation.Attributes;
+using Simplify.Web.Old.Model.Validation.Attributes;
 
 namespace Simplify.Web.Tests.Old.Model.Validation.Attributes;
 

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Simplify.DI;
 
-namespace Simplify.Web.Model;
+namespace Simplify.Web.Old.Model;
 
 /// <summary>
 /// Represent model handler.

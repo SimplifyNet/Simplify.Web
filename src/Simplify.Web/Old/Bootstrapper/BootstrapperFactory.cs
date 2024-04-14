@@ -1,8 +1,8 @@
 ﻿using System;
 using Simplify.DI;
-using Simplify.Web.Meta;
+using Simplify.Web.Old.Meta;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Old.Bootstrapper;
 
 /// <summary>
 /// Bootstrapper factory.

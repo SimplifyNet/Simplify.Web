@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Model.Binding;
+namespace Simplify.Web.Old.Model.Binding;
 
 /// <summary>
 /// Represent model not supported exceptions.

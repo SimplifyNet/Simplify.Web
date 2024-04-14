@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Simplify.Web.Model.Binding.Attributes;
+using Simplify.Web.Old.Model.Binding.Attributes;
 
-namespace Simplify.Web.Model.Binding.Parsers;
+namespace Simplify.Web.Old.Model.Binding.Parsers;
 
 /// <summary>
 /// Provides list of key value pair to model binding.

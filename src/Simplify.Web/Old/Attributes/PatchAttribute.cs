@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Attributes;
+namespace Simplify.Web.Old.Attributes;
 
 /// <summary>
 /// Set controller HTTP PATCH request route path.

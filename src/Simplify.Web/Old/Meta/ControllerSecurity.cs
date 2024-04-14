@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Old.Meta;
 
 /// <summary>
 /// Provides controller security information.

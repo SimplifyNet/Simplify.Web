@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Settings;
+using Simplify.Web.Old.Settings;
 
-namespace Simplify.Web.Modules;
+namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Current language controller and information container.

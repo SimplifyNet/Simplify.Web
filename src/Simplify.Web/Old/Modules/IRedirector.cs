@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Modules;
+﻿namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Represent website redirection manager, which controls current user location, url to previous page and url to specified page.

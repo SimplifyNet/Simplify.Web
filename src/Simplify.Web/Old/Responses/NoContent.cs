@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Responses;
+﻿namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides empty controller response with 204 status code.

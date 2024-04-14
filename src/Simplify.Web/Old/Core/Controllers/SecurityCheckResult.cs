@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Core.Controllers;
+﻿namespace Simplify.Web.Old.Core.Controllers;
 
 /// <summary>
 /// Security rules check result.

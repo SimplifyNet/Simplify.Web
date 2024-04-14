@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Simplify.Web.Model.Binding.Parsers;
+namespace Simplify.Web.Old.Model.Binding.Parsers;
 
 /// <summary>
 /// Provides string to specified type parsing.

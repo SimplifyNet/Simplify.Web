@@ -3,7 +3,7 @@ using System.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
-namespace Simplify.Web.Modules;
+namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Provides website redirection manager, which controls current user location, url to previous page and url to specified page.

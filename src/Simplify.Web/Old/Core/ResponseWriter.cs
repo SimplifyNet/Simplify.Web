@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Core;
+namespace Simplify.Web.Old.Core;
 
 /// <summary>
 /// Providers response writer.

@@ -3,8 +3,8 @@ using System.Globalization;
 using System.Threading;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Modules.Data;
-using Simplify.Web.Modules.Data.Html;
+using Simplify.Web.Old.Modules.Data;
+using Simplify.Web.Old.Modules.Data.Html;
 using Simplify.Web.Tests.Old.Modules.Data;
 
 namespace Simplify.Web.Tests.Old.Modules.Data.Html;

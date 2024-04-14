@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Core;
+﻿namespace Simplify.Web.Old.Core;
 
 /// <summary>
 /// Provides request handling status.

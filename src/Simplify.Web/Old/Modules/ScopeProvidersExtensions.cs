@@ -1,8 +1,8 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Http;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Http;
+using Simplify.Web.Old.Modules.Data;
 
-namespace Simplify.Web.Modules;
+namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Simplify.Web providers extensions.

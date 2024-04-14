@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Asynchronous controllers base class.

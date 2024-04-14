@@ -1,10 +1,11 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Attributes.Setup;
-using Simplify.Web.Meta.Tests.TestTypes;
+using Simplify.Web.Meta.Tests.Old.TestTypes;
+using Simplify.Web.Old.Attributes.Setup;
+using Simplify.Web.Old.Meta;
 
-namespace Simplify.Web.Meta.Tests;
+namespace Simplify.Web.Meta.Tests.Old;
 
 [TestFixture]
 [IgnoreControllers(typeof(TestController3))]

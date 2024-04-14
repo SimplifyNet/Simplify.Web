@@ -1,6 +1,7 @@
 ﻿using System;
+using Simplify.Web.Old;
 
-namespace Simplify.Web.Meta.Tests.TestTypes;
+namespace Simplify.Web.Meta.Tests.Old.TestTypes;
 
 public class TestControllerV2WithModel : Controller2<TestModel>
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Util;
+namespace Simplify.Web.Old.Util;
 
 /// <summary>
 /// Provides DateTime utility methods.

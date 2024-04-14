@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using SampleApp.Classic.Controllers.Shared;
 using Simplify.Templates;
-using Simplify.Web.Responses;
+using Simplify.Web.Old.Responses;
 
 namespace SampleApp.Classic.Tests.Controllers.Shared;
 

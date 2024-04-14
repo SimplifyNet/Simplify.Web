@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using Simplify.DI;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Modules.Data;
 
-namespace Simplify.Web.Model.Validation.Attributes;
+namespace Simplify.Web.Old.Model.Validation.Attributes;
 
 /// <summary>
 /// Represent model property validation attribute base class

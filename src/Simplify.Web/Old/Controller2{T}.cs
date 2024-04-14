@@ -2,9 +2,9 @@
 
 using System.Threading.Tasks;
 using Simplify.DI;
-using Simplify.Web.Model;
+using Simplify.Web.Old.Model;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// User model controllers base class version 2.

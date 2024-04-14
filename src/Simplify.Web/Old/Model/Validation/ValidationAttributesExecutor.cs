@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Simplify.DI;
-using Simplify.Web.Model.Binding;
-using Simplify.Web.Model.Validation.Attributes;
+using Simplify.Web.Old.Model.Binding;
+using Simplify.Web.Old.Model.Validation.Attributes;
 
-namespace Simplify.Web.Model.Validation;
+namespace Simplify.Web.Old.Model.Validation;
 
 /// <summary>
 /// Provides object properties validator.

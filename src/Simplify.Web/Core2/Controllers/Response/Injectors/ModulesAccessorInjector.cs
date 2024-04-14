@@ -1,7 +1,4 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
-using Simplify.Web.Modules.Data.Html;
 
 namespace Simplify.Web.Core2.Controllers.Response.Injectors;
 

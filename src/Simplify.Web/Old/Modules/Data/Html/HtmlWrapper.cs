@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Modules.Data.Html;
+﻿namespace Simplify.Web.Old.Modules.Data.Html;
 
 /// <summary>
 /// Various HTML generation classes container.

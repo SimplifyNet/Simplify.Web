@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using Simplify.Web.Bootstrapper;
-using Simplify.Web.Meta;
+using Simplify.Web.Old.Bootstrapper;
+using Simplify.Web.Old.Meta;
 
 namespace Simplify.Web.Tests.Old.Bootstrapper;
 

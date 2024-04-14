@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Responses;
+namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides Http file response (send file to response).

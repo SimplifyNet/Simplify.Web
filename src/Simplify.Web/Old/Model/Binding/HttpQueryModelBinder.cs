@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Simplify.Web.Model.Binding.Parsers;
+using Simplify.Web.Old.Model.Binding.Parsers;
 
-namespace Simplify.Web.Model.Binding;
+namespace Simplify.Web.Old.Model.Binding;
 
 /// <summary>
 /// Provides HTTP query to model binding.

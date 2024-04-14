@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Simplify.DI;
-using Simplify.Web.Model.Binding;
-using Simplify.Web.Model.Validation;
-using Simplify.Web.Modules;
+using Simplify.Web.Old.Model.Binding;
+using Simplify.Web.Old.Model.Validation;
+using Simplify.Web.Old.Modules;
 
-namespace Simplify.Web.Model;
+namespace Simplify.Web.Old.Model;
 
 /// <summary>
 /// Provides model handling.

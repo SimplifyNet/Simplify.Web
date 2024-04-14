@@ -1,7 +1,7 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Core.Views;
+using Simplify.Web.Old.Core.Views;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// View accessor base class.

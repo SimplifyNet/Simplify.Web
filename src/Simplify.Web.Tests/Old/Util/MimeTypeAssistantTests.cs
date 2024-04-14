@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Simplify.Web.Util;
+using Simplify.Web.Old.Util;
 
 namespace Simplify.Web.Tests.Old.Util;
 

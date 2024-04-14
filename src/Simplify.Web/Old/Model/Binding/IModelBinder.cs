@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Simplify.Web.Model.Binding;
+namespace Simplify.Web.Old.Model.Binding;
 
 /// <summary>
 /// Represent model binder.

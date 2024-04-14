@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Simplify.Web.Modules;
+using Simplify.Web.Old.Modules;
 
-namespace Simplify.Web.Responses;
+namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides controller redirect response (redirects the client to specified URL.).

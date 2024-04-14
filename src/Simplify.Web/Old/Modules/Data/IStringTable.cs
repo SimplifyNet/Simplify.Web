@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web.Modules.Data;
+namespace Simplify.Web.Old.Modules.Data;
 
 /// <summary>
 /// Represent string table.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web.Routing;
+namespace Simplify.Web.Old.Routing;
 
 /// <summary>
 /// Provides HTTP route matching result.

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Core;
-using Simplify.Web.Core.PageAssembly;
+using Simplify.Web.Old.Core;
+using Simplify.Web.Old.Core.PageAssembly;
 
 namespace Simplify.Web.Tests.Old.Core.PageAssembly;
 

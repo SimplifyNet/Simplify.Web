@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Simplify.Templates;
 
-namespace Simplify.Web.Modules.Data;
+namespace Simplify.Web.Old.Modules.Data;
 
 /// <summary>
 /// Represent web-site text templates loader.

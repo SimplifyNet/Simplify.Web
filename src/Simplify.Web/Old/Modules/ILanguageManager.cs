@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Modules;
+﻿namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Represent current language controller and information container.

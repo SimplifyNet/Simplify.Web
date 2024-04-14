@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Simplify.Web.Auth;
+namespace Simplify.Web.Old.Auth;
 
 /// <summary>
 /// Provides authentication redirection extensions.

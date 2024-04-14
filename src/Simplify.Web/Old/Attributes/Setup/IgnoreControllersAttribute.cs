@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Attributes.Setup;
+namespace Simplify.Web.Old.Attributes.Setup;
 
 /// <summary>
 /// Specify controllers types which should be ignored by Simplify.Web.

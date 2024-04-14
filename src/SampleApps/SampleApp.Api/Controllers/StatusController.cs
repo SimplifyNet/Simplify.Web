@@ -1,5 +1,6 @@
 ﻿using Simplify.Web;
-using Simplify.Web.Attributes;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Attributes;
 
 namespace SampleApp.Api.Controllers;
 

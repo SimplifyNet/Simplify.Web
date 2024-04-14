@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Simplify.Web.Responses;
+namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides controller response with exact status code and optional string data (send only specified string to response or empty body).

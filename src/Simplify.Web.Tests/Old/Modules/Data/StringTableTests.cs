@@ -2,8 +2,8 @@
 using System.Xml.Linq;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
 
 namespace Simplify.Web.Tests.Old.Modules.Data;
 

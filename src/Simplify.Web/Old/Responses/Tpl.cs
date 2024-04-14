@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Simplify.Templates;
 
-namespace Simplify.Web.Responses;
+namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides template response (puts data to DataCollector).

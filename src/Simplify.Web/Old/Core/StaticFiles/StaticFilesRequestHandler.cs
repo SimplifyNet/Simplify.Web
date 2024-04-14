@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Core.StaticFiles;
+namespace Simplify.Web.Old.Core.StaticFiles;
 
 /// <summary>
 /// Provides static files request handler.

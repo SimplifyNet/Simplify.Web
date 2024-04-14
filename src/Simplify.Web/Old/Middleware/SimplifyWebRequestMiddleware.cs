@@ -2,15 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
-using Simplify.Web.Bootstrapper;
 using Simplify.Web.Core2.RequestHandling;
-using Simplify.Web.Diagnostics;
-using Simplify.Web.Diagnostics.Measurement;
-using Simplify.Web.Diagnostics.Trace;
-using Simplify.Web.Modules;
-using Simplify.Web.Settings;
+using Simplify.Web.Old.Bootstrapper;
+using Simplify.Web.Old.Diagnostics;
+using Simplify.Web.Old.Diagnostics.Measurement;
+using Simplify.Web.Old.Diagnostics.Trace;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Settings;
 
-namespace Simplify.Web.Middleware;
+namespace Simplify.Web.Old.Middleware;
 
 /// <summary>
 /// Simplify.Web request execution root.

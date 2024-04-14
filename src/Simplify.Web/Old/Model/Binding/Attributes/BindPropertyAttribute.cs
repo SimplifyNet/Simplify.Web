@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Model.Binding.Attributes;
+namespace Simplify.Web.Old.Model.Binding.Attributes;
 
 /// <summary>
 /// Sets source field name this property binds to.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Simplify.Web.Attributes;
-using Simplify.Web.Http;
+using Simplify.Web.Old.Attributes;
+using Simplify.Web.Old.Http;
 
-namespace Simplify.Web.Util;
+namespace Simplify.Web.Old.Util;
 
 /// <summary>
 /// Provides types relations container.

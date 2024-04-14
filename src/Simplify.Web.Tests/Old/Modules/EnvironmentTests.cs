@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Simplify.Web.Modules;
-using Simplify.Web.Settings;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Settings;
 
 namespace Simplify.Web.Tests.Old.Modules;
 

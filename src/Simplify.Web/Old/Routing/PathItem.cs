@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Routing;
+﻿namespace Simplify.Web.Old.Routing;
 
 /// <summary>
 /// Provides path items base class.

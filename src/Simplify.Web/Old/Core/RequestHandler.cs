@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
-using Simplify.Web.Core.Controllers;
-using Simplify.Web.Core.StaticFiles;
+using Simplify.Web.Old.Core.Controllers;
+using Simplify.Web.Old.Core.StaticFiles;
 
-namespace Simplify.Web.Core;
+namespace Simplify.Web.Old.Core;
 
 /// <summary>
 /// Provides OWIN HTTP request handler.

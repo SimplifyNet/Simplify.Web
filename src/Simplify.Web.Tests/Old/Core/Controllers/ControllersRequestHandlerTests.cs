@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Core;
-using Simplify.Web.Core.Controllers;
-using Simplify.Web.Core.PageAssembly;
-using Simplify.Web.Modules;
+using Simplify.Web.Old.Core;
+using Simplify.Web.Old.Core.Controllers;
+using Simplify.Web.Old.Core.PageAssembly;
+using Simplify.Web.Old.Modules;
 
 namespace Simplify.Web.Tests.Old.Core.Controllers;
 

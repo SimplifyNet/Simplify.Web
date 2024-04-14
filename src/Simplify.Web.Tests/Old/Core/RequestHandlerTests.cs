@@ -2,9 +2,9 @@
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Core;
-using Simplify.Web.Core.Controllers;
-using Simplify.Web.Core.StaticFiles;
+using Simplify.Web.Old.Core;
+using Simplify.Web.Old.Core.Controllers;
+using Simplify.Web.Old.Core.StaticFiles;
 
 namespace Simplify.Web.Tests.Old.Core;
 

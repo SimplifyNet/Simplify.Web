@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
-using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Modules;
+using Simplify.Web.Old.Core.Controllers.Execution;
+using Simplify.Web.Old.Modules;
 
-namespace Simplify.Web.Core.Controllers;
+namespace Simplify.Web.Old.Core.Controllers;
 
 /// <summary>
 /// Provides controllers processor.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web.Settings;
+namespace Simplify.Web.Old.Settings;
 
 /// <summary>
 /// Represent Simplify.Web settings.

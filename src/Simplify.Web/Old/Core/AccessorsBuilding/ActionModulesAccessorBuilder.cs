@@ -1,8 +1,8 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
 
-namespace Simplify.Web.Core.AccessorsBuilding;
+namespace Simplify.Web.Old.Core.AccessorsBuilding;
 
 /// <summary>
 /// Provides builder for ActionModulesAccessor objects.

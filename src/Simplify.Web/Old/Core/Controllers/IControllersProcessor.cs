@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
-namespace Simplify.Web.Core.Controllers;
+namespace Simplify.Web.Old.Core.Controllers;
 
 /// <summary>
 /// Represents controllers processor.

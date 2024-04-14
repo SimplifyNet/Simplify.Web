@@ -2,7 +2,7 @@
 using System.Reflection;
 using Simplify.DI;
 
-namespace Simplify.Web.Model.Validation.Attributes;
+namespace Simplify.Web.Old.Model.Validation.Attributes;
 
 /// <summary>
 /// Sets minimum required property length.

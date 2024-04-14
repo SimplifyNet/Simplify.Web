@@ -1,6 +1,6 @@
 ﻿using Simplify.DI;
 
-namespace Simplify.Web.Core.PageAssembly;
+namespace Simplify.Web.Old.Core.PageAssembly;
 
 /// <summary>
 /// Represent context variables setter.

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using Simplify.Web.Attributes.Setup;
+using Simplify.Web.Old.Attributes.Setup;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Old.Meta;
 
 /// <summary>
 /// Loads and stores controllers meta information.

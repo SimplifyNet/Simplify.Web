@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Simplify.Templates;
 
-namespace Simplify.Web.Modules.Data;
+namespace Simplify.Web.Old.Modules.Data;
 
 /// <summary>
 /// Web-site cacheable text templates loader.

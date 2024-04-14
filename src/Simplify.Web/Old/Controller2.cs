@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web;
+﻿namespace Simplify.Web.Old;
 
 /// <summary>
 /// User controllers base class version 2.

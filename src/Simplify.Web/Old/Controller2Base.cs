@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Controllers base class version 2.

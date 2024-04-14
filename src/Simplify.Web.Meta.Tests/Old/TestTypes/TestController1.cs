@@ -1,7 +1,8 @@
 ﻿using System;
-using Simplify.Web.Attributes;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Attributes;
 
-namespace Simplify.Web.Meta.Tests.TestTypes;
+namespace Simplify.Web.Meta.Tests.Old.TestTypes;
 
 [Get("/test-action")]
 [Post("/test-action1")]

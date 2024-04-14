@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Simplify.Web.Diagnostics;
+namespace Simplify.Web.Old.Diagnostics;
 
 /// <summary>
 /// Provides detailed exception info builder.

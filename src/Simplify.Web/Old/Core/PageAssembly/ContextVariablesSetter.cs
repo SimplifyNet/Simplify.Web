@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using Simplify.DI;
-using Simplify.Web.Diagnostics.Measurement;
-using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Diagnostics.Measurement;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
 
-namespace Simplify.Web.Core.PageAssembly;
+namespace Simplify.Web.Old.Core.PageAssembly;
 
 /// <summary>
 /// Provides context variables setter.

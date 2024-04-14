@@ -1,7 +1,8 @@
 using SampleApp.Angular.Responses;
 using SampleApp.Angular.ViewModels;
 using Simplify.Web;
-using Simplify.Web.Attributes;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Attributes;
 
 namespace SampleApp.Angular.Controllers.v1;
 

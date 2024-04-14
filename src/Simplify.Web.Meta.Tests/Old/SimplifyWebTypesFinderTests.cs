@@ -1,8 +1,10 @@
 ﻿using NUnit.Framework;
-using Simplify.Web.Bootstrapper;
-using Simplify.Web.Meta.Tests.TestTypes;
+using Simplify.Web.Meta.Tests.Old.TestTypes;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Bootstrapper;
+using Simplify.Web.Old.Meta;
 
-namespace Simplify.Web.Meta.Tests;
+namespace Simplify.Web.Meta.Tests.Old;
 
 [TestFixture]
 public class SimplifyWebTypesFinderTests

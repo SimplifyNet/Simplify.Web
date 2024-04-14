@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Simplify.Web.Settings;
+using Simplify.Web.Old.Settings;
 
-namespace Simplify.Web.Modules;
+namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Provides language manager provider.

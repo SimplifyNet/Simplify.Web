@@ -2,8 +2,8 @@
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Model.Validation.Attributes;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Model.Validation.Attributes;
+using Simplify.Web.Old.Modules.Data;
 
 namespace Simplify.Web.Tests.Old.Model.Validation.Attributes;
 

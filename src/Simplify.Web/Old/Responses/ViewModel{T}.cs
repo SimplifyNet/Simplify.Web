@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Simplify.Templates.Model;
 
-namespace Simplify.Web.Responses;
+namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides view model response.

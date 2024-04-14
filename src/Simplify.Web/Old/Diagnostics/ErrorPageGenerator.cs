@@ -1,7 +1,7 @@
 ﻿using System;
-using Simplify.Web.Diagnostics.Templates;
+using Simplify.Web.Old.Diagnostics.Templates;
 
-namespace Simplify.Web.Diagnostics;
+namespace Simplify.Web.Old.Diagnostics;
 
 /// <summary>
 /// Provides HTTP 500 error page generator.

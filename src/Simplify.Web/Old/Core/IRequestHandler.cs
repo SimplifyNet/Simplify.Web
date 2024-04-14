@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 
-namespace Simplify.Web.Core;
+namespace Simplify.Web.Old.Core;
 
 /// <summary>
 /// Represent OWIN HTTP request handler.

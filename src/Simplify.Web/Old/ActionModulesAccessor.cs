@@ -1,7 +1,7 @@
-﻿using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
+﻿using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Action modules accessor base class.

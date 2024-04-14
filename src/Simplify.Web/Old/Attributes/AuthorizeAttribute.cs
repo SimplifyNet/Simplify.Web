@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Simplify.Web.Attributes;
+namespace Simplify.Web.Old.Attributes;
 
 /// <summary>
 /// Indicates whether controller requires user authorization.

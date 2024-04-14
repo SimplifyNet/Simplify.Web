@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Meta;
+﻿namespace Simplify.Web.Old.Meta;
 
 /// <summary>
 /// Provides controller route information.

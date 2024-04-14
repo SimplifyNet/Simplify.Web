@@ -1,4 +1,4 @@
-﻿using Simplify.Web.Model.Binding.Attributes;
+﻿using Simplify.Web.Old.Model.Binding.Attributes;
 
 namespace Simplify.Web.Tests.Old.Model.Binding.Parsers.ListToModelParserTestTypes;
 

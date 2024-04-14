@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web;
+﻿namespace Simplify.Web.Old;
 
 /// <summary>
 /// Provides controller response result types.

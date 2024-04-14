@@ -1,6 +1,6 @@
 ﻿using Simplify.Templates;
 
-namespace Simplify.Web.Diagnostics.Templates;
+namespace Simplify.Web.Old.Diagnostics.Templates;
 
 /// <summary>
 /// Provides HTTP 500 minimal error page builder.

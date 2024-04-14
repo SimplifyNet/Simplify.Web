@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Attributes;
+namespace Simplify.Web.Old.Attributes;
 
 /// <summary>
 /// Indicates what controller handles HTTP 404 errors.

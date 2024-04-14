@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Http;
-using Simplify.Web.Meta;
+using Simplify.Web.Old.Http;
 
-namespace Simplify.Web.Util;
+namespace Simplify.Web.Old.Util;
 
 /// <summary>
 /// Provides OWIN and HTTP related utility functions.

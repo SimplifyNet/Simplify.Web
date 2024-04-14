@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Simplify.Web.Util;
+namespace Simplify.Web.Old.Util;
 
 /// <summary>
 /// Provide mime type utility functions.

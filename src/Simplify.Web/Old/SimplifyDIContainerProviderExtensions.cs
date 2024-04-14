@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Simplify.DI;
-using Simplify.Web.Bootstrapper;
+using Simplify.Web.Old.Bootstrapper;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Provides Simplify.Web extensions for Simplify.DI container provider.

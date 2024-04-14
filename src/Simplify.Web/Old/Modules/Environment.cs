@@ -1,6 +1,6 @@
-﻿using Simplify.Web.Settings;
+﻿using Simplify.Web.Old.Settings;
 
-namespace Simplify.Web.Modules;
+namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Site environment properties, Initialized from <see cref="ISimplifyWebSettings" />.

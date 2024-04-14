@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net;
 using Microsoft.AspNetCore.Builder;
-using Simplify.Web.Bootstrapper;
-using Simplify.Web.Middleware;
+using Simplify.Web.Old.Bootstrapper;
+using Simplify.Web.Old.Middleware;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// IApplicationBuilder Simplify.Web extensions.

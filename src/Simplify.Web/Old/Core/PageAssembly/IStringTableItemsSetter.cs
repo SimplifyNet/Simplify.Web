@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Core.PageAssembly;
+﻿namespace Simplify.Web.Old.Core.PageAssembly;
 
 /// <summary>
 /// Represent string table items setter.

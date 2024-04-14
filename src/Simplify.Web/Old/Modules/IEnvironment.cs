@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Modules;
+﻿namespace Simplify.Web.Old.Modules;
 
 /// <summary>
 /// Represent site environment properties.

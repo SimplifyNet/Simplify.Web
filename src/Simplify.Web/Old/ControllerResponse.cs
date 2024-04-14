@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Simplify.Web.Core;
+using Simplify.Web.Old.Core;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Provides controllers responses base class.

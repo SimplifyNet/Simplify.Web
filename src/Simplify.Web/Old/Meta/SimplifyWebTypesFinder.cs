@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Simplify.Web.Attributes.Setup;
+using Simplify.Web.Old.Attributes.Setup;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Old.Meta;
 
 /// <summary>
 /// Provides Simplify.Web types finder among all loaded assemblies.

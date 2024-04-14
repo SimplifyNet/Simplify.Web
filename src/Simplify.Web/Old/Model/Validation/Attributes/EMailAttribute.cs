@@ -3,7 +3,7 @@ using System.Reflection;
 using Simplify.DI;
 using Simplify.String;
 
-namespace Simplify.Web.Model.Validation.Attributes;
+namespace Simplify.Web.Old.Model.Validation.Attributes;
 
 /// <summary>
 /// Indicates that this property should be a valid email address.

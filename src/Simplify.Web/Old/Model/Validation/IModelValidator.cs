@@ -1,6 +1,6 @@
 ﻿using Simplify.DI;
 
-namespace Simplify.Web.Model.Validation;
+namespace Simplify.Web.Old.Model.Validation;
 
 /// <summary>
 /// Represent model validator.

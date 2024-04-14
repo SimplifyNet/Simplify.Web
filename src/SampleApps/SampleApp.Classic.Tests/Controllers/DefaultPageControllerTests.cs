@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using SampleApp.Classic.Controllers;
-using Simplify.Web.Responses;
+using Simplify.Web.Old.Responses;
 
 namespace SampleApp.Classic.Tests.Controllers;
 

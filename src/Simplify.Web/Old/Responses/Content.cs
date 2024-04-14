@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Simplify.Web.Responses;
+namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides controller string response.

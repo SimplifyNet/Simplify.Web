@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Simplify.Web.Modules;
+using Simplify.Web.Old.Modules;
 
 namespace Simplify.Web.Tests.Old.Modules.Data;
 

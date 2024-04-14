@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Simplify.Templates;
 
-namespace Simplify.Web.Modules.Data;
+namespace Simplify.Web.Old.Modules.Data;
 
 /// <summary>
 /// Provides master page data collector.

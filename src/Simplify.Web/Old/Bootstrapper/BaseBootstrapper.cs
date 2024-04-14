@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
-using Simplify.Web.Core;
-using Simplify.Web.Core.Controllers;
-using Simplify.Web.Core.Controllers.Execution;
-using Simplify.Web.Core.PageAssembly;
-using Simplify.Web.Core.StaticFiles;
-using Simplify.Web.Core.Views;
-using Simplify.Web.Diagnostics.Measurement;
-using Simplify.Web.Meta;
-using Simplify.Web.Model;
-using Simplify.Web.Model.Binding;
-using Simplify.Web.Model.Validation;
-using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
-using Simplify.Web.Modules.Data.Html;
-using Simplify.Web.Routing;
-using Simplify.Web.Settings;
+using Simplify.Web.Old.Core;
+using Simplify.Web.Old.Core.Controllers;
+using Simplify.Web.Old.Core.Controllers.Execution;
+using Simplify.Web.Old.Core.PageAssembly;
+using Simplify.Web.Old.Core.StaticFiles;
+using Simplify.Web.Old.Core.Views;
+using Simplify.Web.Old.Diagnostics.Measurement;
+using Simplify.Web.Old.Meta;
+using Simplify.Web.Old.Model;
+using Simplify.Web.Old.Model.Binding;
+using Simplify.Web.Old.Model.Validation;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
+using Simplify.Web.Old.Modules.Data.Html;
+using Simplify.Web.Old.Routing;
+using Simplify.Web.Old.Settings;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Old.Bootstrapper;
 
 /// <summary>
 /// Base and default Simplify.Web bootstrapper.

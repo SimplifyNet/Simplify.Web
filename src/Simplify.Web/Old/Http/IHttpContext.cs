@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Http;
+namespace Simplify.Web.Old.Http;
 
 public interface IHttpContext
 {

@@ -1,8 +1,8 @@
-﻿using Simplify.Web.Modules;
-using Simplify.Web.Modules.Data;
-using Simplify.Web.Modules.Data.Html;
+﻿using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Modules.Data;
+using Simplify.Web.Old.Modules.Data.Html;
 
-namespace Simplify.Web;
+namespace Simplify.Web.Old;
 
 /// <summary>
 /// Provides modules accessor base class.

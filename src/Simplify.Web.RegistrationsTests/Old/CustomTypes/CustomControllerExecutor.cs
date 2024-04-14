@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Simplify.Web.Core.Controllers.Execution;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Core.Controllers.Execution;
 
-namespace Simplify.Web.RegistrationsTests.CustomTypes;
+namespace Simplify.Web.RegistrationsTests.Old.CustomTypes;
 
 public class CustomControllerExecutor : IControllerExecutor
 {

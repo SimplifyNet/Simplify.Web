@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Simplify.Web.Modules.Data;
+using Simplify.Web.Old.Modules.Data;
 
-namespace Simplify.Web.Core.PageAssembly;
+namespace Simplify.Web.Old.Core.PageAssembly;
 
 /// <summary>
 /// Provides string table items setter.

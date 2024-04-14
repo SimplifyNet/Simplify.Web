@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Responses;
+﻿namespace Simplify.Web.Old.Responses;
 
 /// <summary>
 /// Provides Created controller string response with 201 HTTP Status Code.

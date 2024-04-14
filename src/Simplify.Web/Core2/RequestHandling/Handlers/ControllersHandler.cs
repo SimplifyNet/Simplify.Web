@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Simplify.Web.Core2.Controllers.Processing;
 using Simplify.Web.Core2.Controllers.Processing.Context;
 using Simplify.Web.Core2.Controllers.RouteMatching;
-using Simplify.Web.Http;
 
 namespace Simplify.Web.Core2.RequestHandling.Handlers;
 

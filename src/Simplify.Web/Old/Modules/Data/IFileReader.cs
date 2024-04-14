@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace Simplify.Web.Modules.Data;
+namespace Simplify.Web.Old.Modules.Data;
 
 /// <summary>
 /// Represents localizable files reader.

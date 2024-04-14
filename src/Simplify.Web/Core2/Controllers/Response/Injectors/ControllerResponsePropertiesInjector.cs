@@ -1,5 +1,4 @@
 ﻿using Simplify.DI;
-using Simplify.Web.Core;
 
 namespace Simplify.Web.Core2.Controllers.Response.Injectors;
 

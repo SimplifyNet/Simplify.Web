@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Modules;
-using Simplify.Web.Responses;
+using Simplify.Web.Old;
+using Simplify.Web.Old.Modules;
+using Simplify.Web.Old.Responses;
 
 namespace Simplify.Web.Tests.Old.Responses;
 
