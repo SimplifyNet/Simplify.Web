@@ -58,7 +58,7 @@ public class InlineTpl : ControllerResponse
 	/// <summary>
 	/// Processes this response.
 	/// </summary>
-	public override Task<ControllerResponseResult> Process()
+	public override Task<ControllerResponseResult> ExecuteAsync()
 	{
 		DataCollector.Add(DataCollectorVariableName, Data);
 

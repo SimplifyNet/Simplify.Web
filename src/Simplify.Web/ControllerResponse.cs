@@ -19,5 +19,5 @@ public abstract class ControllerResponse : ActionModulesAccessor
 	/// <summary>
 	/// Processes this response
 	/// </summary>
-	public abstract Task<ControllerResponseResult> Process();
+	public abstract Task<ControllerResponseResult> ExecuteAsync();
 }

@@ -41,7 +41,7 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 	/// <summary>
 	/// Processes this response.
 	/// </summary>
-	public override async Task<ControllerResponseResult> Process()
+	public override async Task<ControllerResponseResult> ExecuteAsync()
 	{
 		Context.Response.StatusCode = Code;
 

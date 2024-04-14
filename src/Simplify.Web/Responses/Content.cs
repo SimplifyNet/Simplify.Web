@@ -60,7 +60,7 @@ public class Content : ControllerResponse
 	/// <summary>
 	/// Processes this response.
 	/// </summary>
-	public override async Task<ControllerResponseResult> Process()
+	public override async Task<ControllerResponseResult> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 

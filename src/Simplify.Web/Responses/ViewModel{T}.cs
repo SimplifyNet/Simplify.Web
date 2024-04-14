@@ -52,7 +52,7 @@ public class ViewModel<T>(string templateFileName, T viewModel, string? title = 
 	/// <summary>
 	/// Processes this response.
 	/// </summary>
-	public override Task<ControllerResponseResult> Process()
+	public override Task<ControllerResponseResult> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 

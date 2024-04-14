@@ -34,7 +34,7 @@ public class Json : ControllerResponse
 	/// Processes this response
 	/// </summary>
 	/// <returns></returns>
-	public override async Task<ControllerResponseResult> Process()
+	public override async Task<ControllerResponseResult> ExecuteAsync()
 	{
 		Context.Response.ContentType = "application/json";
 		Context.Response.StatusCode = _statusCode;

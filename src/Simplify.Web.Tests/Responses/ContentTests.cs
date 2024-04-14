@@ -32,7 +32,7 @@ public class ContentTests
 		_context.SetupSet(x => x.Response.StatusCode = It.IsAny<int>());
 
 		// Act
-		var result = await content.Object.Process();
+		var result = await content.Object.ExecuteAsync();
 
 		// Assert
 

@@ -32,7 +32,7 @@ public class FileTests
 		file.SetupGet(x => x.Context).Returns(_context.Object);
 
 		// Act
-		var result = await file.Object.Process();
+		var result = await file.Object.ExecuteAsync();
 
 		// Assert
 

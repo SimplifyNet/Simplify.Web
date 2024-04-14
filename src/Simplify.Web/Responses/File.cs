@@ -54,7 +54,7 @@ public class File(string outputFileName, string contentType, byte[] data, int st
 	/// <summary>
 	/// Processes this response.
 	/// </summary>
-	public override async Task<ControllerResponseResult> Process()
+	public override async Task<ControllerResponseResult> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 

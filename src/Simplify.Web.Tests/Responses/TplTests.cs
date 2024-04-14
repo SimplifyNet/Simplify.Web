@@ -36,7 +36,7 @@ public class TplTests
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 		// Act
-		var result = await tplData.Object.Process();
+		var result = await tplData.Object.ExecuteAsync();
 
 		// Assert
 
@@ -54,7 +54,7 @@ public class TplTests
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 		// Act
-		await tplData.Object.Process();
+		await tplData.Object.ExecuteAsync();
 
 		// Assert
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "test")));
@@ -70,7 +70,7 @@ public class TplTests
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 		// Act
-		await tplData.Object.Process();
+		await tplData.Object.ExecuteAsync();
 
 		// Assert
 
@@ -88,7 +88,7 @@ public class TplTests
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 		// Act
-		await tplData.Object.Process();
+		await tplData.Object.ExecuteAsync();
 
 		// Assert
 
@@ -106,7 +106,7 @@ public class TplTests
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
 		// Act
-		await tplData.Object.Process();
+		await tplData.Object.ExecuteAsync();
 
 		// Assert
 

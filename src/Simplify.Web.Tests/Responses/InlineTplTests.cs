@@ -34,7 +34,7 @@ public class InlineTplTests
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 		// Act
-		var result = await tplData.Object.Process();
+		var result = await tplData.Object.ExecuteAsync();
 
 		// Assert
 
@@ -51,7 +51,7 @@ public class InlineTplTests
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 		// Act
-		await tplData.Object.Process();
+		await tplData.Object.ExecuteAsync();
 
 		// Assert
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));

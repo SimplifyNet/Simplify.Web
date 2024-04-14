@@ -45,6 +45,6 @@ public class ControllerExecutor : IControllerExecutor
 
 		_controllerResponseBuilder.BuildControllerResponseProperties(response, args.Resolver);
 
-		return await response.Process();
+		return await response.ExecuteAsync();
 	}
 }

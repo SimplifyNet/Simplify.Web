@@ -26,7 +26,7 @@ public class RedirectTests
 		redirect.SetupGet(x => x.Redirector).Returns(_redirector.Object);
 
 		// Act
-		var result = await redirect.Object.Process();
+		var result = await redirect.Object.ExecuteAsync();
 
 		// Assert
 
@@ -43,7 +43,7 @@ public class RedirectTests
 		redirect.SetupGet(x => x.Redirector).Returns(_redirector.Object);
 
 		// Act
-		var result = await redirect.Object.Process();
+		var result = await redirect.Object.ExecuteAsync();
 
 		// Assert
 

@@ -74,7 +74,7 @@ public class ControllersExecutorTests
 
 		var response = new Mock<ControllerResponse>();
 
-		response.Setup(x => x.Process()).ReturnsAsync(ControllerResponseResult.RawOutput);
+		response.Setup(x => x.ExecuteAsync()).ReturnsAsync(ControllerResponseResult.RawOutput);
 
 		_executor2.Setup(x => x.Execute(It.IsAny<IControllerExecutionArgs>()))
 			.ReturnsAsync(response.Object);
@@ -90,6 +90,6 @@ public class ControllersExecutorTests
 
 		_controllerResponseBuilder.Verify(x => x.BuildControllerResponseProperties(It.IsAny<ControllerResponse>(), It.IsAny<IDIResolver>()));
 
-		response.Verify(x => x.Process());
+		response.Verify(x => x.ExecuteAsync());
 	}
 }

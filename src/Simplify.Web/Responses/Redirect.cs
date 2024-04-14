@@ -53,7 +53,7 @@ public class Redirect : ControllerResponse
 	/// Processes this response.
 	/// </summary>
 	/// <returns></returns>
-	public override Task<ControllerResponseResult> Process()
+	public override Task<ControllerResponseResult> ExecuteAsync()
 	{
 		if (!string.IsNullOrEmpty(Url))
 			Redirector.Redirect(Url!);
