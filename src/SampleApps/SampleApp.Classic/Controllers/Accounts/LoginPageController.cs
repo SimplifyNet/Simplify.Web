@@ -1,5 +1,4 @@
 ﻿using SampleApp.Classic.Views.Accounts;
-using Simplify.Web;
 using Simplify.Web.Old;
 using Simplify.Web.Old.Attributes;
 using Simplify.Web.Old.Responses;

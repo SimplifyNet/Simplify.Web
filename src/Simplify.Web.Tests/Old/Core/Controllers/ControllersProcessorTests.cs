@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Http;
-using Simplify.Web.Old;
 using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
 using Simplify.Web.Old.Meta;
@@ -112,7 +111,7 @@ public class ControllersProcessorTests
 
 		_controllersExecutor.Setup(x =>
 			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2))))
-				.Returns(Task.FromResult(ControllerResponseResult.RawOutput));
+				.Returns(Task.FromResult(Web.Old.ControllerResponseResult.RawOutput));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
@@ -140,7 +139,7 @@ public class ControllersProcessorTests
 
 		_controllersExecutor.Setup(x =>
 			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController2))))
-				.Returns(Task.FromResult(ControllerResponseResult.Redirect));
+				.Returns(Task.FromResult(Web.Old.ControllerResponseResult.Redirect));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
@@ -260,7 +259,7 @@ public class ControllersProcessorTests
 
 		_controllersExecutor.Setup(x =>
 			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)))
-				.Returns(Task.FromResult(ControllerResponseResult.RawOutput));
+				.Returns(Task.FromResult(Web.Old.ControllerResponseResult.RawOutput));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);
@@ -288,7 +287,7 @@ public class ControllersProcessorTests
 
 		_controllersExecutor.Setup(x =>
 			x.Execute(It.Is<IControllerExecutionArgs>(t => t.ControllerMetaData.ControllerType == typeof(TestController1) && t.RouteParameters == _routeParameters)))
-				.Returns(Task.FromResult(ControllerResponseResult.Redirect));
+				.Returns(Task.FromResult(Web.Old.ControllerResponseResult.Redirect));
 
 		// Act
 		var result = await _processor.ProcessControllers(null!, _context.Object);

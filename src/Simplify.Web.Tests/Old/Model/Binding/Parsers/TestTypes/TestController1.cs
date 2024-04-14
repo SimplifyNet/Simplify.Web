@@ -17,5 +17,5 @@ namespace Simplify.Web.Tests.Old.Model.Binding.Parsers.TestTypes;
 [Authorize("Admin, User")]
 public class TestController1 : Controller
 {
-	public override ControllerResponse Invoke() => throw new NotImplementedException();
+	public override Web.Old.ControllerResponse Invoke() => throw new NotImplementedException();
 }

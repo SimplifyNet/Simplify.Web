@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Simplify.DI;
-using Simplify.Web.Old;
 using Simplify.Web.Old.Core.Controllers.Execution;
 using Simplify.Web.Old.Meta;
 
@@ -61,7 +60,7 @@ public class ControllersExecutorTests
 
 		_executor2.Verify(x => x.Execute(It.IsAny<IControllerExecutionArgs>()));
 
-		_controllerResponseBuilder.Verify(x => x.BuildControllerResponseProperties(It.IsAny<ControllerResponse>(), It.IsAny<IDIResolver>()),
+		_controllerResponseBuilder.Verify(x => x.BuildControllerResponseProperties(It.IsAny<Web.Old.ControllerResponse>(), It.IsAny<IDIResolver>()),
 			Times.Never);
 	}
 
@@ -73,9 +72,9 @@ public class ControllersExecutorTests
 		var controller = Mock.Of<IControllerMetaData>(x => x.Version == ControllerVersion.V2);
 		var args = Mock.Of<IControllerExecutionArgs>(x => x.ControllerMetaData == controller);
 
-		var response = new Mock<ControllerResponse>();
+		var response = new Mock<Web.Old.ControllerResponse>();
 
-		response.Setup(x => x.ExecuteAsync()).ReturnsAsync(ControllerResponseResult.RawOutput);
+		response.Setup(x => x.ExecuteAsync()).ReturnsAsync(Web.Old.ControllerResponseResult.RawOutput);
 
 		_executor2.Setup(x => x.Execute(It.IsAny<IControllerExecutionArgs>()))
 			.ReturnsAsync(response.Object);
@@ -89,7 +88,7 @@ public class ControllersExecutorTests
 
 		_executor2.Verify(x => x.Execute(It.IsAny<IControllerExecutionArgs>()));
 
-		_controllerResponseBuilder.Verify(x => x.BuildControllerResponseProperties(It.IsAny<ControllerResponse>(), It.IsAny<IDIResolver>()));
+		_controllerResponseBuilder.Verify(x => x.BuildControllerResponseProperties(It.IsAny<Web.Old.ControllerResponse>(), It.IsAny<IDIResolver>()));
 
 		response.Verify(x => x.ExecuteAsync());
 	}

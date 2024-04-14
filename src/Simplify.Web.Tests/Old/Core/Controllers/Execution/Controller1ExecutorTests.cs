@@ -59,7 +59,7 @@ public class Controller1ExecutorTests
 	{
 		// Arrange
 
-		var response = Mock.Of<ControllerResponse>();
+		var response = Mock.Of<Web.Old.ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
 			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
@@ -85,7 +85,7 @@ public class Controller1ExecutorTests
 	{
 		// Arrange
 
-		var response = Mock.Of<ControllerResponse>();
+		var response = Mock.Of<Web.Old.ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
 			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
@@ -111,7 +111,7 @@ public class Controller1ExecutorTests
 	{
 		// Arrange
 
-		var response = Mock.Of<ControllerResponse>();
+		var response = Mock.Of<Web.Old.ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
 			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
@@ -137,7 +137,7 @@ public class Controller1ExecutorTests
 	{
 		// Arrange
 
-		var response = Mock.Of<ControllerResponse>();
+		var response = Mock.Of<Web.Old.ControllerResponse>();
 
 		_controllerFactory.Setup(x =>
 			x.CreateController(It.Is<IControllerExecutionArgs>(x => x == _args)))
