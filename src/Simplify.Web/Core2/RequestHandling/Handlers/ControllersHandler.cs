@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Simplify.Web.Core2.Controllers;
-using Simplify.Web.Core2.Controllers.ProcessingContext;
+using Simplify.Web.Core2.Controllers.Processing;
+using Simplify.Web.Core2.Controllers.Processing.Context;
+using Simplify.Web.Core2.Controllers.RouteMatching;
 using Simplify.Web.Core2.Http;
 
 namespace Simplify.Web.Core2.RequestHandling.Handlers;
 
-public class ControllersHandler(IControllersRequestHandler requestHandler, IControllersProcessingContextFactory contextFactory) : IRequestHandler
+public class ControllersHandler(IMatchedControllersFactory matchedControllersFactory,
+	IControllerProcessingPipeline processingPipeline,
+	IControllerProcessingContextFactory argsFactory) : IRequestHandler
 {
-	public Task HandleAsync(IHttpContext context, Action stopProcessing) =>
-		requestHandler.HandleAsync(contextFactory.Create(context));
+	public async Task HandleAsync(IHttpContext context, Action stopProcessing)
+	{
+		foreach (var controller in matchedControllersFactory.Create(context))
+			await processingPipeline.Execute(argsFactory.Create(controller, context));
+	}
 }

@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Core2.Controllers.Routing.Matcher;
+﻿namespace Simplify.Web.Core2.Controllers.RouteMatching.Matcher;
 
 /// <summary>
 /// Represent HTTP route parser and matcher.

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Simplify.Web.Core2.Controllers.Routing.Extensions;
+namespace Simplify.Web.Core2.Controllers.RouteMatching.Extensions;
 
 public static class MatchedControllersExtensions
 {

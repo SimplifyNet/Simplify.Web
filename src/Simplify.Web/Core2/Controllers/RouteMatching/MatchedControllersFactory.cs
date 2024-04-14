@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Core2.Controllers.Extensions;
-using Simplify.Web.Core2.Controllers.Routing.Extensions;
+using Simplify.Web.Core2.Controllers.RouteMatching.Extensions;
 using Simplify.Web.Core2.Http;
 using Simplify.Web.Meta2;
 
-namespace Simplify.Web.Core2.Controllers.Routing;
+namespace Simplify.Web.Core2.Controllers.RouteMatching;
 
 public class MatchedControllersFactory(IControllersMetaStore metaStore, IMatchedControllerFactoryResolver factoryResolver) : IMatchedControllersFactory
 {

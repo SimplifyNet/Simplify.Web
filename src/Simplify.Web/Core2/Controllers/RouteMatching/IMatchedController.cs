@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Simplify.Web.Meta2;
 
-namespace Simplify.Web.Core2.Controllers.Routing;
+namespace Simplify.Web.Core2.Controllers.RouteMatching;
 
 public interface IMatchedController
 {
