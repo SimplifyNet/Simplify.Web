@@ -21,17 +21,12 @@ public abstract class ModulesAccessorInjector(IDIResolver resolver) : ViewAccess
 		InjectViewAccessorProperties(modulesAccessor);
 
 		modulesAccessor.Environment = _resolver.Resolve<IEnvironment>();
-
-		var stringTable = _resolver.Resolve<IStringTable>();
-		modulesAccessor.StringTableManager = stringTable;
-
+		modulesAccessor.StringTableManager = _resolver.Resolve<IStringTable>();
 		modulesAccessor.TemplateFactory = _resolver.Resolve<ITemplateFactory>();
 
-		var htmlWrapper = new HtmlWrapper
+		modulesAccessor.Html = new HtmlWrapper
 		{
 			ListsGenerator = _resolver.Resolve<IListsGenerator>()
 		};
-
-		modulesAccessor.Html = htmlWrapper;
 	}
 }

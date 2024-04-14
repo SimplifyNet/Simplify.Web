@@ -3,11 +3,11 @@
 /// <summary>
 /// Represents controller response builder.
 /// </summary>
-public interface IControllerResponseAssembler
+public interface IControllerResponsePropertiesInjector
 {
 	/// <summary>
 	/// Builds the controller response properties.
 	/// </summary>
 	/// <param name="controllerResponse">The controller response.</param>
-	void InjectControllerResponseProperties(ControllerResponse controllerResponse);
+	void Inject(ControllerResponse controllerResponse);
 }
