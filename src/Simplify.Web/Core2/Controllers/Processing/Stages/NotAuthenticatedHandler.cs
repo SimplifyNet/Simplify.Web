@@ -12,7 +12,7 @@ public class NotAuthenticatedHandler(IRedirector redirector) : IControllerProces
 		if (context.SecurityStatus == SecurityStatus.Ok)
 			return Task.CompletedTask;
 
-		context.Context.Context.Response.StatusCode = 401;
+		context.SetResponseStatusCode(401);
 		redirector.SetLoginReturnUrlFromCurrentUri();
 
 		stopProcessing();
