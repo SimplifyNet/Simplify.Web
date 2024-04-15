@@ -1,7 +1,7 @@
 ﻿using System;
 using Simplify.Templates;
-using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Responses;
+using Simplify.Web.Modules.Redirection;
+using Simplify.Web.Responses;
 
 #nullable disable
 
@@ -13,7 +13,7 @@ namespace Simplify.Web;
 public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 {
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Content" /> class.
+	/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 	/// </summary>
 	/// <param name="content">The string content.</param>
 	/// <param name="statusCode">The HTTP response status code.</param>
@@ -21,7 +21,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected Content Content(string content, int statusCode = 200, string contentType = "text/plain") => new(content, statusCode, contentType);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.Content" /> class.
+	/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 	/// </summary>
 	/// <param name="content">The string content.</param>
 	/// <param name="contentType">>The HTTP response status code.</param>
@@ -47,14 +47,14 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected File File(string outputFileName, string contentType, byte[] data, int statusCode = 200) => new(outputFileName, contentType, data, statusCode);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.InlineTpl"/> class.
+	/// Initializes a new instance of the <see cref="Responses.InlineTpl"/> class.
 	/// </summary>
 	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 	/// <param name="template">The template.</param>
 	protected InlineTpl InlineTpl(string dataCollectorVariableName, ITemplate template) => new(dataCollectorVariableName, template);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.InlineTpl"/> class.
+	/// Initializes a new instance of the <see cref="Responses.InlineTpl"/> class.
 	/// </summary>
 	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 	/// <param name="data">The data.</param>
@@ -79,7 +79,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected Redirect Redirect(RedirectionType redirectionType = RedirectionType.DefaultPage, string bookmarkName = null) => new(redirectionType, bookmarkName);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.Tpl" /> class.
+	/// Initializes a new instance of the <see cref="Responses.Tpl" /> class.
 	/// </summary>
 	/// <param name="template">The template.</param>
 	/// <param name="title">The site title.</param>
@@ -87,7 +87,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected Tpl Tpl(ITemplate template, string title = null, int statusCode = 200) => new(template, title, statusCode);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.Tpl"/> class.
+	/// Initializes a new instance of the <see cref="Responses.Tpl"/> class.
 	/// </summary>
 	/// <param name="data">The data for main content variable.</param>
 	/// <param name="title">The site title.</param>
@@ -95,7 +95,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected Tpl Tpl(string data, string title = null, int statusCode = 200) => new(data, title, statusCode);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.Tpl" /> class.
+	/// Initializes a new instance of the <see cref="Responses.Tpl" /> class.
 	/// </summary>
 	/// <param name="templateFileName">Name of the template file.</param>
 	/// <param name="title">The title.</param>
@@ -104,7 +104,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected StaticTpl StaticTpl(string templateFileName, string title = null, int statusCode = 200) => new(templateFileName, title, statusCode);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Old.Responses.StatusCode" /> class.
+	/// Initializes a new instance of the <see cref="Responses.StatusCode" /> class.
 	/// </summary>
 	/// <param name="statusCode">The HTTP response status code.</param>
 	/// <param name="responseData">The response data.</param>

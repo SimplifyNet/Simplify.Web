@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Simplify.Web.Old.Core;
+using Simplify.Web.Http.ResponseWriting;
 
 namespace Simplify.Web;
 
