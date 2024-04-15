@@ -1,59 +1,58 @@
-using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Simplify.Web.Model.Validation.Attributes;
+using System;
 
-namespace Simplify.Web.Tests.Model.Validation.Attributes;
+namespace Simplify.Web.Tests.Model.Validation.Attributes.MaxAttributeTests;
 
-[TestFixture]
-public class MaxAttributeTests : AttributesTestBase
+public class TypeMaxAttributeTests : AttributesTestBase
 {
-	public const int MaxValue = 12;
+	public const string MaxValue = "12.5";
 
 	[OneTimeSetUp]
-	public void SetupAttribute() => Attr = new MaxAttribute(MaxValue);
+	public void SetupAttribute() => Attr = new MaxAttribute(typeof(decimal), MaxValue);
 
 	[Test]
 	public void Validate_BelowMaxValue_Ok()
 	{
 		// Act & Assert
-		TestAttributeForValidValue(10);
+		TestAttributeForValidValue((decimal)10);
 	}
-	
+
 	[Test]
 	public void Validate_MaxValueEqualsValue_Ok()
 	{
 		// Act & Assert
-		TestAttributeForValidValue(12);
+		TestAttributeForValidValue((decimal)12.5);
 	}
-	
+
 	[Test]
 	public void Validate_AboveMaxValue_ExceptionThrown()
 	{
 		// Assign
 
-		var value = 15;
+		var value = (decimal)15;
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required maximum value is {MaxValue}, actual value: {value}";
 
 		// Act & Assert
 		TestAttribute(value, defaultMessage);
 	}
-	
+
 	[Test]
 	public void Validate_NullValue_NoExceptions()
 	{
 		// Act & Assert
 		TestAttributeForValidValue(null);
 	}
-	
+
 	[Test]
 	public void Validate_DifferentTypes_ExceptionThrown()
 	{
 		// Act & Assert
-		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(15.2));
+		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(15.2d));
 	}
-	
+
 	[Test]
-	public void Validate_ValueTypeNotInheritIComparable_ExceptionThrown()
+	public void Validate_ObjectValueIsNotIComparable_ExceptionThrown()
 	{
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(new object()));

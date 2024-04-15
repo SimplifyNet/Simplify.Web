@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Reflection;
 using Simplify.DI;
 
@@ -16,7 +17,52 @@ public class MaxAttribute : ValidationAttribute
 	/// <param name="maxValue">Maximum value of the property.</param>
 	/// <param name="errorMessage">The error message.</param>
 	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
-	public MaxAttribute(IComparable maxValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage, isMessageFromStringTable) => MaxValue = maxValue;
+	public MaxAttribute(int maxValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage,
+		isMessageFromStringTable)
+	{
+		MaxValue = maxValue;
+		OperandType = typeof(int);
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="MaxAttribute"/> class.
+	/// </summary>
+	/// <param name="maxValue">Maximum value of the property.</param>
+	/// <param name="errorMessage">The error message.</param>
+	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
+	public MaxAttribute(long maxValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage,
+		isMessageFromStringTable)
+	{
+		MaxValue = maxValue;
+		OperandType = typeof(long);
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="MaxAttribute"/> class.
+	/// </summary>
+	/// <param name="maxValue">Maximum value of the property.</param>
+	/// <param name="errorMessage">The error message.</param>
+	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
+	public MaxAttribute(double maxValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage,
+		isMessageFromStringTable)
+	{
+		MaxValue = maxValue;
+		OperandType = typeof(double);
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="MaxAttribute"/> class.
+	/// </summary>
+	/// <param name="type">The type of the maximum value of the property.</param>
+	/// <param name="maxValue">Maximum value of the property.</param>
+	/// <param name="errorMessage">The error message.</param>
+	/// <param name="isMessageFromStringTable">if set to <c>true</c> [is message from string table].</param>
+	public MaxAttribute(Type type, string maxValue, string? errorMessage = null, bool isMessageFromStringTable = true) : base(errorMessage,
+		isMessageFromStringTable)
+	{
+		MaxValue = maxValue;
+		OperandType = type;
+	}
 
 	/// <summary>
 	/// Gets or sets the maximum value of the property.
@@ -24,7 +70,12 @@ public class MaxAttribute : ValidationAttribute
 	/// <value>
 	/// The maximum value of the property.
 	/// </value>
-	public IComparable MaxValue { get; }
+	public object MaxValue { get; }
+
+	/// <summary>
+	/// Gets the type of the maximum value.
+	/// </summary>
+	public Type OperandType { get; }
 
 	/// <summary>
 	/// Validates the specified property value.
@@ -36,22 +87,38 @@ public class MaxAttribute : ValidationAttribute
 	{
 		if (value == null)
 			return;
-		
-		if (value is not IComparable comparableValue)
-			throw new ArgumentException($"The type of specified property value must be inherited from {typeof(IComparable)}");
 
-		ValidateTypesMatching(comparableValue);
-		
+		var maxValue = ConvertToOperandComparableType(MaxValue);
+
+		var comparableValue = ConvertToIComparable(value);
+
+		ValidateTypesMatching(value);
+
 		TryThrowCustomOrStringTableException(resolver);
 
-		if (comparableValue.CompareTo(MaxValue) > 0)
+		if (comparableValue.CompareTo(maxValue) > 0)
 			throw new ModelValidationException(
 				$"Property '{propertyInfo.Name}' required maximum value is {MaxValue}, actual value: {value}");
 	}
-	
-	private void ValidateTypesMatching(IComparable comparableValue)
+
+	private void ValidateTypesMatching(object value)
 	{
-		if (comparableValue.GetType() != MaxValue.GetType())
+		if (value.GetType() != OperandType)
 			throw new ArgumentException("Type mismatch. The maximum value and property value should be of the same type.");
+	}
+
+	private IComparable ConvertToOperandComparableType(object value)
+	{
+		var convertedValue = Convert.ChangeType(value!, OperandType, CultureInfo.InvariantCulture);
+
+		return ConvertToIComparable(convertedValue);
+	}
+
+	private IComparable ConvertToIComparable(object value)
+	{
+		if (value is not IComparable comparableValue)
+			throw new ArgumentException($"The type of object value must be inherited from {typeof(IComparable)}");
+
+		return comparableValue;
 	}
 }
