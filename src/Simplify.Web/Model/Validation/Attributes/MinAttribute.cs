@@ -104,7 +104,7 @@ public class MinAttribute : ValidationAttribute
 	private void ValidateTypesMatching(object value)
 	{
 		if (value.GetType() != OperandType)
-			throw new ArgumentException("Type mismatch. The maximum value and property value should be of the same type.");
+			throw new ArgumentException("Type mismatch. The minimum value and property value should be of the same type.");
 	}
 
 	private IComparable ConvertToOperandComparableType(object value)
