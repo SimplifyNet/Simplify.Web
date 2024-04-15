@@ -88,8 +88,9 @@ public class MinAttribute : ValidationAttribute
 		if (value == null)
 			return;
 
-		var minValue = ConvertToIComparable(MinValue);
-		var comparableValue = (IComparable)value;
+		var minValue = ConvertToOperandComparableType(MinValue);
+
+		var comparableValue = ConvertToIComparable(value);
 
 		ValidateTypesMatching(value);
 
@@ -103,15 +104,20 @@ public class MinAttribute : ValidationAttribute
 	private void ValidateTypesMatching(object value)
 	{
 		if (value.GetType() != OperandType)
-			throw new ArgumentException("Type mismatch. The minimum value and property value should be of the same type.");
+			throw new ArgumentException("Type mismatch. The maximum value and property value should be of the same type.");
+	}
+
+	private IComparable ConvertToOperandComparableType(object value)
+	{
+		var convertedValue = Convert.ChangeType(value!, OperandType, CultureInfo.InvariantCulture);
+
+		return ConvertToIComparable(convertedValue);
 	}
 
 	private IComparable ConvertToIComparable(object value)
 	{
-		var convertedValue = Convert.ChangeType(value!, OperandType, CultureInfo.InvariantCulture);
-
-		if (convertedValue is not IComparable comparableValue)
-			throw new ArgumentException($"The type of specified property value must be inherited from {typeof(IComparable)}");
+		if (value is not IComparable comparableValue)
+			throw new ArgumentException($"The type of object value must be inherited from {typeof(IComparable)}");
 
 		return comparableValue;
 	}

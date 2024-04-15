@@ -50,4 +50,11 @@ public class TypeMinAttributeTests : AttributesTestBase
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(12));
 	}
+
+	[Test]
+	public void Validate_ObjectValueIsNotIComparable_ExceptionThrown()
+	{
+		// Act & Assert
+		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(new object()));
+	}
 }

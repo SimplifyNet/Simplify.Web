@@ -88,8 +88,9 @@ public class MaxAttribute : ValidationAttribute
 		if (value == null)
 			return;
 
-		var maxValue = ConvertToIComparable(MaxValue);
-		var comparableValue = (IComparable)value;
+		var maxValue = ConvertToOperandComparableType(MaxValue);
+
+		var comparableValue = ConvertToIComparable(value);
 
 		ValidateTypesMatching(value);
 
@@ -106,12 +107,17 @@ public class MaxAttribute : ValidationAttribute
 			throw new ArgumentException("Type mismatch. The maximum value and property value should be of the same type.");
 	}
 
-	private IComparable ConvertToIComparable(object value)
+	private IComparable ConvertToOperandComparableType(object value)
 	{
 		var convertedValue = Convert.ChangeType(value!, OperandType, CultureInfo.InvariantCulture);
 
-		if (convertedValue is not IComparable comparableValue)
-			throw new ArgumentException($"The type of specified property value must be inherited from {typeof(IComparable)}");
+		return ConvertToIComparable(convertedValue);
+	}
+
+	private IComparable ConvertToIComparable(object value)
+	{
+		if (value is not IComparable comparableValue)
+			throw new ArgumentException($"The type of object value must be inherited from {typeof(IComparable)}");
 
 		return comparableValue;
 	}
