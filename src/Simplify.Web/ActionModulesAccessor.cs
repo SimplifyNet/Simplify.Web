@@ -8,7 +8,7 @@ namespace Simplify.Web;
 /// <summary>
 /// Provides the action modules accessor base class.
 /// </summary>
-public class ActionModulesAccessor : ModulesAccessor
+public abstract class ActionModulesAccessor : ModulesAccessor
 {
 	/// <summary>
 	/// Gets the current web context

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old;
 using Simplify.Web.Old.Core.Controllers.Execution;
 using Simplify.Web.Tests.Old.Core.Controllers.Execution.TestTypes;
 
@@ -15,10 +14,10 @@ public class Controller1ExecutorTests
 	private Controller1Executor _executor = null!;
 	private Mock<IController1Factory> _controllerFactory = null!;
 
-	private Mock<Controller> _syncController = null!;
-	private Mock<AsyncController> _asyncController = null!;
-	private Mock<Controller<TestModel>> _syncModelController = null!;
-	private Mock<AsyncController<TestModel>> _asyncModelController = null!;
+	private Mock<Web.Old.Controller> _syncController = null!;
+	private Mock<Web.Old.AsyncController> _asyncController = null!;
+	private Mock<Web.Old.Controller<TestModel>> _syncModelController = null!;
+	private Mock<Web.Old.AsyncController<TestModel>> _asyncModelController = null!;
 
 	[SetUp]
 	public void Initialize()
@@ -26,10 +25,10 @@ public class Controller1ExecutorTests
 		_controllerFactory = new Mock<IController1Factory>();
 		_executor = new Controller1Executor(_controllerFactory.Object);
 
-		_syncController = new Mock<Controller>();
-		_asyncController = new Mock<AsyncController>();
-		_syncModelController = new Mock<Controller<TestModel>>();
-		_asyncModelController = new Mock<AsyncController<TestModel>>();
+		_syncController = new Mock<Web.Old.Controller>();
+		_asyncController = new Mock<Web.Old.AsyncController>();
+		_syncModelController = new Mock<Web.Old.Controller<TestModel>>();
+		_asyncModelController = new Mock<Web.Old.AsyncController<TestModel>>();
 	}
 
 	[Test]
