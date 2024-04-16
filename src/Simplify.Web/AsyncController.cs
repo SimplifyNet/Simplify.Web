@@ -3,6 +3,4 @@
 /// <summary>
 /// Provides the user asynchronous controllers base class version 1.
 /// </summary>
-public abstract class AsyncController : AsyncControllerBase
-{
-}
+public abstract class AsyncController : AsyncControllerBase;
