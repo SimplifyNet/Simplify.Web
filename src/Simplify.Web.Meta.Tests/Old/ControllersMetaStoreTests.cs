@@ -26,9 +26,11 @@ public class ControllersMetaStoreTests
 		factory.SetupSequence(x => x.CreateControllerMetaData(It.IsAny<Type>()))
 			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestControllerV2)))
 			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestControllerV2WithModel)))
-			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) && x.ExecParameters == new ControllerExecParameters(null, 2)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController1) && x.ExecParameters == new
+				Web.Old.Meta.ControllerExecParameters(null, 2)))
 			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController6)))
-			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController2) && x.ExecParameters == new ControllerExecParameters(null, 1)))
+			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController2) && x.ExecParameters == new
+				Web.Old.Meta.ControllerExecParameters(null, 1)))
 			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController4)))
 			.Returns(Mock.Of<IControllerMetaData>(x => x.ControllerType == typeof(TestController5)));
 

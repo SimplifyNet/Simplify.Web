@@ -25,15 +25,15 @@ public interface IControllersMetaStore
 	/// <summary>
 	/// Gets the controller for handling HTTP 400 status.
 	/// </summary>
-	IControllerMetadata Controller400 { get; }
+	IControllerMetadata? Controller400 { get; }
 
 	/// <summary>
 	/// Gets the controller for handling HTTP 403 status.
 	/// </summary>
-	IControllerMetadata Controller403 { get; }
+	IControllerMetadata? Controller403 { get; }
 
 	/// <summary>
 	/// Gets the controller for handling HTTP 404 status.
 	/// </summary>
-	IControllerMetadata Controller404 { get; }
+	IControllerMetadata? Controller404 { get; }
 }
