@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simplify.Web;
-using Simplify.Web.Old;
-using Simplify.Web.Old.Auth;
+using Simplify.Web.Auth.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
