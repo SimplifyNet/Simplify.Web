@@ -24,11 +24,11 @@
 		<PackageReleaseNotes>See https://github.com/SimplifyNet/Simplify.Web/tree/master/src/Simplify.Web/CHANGELOG.md for details</PackageReleaseNotes>
 	</PropertyGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Old\Diagnostics\Templates\Http500MinimalErrorPage.html" />
-		<EmbeddedResource Include="Old\Diagnostics\Templates\Http500ErrorPageExceptionInfo.html" />
-		<EmbeddedResource Include="Old\Diagnostics\Templates\Http500ErrorPage.html" />
-		<EmbeddedResource Include="Old\Diagnostics\Templates\Styles\Dark.css" />
-		<EmbeddedResource Include="Old\Diagnostics\Templates\Styles\Light.css" />
+		<EmbeddedResource Include="Diagnostics\Templates\Http500MinimalErrorPage.html" />
+		<EmbeddedResource Include="Diagnostics\Templates\Http500ErrorPageExceptionInfo.html" />
+		<EmbeddedResource Include="Diagnostics\Templates\Http500ErrorPage.html" />
+		<EmbeddedResource Include="Diagnostics\Templates\Styles\Dark.css" />
+		<EmbeddedResource Include="Diagnostics\Templates\Styles\Light.css" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
