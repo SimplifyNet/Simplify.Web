@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Meta.Controllers;
 
 /// <summary>
 /// Represents a controller base metadata information.

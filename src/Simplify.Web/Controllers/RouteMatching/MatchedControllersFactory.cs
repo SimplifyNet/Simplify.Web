@@ -3,7 +3,7 @@ using System.Linq;
 using Simplify.Web.Controllers.Extensions;
 using Simplify.Web.Controllers.RouteMatching.Extensions;
 using Simplify.Web.Http;
-using Simplify.Web.Meta;
+using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.RouteMatching;
 

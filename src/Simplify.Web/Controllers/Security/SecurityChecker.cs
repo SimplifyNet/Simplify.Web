@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Simplify.Web.Meta;
+using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.Security;
 

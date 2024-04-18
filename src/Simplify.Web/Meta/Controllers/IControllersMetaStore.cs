@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Meta.Controllers;
 
 /// <summary>
 /// Represents a controllers meta store.
