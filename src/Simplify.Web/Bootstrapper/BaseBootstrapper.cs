@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
+using Simplify.Web.Settings;
 
 namespace Simplify.Web.Bootstrapper;
 
@@ -26,6 +27,10 @@ public class BaseBootstrapper
 
 		// Registering non Simplify.Web types
 		RegisterConfiguration();
+
+		// Registering Simplify.Web core types
+
+		RegisterSimplifyWebSettings();
 	}
 
 	/// <summary>
@@ -43,5 +48,16 @@ public class BaseBootstrapper
 			.AddJsonFile($"appsettings.{environmentName}.json", true);
 
 		BootstrapperFactory.ContainerProvider.Register<IConfiguration>(r => builder.Build(), LifetimeType.Singleton);
+	}
+
+	/// <summary>
+	/// Registers the Simplify.Web settings.
+	/// </summary>
+	public virtual void RegisterSimplifyWebSettings()
+	{
+		if (TypesToExclude.Contains(typeof(ISimplifyWebSettings)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<ISimplifyWebSettings, SimplifyWebSettings>(LifetimeType.Singleton);
 	}
 }
