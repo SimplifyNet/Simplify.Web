@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
 using Simplify.Web.Diagnostics;
-using Simplify.Web.Diagnostics.Measurement;
+using Simplify.Web.Diagnostics.Measurement.Extensions;
 using Simplify.Web.Diagnostics.Trace;
 using Simplify.Web.Modules;
 using Simplify.Web.Modules.Context;
