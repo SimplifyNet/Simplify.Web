@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Simplify.DI;
 
 namespace Simplify.Web.Bootstrapper;
 
@@ -20,5 +23,25 @@ public class BaseBootstrapper
 	{
 		if (typesToExclude != null)
 			TypesToExclude = typesToExclude;
+
+		// Registering non Simplify.Web types
+		RegisterConfiguration();
+	}
+
+	/// <summary>
+	/// Registers the configuration.
+	/// </summary>
+	public virtual void RegisterConfiguration()
+	{
+		if (TypesToExclude.Contains(typeof(IConfiguration)))
+			return;
+
+		var environmentName = global::System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+		var builder = new ConfigurationBuilder()
+			.AddJsonFile("appsettings.json", true)
+			.AddJsonFile($"appsettings.{environmentName}.json", true);
+
+		BootstrapperFactory.ContainerProvider.Register<IConfiguration>(r => builder.Build(), LifetimeType.Singleton);
 	}
 }
