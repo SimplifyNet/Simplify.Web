@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Simplify.Web.Attributes;
 using Simplify.Web.Http;
 using Simplify.Web.Meta.Controllers;
-using Simplify.Web.Old.Attributes;
-using Simplify.Web.Old.Util;
+using Simplify.Web.Utils;
 
-namespace Simplify.Web.Old.Meta2;
+namespace Simplify.Web.Meta;
 
 /// <summary>
-/// Controller base metadata information.
+/// Provides the controller base metadata information.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerMetaData" /> class.
 /// </remarks>
 /// <param name="controllerType">Type of the controller.</param>
-public abstract class ControllerMetaData(Type controllerType) : IControllerMetaData
+public abstract class ControllerMetadata(Type controllerType) : IControllerMetadata
 {
 	/// <summary>
 	/// Gets the type of the controller.
 	/// </summary>
-	/// <value>
-	/// The type of the extension.
-	/// </value>
 	public Type ControllerType { get; } = controllerType;
 
 	/// <summary>
@@ -38,9 +35,6 @@ public abstract class ControllerMetaData(Type controllerType) : IControllerMetaD
 	/// <summary>
 	/// Gets the controller security information.
 	/// </summary>
-	/// <value>
-	/// The controller security information.
-	/// </value>
 	public ControllerSecurity? Security { get; } = GetControllerSecurity(controllerType);
 
 	private static ControllerExecParameters? GetControllerExecParameters(ICustomAttributeProvider controllerType)
