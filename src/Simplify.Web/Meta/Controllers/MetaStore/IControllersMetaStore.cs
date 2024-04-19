@@ -10,17 +10,17 @@ public interface IControllersMetaStore
 	/// <summary>
 	/// Gets the standard controllers (all controllers excluding controllers for specific HTTP codes).
 	/// </summary>
-	IList<IControllerMetadata> StandardControllers { get; }
+	IReadOnlyCollection<IControllerMetadata> StandardControllers { get; }
 
 	/// <summary>
 	/// Gets the controllers linked to specific routes.
 	/// </summary>
-	IList<IControllerMetadata> RoutedControllers { get; }
+	IReadOnlyCollection<IControllerMetadata> RoutedControllers { get; }
 
 	/// <summary>
 	/// Gets the global (any-route) controllers.
 	/// </summary>
-	IList<IControllerMetadata> GlobalControllers { get; }
+	IReadOnlyCollection<IControllerMetadata> GlobalControllers { get; }
 
 	/// <summary>
 	/// Gets the controller for handling HTTP 400 status.
