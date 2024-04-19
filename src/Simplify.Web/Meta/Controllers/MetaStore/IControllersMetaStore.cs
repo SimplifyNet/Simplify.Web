@@ -7,6 +7,8 @@ namespace Simplify.Web.Meta.Controllers;
 /// </summary>
 public interface IControllersMetaStore
 {
+	IReadOnlyCollection<IControllerMetadata> AllControllers { get; }
+
 	/// <summary>
 	/// Gets the standard controllers (all controllers excluding controllers for specific HTTP codes).
 	/// </summary>

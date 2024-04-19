@@ -21,6 +21,7 @@ public class ControllersMetaStore : IControllersMetaStore
 	{
 		var items = loader.Load();
 
+		AllControllers = items;
 		StandardControllers = items.GetStandardControllers().ToList();
 		RoutedControllers = items.GetRoutedControllers().ToList();
 		GlobalControllers = items.GetGlobalControllers().ToList();
@@ -37,6 +38,8 @@ public class ControllersMetaStore : IControllersMetaStore
 		get => _current ??= new ControllersMetaStore(MetadataLoader.Current);
 		set => _current = value ?? throw new ArgumentNullException(nameof(value));
 	}
+
+	public IReadOnlyCollection<IControllerMetadata> AllControllers { get; } = new List<IControllerMetadata>();
 
 	public IReadOnlyCollection<IControllerMetadata> StandardControllers { get; } = new List<IControllerMetadata>();
 	public IReadOnlyCollection<IControllerMetadata> RoutedControllers { get; } = new List<IControllerMetadata>();
