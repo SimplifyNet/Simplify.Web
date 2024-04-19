@@ -6,9 +6,9 @@ using System.Reflection;
 namespace Simplify.Web.Utils.Assemblies;
 
 /// <summary>
-/// Provides the Assembly enumerable extensions
+/// Provides the Assembly filter extensions
 /// </summary>
-public static class AssembliesEnumerableExtensions
+public static class AssembliesFilterExtensions
 {
 	/// <summary>
 	/// Gets the assemblies types.
