@@ -11,7 +11,7 @@ public interface IControllerMetaDataFactory
 	/// Determines whether this factory can create a metadata fro specified type
 	/// </summary>
 	/// <param name="controllerType">Type of the controller.</param>
-	bool CanHandleType(Type controllerType);
+	bool CanHandle(Type controllerType);
 
 	/// <summary>
 	/// Creates the controller metadata.
