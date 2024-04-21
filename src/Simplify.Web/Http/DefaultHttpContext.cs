@@ -18,4 +18,6 @@ public class DefaultHttpContext(HttpContext context, bool isTerminalMiddleware) 
 	/// Gets a value indicating whether Simplify.Web performing as terminal middleware.
 	/// </summary>
 	public bool IsTerminalMiddleware { get; } = isTerminalMiddleware;
+
+	public void SetResponseStatusCode(int code) => Context.Response.StatusCode = code;
 }

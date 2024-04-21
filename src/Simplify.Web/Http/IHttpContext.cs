@@ -12,8 +12,5 @@ public interface IHttpContext
 	/// </summary>
 	HttpContext Context { get; }
 
-	/// <summary>
-	/// Gets a value indicating whether Simplify.Web performing as terminal middleware.
-	/// </summary>
-	bool IsTerminalMiddleware { get; }
+	void SetResponseStatusCode(int code);
 }

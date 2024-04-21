@@ -20,7 +20,7 @@ public class ForbiddenHandler(IControllerExecutorResolver resolver,
 			return;
 
 		if (metaStore.Controller403 == null)
-			context.SetResponseStatusCode(403);
+			context.Context.SetResponseStatusCode(403);
 		else
 			await ExecuteAndHandleResponse(metaStore.Controller403.ToControllerExecutionArgs(context.Context), stopProcessing);
 	}

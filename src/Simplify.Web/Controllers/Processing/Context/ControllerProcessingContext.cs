@@ -12,6 +12,4 @@ public class ControllerProcessingContext(
 	public IMatchedController Controller { get; } = matchedController;
 	public SecurityStatus SecurityStatus { get; } = securityStatus;
 	public IHttpContext Context { get; } = context;
-
-	public void SetResponseStatusCode(int code) => Context.Context.Response.StatusCode = code;
 }

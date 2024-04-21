@@ -8,4 +8,6 @@ public static class ControllerMetadataRoleExtensions
 		x.Role!.Is400Handler ||
 		x.Role!.Is403Handler ||
 		x.Role!.Is404Handler;
+
+	public static bool Is404Controller(this IControllerMetadata x) => x.Role!.Is404Handler;
 }

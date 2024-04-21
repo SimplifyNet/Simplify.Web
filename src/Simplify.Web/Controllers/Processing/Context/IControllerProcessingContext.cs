@@ -11,6 +11,4 @@ public interface IControllerProcessingContext
 	public SecurityStatus SecurityStatus { get; }
 
 	public IHttpContext Context { get; }
-
-	void SetResponseStatusCode(int code);
 }
