@@ -1,12 +1,12 @@
 ﻿namespace Simplify.Web;
 
 /// <summary>
-/// Provides the controller response result types.
+/// Provides the response behavior types.
 /// </summary>
-public enum ControllerResponseResult
+public enum ResponseBehavior
 {
 	/// <summary>
-	/// The default result (no special processing required).
+	/// The default behavior (no special processing required).
 	/// </summary>
 	Default,
 

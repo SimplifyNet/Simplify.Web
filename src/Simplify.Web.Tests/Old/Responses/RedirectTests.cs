@@ -32,7 +32,7 @@ public class RedirectTests
 		// Assert
 
 		_redirector.Verify(x => x.Redirect(It.Is<string>(d => d == "foo")));
-		Assert.AreEqual(ControllerResponseResult.Redirect, result);
+		Assert.AreEqual(ResponseBehavior.Redirect, result);
 	}
 
 	[Test]
@@ -49,6 +49,6 @@ public class RedirectTests
 		// Assert
 
 		_redirector.Verify(x => x.Redirect(It.Is<RedirectionType>(d => d == RedirectionType.PreviousPageWithBookmark), It.Is<string>(d => d == "test")));
-		Assert.AreEqual(ControllerResponseResult.Redirect, result);
+		Assert.AreEqual(ResponseBehavior.Redirect, result);
 	}
 }

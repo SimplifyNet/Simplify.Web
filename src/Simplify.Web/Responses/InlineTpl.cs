@@ -52,10 +52,10 @@ public class InlineTpl : ControllerResponse
 	/// <summary>
 	/// Executes this response
 	/// </summary>
-	public override Task<ControllerResponseResult> ExecuteAsync()
+	public override Task<ResponseBehavior> ExecuteAsync()
 	{
 		DataCollector.Add(DataCollectorVariableName, Data);
 
-		return Task.FromResult(ControllerResponseResult.Default);
+		return Task.FromResult(ResponseBehavior.Default);
 	}
 }

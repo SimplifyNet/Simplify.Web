@@ -40,6 +40,6 @@ public class FileTests
 		_context.VerifySet(x => x.Response.ContentType = "application/example");
 		Assert.AreEqual(1, _headerDictionary.Count);
 		Assert.AreEqual("attachment; filename=\"Foo.txt\"", _headerDictionary["Content-Disposition"]);
-		Assert.AreEqual(ControllerResponseResult.RawOutput, result);
+		Assert.AreEqual(ResponseBehavior.RawOutput, result);
 	}
 }

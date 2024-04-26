@@ -39,6 +39,6 @@ public class ContentTests
 
 		_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "test"), It.IsAny<HttpResponse>()));
 		_context.VerifySet(x => x.Response.StatusCode = It.Is<int>(code => code == 123));
-		Assert.AreEqual(ControllerResponseResult.RawOutput, result);
+		Assert.AreEqual(ResponseBehavior.RawOutput, result);
 	}
 }

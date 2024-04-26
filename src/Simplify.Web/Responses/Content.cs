@@ -52,7 +52,7 @@ public class Content : ControllerResponse
 	/// <summary>
 	/// Executes this response
 	/// </summary>
-	public override async Task<ControllerResponseResult> ExecuteAsync()
+	public override async Task<ResponseBehavior> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 
@@ -61,6 +61,6 @@ public class Content : ControllerResponse
 
 		await ResponseWriter.WriteAsync(StringContent, Context.Response);
 
-		return ControllerResponseResult.RawOutput;
+		return ResponseBehavior.RawOutput;
 	}
 }

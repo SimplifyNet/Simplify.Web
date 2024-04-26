@@ -53,7 +53,7 @@ public class File(string outputFileName, string contentType, byte[] data, int st
 	/// <summary>
 	/// Executes this response
 	/// </summary>
-	public override async Task<ControllerResponseResult> ExecuteAsync()
+	public override async Task<ResponseBehavior> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 
@@ -62,6 +62,6 @@ public class File(string outputFileName, string contentType, byte[] data, int st
 
 		await ResponseWriter.WriteAsync(Data, Context.Response);
 
-		return ControllerResponseResult.RawOutput;
+		return ResponseBehavior.RawOutput;
 	}
 }

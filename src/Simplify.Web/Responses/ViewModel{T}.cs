@@ -39,7 +39,7 @@ public class ViewModel<T>(string templateFileName, T viewModel, string? title = 
 	/// <summary>
 	/// Executes this response
 	/// </summary>
-	public override Task<ControllerResponseResult> ExecuteAsync()
+	public override Task<ResponseBehavior> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 
@@ -51,6 +51,6 @@ public class ViewModel<T>(string templateFileName, T viewModel, string? title = 
 		if (!string.IsNullOrEmpty(Title))
 			DataCollector.AddTitle(Title);
 
-		return Task.FromResult(ControllerResponseResult.Default);
+		return Task.FromResult(ResponseBehavior.Default);
 	}
 }

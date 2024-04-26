@@ -56,7 +56,7 @@ public class ControllersExecutorTests
 
 		// Assert
 
-		Assert.That(result, Is.EqualTo(ControllerResponseResult.Default));
+		Assert.That(result, Is.EqualTo(ResponseBehavior.Default));
 
 		_executor2.Verify(x => x.Execute(It.IsAny<IControllerExecutionArgs>()));
 
@@ -84,7 +84,7 @@ public class ControllersExecutorTests
 
 		// Assert
 
-		Assert.That(result, Is.EqualTo(ControllerResponseResult.RawOutput));
+		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
 
 		_executor2.Verify(x => x.Execute(It.IsAny<IControllerExecutionArgs>()));
 

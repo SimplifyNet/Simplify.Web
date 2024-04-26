@@ -34,7 +34,7 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 	/// <summary>
 	/// Executes this response
 	/// </summary>
-	public override async Task<ControllerResponseResult> ExecuteAsync()
+	public override async Task<ResponseBehavior> ExecuteAsync()
 	{
 		Context.Response.StatusCode = Code;
 
@@ -44,6 +44,6 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 		if (ResponseData != null)
 			await ResponseWriter.WriteAsync(ResponseData, Context.Response);
 
-		return ControllerResponseResult.RawOutput;
+		return ResponseBehavior.RawOutput;
 	}
 }

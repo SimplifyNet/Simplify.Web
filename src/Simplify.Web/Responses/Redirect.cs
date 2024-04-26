@@ -43,13 +43,13 @@ public class Redirect : ControllerResponse
 	/// <summary>
 	/// Executes this response
 	/// </summary>
-	public override Task<ControllerResponseResult> ExecuteAsync()
+	public override Task<ResponseBehavior> ExecuteAsync()
 	{
 		if (!string.IsNullOrEmpty(Url))
 			Redirector.Redirect(Url!);
 		else
 			Redirector.Redirect(RedirectionType, BookmarkName);
 
-		return Task.FromResult(ControllerResponseResult.Redirect);
+		return Task.FromResult(ResponseBehavior.Redirect);
 	}
 }

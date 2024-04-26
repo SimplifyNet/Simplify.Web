@@ -42,7 +42,7 @@ public class TplTests
 		// Assert
 
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "test")));
-		Assert.AreEqual(ControllerResponseResult.Default, result);
+		Assert.AreEqual(ResponseBehavior.Default, result);
 	}
 
 	[Test]

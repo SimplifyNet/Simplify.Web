@@ -33,7 +33,7 @@ public class StaticTpl(string templateFileName, string? title = null, int status
 	/// <summary>
 	/// Processes this response.
 	/// </summary>
-	public override Task<ControllerResponseResult> ExecuteAsync()
+	public override Task<ResponseBehavior> ExecuteAsync()
 	{
 		Context.Response.StatusCode = StatusCode;
 
@@ -42,6 +42,6 @@ public class StaticTpl(string templateFileName, string? title = null, int status
 		if (!string.IsNullOrEmpty(Title))
 			DataCollector.AddTitle(Title);
 
-		return Task.FromResult(ControllerResponseResult.Default);
+		return Task.FromResult(ResponseBehavior.Default);
 	}
 }
