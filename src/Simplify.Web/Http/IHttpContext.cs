@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Http;
 
@@ -11,6 +12,11 @@ public interface IHttpContext
 	/// Gets the original HTTP context.
 	/// </summary>
 	HttpContext Context { get; }
+
+	ClaimsPrincipal? User { get; }
+
+	IHttpRequest Request { get; }
+	IHttpResponse Response { get; }
 
 	void SetResponseStatusCode(int code);
 }
