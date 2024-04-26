@@ -20,8 +20,6 @@ public static class ControllerMetadataFilterExtensions
 	public static IControllerMetadata? GetHandlerController(this IEnumerable<IControllerMetadata> list, HandlerControllerType controllerType) =>
 		controllerType switch
 		{
-			HandlerControllerType.Http400Handler => list.GetStandardControllers().FirstOrDefault(x =>
-				x.Role is { Is400Handler: true }),
 			HandlerControllerType.Http403Handler => list.GetStandardControllers().FirstOrDefault(x =>
 				x.Role is { Is403Handler: true }),
 			HandlerControllerType.Http404Handler => list.GetStandardControllers().FirstOrDefault(x =>
