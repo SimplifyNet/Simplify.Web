@@ -2,17 +2,18 @@
 using System.Threading.Tasks;
 using Simplify.Web.Http;
 using Simplify.Web.StaticFiles;
+using Simplify.Web.StaticFiles.Context;
 
 namespace Simplify.Web.RequestHandling.Handlers;
 
-public class StaticFilesHandler(IStaticFileRequestHandler handler) : IRequestHandler
+public class StaticFilesHandler(IStaticFileProcessingPipeline pipeline, IStaticFileProcessingContextFactory contextFactory, IStaticFileHandler fileHandler) : IRequestHandler
 {
 	public async Task HandleAsync(IHttpContext context, Action stopProcessing)
 	{
-		if (!handler.IsStaticFileRoutePath(context))
+		if (!fileHandler.IsStaticFileRoutePath(context))
 			return;
 
-		await handler.ExecuteAsync(context);
+		await pipeline.ExecuteAsync(contextFactory.Create(context));
 
 		stopProcessing();
 	}
