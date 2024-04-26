@@ -70,16 +70,10 @@ public abstract class ControllerMetadata(Type controllerType) : IControllerMetad
 
 	private static ControllerRole? GetControllerRole(ICustomAttributeProvider controllerType)
 	{
-		var http400 = false;
 		var http403 = false;
 		var http404 = false;
 
-		var attributes = controllerType.GetCustomAttributes(typeof(Http400Attribute), false);
-
-		if (attributes.Length > 0)
-			http400 = true;
-
-		attributes = controllerType.GetCustomAttributes(typeof(Http403Attribute), false);
+		var attributes = controllerType.GetCustomAttributes(typeof(Http403Attribute), false);
 
 		if (attributes.Length > 0)
 			http403 = true;
@@ -90,7 +84,7 @@ public abstract class ControllerMetadata(Type controllerType) : IControllerMetad
 			http404 = true;
 
 		return http403 || http404
-				? new ControllerRole(http400, http403, http404)
+				? new ControllerRole(http403, http404)
 				: null;
 	}
 

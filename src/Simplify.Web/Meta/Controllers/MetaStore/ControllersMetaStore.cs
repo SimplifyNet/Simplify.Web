@@ -25,7 +25,6 @@ public class ControllersMetaStore : IControllersMetaStore
 		StandardControllers = items.GetStandardControllers().ToList();
 		RoutedControllers = items.GetRoutedControllers().ToList();
 		GlobalControllers = items.GetGlobalControllers().ToList();
-		Controller400 = items.GetHandlerController(HandlerControllerType.Http400Handler);
 		Controller403 = items.GetHandlerController(HandlerControllerType.Http403Handler);
 		Controller404 = items.GetHandlerController(HandlerControllerType.Http404Handler);
 	}
@@ -45,7 +44,6 @@ public class ControllersMetaStore : IControllersMetaStore
 	public IReadOnlyCollection<IControllerMetadata> RoutedControllers { get; } = new List<IControllerMetadata>();
 	public IReadOnlyCollection<IControllerMetadata> GlobalControllers { get; } = new List<IControllerMetadata>();
 
-	public IControllerMetadata? Controller400 { get; }
 	public IControllerMetadata? Controller403 { get; }
 	public IControllerMetadata? Controller404 { get; }
 }

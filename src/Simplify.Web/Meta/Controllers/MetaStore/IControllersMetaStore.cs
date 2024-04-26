@@ -25,11 +25,6 @@ public interface IControllersMetaStore
 	IReadOnlyCollection<IControllerMetadata> GlobalControllers { get; }
 
 	/// <summary>
-	/// Gets the controller for handling HTTP 400 status.
-	/// </summary>
-	IControllerMetadata? Controller400 { get; }
-
-	/// <summary>
 	/// Gets the controller for handling HTTP 403 status.
 	/// </summary>
 	IControllerMetadata? Controller403 { get; }
