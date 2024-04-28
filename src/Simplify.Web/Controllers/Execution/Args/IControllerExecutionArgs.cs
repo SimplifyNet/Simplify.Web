@@ -22,5 +22,5 @@ public interface IControllerExecutionArgs
 	/// <summary>
 	/// Gets the route parameters.
 	/// </summary>
-	IDictionary<string, object>? RouteParameters { get; }
+	IReadOnlyDictionary<string, object>? RouteParameters { get; }
 }

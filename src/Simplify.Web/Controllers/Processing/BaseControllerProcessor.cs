@@ -8,17 +8,17 @@ namespace Simplify.Web.Controllers.Processing;
 
 public abstract class BaseControllerProcessor(IControllerExecutorResolver resolver, IControllerResponsePropertiesInjector propertiesInjector)
 {
-	protected async Task ExecuteAndHandleResponse(IControllerExecutionArgs args, Action stopProcessing)
+	protected async Task<ResponseBehavior> ExecuteAndHandleResponse(IControllerExecutionArgs args, Action stopProcessing)
 	{
 		var response = await resolver.Resolve(args.Controller).Execute(args);
 
 		if (response == null)
-			return;
+			return ResponseBehavior.Default;
 
-		await HandleControllerResponseAsync(response, stopProcessing);
+		return await HandleControllerResponseAsync(response, stopProcessing);
 	}
 
-	private async Task HandleControllerResponseAsync(ControllerResponse response, Action stopProcessing)
+	private async Task<ResponseBehavior> HandleControllerResponseAsync(ControllerResponse response, Action stopProcessing)
 	{
 		propertiesInjector.Inject(response);
 
@@ -26,13 +26,15 @@ public abstract class BaseControllerProcessor(IControllerExecutorResolver resolv
 
 		switch (responseResult)
 		{
-			case ControllerResponseResult.RawOutput:
+			case ResponseBehavior.RawOutput:
 				stopProcessing();
 				break;
 
-			case ControllerResponseResult.Redirect:
+			case ResponseBehavior.Redirect:
 				stopProcessing();
 				break;
 		}
+
+		return responseResult;
 	}
 }

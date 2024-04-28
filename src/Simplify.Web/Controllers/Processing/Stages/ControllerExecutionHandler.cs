@@ -10,5 +10,5 @@ namespace Simplify.Web.Controllers.Processing.Stages;
 public class ControllerExecutionHandler(IControllerExecutorResolver resolver, IControllerResponsePropertiesInjector propertiesInjector)
 	: BaseControllerProcessor(resolver, propertiesInjector), IControllerProcessingStage
 {
-	public Task Execute(IControllerProcessingContext context, Action stopProcessing) => ExecuteAndHandleResponse(context.ToControllerExecutionArgs(), stopProcessing);
+	public Task<ResponseBehavior> Execute(IControllerProcessingContext context, Action stopProcessing) => ExecuteAndHandleResponse(context.ToControllerExecutionArgs(), stopProcessing);
 }

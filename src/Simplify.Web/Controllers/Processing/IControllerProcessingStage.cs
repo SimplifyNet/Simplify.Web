@@ -6,5 +6,5 @@ namespace Simplify.Web.Controllers.Processing;
 
 public interface IControllerProcessingStage
 {
-	public Task Execute(IControllerProcessingContext context, Action stopProcessing);
+	public Task<ResponseBehavior> Execute(IControllerProcessingContext context, Action stopProcessing);
 }
