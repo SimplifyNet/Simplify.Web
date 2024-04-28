@@ -5,5 +5,7 @@ namespace Simplify.Web.Controllers.Security;
 
 public interface ISecurityRule
 {
-	SecurityStatus Check(ControllerSecurity security, ClaimsPrincipal? user);
+	SecurityStatus ViolationStatus { get; }
+
+	bool IsViolated(ControllerSecurity security, ClaimsPrincipal? user);
 }

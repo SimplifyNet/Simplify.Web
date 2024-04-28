@@ -12,12 +12,8 @@ public class SecurityChecker(IReadOnlyList<ISecurityRule> checks) : ISecurityChe
 			return SecurityStatus.Ok;
 
 		foreach (var check in checks)
-		{
-			var result = check.Check(metaData.Security, user);
-
-			if (result != SecurityStatus.Ok)
-				return result;
-		}
+			if (check.IsViolated(metaData.Security, user))
+				return check.ViolationStatus;
 
 		return SecurityStatus.Ok;
 	}

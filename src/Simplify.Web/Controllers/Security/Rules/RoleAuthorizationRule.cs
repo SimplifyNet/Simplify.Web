@@ -6,14 +6,16 @@ namespace Simplify.Web.Controllers.Security.Rules;
 
 public class RoleAuthorizationRule : ISecurityRule
 {
-	public SecurityStatus Check(ControllerSecurity security, ClaimsPrincipal? user)
+	public SecurityStatus ViolationStatus => SecurityStatus.Forbidden;
+
+	public bool IsViolated(ControllerSecurity security, ClaimsPrincipal? user)
 	{
 		if (security.RequiredUserRoles == null || !security.RequiredUserRoles.Any())
-			return SecurityStatus.Ok;
+			return false;
 
-		if (user != null && security.RequiredUserRoles.Any(user.IsInRole))
-			return SecurityStatus.Ok;
+		if (user == null || !security.RequiredUserRoles.All(user.IsInRole))
+			return true;
 
-		return SecurityStatus.Forbidden;
+		return false;
 	}
 }
