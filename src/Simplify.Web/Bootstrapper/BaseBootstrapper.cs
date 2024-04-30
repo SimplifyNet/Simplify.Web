@@ -30,9 +30,11 @@ public partial class BaseBootstrapper
 		// Registering Simplify.Web core types
 
 		RegisterEnvironment();
+		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterSimplifyWebSettings();
 		RegisterStopwatchProvider();
+		RegisterStringTable();
 		RegisterTemplateFactory();
 		RegisterWebContextProvider();
 	}

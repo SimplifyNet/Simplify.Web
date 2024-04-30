@@ -27,6 +27,26 @@ public partial class BaseBootstrapper
 	}
 
 	/// <summary>
+	/// Registers the file reader.
+	/// </summary>
+	public virtual void RegisterFileReader()
+	{
+		if (TypesToExclude.Contains(typeof(IFileReader)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IFileReader>(r =>
+		{
+			var settings = r.Resolve<ISimplifyWebSettings>();
+
+			return new FileReader(
+				r.Resolve<IEnvironment>().DataPhysicalPath,
+				r.Resolve<ISimplifyWebSettings>().DefaultLanguage,
+				r.Resolve<ILanguageManagerProvider>(),
+				settings.DisableFileReaderCache);
+		});
+	}
+
+	/// <summary>
 	/// Registers the language manager provider.
 	/// </summary>
 	public virtual void RegisterLanguageManagerProvider()
@@ -36,6 +56,27 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(r =>
 			new LanguageManagerProvider(r.Resolve<ISimplifyWebSettings>()));
+	}
+
+	/// <summary>
+	/// Registers the string table.
+	/// </summary>
+	public virtual void RegisterStringTable()
+	{
+		if (TypesToExclude.Contains(typeof(IStringTable)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IStringTable>(r =>
+		{
+			var settings = r.Resolve<ISimplifyWebSettings>();
+
+			return new StringTable(
+				settings.StringTableFiles,
+				settings.DefaultLanguage,
+				r.Resolve<ILanguageManagerProvider>(),
+				r.Resolve<IFileReader>(),
+				settings.StringTableMemoryCache);
+		});
 	}
 
 	/// <summary>
