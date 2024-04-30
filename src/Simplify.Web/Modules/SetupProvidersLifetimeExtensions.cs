@@ -9,7 +9,7 @@ namespace Simplify.Web.Modules;
 /// <summary>
 /// Provides the Simplify.Web providers extensions.
 /// </summary>
-public static class SetupProvidersExtensions
+public static class SetupProvidersLifetimeExtensions
 {
 	/// <summary>
 	/// Setups the Simplify.Web providers for specified scope request.

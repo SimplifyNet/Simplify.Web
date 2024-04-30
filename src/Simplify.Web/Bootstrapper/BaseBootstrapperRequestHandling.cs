@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.RequestHandling;
+using Simplify.Web.RequestHandling.Handlers;
+using Simplify.Web.StaticFiles;
+using Simplify.Web.StaticFiles.Context;
+using Simplify.Web.StaticFiles.IO;
 
 namespace Simplify.Web.Bootstrapper;
 
 /// <summary>
-/// Provides the base bootstrapper request handling registration methods.
+/// Provides the bootstrapper request handling registrations.
 /// </summary>
 public partial class BaseBootstrapper
 {
@@ -27,7 +31,10 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IRequestHandler>>(r =>
 			new List<IRequestHandler>
 			{
-				// new StaticFilesHandler(null, null, r.Resolve<IStaticFile>())
+				new StaticFilesHandler(
+					r.Resolve<IStaticFileRequestHandlingPipeline>(),
+					r.Resolve<IStaticFileProcessingContextFactory>(),
+					r.Resolve<IStaticFile>())
 			}, LifetimeType.Singleton);
 	}
 }

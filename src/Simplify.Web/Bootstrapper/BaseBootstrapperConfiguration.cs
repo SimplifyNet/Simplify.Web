@@ -7,7 +7,7 @@ using Simplify.System;
 namespace Simplify.Web.Bootstrapper;
 
 /// <summary>
-/// Provides the base bootstrapper configuration registration.
+/// Provides the bootstrapper configuration registration.
 /// </summary>
 public partial class BaseBootstrapper
 {

@@ -1,17 +1,17 @@
-﻿namespace Simplify.Web.Modules.Environment;
+﻿namespace Simplify.Web.Modules.ApplicationEnvironment;
 
 /// <summary>
-/// Represents a site environment properties.
+/// Represents an application environment properties.
 /// </summary>
 public interface IEnvironment
 {
 	/// <summary>
-	/// Gets the site physical path.
+	/// Gets the application physical path.
 	/// </summary>
 	/// <value>
-	/// The site physical path.
+	/// The application physical path.
 	/// </value>
-	string SitePhysicalPath { get; }
+	string AppPhysicalPath { get; }
 
 	/// <summary>
 	/// Gets the site current templates directory relative path.

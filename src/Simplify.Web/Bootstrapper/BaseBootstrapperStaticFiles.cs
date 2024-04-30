@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Processing;
-using Simplify.Web.Modules.Environment;
-using Simplify.Web.RequestHandling;
+using Simplify.Web.Http.ResponseWriting;
+using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Settings;
 using Simplify.Web.StaticFiles;
 using Simplify.Web.StaticFiles.IO;
+using Simplify.Web.StaticFiles.Stages;
 
 namespace Simplify.Web.Bootstrapper;
 
 /// <summary>
-/// Provides the base bootstrapper static files registration methods.
+/// Provides the bootstrapper static files registration methods.
 /// </summary>
 public partial class BaseBootstrapper
 {
@@ -24,7 +25,7 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IStaticFile>(r =>
 			new StaticFile(
 				r.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
-				r.Resolve<IEnvironment>().SitePhysicalPath),
+				r.Resolve<IEnvironment>().AppPhysicalPath),
 			LifetimeType.Singleton);
 	}
 
@@ -45,7 +46,8 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IStaticFileRequestHandler>>(r =>
 			new List<IStaticFileRequestHandler>
 			{
-				// new StaticFilesHandler(null, null, r.Resolve<IStaticFile>())
+				new CachedFileHandler(),
+				new NewFileHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>())
 			}, LifetimeType.Singleton);
 	}
 }
