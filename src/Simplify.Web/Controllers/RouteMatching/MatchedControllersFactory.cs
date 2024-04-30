@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Extensions;
 using Simplify.Web.Controllers.RouteMatching.Extensions;
-using Simplify.Web.Http;
 using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.RouteMatching;
@@ -11,7 +11,7 @@ public class MatchedControllersFactory(IControllersMetaStore metaStore, IMatched
 {
 	private readonly IEnumerable<IMatchedController> _globalMatchedControllers = metaStore.GlobalControllers.Select(x => x.ToMatchedController());
 
-	public IReadOnlyList<IMatchedController> Create(IHttpContext context)
+	public IReadOnlyList<IMatchedController> Create(HttpContext context)
 	{
 		var result = new List<IMatchedController>();
 
@@ -24,6 +24,6 @@ public class MatchedControllersFactory(IControllersMetaStore metaStore, IMatched
 			.AsReadOnly();
 	}
 
-	private IEnumerable<IMatchedController> CreateRoutedMatchedControllers(IHttpContext context) =>
+	private IEnumerable<IMatchedController> CreateRoutedMatchedControllers(HttpContext context) =>
 		metaStore.RoutedControllers.Select(x => factoryResolver.Resolve(x).Create(x, context));
 }

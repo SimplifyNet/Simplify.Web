@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Controllers.RouteMatching;
 
 public interface IMatchedControllersFactory
 {
-	IReadOnlyList<IMatchedController> Create(IHttpContext context);
+	IReadOnlyList<IMatchedController> Create(HttpContext context);
 }

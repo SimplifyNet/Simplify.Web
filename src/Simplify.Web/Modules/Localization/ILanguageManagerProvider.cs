@@ -1,4 +1,4 @@
-﻿using Simplify.Web.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules.Localization;
 
@@ -11,7 +11,7 @@ public interface ILanguageManagerProvider
 	/// Creates the language manager instance.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	void Setup(IHttpContext context);
+	void Setup(HttpContext context);
 
 	/// <summary>
 	/// Gets the language manager.

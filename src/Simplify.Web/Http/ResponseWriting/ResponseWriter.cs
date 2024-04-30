@@ -11,14 +11,14 @@ public class ResponseWriter : IResponseWriter
 	/// <summary>
 	/// Writes the specified data asynchronously.
 	/// </summary>
-	/// <param name="data">The data.</param>
 	/// <param name="response">The response.</param>
-	public Task WriteAsync(string data, HttpResponse response) => response.WriteAsync(data);
+	/// <param name="data">The data.</param>
+	public Task WriteAsync(HttpResponse response, string data) => response.WriteAsync(data);
 
 	/// <summary>
 	/// Writes the specified data asynchronously.
 	/// </summary>
-	/// <param name="data">The data.</param>
 	/// <param name="response">The response.</param>
-	public Task WriteAsync(byte[] data, HttpResponse response) => response.Body.WriteAsync(data, 0, data.Length);
+	/// <param name="data">The data.</param>
+	public Task WriteAsync(HttpResponse response, byte[] data) => response.Body.WriteAsync(data, 0, data.Length);
 }

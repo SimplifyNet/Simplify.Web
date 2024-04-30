@@ -1,9 +1,9 @@
 using System;
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Controllers.Resolution;
 
 public interface IControllerResolutionStage
 {
-	void Execute(ControllerResolutionState state, IHttpContext context, Action stopExecution);
+	void Execute(ControllerResolutionState state, HttpContext context, Action stopExecution);
 }

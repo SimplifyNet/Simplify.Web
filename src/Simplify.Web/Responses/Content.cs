@@ -59,7 +59,7 @@ public class Content : ControllerResponse
 		if (ContentType != null)
 			Context.Response.ContentType = ContentType;
 
-		await ResponseWriter.WriteAsync(StringContent, Context.Response);
+		await ResponseWriter.WriteAsync(Context.Response, StringContent);
 
 		return ResponseBehavior.RawOutput;
 	}

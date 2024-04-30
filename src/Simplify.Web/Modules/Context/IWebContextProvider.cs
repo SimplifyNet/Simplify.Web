@@ -1,4 +1,4 @@
-﻿using Simplify.Web.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Modules.Context;
 
@@ -11,7 +11,7 @@ public interface IWebContextProvider
 	/// Creates the web context.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	void Setup(IHttpContext context);
+	void Setup(HttpContext context);
 
 	/// <summary>
 	/// Gets the web context.

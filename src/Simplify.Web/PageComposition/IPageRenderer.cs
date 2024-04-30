@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.PageComposition;
 
@@ -12,5 +12,5 @@ public interface IPageRenderer
 	/// Processes (build web-page and send it to the client) the current web-page.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	Task Render(IHttpContext context);
+	Task Render(HttpContext context);
 }

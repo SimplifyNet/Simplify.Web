@@ -1,5 +1,5 @@
-﻿using Simplify.DI;
-using Simplify.Web.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Simplify.DI;
 using Simplify.Web.Old.Modules.Data;
 
 namespace Simplify.Web.Old.Modules;
@@ -14,10 +14,10 @@ public static class ScopeProvidersExtensions
 	/// </summary>
 	/// <param name="scope">The scope.</param>
 	/// <param name="context">The context.</param>
-	public static ILifetimeScope SetupProviders(this ILifetimeScope scope, IHttpContext context)
+	public static ILifetimeScope SetupProviders(this ILifetimeScope scope, HttpContext context)
 	{
-		scope.Resolver.Resolve<IWebContextProvider>().Setup(context.Context);
-		scope.Resolver.Resolve<ILanguageManagerProvider>().Setup(context.Context);
+		scope.Resolver.Resolve<IWebContextProvider>().Setup(context);
+		scope.Resolver.Resolve<ILanguageManagerProvider>().Setup(context);
 		scope.Resolver.Resolve<ITemplateFactory>().Setup();
 		scope.Resolver.Resolve<IFileReader>().Setup();
 		scope.Resolver.Resolve<IStringTable>().Setup();

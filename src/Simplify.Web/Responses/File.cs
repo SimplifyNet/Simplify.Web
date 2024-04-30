@@ -60,7 +60,7 @@ public class File(string outputFileName, string contentType, byte[] data, int st
 		Context.Response.Headers.Append("Content-Disposition", "attachment; filename=\"" + OutputFileName + "\"");
 		Context.Response.ContentType = ContentType;
 
-		await ResponseWriter.WriteAsync(Data, Context.Response);
+		await ResponseWriter.WriteAsync(Context.Response, Data);
 
 		return ResponseBehavior.RawOutput;
 	}

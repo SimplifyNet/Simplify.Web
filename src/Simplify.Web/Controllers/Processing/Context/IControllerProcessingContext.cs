@@ -1,6 +1,6 @@
-﻿using Simplify.Web.Controllers.RouteMatching;
+﻿using Microsoft.AspNetCore.Http;
+using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.Controllers.Security;
-using Simplify.Web.Http;
 
 namespace Simplify.Web.Controllers.Processing.Context;
 
@@ -10,5 +10,5 @@ public interface IControllerProcessingContext
 
 	public SecurityStatus SecurityStatus { get; }
 
-	public IHttpContext Context { get; }
+	public HttpContext HttpContext { get; }
 }

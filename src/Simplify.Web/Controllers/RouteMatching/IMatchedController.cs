@@ -5,7 +5,7 @@ namespace Simplify.Web.Controllers.RouteMatching;
 
 public interface IMatchedController
 {
-	public IControllerMetadata MetaData { get; }
+	public IControllerMetadata Controller { get; }
 
-	public IDictionary<string, object>? RouteParameters { get; }
+	public IReadOnlyDictionary<string, object>? RouteParameters { get; }
 }

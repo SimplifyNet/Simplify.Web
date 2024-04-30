@@ -11,16 +11,14 @@ public interface IResponseWriter
 	/// <summary>
 	/// Writes the specified data asynchronously.
 	/// </summary>
-	/// <param name="data">The data.</param>
 	/// <param name="response">The response.</param>
-	/// <returns></returns>
-	Task WriteAsync(string data, HttpResponse response);
+	/// <param name="data">The data.</param>
+	Task WriteAsync(HttpResponse response, string data);
 
 	/// <summary>
 	/// Writes the specified data asynchronously.
 	/// </summary>
-	/// <param name="data">The data.</param>
 	/// <param name="response">The response.</param>
-	/// <returns></returns>
-	Task WriteAsync(byte[] data, HttpResponse response);
+	/// <param name="data">The data.</param>
+	Task WriteAsync(HttpResponse response, byte[] data);
 }

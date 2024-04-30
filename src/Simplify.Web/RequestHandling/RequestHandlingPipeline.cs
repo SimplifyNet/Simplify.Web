@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.RequestHandling;
 
-public class RequestHandlingPipeline(IOrderedEnumerable<IRequestHandler> handlers) : IRequestHandlingPipeline
+public class RequestHandlingPipeline(IReadOnlyList<IRequestHandler> handlers) : IRequestHandlingPipeline
 {
-	public async Task ExecuteAsync(IHttpContext context)
+	public async Task ExecuteAsync(HttpContext context)
 	{
 		var stopProcessing = false;
 

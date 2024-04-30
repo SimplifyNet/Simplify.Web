@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.Execution.Args;
@@ -17,7 +17,7 @@ public interface IControllerExecutionArgs
 	/// <summary>
 	/// Gets the context.
 	/// </summary>
-	IHttpContext Context { get; }
+	HttpContext Context { get; }
 
 	/// <summary>
 	/// Gets the route parameters.

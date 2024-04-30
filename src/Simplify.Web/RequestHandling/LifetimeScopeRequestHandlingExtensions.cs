@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Simplify.DI;
-using Simplify.Web.Http;
 
 namespace Simplify.Web.RequestHandling;
 
@@ -14,6 +14,6 @@ public static class LifetimeScopeRequestHandlingExtensions
 	/// </summary>
 	/// <param name="scope">The scope.</param>
 	/// <param name="context">The context.</param>
-	public static Task ProcessRequestAsync(this ILifetimeScope scope, IHttpContext context) =>
+	public static Task ProcessRequestAsync(this ILifetimeScope scope, HttpContext context) =>
 		scope.Resolver.Resolve<IRequestHandlingPipeline>().ExecuteAsync(context);
 }

@@ -42,7 +42,7 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 			Context.Response.ContentType = ContentType;
 
 		if (ResponseData != null)
-			await ResponseWriter.WriteAsync(ResponseData, Context.Response);
+			await ResponseWriter.WriteAsync(Context.Response, ResponseData);
 
 		return ResponseBehavior.RawOutput;
 	}

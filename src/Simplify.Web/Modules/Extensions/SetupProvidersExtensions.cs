@@ -1,5 +1,5 @@
-﻿using Simplify.DI;
-using Simplify.Web.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Simplify.DI;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
@@ -16,7 +16,7 @@ public static class SetupProvidersExtensions
 	/// </summary>
 	/// <param name="scope">The scope.</param>
 	/// <param name="context">The context.</param>
-	public static ILifetimeScope SetupProviders(this ILifetimeScope scope, IHttpContext context)
+	public static ILifetimeScope SetupProviders(this ILifetimeScope scope, HttpContext context)
 	{
 		scope.Resolver.Resolve<IWebContextProvider>().Setup(context);
 		scope.Resolver.Resolve<ILanguageManagerProvider>().Setup(context);

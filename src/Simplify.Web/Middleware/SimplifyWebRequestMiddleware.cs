@@ -28,27 +28,25 @@ public static class SimplifyWebRequestMiddleware
 	/// </summary>
 	public static event TraceEventHandler? OnTrace;
 
-	public static Task InvokeAsTerminalAsync(HttpContext context) => InvokeAsync(context, true);
+	public static Task InvokeAsTerminalAsync(HttpContext context) => InvokeAsync(context);
 
-	public static Task InvokeAsNonTerminalAsync(HttpContext context) => InvokeAsync(context, false);
+	public static Task InvokeAsNonTerminalAsync(HttpContext context) => InvokeAsync(context);
 
 	/// <summary>
 	/// Process an individual request.
 	/// </summary>
 	/// <param name="context">The context.</param>
 	/// <param name="isTerminalMiddleware">if set to <c>true</c> [is terminal middleware].</param>
-	public static async Task InvokeAsync(HttpContext context, bool isTerminalMiddleware)
+	public static async Task InvokeAsync(HttpContext context)
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
-
-		var localContext = new Http.DefaultHttpContext(context, isTerminalMiddleware);
 
 		try
 		{
 			await scope.StartMeasurements()
 				.Trace(context, OnTrace)
-				.SetupProviders(localContext)
-				.ProcessRequestAsync(localContext);
+				.SetupProviders(context)
+				.ProcessRequestAsync(context);
 		}
 		catch (Exception e)
 		{

@@ -40,14 +40,12 @@ public static class SimplifyWebRequestMiddleware
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
 
-		var localContext = new Http.DefaultHttpContext(context, isTerminalMiddleware);
-
 		try
 		{
 			await scope.StartMeasurements()
 				.Trace(context, OnTrace)
-				.SetupProviders(localContext)
-				.ProcessRequestAsync(localContext);
+				.SetupProviders(context)
+				.ProcessRequestAsync(context);
 		}
 		catch (Exception e)
 		{

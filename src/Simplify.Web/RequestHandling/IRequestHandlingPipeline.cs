@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.RequestHandling;
 
@@ -12,5 +12,5 @@ public interface IRequestHandlingPipeline
 	/// Executes the pipeline.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	Task ExecuteAsync(IHttpContext context);
+	Task ExecuteAsync(HttpContext context);
 }
