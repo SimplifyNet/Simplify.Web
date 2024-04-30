@@ -6,11 +6,15 @@
 
 - Version 2 controllers
 
+### Removed
+
+- .NET Framework 4.8 explicit support
+
 ### Changed
 
+- Internal restructure and modules rewrite
 - RouteParameters defaulted to empty ExpandoObject to exclude NRE
-- Internal restructure for v2 controllers implementation (controller executors and factories separate and change)
-- Non-breaking code optimization
+
 ## [4.9.0] - 2024-01-08
 
 ### Added

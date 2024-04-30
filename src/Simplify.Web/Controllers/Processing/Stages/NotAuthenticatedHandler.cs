@@ -8,16 +8,16 @@ namespace Simplify.Web.Controllers.Processing.Stages;
 
 public class NotAuthenticatedHandler(IRedirector redirector) : IControllerProcessingStage
 {
-	public Task Execute(IControllerProcessingContext context, Action stopProcessing)
+	public Task<ResponseBehavior> Execute(IControllerProcessingContext context, Action stopProcessing)
 	{
 		if (context.SecurityStatus == SecurityStatus.Ok)
-			return Task.CompletedTask;
+			return Task.FromResult(ResponseBehavior.Default);
 
-		context.Context.SetResponseStatusCode(401);
+		context.HttpContext.Response.StatusCode = 401;
 		redirector.SetLoginReturnUrlFromCurrentUri();
 
 		stopProcessing();
 
-		return Task.CompletedTask;
+		return Task.FromResult(ResponseBehavior.Default);
 	}
 }

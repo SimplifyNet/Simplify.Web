@@ -14,14 +14,18 @@ public class ForbiddenHandler(IControllerExecutorResolver resolver,
 	IControllersMetaStore metaStore)
 	: BaseControllerProcessor(resolver, propertiesInjector), IControllerProcessingStage
 {
-	public async Task Execute(IControllerProcessingContext context, Action stopProcessing)
+	public async Task<ResponseBehavior> Execute(IControllerProcessingContext context, Action stopProcessing)
 	{
 		if (context.SecurityStatus == SecurityStatus.Ok)
-			return;
+			return ResponseBehavior.Default;
 
 		if (metaStore.Controller403 == null)
-			context.Context.SetResponseStatusCode(403);
+			context.HttpContext.Response.StatusCode = 403;
 		else
-			await ExecuteAndHandleResponse(metaStore.Controller403.ToControllerExecutionArgs(context.Context), stopProcessing);
+			await ExecuteAndHandleResponse(metaStore.Controller403.ToControllerExecutionArgs(context.HttpContext), stopProcessing);
+
+		stopProcessing();
+
+		return ResponseBehavior.Default;
 	}
 }

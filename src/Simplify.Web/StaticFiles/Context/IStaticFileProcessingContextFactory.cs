@@ -1,8 +1,8 @@
-using Simplify.Web.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.StaticFiles.Context;
 
 public interface IStaticFileProcessingContextFactory
 {
-	IStaticFileProcessingContext Create(IHttpContext context);
+	IStaticFileProcessingContext Create(HttpContext context, string relativeFilePath);
 }
