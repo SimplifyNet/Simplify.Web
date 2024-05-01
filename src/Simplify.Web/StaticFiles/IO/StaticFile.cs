@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Simplify.System.Extensions;
 
 namespace Simplify.Web.StaticFiles.IO;
 
@@ -28,6 +29,8 @@ public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath)
 		_staticFilesPaths
 			.Where(relativeFilePath.ToLower().StartsWith)
 			.Any(_ => File.Exists(_sitePhysicalPath + relativeFilePath));
+
+	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(relativeFilePath).TrimMilliseconds();
 
 	/// <summary>
 	/// Gets the file data.

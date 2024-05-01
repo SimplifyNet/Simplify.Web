@@ -32,7 +32,14 @@ public partial class BaseBootstrapper
 		RegisterEnvironment();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
+		RegisterRequestHandlingPipeline();
+		RegisterRequestHandlingPipelineHandlers();
+		RegisterResponseWriter();
 		RegisterSimplifyWebSettings();
+		RegisterStaticFile();
+		RegisterStaticFileProcessingContextFactory();
+		RegisterStaticFileRequestHandlingPipeline();
+		RegisterStaticFileRequestHandlingPipelineHandlers();
 		RegisterStopwatchProvider();
 		RegisterStringTable();
 		RegisterTemplateFactory();
