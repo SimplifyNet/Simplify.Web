@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.RequestHandling;
@@ -13,6 +12,6 @@ public interface IRequestHandler
 	/// Handles the requests.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	/// <param name="stopProcessing">The action to stop processing.</param>
-	Task HandleAsync(HttpContext context, Action stopProcessing);
+	/// <param name="next">The next handler in the chain.</param>
+	Task Handle(HttpContext context, RequestHandlerAsync next);
 }

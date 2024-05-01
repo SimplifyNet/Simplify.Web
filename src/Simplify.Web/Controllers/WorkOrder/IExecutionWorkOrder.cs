@@ -7,5 +7,5 @@ public interface IExecutionWorkOrder
 {
 	IReadOnlyList<IMatchedController> Controllers { get; }
 
-	public WorkOrderStatus Status { get; }
+	public WorkOrderStatus? Status { get; }
 }

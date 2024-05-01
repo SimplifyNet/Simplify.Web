@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Http.RequestPath;
 using Simplify.Web.StaticFiles;
@@ -13,15 +12,13 @@ public class StaticFilesHandler(IStaticFileRequestHandlingPipeline pipeline,
 	IStaticFile file)
 		: IRequestHandler
 {
-	public async Task HandleAsync(HttpContext context, Action stopProcessing)
+	public async Task Handle(HttpContext context, RequestHandlerAsync next)
 	{
 		var relativeFilePath = context.Request.GetRelativeFilePath();
 
-		if (relativeFilePath == null || !file.IsValidPath(relativeFilePath))
-			return;
-
-		await pipeline.ExecuteAsync(contextFactory.Create(context, relativeFilePath), context.Response);
-
-		stopProcessing();
+		if (file.IsValidPath(relativeFilePath))
+			await pipeline.ExecuteAsync(contextFactory.Create(context, relativeFilePath), context.Response);
+		else
+			await next();
 	}
 }

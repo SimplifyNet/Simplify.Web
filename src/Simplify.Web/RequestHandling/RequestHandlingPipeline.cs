@@ -1,25 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Simplify.Web.RequestHandling.Process;
+using Simplify.Web.RequestHandling.Wrapping;
 
 namespace Simplify.Web.RequestHandling;
 
 public class RequestHandlingPipeline(IReadOnlyList<IRequestHandler> handlers) : IRequestHandlingPipeline
 {
-	public async Task ExecuteAsync(HttpContext context)
-	{
-		var stopProcessing = false;
+	private readonly HandlerChainWrapper _startingHandler = handlers.WrapUp();
 
-		foreach (var item in handlers)
-		{
-			await item.HandleAsync(context, StopProcessing);
-
-			if (stopProcessing)
-				break;
-		}
-
-		return;
-
-		void StopProcessing() => stopProcessing = true;
-	}
+	public Task ExecuteAsync(HttpContext context) =>
+		_startingHandler.HandleAsync(context);
 }

@@ -1,25 +1,28 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Controllers.Processing;
-using Simplify.Web.Controllers.Processing.Context;
-using Simplify.Web.Controllers.RouteMatching;
-using Simplify.Web.Controllers.RouteMatching.Extensions;
+using Simplify.Web.Controllers.Execution;
+using Simplify.Web.Controllers.WorkOrder;
+using Simplify.Web.Controllers.WorkOrder.Construction;
 
 namespace Simplify.Web.RequestHandling.Handlers;
 
-public class ControllersHandler(IMatchedControllersFactory matchedControllersFactory,
-	IControllerProcessingPipeline processingPipeline,
-	IControllerProcessingContextFactory argsFactory) : IRequestHandler
+public class ControllersHandler(IWorkOrderConstructionDirector workOrderConstructionDirector, IControllersExecutor controllersExecutor) : IRequestHandler
 {
-	public async Task HandleAsync(HttpContext context, Action stopProcessing)
+	public async Task Handle(HttpContext context, RequestHandlerAsync next)
 	{
-		var items = matchedControllersFactory.Create(context);
+		var workOrder = workOrderConstructionDirector.CreateWorkOrder(context);
 
-		if (items.TryProcessUnhandledRoute(context.Response))
-			stopProcessing();
-		else
-			foreach (var item in items)
-				await processingPipeline.Execute(argsFactory.Create(item, context));
+		if (workOrder.Status != null)
+		{
+			context.Response.StatusCode = WorkerOrderStatusHttpStatusCodeRelation.Relation[workOrder.Status.Value];
+			return;
+		}
+
+		var result = await controllersExecutor.ExecuteAsync(workOrder.Controllers, context);
+
+		if (result != ResponseBehavior.Default)
+			return;
+
+		await next();
 	}
 }

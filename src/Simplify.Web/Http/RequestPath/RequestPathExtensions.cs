@@ -4,7 +4,7 @@ namespace Simplify.Web.Http.RequestPath;
 
 public static class RequestPathExtensions
 {
-	public static string? GetRelativeFilePath(this HttpRequest request)
+	public static string GetRelativeFilePath(this HttpRequest request)
 	{
 		if (string.IsNullOrEmpty(request.Path.Value))
 			return "";
