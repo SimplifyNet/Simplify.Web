@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Extensions;
 using Simplify.Web.Meta.Controllers;
 
-namespace Simplify.Web.Controllers.WorkOrder.Construction.Stages;
+namespace Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
 
-public class GlobalControllersBuilder(IControllersMetaStore metaStore) : IWorkOrderConstructionStage
+public class GlobalControllersBuilder(IControllersMetaStore metaStore) : IWorkOrderBuildStage
 {
 	public void Execute(WorkOrderBuilder builder, HttpContext context) =>
 		builder.Controllers.AddRange(metaStore.GlobalControllers.Select(x => x.ToMatchedController()));

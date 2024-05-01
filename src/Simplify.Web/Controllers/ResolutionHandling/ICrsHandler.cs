@@ -1,12 +1,12 @@
-using Simplify.Web.Controllers.WorkOrder.Construction;
+using Simplify.Web.Controllers.ExecutionWorkOrder;
 
 namespace Simplify.Web.Controllers.Resolution;
 
-public interface ICrsHandlingPipelineStage
+public interface ICrsHandler
 {
 	bool IsTerminal { get; }
 
-	bool IsApplicable(ControllerResolutionState state);
+	bool CanHandle(ControllerResolutionState state);
 
 	void Execute(ControllerResolutionState state, WorkOrderBuilder builder);
 }

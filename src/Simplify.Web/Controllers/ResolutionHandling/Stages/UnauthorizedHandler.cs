@@ -1,15 +1,15 @@
+using System.Net;
+using Simplify.Web.Controllers.ExecutionWorkOrder;
 using Simplify.Web.Controllers.Resolution;
-using Simplify.Web.Controllers.WorkOrder;
-using Simplify.Web.Controllers.WorkOrder.Construction;
 
 namespace Simplify.Web.Controllers.ResolutionResultHandling.Stages;
 
-public class UnauthorizedHandler : ICrsHandlingPipelineStage
+public class UnauthorizedHandler : ICrsHandler
 {
 	public bool IsTerminal => true;
 
-	public bool IsApplicable(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Unauthorized;
+	public bool CanHandle(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Unauthorized;
 
 	public void Execute(ControllerResolutionState state, WorkOrderBuilder builder) =>
-		builder.Status = WorkOrderStatus.Unauthorized;
+		builder.HttpStatusCode = HttpStatusCode.Unauthorized;
 }

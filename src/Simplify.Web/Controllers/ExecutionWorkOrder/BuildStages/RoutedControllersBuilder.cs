@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Meta.Controllers;
 
-namespace Simplify.Web.Controllers.WorkOrder.Construction.Stages;
+namespace Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
 
 public class RoutedControllersBuilder(IControllersMetaStore metaStore,
  IControllerResolutionPipeline resolutionPipeline,
-  ICrsHandlingPipeline crsHandlingPipeline) : IWorkOrderConstructionStage
+  ICrsHandlingPipeline crsHandlingPipeline) : IWorkOrderBuildStage
 {
 	public void Execute(WorkOrderBuilder builder, HttpContext context)
 	{
