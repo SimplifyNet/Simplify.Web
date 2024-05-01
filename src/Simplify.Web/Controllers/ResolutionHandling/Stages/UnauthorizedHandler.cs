@@ -8,7 +8,7 @@ public class UnauthorizedHandler : ICrsHandlingPipelineStage
 {
 	public bool IsTerminal => true;
 
-	public bool IsApplicable(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.NotAuthenticated;
+	public bool IsApplicable(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Unauthorized;
 
 	public void Execute(ControllerResolutionState state, WorkOrderBuilder builder) =>
 		builder.Status = WorkOrderStatus.Unauthorized;

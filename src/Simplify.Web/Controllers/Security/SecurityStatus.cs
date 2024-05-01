@@ -1,19 +1,19 @@
 ﻿namespace Simplify.Web.Controllers.Security;
 
 /// <summary>
-/// Provides security rules check result.
+/// Provides the controller security status.
 /// </summary>
 public enum SecurityStatus
 {
 	/// <summary>
-	/// OK result.
+	/// OK status.
 	/// </summary>
 	Ok,
 
 	/// <summary>
 	/// The user is not authenticated.
 	/// </summary>
-	NotAuthenticated,
+	Unauthorized,
 
 	/// <summary>
 	/// The user is authenticated but does not have access rights.
