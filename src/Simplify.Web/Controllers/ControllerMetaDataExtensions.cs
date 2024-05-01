@@ -1,7 +1,6 @@
-using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.Meta.Controllers;
 
-namespace Simplify.Web.Controllers.Extensions;
+namespace Simplify.Web.Controllers;
 
 public static class ControllerMetaDataExtensions
 {

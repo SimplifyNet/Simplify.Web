@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using Simplify.Web.Controllers.RouteMatching;
 
 namespace Simplify.Web.Controllers.ExecutionWorkOrder;
 
@@ -10,5 +10,11 @@ public class WorkOrderBuilder
 
 	public HttpStatusCode? HttpStatusCode { get; set; }
 
-	public IWorkOrder Build() => new WorkOrder(Controllers, HttpStatusCode);
+	public IWorkOrder Build() =>
+		new WorkOrder(
+			Controllers
+				.SortByRunPriority()
+				.ToList()
+				.AsReadOnly(),
+			HttpStatusCode);
 }

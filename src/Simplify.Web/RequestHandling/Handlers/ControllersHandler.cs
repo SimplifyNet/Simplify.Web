@@ -5,11 +5,11 @@ using Simplify.Web.Controllers.ExecutionWorkOrder;
 
 namespace Simplify.Web.RequestHandling.Handlers;
 
-public class ControllersHandler(IWorkOrderBuildDirector workOrderConstructionDirector, IControllersExecutor controllersExecutor) : IRequestHandler
+public class ControllersHandler(IWorkOrderBuildDirector workOrderBuildDirector, IControllersExecutor controllersExecutor) : IRequestHandler
 {
 	public async Task Handle(HttpContext context, RequestHandlerAsync next)
 	{
-		var workOrder = workOrderConstructionDirector.CreateWorkOrder(context);
+		var workOrder = workOrderBuildDirector.CreateWorkOrder(context);
 
 		if (workOrder.HttpStatusCode != null)
 		{
