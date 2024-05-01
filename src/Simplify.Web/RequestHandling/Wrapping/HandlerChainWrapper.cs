@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.RequestHandling.Process;
+namespace Simplify.Web.RequestHandling.Wrapping;
 
 public class HandlerChainWrapper(IRequestHandler handler, HandlerChainWrapper? nextHandler = null)
 {
