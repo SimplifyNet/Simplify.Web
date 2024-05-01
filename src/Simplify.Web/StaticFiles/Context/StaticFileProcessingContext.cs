@@ -3,12 +3,12 @@ using System;
 namespace Simplify.Web.StaticFiles.Context;
 
 public class StaticFileProcessingContext(string relativeFilePath,
-	DateTime fileLastModificationTime,
+	DateTime lastModificationTime,
 	bool isCached) : IStaticFileProcessingContext
 {
 	public string RelativeFilePath { get; } = relativeFilePath;
 
-	public DateTime FileLastModificationTime { get; } = fileLastModificationTime;
+	public DateTime LastModificationTime { get; } = lastModificationTime;
 
 	public bool IsCached { get; } = isCached;
 }

@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Http.Cache;
 using Simplify.Web.StaticFiles.IO;

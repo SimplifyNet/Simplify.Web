@@ -15,7 +15,7 @@ public class NewFileHandler(IResponseWriter responseWriter, IStaticFile fileHand
 	public async Task Execute(IStaticFileProcessingContext context, HttpResponse response)
 	{
 		response.SetContentMimeType(context.RelativeFilePath);
-		response.SetLastModifiedTime(context.FileLastModificationTime);
+		response.SetLastModifiedTime(context.LastModificationTime);
 
 		await responseWriter.WriteAsync(response, await fileHandler.GetDataAsync(context.RelativeFilePath));
 	}

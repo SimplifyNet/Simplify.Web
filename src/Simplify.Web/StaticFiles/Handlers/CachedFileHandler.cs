@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Processing;
@@ -13,8 +14,8 @@ public class CachedFileHandler : IStaticFileRequestHandler
 	public Task Execute(IStaticFileProcessingContext context, HttpResponse response)
 	{
 		response.SetContentMimeType(context.RelativeFilePath);
-		response.SetLastModifiedTime(context.FileLastModificationTime);
-		response.StatusCode = 304;
+		response.SetLastModifiedTime(context.LastModificationTime);
+		response.StatusCode = (int)HttpStatusCode.NotModified;
 
 		return Task.CompletedTask;
 	}

@@ -12,7 +12,7 @@ public interface IStaticFileProcessingContext
 	/// <summary>
 	/// Gets the file last modification time.
 	/// </summary>
-	DateTime FileLastModificationTime { get; }
+	DateTime LastModificationTime { get; }
 
 	/// <summary>
 	/// Determines whether the file can be used from cached.
