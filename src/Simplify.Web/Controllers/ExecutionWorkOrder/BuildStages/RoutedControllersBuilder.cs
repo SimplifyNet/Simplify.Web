@@ -10,11 +10,7 @@ public class RoutedControllersBuilder(IControllerResolutionPipeline resolutionPi
 	public void Execute(WorkOrderBuilder builder, HttpContext context)
 	{
 		foreach (var item in ControllersMetaStore.Current.RoutedControllers)
-		{
-			var handlingResult = crsHandlingPipeline.Execute(resolutionPipeline.Execute(item, context), builder);
-
-			if (handlingResult)
+			if (crsHandlingPipeline.Execute(resolutionPipeline.Execute(item, context), builder))
 				break;
-		}
 	}
 }
