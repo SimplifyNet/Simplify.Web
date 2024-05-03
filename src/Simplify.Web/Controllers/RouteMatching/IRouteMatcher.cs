@@ -1,10 +1,14 @@
-﻿namespace Simplify.Web.Controllers.RouteMatching.Matcher;
+﻿using Simplify.Web.Meta.Controllers;
+
+namespace Simplify.Web.Controllers.RouteMatching;
 
 /// <summary>
 /// Represent a HTTP route parser and matcher.
 /// </summary>
 public interface IRouteMatcher
 {
+	bool CanHandle(IControllerMetadata controller);
+
 	/// <summary>
 	/// Matches the specified route.
 	/// </summary>

@@ -5,7 +5,7 @@ using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.Execution;
 
-public class ControllerExecutorResolver(IEnumerable<IControllerExecutor> executors) : IControllerExecutorResolver
+public class ControllerExecutorResolver(IReadOnlyList<IControllerExecutor> executors) : IControllerExecutorResolver
 {
 	public IControllerExecutor Resolve(IControllerMetadata controller) =>
 		executors.FirstOrDefault(x => x.CanHandle(controller))
