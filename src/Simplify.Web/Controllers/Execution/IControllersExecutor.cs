@@ -6,5 +6,5 @@ namespace Simplify.Web.Controllers.Execution;
 
 public interface IControllersExecutor
 {
-	public Task<ResponseBehavior> ExecuteAsync(IReadOnlyList<IMatchedController> Controllers, HttpContext context);
+	public Task<ResponseBehavior> ExecuteAsync(IReadOnlyList<IMatchedController> controllers, HttpContext context);
 }

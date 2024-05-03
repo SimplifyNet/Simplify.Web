@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Simplify.Web.Controllers.Execution.Args;
+using Microsoft.AspNetCore.Http;
 using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.Execution;
@@ -15,8 +15,9 @@ public interface IControllerExecutor
 	bool CanHandle(IControllerMetadata args);
 
 	/// <summary>
-	/// Creates and executes the controller.
+	/// Creates the actual controller and executes it.
 	/// </summary>
-	/// <param name="args">The controller execution args.</param>
-	Task<ControllerResponse?> Execute(IControllerExecutionArgs args);
+	/// <param name="args">The matched controller.</param>
+	/// <param name="context">The HTTP contexts.</param>
+	Task<ControllerResponse?> ExecuteAsync(IMatchedController controller, HttpContext context);
 }
