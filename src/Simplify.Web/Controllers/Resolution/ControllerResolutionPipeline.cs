@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Meta.Controllers;
 
-namespace Simplify.Web.Controllers.Processing;
+namespace Simplify.Web.Controllers.Resolution;
 
 public class ControllerResolutionPipeline(IReadOnlyList<IControllerResolutionStage> stages) : IControllerResolutionPipeline
 {

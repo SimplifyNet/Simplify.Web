@@ -2,7 +2,7 @@
 using Simplify.DI;
 using Simplify.Web.Diagnostics.Measurement;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
 /// Provides the bootstrapper diagnostics registrations.

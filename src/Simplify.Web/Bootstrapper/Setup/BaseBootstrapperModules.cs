@@ -7,7 +7,7 @@ using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
 using Simplify.Web.Settings;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
 /// Provides the bootstrapper modules registrations.

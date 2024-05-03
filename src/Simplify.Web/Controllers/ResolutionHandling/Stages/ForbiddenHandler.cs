@@ -5,7 +5,7 @@ using Simplify.Web.Meta.Controllers;
 
 namespace Simplify.Web.Controllers.ResolutionHandling.Stages;
 
-public class ForbiddenHandler(IControllersMetaStore metaStore) : ICrsHandler
+public class ForbiddenHandler : ICrsHandler
 {
 	public bool IsTerminal => true;
 
@@ -15,9 +15,9 @@ public class ForbiddenHandler(IControllersMetaStore metaStore) : ICrsHandler
 	{
 		builder.Controllers.Clear();
 
-		if (metaStore.Controller403 == null)
+		if (ControllersMetaStore.Current.Controller403 == null)
 			builder.HttpStatusCode = HttpStatusCode.Forbidden;
 		else
-			builder.Controllers.Add(metaStore.Controller403.ToMatchedController());
+			builder.Controllers.Add(ControllersMetaStore.Current.Controller403.ToMatchedController());
 	}
 }

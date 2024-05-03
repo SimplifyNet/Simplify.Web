@@ -1,5 +1,6 @@
 ﻿using System;
 using Simplify.DI;
+using Simplify.Web.Bootstrapper.Setup;
 using Simplify.Web.Meta;
 
 namespace Simplify.Web.Bootstrapper;

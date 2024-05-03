@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
+using Simplify.Web.Controllers.Execution;
+using Simplify.Web.Controllers.ExecutionWorkOrder;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
 using Simplify.Web.StaticFiles;
 using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.IO;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
 /// Provides the bootstrapper request handling registrations.
@@ -34,7 +36,10 @@ public partial class BaseBootstrapper
 				new StaticFilesHandler(
 					r.Resolve<IStaticFileRequestHandlingPipeline>(),
 					r.Resolve<IStaticFileProcessingContextFactory>(),
-					r.Resolve<IStaticFile>())
+					r.Resolve<IStaticFile>()),
+				new ControllersHandler(
+					r.Resolve<IWorkOrderBuildDirector>(),
+					r.Resolve<IControllersExecutor>())
 			}, LifetimeType.Singleton);
 	}
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Settings;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
 /// Provides the base and default Simplify.Web bootstrapper.
@@ -29,12 +29,16 @@ public partial class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
+		RegisterControllerResolutionPipeline();
+		RegisterControllerResolutionPipelineStages();
 		RegisterEnvironment();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterRequestHandlingPipeline();
 		RegisterRequestHandlingPipelineHandlers();
 		RegisterResponseWriter();
+		RegisterSecurityChecker();
+		RegisterSecurityRules();
 		RegisterSimplifyWebSettings();
 		RegisterStaticFile();
 		RegisterStaticFileProcessingContextFactory();
@@ -44,6 +48,8 @@ public partial class BaseBootstrapper
 		RegisterStringTable();
 		RegisterTemplateFactory();
 		RegisterWebContextProvider();
+		RegisterWorkOrderBuildDirector();
+		RegisterWorkOrderBuildDirectorStages();
 	}
 
 	/// <summary>

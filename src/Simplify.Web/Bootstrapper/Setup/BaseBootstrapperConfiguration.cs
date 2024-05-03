@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Simplify.DI;
 using Simplify.System;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
 /// Provides the bootstrapper configuration registration.

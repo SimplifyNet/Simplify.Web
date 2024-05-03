@@ -11,7 +11,7 @@ using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.IO;
 using Simplify.Web.StaticFiles.Stages;
 
-namespace Simplify.Web.Bootstrapper;
+namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
 /// Provides the bootstrapper static files registration methods.
