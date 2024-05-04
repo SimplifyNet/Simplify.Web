@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Controllers.RouteMatching.Matcher;
+﻿using Simplify.Web.Controllers.V1.Matcher;
+
+namespace Simplify.Web.Controllers.V1.Matcher;
 
 /// <summary>
 /// Represent a controller path parser.
