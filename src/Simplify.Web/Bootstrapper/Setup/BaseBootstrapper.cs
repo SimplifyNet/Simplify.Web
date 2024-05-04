@@ -29,14 +29,21 @@ public partial class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
+		RegisterControllerExecutorResolver();
+		RegisterControllerExecutorResolverExecutors();
+		RegisterControllersExecutor();
 		RegisterControllerResolutionPipeline();
 		RegisterControllerResolutionPipelineStages();
+		RegisterCrsHandlers();
+		RegisterCrsHandlingPipeline();
 		RegisterEnvironment();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterRequestHandlingPipeline();
 		RegisterRequestHandlingPipelineHandlers();
 		RegisterResponseWriter();
+		RegisterRouteMatcherResolver();
+		RegisterRouteMatcherResolverMatchers();
 		RegisterSecurityChecker();
 		RegisterSecurityRules();
 		RegisterSimplifyWebSettings();
