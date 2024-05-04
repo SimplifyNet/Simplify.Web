@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
+using Simplify.Web.Controllers.Response;
+using Simplify.Web.Controllers.Response.Injection;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
@@ -11,17 +13,6 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
-	/// <summary>
-	/// Registers the controllers executor.
-	/// </summary>
-	public virtual void RegisterControllersExecutor()
-	{
-		if (TypesToExclude.Contains(typeof(IControllersExecutor)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllersExecutor, ControllersExecutor>(LifetimeType.Singleton);
-	}
-
 	public virtual void RegisterControllerExecutorResolver()
 	{
 		if (TypesToExclude.Contains(typeof(IControllerExecutorResolver)))
@@ -39,5 +30,32 @@ public partial class BaseBootstrapper
 			new List<IControllerExecutor>
 			{
 			}, LifetimeType.Singleton);
+	}
+
+	public virtual void RegisterControllerResponseExecutor()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerResponseExecutor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IControllerResponseExecutor, ControllerResponseExecutor>();
+	}
+
+	public virtual void RegisterControllerResponsePropertiesInjector()
+	{
+		if (TypesToExclude.Contains(typeof(IControllerResponsePropertiesInjector)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IControllerResponsePropertiesInjector>(r => new ControllerResponsePropertiesInjector(r));
+	}
+
+	/// <summary>
+	/// Registers the controllers executor.
+	/// </summary>
+	public virtual void RegisterControllersExecutor()
+	{
+		if (TypesToExclude.Contains(typeof(IControllersExecutor)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IControllersExecutor, ControllersExecutor>();
 	}
 }

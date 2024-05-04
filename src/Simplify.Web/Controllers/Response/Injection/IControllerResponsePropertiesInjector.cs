@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Controllers.Response.Injectors;
+﻿namespace Simplify.Web.Controllers.Response.Injection;
 
 /// <summary>
 /// Represents a controller response builder.

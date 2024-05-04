@@ -34,6 +34,8 @@ public partial class BaseBootstrapper
 		RegisterControllersExecutor();
 		RegisterControllerResolutionPipeline();
 		RegisterControllerResolutionPipelineStages();
+		RegisterControllerResponseExecutor();
+		RegisterControllerResponsePropertiesInjector();
 		RegisterCrsHandlers();
 		RegisterCrsHandlingPipeline();
 		RegisterEnvironment();

@@ -3,7 +3,7 @@ using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
 
-namespace Simplify.Web.Controllers.Response.Injectors;
+namespace Simplify.Web.Controllers.Response.Injection;
 
 /// <summary>
 /// Provides the builder for ModulesAccessor objects.

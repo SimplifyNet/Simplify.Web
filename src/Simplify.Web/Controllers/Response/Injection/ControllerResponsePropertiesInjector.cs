@@ -1,7 +1,7 @@
 ﻿using Simplify.DI;
 using Simplify.Web.Http.ResponseWriting;
 
-namespace Simplify.Web.Controllers.Response.Injectors;
+namespace Simplify.Web.Controllers.Response.Injection;
 
 /// <summary>
 /// Provides a controller response builder.

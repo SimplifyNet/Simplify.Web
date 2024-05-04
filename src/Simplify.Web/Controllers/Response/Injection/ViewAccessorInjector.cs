@@ -1,7 +1,7 @@
 ﻿using Simplify.DI;
 using Simplify.Web.Views;
 
-namespace Simplify.Web.Controllers.Response.Injectors;
+namespace Simplify.Web.Controllers.Response.Injection;
 
 /// <summary>
 /// Provides the builder for ViewAccessor objects construction.

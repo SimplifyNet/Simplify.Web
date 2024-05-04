@@ -22,7 +22,7 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IRequestHandlingPipeline)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IRequestHandlingPipeline, RequestHandlingPipeline>(LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<IRequestHandlingPipeline, RequestHandlingPipeline>();
 	}
 
 	public virtual void RegisterRequestHandlingPipelineHandlers()
@@ -40,6 +40,6 @@ public partial class BaseBootstrapper
 				new ControllersHandler(
 					r.Resolve<IWorkOrderBuildDirector>(),
 					r.Resolve<IControllersExecutor>())
-			}, LifetimeType.Singleton);
+			});
 	}
 }
