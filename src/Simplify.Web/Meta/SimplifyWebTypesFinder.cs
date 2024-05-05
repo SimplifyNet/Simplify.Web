@@ -50,30 +50,14 @@ public static class SimplifyWebTypesFinder
 	/// <typeparam name="T"></typeparam>
 	public static IList<Type> FindTypesDerivedFrom<T>() => FindTypesDerivedFrom(typeof(T));
 
+	public static IList<Type> FindTypesDerivedFrom(params Type[] types) => types.SelectMany(x => FindTypesDerivedFrom(x)).ToList();
+
 	/// <summary>
 	/// Finds all the types derived from specified type in the current domain assemblies.
 	/// </summary>
 	/// <param name="type">Type to find types derived from.</param>
 	public static IList<Type> FindTypesDerivedFrom(Type type) =>
-		CurrentDomainAssembliesTypes.Where(t =>
-		{
-			if (t.IsAbstract)
-				return false;
-
-			if (t.BaseType == null)
-				return false;
-
-			if (t.BaseType.IsTypeOf(type))
-				return true;
-
-			if (t.BaseType.BaseType == null)
-				return false;
-
-			if (t.BaseType.BaseType.IsTypeOf(type))
-				return true;
-
-			return false;
-		}).ToList();
+		CurrentDomainAssembliesTypes.Where(t => t.IsTypeDerivedFrom(type)).ToList();
 
 	/// <summary>
 	/// Gets the controller types to ignore.

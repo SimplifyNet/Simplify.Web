@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Simplify.Web.Controllers.V1.Metadata;
 using Simplify.Web.Meta.Controllers.Factory;
 
 namespace Simplify.Web.Meta.Controllers.Loader;
@@ -14,7 +15,10 @@ public class MetadataLoader(IControllerMetadataFactoryResolver resolver) : IMeta
 	/// </summary>
 	public static IMetadataLoader Current
 	{
-		get => _loader ??= new MetadataLoader(new ControllerMetadataFactoryResolver(new List<IControllerMetadataFactory>()));
+		get => _loader ??= new MetadataLoader(new ControllerMetadataFactoryResolver(new List<IControllerMetadataFactory>{
+				new Controller1MetadataFactory()
+			}));
+
 		set => _loader = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
@@ -23,10 +27,7 @@ public class MetadataLoader(IControllerMetadataFactoryResolver resolver) : IMeta
 		var types = SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller2>();
 
 		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(Controller2<>))).ToList();
-		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller>()).ToList();
-		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom<AsyncController>()).ToList();
-		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(Controller<>))).ToList();
-		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(AsyncController<>))).ToList();
+		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(Controller1Types.Types)).ToList();
 
 		return LoadMetadata(types, SimplifyWebTypesFinder.GetControllerTypesToIgnore());
 	}

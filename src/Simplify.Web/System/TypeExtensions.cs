@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Simplify.Web.System;
 
@@ -23,5 +24,27 @@ public static class TypeExtensions
 			default:
 				return false;
 		}
+	}
+
+	public static bool IsTypeDerivedFrom(this Type t, params Type[] types) => types.Any(x => t.IsTypeDerivedFrom(x));
+
+	public static bool IsTypeDerivedFrom(this Type t, Type type)
+	{
+		if (t.IsAbstract)
+			return false;
+
+		if (t.BaseType == null)
+			return false;
+
+		if (t.BaseType.IsTypeOf(type))
+			return true;
+
+		if (t.BaseType.BaseType == null)
+			return false;
+
+		if (t.BaseType.BaseType.IsTypeOf(type))
+			return true;
+
+		return false;
 	}
 }
