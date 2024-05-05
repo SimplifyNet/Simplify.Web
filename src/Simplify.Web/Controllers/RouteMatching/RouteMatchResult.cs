@@ -10,9 +10,8 @@ namespace Simplify.Web.Controllers.RouteMatching;
 /// </remarks>
 /// <param name="matched">if set to <c>true</c> then it means what matching was successful.</param>
 /// <param name="routeParameters">The route parameters.</param>
-public class RouteMatchResult(bool matched = false, IReadOnlyDictionary<string, object>? routeParameters = null) : IRouteMatchResult
+public class RouteMatchResult(bool matched = false, IDictionary<string, object>? routeParameters = null) : IRouteMatchResult
 {
-
 	/// <summary>
 	/// Gets a value indicating whether the route was matched successfully.
 	/// </summary>
@@ -27,5 +26,5 @@ public class RouteMatchResult(bool matched = false, IReadOnlyDictionary<string, 
 	/// <value>
 	/// The route parsed parameters.
 	/// </value>
-	public IReadOnlyDictionary<string, object>? RouteParameters { get; } = routeParameters;
+	public IDictionary<string, object>? RouteParameters { get; } = routeParameters;
 }

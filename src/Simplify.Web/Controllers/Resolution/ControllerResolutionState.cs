@@ -11,7 +11,7 @@ public class ControllerResolutionState(IControllerMetadata initialController)
 
 	public bool IsMatched { get; set; }
 
-	public IReadOnlyDictionary<string, object>? RouteParameters { get; set; }
+	public IDictionary<string, object>? RouteParameters { get; set; }
 
 	public SecurityStatus SecurityStatus { get; set; }
 

@@ -15,5 +15,5 @@ public interface IRouteMatchResult
 	/// <summary>
 	/// Gets the route parsed parameters.
 	/// </summary>
-	IReadOnlyDictionary<string, object>? RouteParameters { get; }
+	IDictionary<string, object>? RouteParameters { get; }
 }
