@@ -57,7 +57,7 @@ public static class SimplifyWebTypesFinder
 	/// </summary>
 	/// <param name="type">Type to find types derived from.</param>
 	public static IList<Type> FindTypesDerivedFrom(Type type) =>
-		CurrentDomainAssembliesTypes.Where(t => t.IsTypeDerivedFrom(type)).ToList();
+		CurrentDomainAssembliesTypes.Where(t => t.IsDerivedFrom(type)).ToList();
 
 	/// <summary>
 	/// Gets the controller types to ignore.

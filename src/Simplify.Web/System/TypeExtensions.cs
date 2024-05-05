@@ -26,9 +26,9 @@ public static class TypeExtensions
 		}
 	}
 
-	public static bool IsTypeDerivedFrom(this Type t, params Type[] types) => types.Any(x => t.IsTypeDerivedFrom(x));
+	public static bool IsDerivedFrom(this Type t, params Type[] types) => types.Any(x => t.IsDerivedFrom(x));
 
-	public static bool IsTypeDerivedFrom(this Type t, Type type)
+	public static bool IsDerivedFrom(this Type t, Type type)
 	{
 		if (t.IsAbstract)
 			return false;
