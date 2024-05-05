@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Utils.Types;
+namespace Simplify.Web.System;
 
 /// <summary>
 /// Provides the Type extensions

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Simplify.Web.Utils.Assemblies;
+namespace Simplify.Web.System;
 
 /// <summary>
 /// Provides the Assembly filter extensions

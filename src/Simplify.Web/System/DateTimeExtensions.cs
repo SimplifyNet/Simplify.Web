@@ -1,6 +1,6 @@
 using System;
 
-namespace Simplify.Web.Utils.DateTimes;
+namespace Simplify.Web.System;
 
 public static class DateTimeExtensions
 {

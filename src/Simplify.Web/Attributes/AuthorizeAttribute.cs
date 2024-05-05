@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Simplify.Web.Utils.Strings;
+using Simplify.Web.System;
 
 namespace Simplify.Web.Attributes;
 

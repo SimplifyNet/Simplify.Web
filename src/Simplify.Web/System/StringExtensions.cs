@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Simplify.Web.Utils.Strings;
+namespace Simplify.Web.System;
 
 /// <summary>
 /// Provides String extensions

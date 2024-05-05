@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Simplify.Web.Http;
 
-namespace Simplify.Web.Utils;
+namespace Simplify.Web.Http;
 
 public static class Converter
 {
