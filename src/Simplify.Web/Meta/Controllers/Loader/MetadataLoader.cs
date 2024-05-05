@@ -5,7 +5,7 @@ using Simplify.Web.Meta.Controllers.Factory;
 
 namespace Simplify.Web.Meta.Controllers.Loader;
 
-public class MetadataLoader(IControllerMetaDataFactoryResolver resolver) : IMetadataLoader
+public class MetadataLoader(IControllerMetadataFactoryResolver resolver) : IMetadataLoader
 {
 	private static IMetadataLoader? _loader;
 
@@ -14,7 +14,7 @@ public class MetadataLoader(IControllerMetaDataFactoryResolver resolver) : IMeta
 	/// </summary>
 	public static IMetadataLoader Current
 	{
-		get => _loader ??= new MetadataLoader(new ControllerMetaDataFactoryResolver(new List<IControllerMetaDataFactory>()));
+		get => _loader ??= new MetadataLoader(new ControllerMetadataFactoryResolver(new List<IControllerMetadataFactory>()));
 		set => _loader = value ?? throw new ArgumentNullException(nameof(value));
 	}
 

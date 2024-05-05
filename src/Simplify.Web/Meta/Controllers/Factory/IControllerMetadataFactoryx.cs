@@ -5,7 +5,7 @@ namespace Simplify.Web.Meta.Controllers.Factory;
 /// <summary>
 /// Represents a controller metadata creator.
 /// </summary>
-public interface IControllerMetaDataFactory
+public interface IControllerMetadataFactory
 {
 	/// <summary>
 	/// Determines whether this factory can create a metadata fro specified type

@@ -5,11 +5,11 @@ namespace Simplify.Web.Meta.Controllers.Factory;
 /// <summary>
 /// Represents controller metadata factories resolver
 /// </summary>
-public interface IControllerMetaDataFactoryResolver
+public interface IControllerMetadataFactoryResolver
 {
 	/// <summary>
 	/// Resolves the controller metadata factory for specified type.
 	/// </summary>
 	/// <param name="controllerType">Type of the controller.</param>
-	IControllerMetaDataFactory Resolve(Type controllerType);
+	IControllerMetadataFactory Resolve(Type controllerType);
 }
