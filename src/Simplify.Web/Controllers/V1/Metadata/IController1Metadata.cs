@@ -1,4 +1,6 @@
-﻿namespace Simplify.Web.Meta.Controllers.V1;
+﻿using Simplify.Web.Meta.Controllers;
+
+namespace Simplify.Web.Controllers.V1.Metadata;
 
 /// <summary>
 /// Represent a controller v1 metadata information.

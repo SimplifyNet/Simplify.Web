@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using Simplify.Web.Controllers.RouteMatching;
+using Simplify.Web.Controllers.V1.Metadata;
 using Simplify.Web.Meta.Controllers;
-using Simplify.Web.Meta.Controllers.V1;
 
 namespace Simplify.Web.Controllers.V1.Matcher;
 

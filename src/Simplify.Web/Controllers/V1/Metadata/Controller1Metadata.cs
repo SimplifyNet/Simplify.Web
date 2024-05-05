@@ -1,6 +1,7 @@
 ﻿using System;
+using Simplify.Web.Meta;
 
-namespace Simplify.Web.Meta.Controllers.V1;
+namespace Simplify.Web.Controllers.V1.Metadata;
 
 /// <summary>
 /// Provides the controller v1 metadata information.
