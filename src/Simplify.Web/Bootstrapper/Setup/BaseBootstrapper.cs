@@ -29,6 +29,7 @@ public partial class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
+		RegisterController1PathParser();
 		RegisterControllerExecutorResolver();
 		RegisterControllerExecutorResolverExecutors();
 		RegisterControllersExecutor();

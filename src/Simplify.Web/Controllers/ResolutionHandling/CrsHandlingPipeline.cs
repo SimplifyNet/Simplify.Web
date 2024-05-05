@@ -9,7 +9,10 @@ public class CrsHandlingPipeline(IReadOnlyList<ICrsHandler> handlers) : ICrsHand
 {
 	public bool Execute(ControllerResolutionState state, WorkOrderBuilder builder)
 	{
-		var handler = handlers.First(x => x.CanHandle(state));
+		var handler = handlers.FirstOrDefault(x => x.CanHandle(state));
+
+		if (handler == null)
+			return false;
 
 		handler.Execute(state, builder);
 
