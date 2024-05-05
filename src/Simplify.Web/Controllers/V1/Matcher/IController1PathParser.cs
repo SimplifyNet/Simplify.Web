@@ -3,9 +3,9 @@
 namespace Simplify.Web.Controllers.V1.Matcher;
 
 /// <summary>
-/// Represent a controller path parser.
+/// Represent a controller v1 path parser.
 /// </summary>
-public interface IControllerPathParser
+public interface IController1PathParser
 {
 	/// <summary>
 	/// Parses the specified controller path.

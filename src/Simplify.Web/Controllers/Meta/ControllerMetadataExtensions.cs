@@ -6,7 +6,7 @@ namespace Simplify.Web.Controllers.Meta;
 public static class ControllerMetadataRouteExtensions
 {
 	public static IEnumerable<IControllerMetadata> GetStandardControllers(this IEnumerable<IControllerMetadata> list) => list
-	.Where(x => !x.IsSpecialController());
+		.Where(x => !x.IsSpecialController());
 
 	public static IEnumerable<IControllerMetadata> GetRoutedControllers(this IEnumerable<IControllerMetadata> list) => list
 		.GetStandardControllers()
@@ -27,8 +27,8 @@ public static class ControllerMetadataRouteExtensions
 		};
 
 	public static bool IsSpecialController(this IControllerMetadata x) =>
-		x.Role!.Is403Handler ||
-		x.Role!.Is404Handler;
+		x.Role is { Is403Handler: true } ||
+		x.Role is { Is404Handler: true };
 
 	public static bool ContainsRoute(this IControllerMetadata x) =>
 		x.ExecParameters!.Routes.Any(x => !string.IsNullOrEmpty(x.Value));

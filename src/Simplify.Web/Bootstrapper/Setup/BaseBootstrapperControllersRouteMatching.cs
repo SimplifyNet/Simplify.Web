@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.RouteMatching;
+using Simplify.Web.Controllers.V1.Matcher;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
@@ -27,6 +28,7 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IRouteMatcher>>(r =>
 			new List<IRouteMatcher>
 			{
+				new Controller1RouteMatcher(r.Resolve<IController1PathParser>())
 			}, LifetimeType.Singleton);
 	}
 }

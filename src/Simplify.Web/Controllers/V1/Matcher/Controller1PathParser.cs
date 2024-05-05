@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 namespace Simplify.Web.Controllers.V1.Matcher;
 
 /// <summary>
-/// Provides the controller path parser.
+/// Provides the controller v1 path parser.
 /// </summary>
-public class ControllerPathParser : IControllerPathParser
+public class Controller1PathParser : IController1PathParser
 {
 	/// <summary>
 	/// Parses the specified controller path.

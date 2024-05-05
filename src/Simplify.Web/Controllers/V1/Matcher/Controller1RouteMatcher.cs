@@ -15,9 +15,9 @@ namespace Simplify.Web.Controllers.V1.Matcher;
 /// Initializes a new instance of the <see cref="RouteMatcher"/> class.
 /// </remarks>
 /// <param name="controllerPathParser">The controller path parser.</param>
-public class RouteMatcher(IControllerPathParser controllerPathParser) : IRouteMatcher
+public class Controller1RouteMatcher(IController1PathParser controllerPathParser) : IRouteMatcher
 {
-	private readonly IControllerPathParser _controllerPathParser = controllerPathParser;
+	private readonly IController1PathParser _controllerPathParser = controllerPathParser;
 
 	public bool CanHandle(IControllerMetadata controller) => controller is IController1Metadata;
 
