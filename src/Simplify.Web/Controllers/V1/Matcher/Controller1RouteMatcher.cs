@@ -65,8 +65,7 @@ public class Controller1RouteMatcher(IController1PathParser controllerPathParser
 			}
 		}
 
-		// Return string value
-		return new RouteMatchResult(true, (IReadOnlyDictionary<string, object>)routeParameters);
+		return new RouteMatchResult(true, routeParameters.ToDictionary(x => x.Key, x => x.Value));
 	}
 
 	private static object? GetParameterValue(PathParameter pathParameter, string source)
