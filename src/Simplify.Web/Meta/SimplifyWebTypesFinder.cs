@@ -13,7 +13,7 @@ namespace Simplify.Web.Meta;
 public static class SimplifyWebTypesFinder
 {
 	private static Assembly[]? _currentDomainAssemblies;
-	private static IEnumerable<Type>? _currentDomainAssembliesTypes;
+	private static IList<Type>? _currentDomainAssembliesTypes;
 
 	/// <summary>
 	/// Gets or sets the excluded assemblies prefixes.
@@ -29,8 +29,9 @@ public static class SimplifyWebTypesFinder
 		"Simplify"
 	];
 
-	private static IEnumerable<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ??= AppDomain.CurrentDomain.GetAssemblies();
-	private static IEnumerable<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes ??= CurrentDomainAssemblies.GetAssembliesTypes(ExcludedAssembliesPrefixes);
+	private static IList<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ??= AppDomain.CurrentDomain.GetAssemblies();
+	private static IList<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes
+		??= CurrentDomainAssemblies.GetAssembliesTypes(ExcludedAssembliesPrefixes).ToList();
 
 	/// <summary>
 	/// Finds the type derived from specified type in the current domain assemblies.
@@ -75,28 +76,35 @@ public static class SimplifyWebTypesFinder
 		}).ToList();
 
 	/// <summary>
-	/// Gets all the types.
+	/// Gets the controller types to ignore.
 	/// </summary>
-	public static IList<Type> GetAllTypes() => CurrentDomainAssembliesTypes.ToList();
+	public static IEnumerable<Type> GetControllerTypesToIgnore()
+	{
+		var ignoreContainingClass = CurrentDomainAssembliesTypes
+			.FirstOrDefault(t => t.IsDefined(typeof(IgnoreControllersAttribute), true));
+
+		if (ignoreContainingClass == null)
+			return new List<Type>();
+
+		var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreControllersAttribute), false);
+
+		return ((IgnoreControllersAttribute)attributes[0]).Types;
+	}
 
 	/// <summary>
 	/// Gets the types to ignore.
 	/// </summary>
-	public static IList<Type> GetTypesToIgnore()
+	public static IEnumerable<Type> GetTypesToIgnore()
 	{
-		var typesToIgnore = new List<Type>();
-
-		var ignoreContainingClass = GetAllTypes()
+		var ignoreContainingClass = CurrentDomainAssembliesTypes
 			.FirstOrDefault(t => t.IsDefined(typeof(IgnoreTypesRegistrationAttribute), true));
 
 		if (ignoreContainingClass == null)
-			return typesToIgnore;
+			return new List<Type>();
 
 		var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreTypesRegistrationAttribute), false);
 
-		typesToIgnore.AddRange(((IgnoreTypesRegistrationAttribute)attributes[0]).Types);
-
-		return typesToIgnore;
+		return ((IgnoreTypesRegistrationAttribute)attributes[0]).Types;
 	}
 
 	/// <summary>

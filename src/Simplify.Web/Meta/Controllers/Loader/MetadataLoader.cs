@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplify.Web.Attributes.Setup;
 using Simplify.Web.Meta.Controllers.Factory;
 
 namespace Simplify.Web.Meta.Controllers.Loader;
@@ -29,25 +28,11 @@ public class MetadataLoader(IControllerMetaDataFactoryResolver resolver) : IMeta
 		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(Controller<>))).ToList();
 		types = types.Concat(SimplifyWebTypesFinder.FindTypesDerivedFrom(typeof(AsyncController<>))).ToList();
 
-		return LoadMetadata(types, GetTypesToIgnore());
+		return LoadMetadata(types, SimplifyWebTypesFinder.GetControllerTypesToIgnore());
 	}
 
 	private IReadOnlyList<IControllerMetadata> LoadMetadata(IEnumerable<Type> types, IEnumerable<Type> typesToIgnore) =>
 		types.Where(t => typesToIgnore.All(x => x.FullName != t.FullName))
 			.Select(t => resolver.Resolve(t).Create(t))
 			.ToList();
-
-	private static IEnumerable<Type> GetTypesToIgnore()
-	{
-		var ignoreContainingClass = SimplifyWebTypesFinder
-									.GetAllTypes()
-									.FirstOrDefault(t => t.IsDefined(typeof(IgnoreControllersAttribute), true));
-
-		if (ignoreContainingClass == null)
-			return new List<Type>();
-
-		var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreControllersAttribute), false);
-
-		return ((IgnoreControllersAttribute)attributes[0]).Types;
-	}
 }
