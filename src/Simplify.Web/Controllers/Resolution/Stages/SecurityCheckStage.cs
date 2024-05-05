@@ -8,7 +8,7 @@ public class SecurityCheckStage(ISecurityChecker securityChecker) : IControllerR
 {
 	public void Execute(ControllerResolutionState state, HttpContext context, Action stopExecution)
 	{
-		state.SecurityStatus = securityChecker.CheckSecurityRules(state.ControllerMetadata, context.User);
+		state.SecurityStatus = securityChecker.CheckSecurityRules(state.Controller, context.User);
 
 		if (state.SecurityStatus != SecurityStatus.Ok)
 			stopExecution();

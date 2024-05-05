@@ -7,7 +7,7 @@ namespace Simplify.Web.Controllers.Resolution;
 
 public class ControllerResolutionState(IControllerMetadata initialController)
 {
-	public IControllerMetadata ControllerMetadata { get; } = initialController;
+	public IControllerMetadata Controller { get; } = initialController;
 
 	public bool IsMatched { get; set; }
 
@@ -17,9 +17,9 @@ public class ControllerResolutionState(IControllerMetadata initialController)
 
 	public IMatchedController ToMatchedController()
 	{
-		if (ControllerMetadata == null)
+		if (Controller == null)
 			throw new InvalidOperationException("ControllerMetadata is null");
 
-		return new MatchedController(ControllerMetadata, RouteParameters);
+		return new MatchedController(Controller, RouteParameters);
 	}
 }

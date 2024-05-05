@@ -57,7 +57,7 @@ public abstract class ControllerMetadata(Type controllerType) : IControllerMetad
 	{
 		var routeInfo = new Dictionary<HttpMethod, string>();
 
-		foreach (var item in Relations.HttpMethodToHttpMethodAttributeRelations)
+		foreach (var item in Relations.HttpMethodToHttpMethodAttributeRelation)
 		{
 			var attributes = controllerType.GetCustomAttributes(item.Value, false);
 
