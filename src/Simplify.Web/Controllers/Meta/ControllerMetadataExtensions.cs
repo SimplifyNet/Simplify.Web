@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Simplify.Web.Meta.Controllers;
+namespace Simplify.Web.Controllers.Meta;
 
 public static class ControllerMetadataRouteExtensions
 {

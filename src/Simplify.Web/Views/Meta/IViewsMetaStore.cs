@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Simplify.Web.Meta.Views;
+namespace Simplify.Web.Views.Meta;
 
 /// <summary>
 /// Represent a views meta store.

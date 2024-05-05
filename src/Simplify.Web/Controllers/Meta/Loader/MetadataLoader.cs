@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Simplify.Web.Controllers.Meta.Factory;
 using Simplify.Web.Controllers.V1.Metadata;
-using Simplify.Web.Meta.Controllers.Factory;
+using Simplify.Web.System;
 
-namespace Simplify.Web.Meta.Controllers.Loader;
+namespace Simplify.Web.Controllers.Meta.Loader;
 
 public class MetadataLoader(IControllerMetadataFactoryResolver resolver) : IMetadataLoader
 {

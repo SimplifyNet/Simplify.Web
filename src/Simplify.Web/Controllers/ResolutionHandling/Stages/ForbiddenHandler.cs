@@ -1,7 +1,7 @@
 using System.Net;
 using Simplify.Web.Controllers.ExecutionWorkOrder;
 using Simplify.Web.Controllers.Resolution;
-using Simplify.Web.Meta.Controllers;
+using Simplify.Web.Controllers.Meta.MetaStore;
 
 namespace Simplify.Web.Controllers.ResolutionHandling.Stages;
 

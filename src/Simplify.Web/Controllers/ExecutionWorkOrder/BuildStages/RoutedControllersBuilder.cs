@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.ResolutionHandling;
-using Simplify.Web.Meta.Controllers;
+using Simplify.Web.Controllers.Meta.MetaStore;
 
 namespace Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
 

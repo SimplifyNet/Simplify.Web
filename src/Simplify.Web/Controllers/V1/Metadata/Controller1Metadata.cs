@@ -1,5 +1,5 @@
 ﻿using System;
-using Simplify.Web.Meta;
+using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.V1.Metadata;
 

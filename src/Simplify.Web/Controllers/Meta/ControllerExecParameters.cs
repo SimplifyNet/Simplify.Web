@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Simplify.Web.Http;
 
-namespace Simplify.Web.Meta.Controllers;
+namespace Simplify.Web.Controllers.Meta;
 
 /// <summary>
 /// Provides the controller execution parameters,

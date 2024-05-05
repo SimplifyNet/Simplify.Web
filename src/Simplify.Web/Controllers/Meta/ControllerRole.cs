@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Meta.Controllers;
+﻿namespace Simplify.Web.Controllers.Meta;
 
 /// <summary>
 /// Provides the controller specific roles.

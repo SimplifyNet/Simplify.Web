@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Simplify.Web.Meta.Controllers;
+namespace Simplify.Web.Controllers.Meta.Loader;
 
 public interface IMetadataLoader
 {

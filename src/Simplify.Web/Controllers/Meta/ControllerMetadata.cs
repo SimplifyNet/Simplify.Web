@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Simplify.Web.Attributes;
 using Simplify.Web.Http;
-using Simplify.Web.Meta.Controllers;
+using Simplify.Web.Controllers.Meta;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.Controllers.Meta;
 
 /// <summary>
 /// Provides the controller base metadata information.

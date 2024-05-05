@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Simplify.Web.Meta.Controllers.Factory;
+namespace Simplify.Web.Controllers.Meta.Factory;
 
 public class ControllerMetadataFactoryResolver(IEnumerable<IControllerMetadataFactory> factories) : IControllerMetadataFactoryResolver
 {

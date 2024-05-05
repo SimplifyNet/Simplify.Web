@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Simplify.Web.Meta.Controllers;
+using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers;
 

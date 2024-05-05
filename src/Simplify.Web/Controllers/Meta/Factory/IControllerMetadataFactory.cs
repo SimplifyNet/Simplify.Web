@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Meta.Controllers.Factory;
+namespace Simplify.Web.Controllers.Meta.Factory;
 
 /// <summary>
 /// Represents a controller metadata creator.

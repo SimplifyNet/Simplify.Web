@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplify.Web.Meta.Controllers;
+using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.Execution;
 

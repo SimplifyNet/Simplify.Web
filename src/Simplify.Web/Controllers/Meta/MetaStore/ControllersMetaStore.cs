@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplify.Web.Meta.Controllers.Loader;
+using Simplify.Web.Controllers.Meta.Loader;
 
-namespace Simplify.Web.Meta.Controllers;
+namespace Simplify.Web.Controllers.Meta.MetaStore;
 
 /// <summary>
 /// Provides the controllers meta information container.

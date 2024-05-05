@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Simplify.Web.Meta.Controllers;
+using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.Security.Rules;
 

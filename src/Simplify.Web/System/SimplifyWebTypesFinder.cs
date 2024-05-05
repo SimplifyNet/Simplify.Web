@@ -5,7 +5,7 @@ using System.Reflection;
 using Simplify.Web.Attributes.Setup;
 using Simplify.Web.System;
 
-namespace Simplify.Web.Meta;
+namespace Simplify.Web.System;
 
 /// <summary>
 /// Provides the Simplify.Web types finder among all loaded assemblies.
@@ -41,7 +41,7 @@ public static class SimplifyWebTypesFinder
 	{
 		var type = typeof(T);
 
-		return CurrentDomainAssembliesTypes.FirstOrDefault(t => t.BaseType != null && t.BaseType.FullName == type.FullName);
+		return CurrentDomainAssembliesTypes.FirstOrDefault(t => t.IsDerivedFrom(type));
 	}
 
 	/// <summary>
