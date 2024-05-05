@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Simplify.Web.Meta.Controllers.Extensions;
 
-namespace Simplify.Web.Meta.Controllers.MetaStore.Extensions;
+namespace Simplify.Web.Meta.Controllers;
 
-public static class ControllerMetadataFilterExtensions
+public static class ControllerMetadataRouteExtensions
 {
 	public static IEnumerable<IControllerMetadata> GetStandardControllers(this IEnumerable<IControllerMetadata> list) => list
-		.Where(x => !x.IsSpecialController());
+	.Where(x => !x.IsSpecialController());
 
 	public static IEnumerable<IControllerMetadata> GetRoutedControllers(this IEnumerable<IControllerMetadata> list) => list
 		.GetStandardControllers()
@@ -26,4 +25,11 @@ public static class ControllerMetadataFilterExtensions
 				x.Role is { Is404Handler: true }),
 			_ => null
 		};
+
+	public static bool IsSpecialController(this IControllerMetadata x) =>
+		x.Role!.Is403Handler ||
+		x.Role!.Is404Handler;
+
+	public static bool ContainsRoute(this IControllerMetadata x) =>
+		x.ExecParameters!.Routes.Any(x => !string.IsNullOrEmpty(x.Value));
 }

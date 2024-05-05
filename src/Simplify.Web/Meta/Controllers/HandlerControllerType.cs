@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Meta.Controllers.MetaStore.Extensions;
+﻿namespace Simplify.Web.Meta.Controllers;
 
 /// <summary>
 /// Provides the handler controller types.
