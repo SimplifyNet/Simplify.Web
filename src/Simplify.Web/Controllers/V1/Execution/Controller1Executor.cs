@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Execution;
@@ -18,25 +19,13 @@ public class Controller1Executor(IController1Factory controllerFactory) : IContr
 
 	public async Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController, HttpContext context)
 	{
-		ControllerResponse? response = null;
-
 		var controller = _controllerFactory.CreateController(matchedController);
 
-		switch (controller)
+		return controller switch
 		{
-			case SyncControllerBase syncController:
-				{
-					response = syncController.Invoke();
-					break;
-				}
-
-			case AsyncControllerBase asyncController:
-				{
-					response = await asyncController.Invoke();
-					break;
-				}
-		}
-
-		return response;
+			SyncControllerBase syncController => syncController.Invoke(),
+			AsyncControllerBase asyncController => await asyncController.Invoke(),
+			_ => throw new InvalidOperationException($"Incorrect controller base class, controller type: {matchedController.Controller.GetType().Name}"),
+		};
 	}
 }
