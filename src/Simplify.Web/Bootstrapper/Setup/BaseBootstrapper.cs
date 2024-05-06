@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Meta.MetaStore;
-using Simplify.Web.Settings;
 using Simplify.Web.System;
+using Simplify.Web.Views.Meta;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
@@ -29,7 +29,7 @@ public partial class BaseBootstrapper
 		// Registering non Simplify.Web types
 		RegisterConfiguration();
 
-		// Registering Simplify.Web core types
+		// Registering Simplify.Web types
 
 		RegisterIController1Factory();
 		RegisterController1PathParser();
@@ -60,6 +60,7 @@ public partial class BaseBootstrapper
 		RegisterStopwatchProvider();
 		RegisterStringTable();
 		RegisterTemplateFactory();
+		RegisterViewFactory();
 		RegisterWebContextProvider();
 		RegisterWorkOrderBuildDirector();
 		RegisterWorkOrderBuildDirectorStages();
@@ -81,13 +82,13 @@ public partial class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the Simplify.Web settings.
+	/// Registers the views.
 	/// </summary>
-	public virtual void RegisterSimplifyWebSettings()
+	/// <param name="typesToIgnore">The types to ignore.</param>
+	public virtual void RegisterViews(IEnumerable<Type> typesToIgnore)
 	{
-		if (TypesToExclude.Contains(typeof(ISimplifyWebSettings)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<ISimplifyWebSettings, SimplifyWebSettings>(LifetimeType.Singleton);
+		foreach (var viewType in ViewsMetaStore.Current.ViewsTypes
+			.Where(viewType => typesToIgnore.All(x => x != viewType)))
+			BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
 	}
 }
