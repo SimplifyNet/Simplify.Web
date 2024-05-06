@@ -33,10 +33,11 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IWorkOrderBuildStage>>(r =>
 			new List<IWorkOrderBuildStage>
 			{
-				new GlobalControllersBuilder(),
 				new RoutedControllersBuilder(
 					r.Resolve<IControllerResolutionPipeline>(),
-					r.Resolve<ICrsHandlingPipeline>())
+					r.Resolve<ICrsHandlingPipeline>()),
+				new NotFoundBuilder(),
+				new GlobalControllersBuilder()
 			}, LifetimeType.Singleton);
 	}
 }
