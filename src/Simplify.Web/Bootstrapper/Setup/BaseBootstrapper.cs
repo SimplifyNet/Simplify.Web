@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
+using Simplify.Web.Controllers.Meta.MetaStore;
 using Simplify.Web.Settings;
+using Simplify.Web.System;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
@@ -29,6 +31,7 @@ public partial class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
+		RegisterIController1Factory();
 		RegisterController1PathParser();
 		RegisterControllerExecutorResolver();
 		RegisterControllerExecutorResolverExecutors();
@@ -60,6 +63,21 @@ public partial class BaseBootstrapper
 		RegisterWebContextProvider();
 		RegisterWorkOrderBuildDirector();
 		RegisterWorkOrderBuildDirectorStages();
+
+		var typesToIgnore = SimplifyWebTypesFinder.GetIgnoredIocRegistrationTypes();
+
+		RegisterControllers(typesToIgnore);
+	}
+
+	/// <summary>
+	/// Registers the controllers.
+	/// </summary>
+	/// <param name="typesToIgnore">The types to ignore.</param>
+	public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
+	{
+		foreach (var controller in ControllersMetaStore.Current.AllControllers
+			.Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
+			BootstrapperFactory.ContainerProvider.Register(controller.ControllerType, LifetimeType.Transient);
 	}
 
 	/// <summary>

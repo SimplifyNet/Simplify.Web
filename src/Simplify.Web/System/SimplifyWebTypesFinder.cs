@@ -48,9 +48,9 @@ public static class SimplifyWebTypesFinder
 	/// Finds the all types derived from specified type in the current domain assemblies.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public static IList<Type> FindTypesDerivedFrom<T>() => FindTypesDerivedFrom(typeof(T));
+	public static IEnumerable<Type> FindTypesDerivedFrom<T>() => FindTypesDerivedFrom(typeof(T));
 
-	public static IList<Type> FindTypesDerivedFrom(params Type[] types) => types.SelectMany(x => FindTypesDerivedFrom(x)).ToList();
+	public static IEnumerable<Type> FindTypesDerivedFrom(params Type[] types) => types.SelectMany(FindTypesDerivedFrom);
 
 	/// <summary>
 	/// Finds all the types derived from specified type in the current domain assemblies.
@@ -78,7 +78,7 @@ public static class SimplifyWebTypesFinder
 	/// <summary>
 	/// Gets the types to ignore.
 	/// </summary>
-	public static IEnumerable<Type> GetTypesToIgnore()
+	public static IEnumerable<Type> GetIgnoredIocRegistrationTypes()
 	{
 		var ignoreContainingClass = CurrentDomainAssembliesTypes
 			.FirstOrDefault(t => t.IsDefined(typeof(IgnoreTypesRegistrationAttribute), true));
