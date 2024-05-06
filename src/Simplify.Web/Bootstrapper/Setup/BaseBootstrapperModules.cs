@@ -4,7 +4,9 @@ using Simplify.DI;
 using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Data;
+using Simplify.Web.Modules.Data.Html;
 using Simplify.Web.Modules.Localization;
+using Simplify.Web.Modules.Redirection;
 using Simplify.Web.Settings;
 
 namespace Simplify.Web.Bootstrapper.Setup;
@@ -14,6 +16,25 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the data collector.
+	/// </summary>
+	public virtual void RegisterDataCollector()
+	{
+		if (TypesToExclude.Contains(typeof(IDataCollector)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IDataCollector>(r =>
+		{
+			var settings = r.Resolve<ISimplifyWebSettings>();
+
+			return new DataCollector(
+				settings.DefaultMainContentVariableName,
+				settings.DefaultTitleVariableName,
+				r.Resolve<IStringTable>());
+		});
+	}
+
 	/// <summary>
 	/// Registers the environment.
 	/// </summary>
@@ -56,6 +77,29 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(r =>
 			new LanguageManagerProvider(r.Resolve<ISimplifyWebSettings>()));
+	}
+
+
+	/// <summary>
+	/// Registers the list generator.
+	/// </summary>
+	public virtual void RegisterListsGenerator()
+	{
+		if (TypesToExclude.Contains(typeof(IListsGenerator)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IListsGenerator, ListsGenerator>();
+	}
+
+	/// <summary>
+	/// Registers the redirector.
+	/// </summary>
+	public virtual void RegisterRedirector()
+	{
+		if (TypesToExclude.Contains(typeof(IRedirector)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IRedirector>(r => new Redirector(r.Resolve<IWebContextProvider>().Get()));
 	}
 
 	/// <summary>

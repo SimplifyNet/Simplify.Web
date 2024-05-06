@@ -42,9 +42,12 @@ public partial class BaseBootstrapper
 		RegisterControllerResponsePropertiesInjector();
 		RegisterCrsHandlers();
 		RegisterCrsHandlingPipeline();
+		RegisterDataCollector();
 		RegisterEnvironment();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
+		RegisterListsGenerator();
+		RegisterRedirector();
 		RegisterRequestHandlingPipeline();
 		RegisterRequestHandlingPipelineHandlers();
 		RegisterResponseWriter();
