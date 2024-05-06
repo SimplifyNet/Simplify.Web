@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Simplify.Web.Controllers.ExecutionWorkOrder;
+namespace Simplify.Web.Controllers;
 
 public static class MatchedControllersExtensions
 {

@@ -8,10 +8,10 @@ public enum HandlerControllerType
 	/// <summary>
 	/// The HTTP 404 handler.
 	/// </summary>
-	Http404Handler,
+	NotFoundHandler,
 
 	/// <summary>
 	/// The HTTP 403 handler.
 	/// </summary>
-	Http403Handler
+	ForbiddenHandler
 }

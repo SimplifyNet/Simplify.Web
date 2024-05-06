@@ -15,9 +15,9 @@ public class ForbiddenHandler : ICrsHandler
 	{
 		builder.Controllers.Clear();
 
-		if (ControllersMetaStore.Current.Controller403 == null)
+		if (ControllersMetaStore.Current.ForbiddenController == null)
 			builder.HttpStatusCode = HttpStatusCode.Forbidden;
 		else
-			builder.Controllers.Add(ControllersMetaStore.Current.Controller403.ToMatchedController());
+			builder.Controllers.Add(ControllersMetaStore.Current.ForbiddenController.ToMatchedController());
 	}
 }

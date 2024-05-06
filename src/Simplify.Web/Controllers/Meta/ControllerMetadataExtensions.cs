@@ -19,16 +19,16 @@ public static class ControllerMetadataRouteExtensions
 	public static IControllerMetadata? GetHandlerController(this IEnumerable<IControllerMetadata> list, HandlerControllerType controllerType) =>
 		controllerType switch
 		{
-			HandlerControllerType.Http403Handler => list.GetStandardControllers().FirstOrDefault(x =>
-				x.Role is { Is403Handler: true }),
-			HandlerControllerType.Http404Handler => list.GetStandardControllers().FirstOrDefault(x =>
-				x.Role is { Is404Handler: true }),
+			HandlerControllerType.ForbiddenHandler => list.GetStandardControllers().FirstOrDefault(x =>
+				x.Role is { IsForbiddenHandler: true }),
+			HandlerControllerType.NotFoundHandler => list.GetStandardControllers().FirstOrDefault(x =>
+				x.Role is { IsNotFoundHandler: true }),
 			_ => null
 		};
 
 	public static bool IsSpecialController(this IControllerMetadata x) =>
-		x.Role is { Is403Handler: true } ||
-		x.Role is { Is404Handler: true };
+		x.Role is { IsForbiddenHandler: true } ||
+		x.Role is { IsNotFoundHandler: true };
 
 	public static bool ContainsRoute(this IControllerMetadata x) =>
 		x.ExecParameters!.Routes.Any(x => !string.IsNullOrEmpty(x.Value));

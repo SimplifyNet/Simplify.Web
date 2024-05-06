@@ -14,9 +14,9 @@ public class NotFoundBuilder : IWorkOrderBuildStage
 		if (builder.Controllers.Count > 0)
 			return;
 
-		if (ControllersMetaStore.Current.Controller404 == null)
+		if (ControllersMetaStore.Current.NotFoundController == null)
 			builder.HttpStatusCode = HttpStatusCode.NotFound;
 		else
-			builder.Controllers.Add(ControllersMetaStore.Current.Controller404.ToMatchedController());
+			builder.Controllers.Add(ControllersMetaStore.Current.NotFoundController.ToMatchedController());
 	}
 }

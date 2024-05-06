@@ -27,10 +27,10 @@ public interface IControllersMetaStore
 	/// <summary>
 	/// Gets the controller for handling HTTP 403 status.
 	/// </summary>
-	IControllerMetadata? Controller403 { get; }
+	IControllerMetadata? ForbiddenController { get; }
 
 	/// <summary>
 	/// Gets the controller for handling HTTP 404 status.
 	/// </summary>
-	IControllerMetadata? Controller404 { get; }
+	IControllerMetadata? NotFoundController { get; }
 }
