@@ -2,6 +2,7 @@
 using Simplify.DI;
 using Simplify.Web.Controllers.Response.Injection;
 using Simplify.Web.Modules.Data;
+using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.V1.Execution;
 
@@ -22,7 +23,7 @@ public class Controller1Factory(IDIResolver resolver) : ActionModulesAccessorInj
 
 		InjectActionModulesAccessorProperties(controller);
 
-		controller.RouteParameters = matchedController.RouteParameters ?? new ExpandoObject()!;
+		controller.RouteParameters = matchedController.RouteParameters!.ToExpandoObject() ?? new ExpandoObject()!;
 		controller.StringTable = _resolver.Resolve<IStringTable>().Items;
 
 		return controller;

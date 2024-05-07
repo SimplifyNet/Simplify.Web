@@ -7,5 +7,5 @@ public interface IMatchedController
 {
 	public IControllerMetadata Controller { get; }
 
-	public IDictionary<string, object>? RouteParameters { get; }
+	public IReadOnlyDictionary<string, object>? RouteParameters { get; }
 }

@@ -6,7 +6,7 @@ namespace Simplify.Web.Controllers.ExecutionWorkOrder;
 
 public class WorkOrderBuilder
 {
-	public List<IMatchedController> Controllers { get; set; } = [];
+	public List<IMatchedController> Controllers { get; private set; } = [];
 
 	public HttpStatusCode? HttpStatusCode { get; set; }
 

@@ -43,7 +43,7 @@ public class Controller1RouteMatcher(IController1PathParser controllerPathParser
 		if (currentPathItems.Length != controllerPathParsed.Items.Count)
 			return new RouteMatchResult();
 
-		IDictionary<string, object> routeParameters = new ExpandoObject()!;
+		IDictionary<string, object> routeParameters = new Dictionary<string, object>();
 
 		for (var i = 0; i < controllerPathParsed.Items.Count; i++)
 		{
@@ -65,7 +65,7 @@ public class Controller1RouteMatcher(IController1PathParser controllerPathParser
 			}
 		}
 
-		return new RouteMatchResult(true, routeParameters.ToDictionary(x => x.Key, x => x.Value));
+		return new RouteMatchResult(true, (IReadOnlyDictionary<string, object>)routeParameters);
 	}
 
 	private static object? GetParameterValue(PathParameter pathParameter, string source)
