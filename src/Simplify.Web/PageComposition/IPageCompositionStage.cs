@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.PageComposition;
 
-public interface IPageRenderingStage
+public interface IPageCompositionStage
 {
 	Task ExecuteAsync(HttpContext context);
 }

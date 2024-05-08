@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Http;
 namespace Simplify.Web.PageComposition;
 
 /// <summary>
-/// Represents a web-page renderer.
+/// Represents a web-page composer.
 /// </summary>
-public interface IPageRenderer
+public interface IPageComposer
 {
 	/// <summary>
-	/// Processes (build web-page and send it to the client) the current web-page.
+	/// Composes the current web-page.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	Task RenderAsync(HttpContext context);
+	Task<string> ComposeAsync(HttpContext context);
 }

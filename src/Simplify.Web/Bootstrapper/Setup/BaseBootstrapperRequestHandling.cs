@@ -4,6 +4,7 @@ using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.ExecutionWorkOrder;
+using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.Modules.Redirection;
 using Simplify.Web.PageComposition;
 using Simplify.Web.RequestHandling;
@@ -43,7 +44,7 @@ public partial class BaseBootstrapper
 				new ControllersHandler(
 					r.Resolve<IWorkOrderBuildDirector>(),
 					r.Resolve<IControllersExecutor>()),
-				new PageRenderingHandler(r.Resolve<IPageRenderer>())
+				new PageGenerationHandler(r.Resolve<IPageComposer>(), r.Resolve<IResponseWriter>())
 			});
 	}
 }
