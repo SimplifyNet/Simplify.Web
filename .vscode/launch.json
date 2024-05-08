@@ -19,6 +19,24 @@
 			}
 		},
 		{
+			"name": "SampleApp.Angular SPA",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "Build Angular Example",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net8.0/SampleApp.Angular.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
+			"internalConsoleOptions": "openOnSessionStart",
+			"serverReadyAction": {
+				"action": "openExternally",
+				"pattern": "Now listening on",
+				"uriFormat": "http://localhost:5000"
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+			}
+		},
+		{
 			"name": "SampleApp.Api",
 			"type": "coreclr",
 			"request": "launch",
