@@ -1,4 +1,5 @@
 using Simplify.Web;
+using Simplify.Web.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseSimplifyWebNonTerminal();
+
+BootstrapperFactory.ContainerProvider.Verify();
 
 // Production use: proxying from .NET to Angular
 if (!app.Environment.IsDevelopment())

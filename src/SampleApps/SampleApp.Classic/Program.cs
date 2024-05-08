@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simplify.Web;
 using Simplify.Web.Auth.Extensions;
+using Simplify.Web.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,5 +27,7 @@ app.UseAuthentication();
 app.UseAuthRedirect("/login");
 
 app.UseSimplifyWeb();
+
+BootstrapperFactory.ContainerProvider.Verify();
 
 app.Run();
