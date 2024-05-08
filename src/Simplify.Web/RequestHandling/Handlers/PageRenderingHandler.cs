@@ -7,5 +7,5 @@ namespace Simplify.Web.RequestHandling.Handlers;
 
 public class PageRenderingHandler(IPageRenderer renderer) : IRequestHandler
 {
-	public Task Handle(HttpContext context, RequestHandlerAsync next) => renderer.Render(context);
+	public Task HandleAsync(HttpContext context, RequestHandlerAsync next) => renderer.Render(context);
 }

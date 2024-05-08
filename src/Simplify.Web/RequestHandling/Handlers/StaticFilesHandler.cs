@@ -12,7 +12,7 @@ public class StaticFilesHandler(IStaticFileRequestHandlingPipeline pipeline,
 	IStaticFile file)
 		: IRequestHandler
 {
-	public async Task Handle(HttpContext context, RequestHandlerAsync next)
+	public async Task HandleAsync(HttpContext context, RequestHandlerAsync next)
 	{
 		var relativeFilePath = context.Request.GetRelativeFilePath();
 

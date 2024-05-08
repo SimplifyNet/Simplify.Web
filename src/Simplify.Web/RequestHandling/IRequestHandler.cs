@@ -13,5 +13,5 @@ public interface IRequestHandler
 	/// </summary>
 	/// <param name="context">The context.</param>
 	/// <param name="next">The next handler in the chain.</param>
-	Task Handle(HttpContext context, RequestHandlerAsync next);
+	Task HandleAsync(HttpContext context, RequestHandlerAsync next);
 }

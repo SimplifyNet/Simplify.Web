@@ -7,7 +7,7 @@ namespace Simplify.Web.RequestHandling.Handlers;
 
 public class SetLoginUrlForUnauthorizedRequestHandler(IRedirector redirector) : IRequestHandler
 {
-	public async Task Handle(HttpContext context, RequestHandlerAsync next)
+	public async Task HandleAsync(HttpContext context, RequestHandlerAsync next)
 	{
 		await next();
 

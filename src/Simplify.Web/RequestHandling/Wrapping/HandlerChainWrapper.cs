@@ -10,7 +10,7 @@ public class HandlerChainWrapper(IRequestHandler handler, HandlerChainWrapper? n
 	private readonly HandlerChainWrapper? _nextHandler = nextHandler;
 
 	public Task HandleAsync(HttpContext context) =>
-		_handler.Handle(context, () =>
+		_handler.HandleAsync(context, () =>
 			 _nextHandler != null
 			 	? _nextHandler.HandleAsync(context)
 				: Task.CompletedTask);

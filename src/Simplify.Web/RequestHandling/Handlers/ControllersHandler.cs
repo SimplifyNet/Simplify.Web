@@ -7,7 +7,7 @@ namespace Simplify.Web.RequestHandling.Handlers;
 
 public class ControllersHandler(IWorkOrderBuildDirector workOrderBuildDirector, IControllersExecutor controllersExecutor) : IRequestHandler
 {
-	public async Task Handle(HttpContext context, RequestHandlerAsync next)
+	public async Task HandleAsync(HttpContext context, RequestHandlerAsync next)
 	{
 		var workOrder = workOrderBuildDirector.CreateWorkOrder(context);
 
