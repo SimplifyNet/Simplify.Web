@@ -12,8 +12,9 @@
 
 ### Changed
 
-- Internal restructure and modules rewrite
-- RouteParameters defaulted to empty ExpandoObject to exclude NRE
+- Internal framework restructure and modules rewrite
+- V1 controllers RouteParameters defaulted to empty ExpandoObject to exclude NRE
+- Environment split to Environment and DynamicEnvironment
 
 ## [4.9.0] - 2024-01-08
 
