@@ -1,9 +1,8 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.PageComposition;
 
 public interface IPageCompositionStage
 {
-	Task ExecuteAsync(HttpContext context);
+	void Execute(IDataCollector dataCollector);
 }

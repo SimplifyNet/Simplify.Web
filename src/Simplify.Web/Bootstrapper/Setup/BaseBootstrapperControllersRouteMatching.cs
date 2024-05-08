@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.RouteMatching;
+using Simplify.Web.Controllers.RouteMatching.Resolver;
 using Simplify.Web.Controllers.V1.Matcher;
 
 namespace Simplify.Web.Bootstrapper.Setup;

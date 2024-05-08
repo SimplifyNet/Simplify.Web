@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Controllers.Meta;
 
-namespace Simplify.Web.Controllers.RouteMatching;
+namespace Simplify.Web.Controllers.RouteMatching.Resolver;
 
 public class RouteMatcherResolver(IReadOnlyList<IRouteMatcher> matchers) : IRouteMatcherResolver
 {

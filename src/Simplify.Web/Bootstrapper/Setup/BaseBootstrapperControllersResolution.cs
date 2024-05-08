@@ -5,7 +5,7 @@ using Simplify.DI;
 using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.Resolution.Stages;
 using Simplify.Web.Controllers.Resolution.State;
-using Simplify.Web.Controllers.RouteMatching;
+using Simplify.Web.Controllers.RouteMatching.Resolver;
 using Simplify.Web.Controllers.Security;
 
 namespace Simplify.Web.Bootstrapper.Setup;

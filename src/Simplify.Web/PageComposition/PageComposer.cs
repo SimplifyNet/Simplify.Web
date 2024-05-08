@@ -1,16 +1,15 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.PageComposition;
 
-public class PageComposer(IReadOnlyList<IPageCompositionStage> stages, IPageGenerator pageGenerator) : IPageComposer
+public class PageComposer(IReadOnlyList<IPageCompositionStage> stages, IDataCollector dataCollector, IPageGenerator pageGenerator) : IPageComposer
 {
-	public async Task<string> ComposeAsync(HttpContext context)
+	public string Compose()
 	{
 		foreach (var item in stages)
-			await item.ExecuteAsync(context);
+			item.Execute(dataCollector);
 
-		return pageGenerator.Generate();
+		return pageGenerator.Generate(dataCollector);
 	}
 }

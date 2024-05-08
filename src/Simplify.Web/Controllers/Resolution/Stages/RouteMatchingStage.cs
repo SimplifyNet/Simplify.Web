@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Resolution.State;
-using Simplify.Web.Controllers.RouteMatching;
+using Simplify.Web.Controllers.RouteMatching.Resolver;
 using Simplify.Web.Http;
 
 namespace Simplify.Web.Controllers.Resolution.Stages;

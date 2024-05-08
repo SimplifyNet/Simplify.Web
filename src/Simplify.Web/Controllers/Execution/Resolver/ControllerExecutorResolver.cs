@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Controllers.Meta;
 
-namespace Simplify.Web.Controllers.Execution;
+namespace Simplify.Web.Controllers.Execution.Resolver;
 
 public class ControllerExecutorResolver(IReadOnlyList<IControllerExecutor> executors) : IControllerExecutorResolver
 {
