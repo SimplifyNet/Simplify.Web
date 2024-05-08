@@ -43,6 +43,7 @@ public partial class BaseBootstrapper
 		RegisterCrsHandlers();
 		RegisterCrsHandlingPipeline();
 		RegisterDataCollector();
+		RegisterDynamicEnvironment();
 		RegisterEnvironment();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();

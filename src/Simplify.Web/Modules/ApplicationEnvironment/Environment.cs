@@ -17,24 +17,13 @@ public sealed class Environment : IEnvironment
 			appPhysicalPath += "/";
 
 		AppPhysicalPath = appPhysicalPath;
-
-		TemplatesPath = settings.DefaultTemplatesPath;
 		DataPath = settings.DataPath;
-		SiteStyle = settings.DefaultStyle;
-		MasterTemplateFileName = settings.DefaultMasterTemplateFileName;
 	}
 
 	public string AppPhysicalPath { get; }
 
-	public string TemplatesPath { get; set; }
-
-	public string TemplatesPhysicalPath => AppPhysicalPath + TemplatesPath + "/";
 
 	public string DataPath { get; }
 
 	public string DataPhysicalPath => AppPhysicalPath + DataPath + "/";
-
-	public string SiteStyle { get; set; }
-
-	public string MasterTemplateFileName { get; set; }
 }

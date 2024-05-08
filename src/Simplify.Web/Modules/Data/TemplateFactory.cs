@@ -23,7 +23,7 @@ namespace Simplify.Web.Modules.Data;
 /// <param name="defaultLanguage">The default language.</param>
 /// <param name="templatesMemoryCache">if set to <c>true</c> them loaded templates will be cached in memory.</param>
 /// <param name="loadTemplatesFromAssembly">if set to <c>true</c> then all templates will be loaded from assembly.</param>
-public sealed class TemplateFactory(IEnvironment environment,
+public sealed class TemplateFactory(IDynamicEnvironment environment,
 	ILanguageManagerProvider languageManagerProvider,
 	string defaultLanguage,
 	bool templatesMemoryCache = false,
@@ -33,7 +33,7 @@ public sealed class TemplateFactory(IEnvironment environment,
 	private static readonly object Locker = new();
 	private readonly SemaphoreSlim _cacheSemaphore = new(1, 1);
 
-	private readonly IEnvironment _environment = environment;
+	private readonly IDynamicEnvironment _environment = environment;
 	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
 	private readonly string _defaultLanguage = defaultLanguage;
 	private readonly bool _templatesMemoryCache = templatesMemoryCache;

@@ -36,6 +36,17 @@ public partial class BaseBootstrapper
 	}
 
 	/// <summary>
+	/// Registers the dynamic environment.
+	/// </summary>
+	public virtual void RegisterDynamicEnvironment()
+	{
+		if (TypesToExclude.Contains(typeof(IDynamicEnvironment)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<IDynamicEnvironment, DynamicEnvironment>();
+	}
+
+	/// <summary>
 	/// Registers the environment.
 	/// </summary>
 	public virtual void RegisterEnvironment()
@@ -44,7 +55,8 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IEnvironment>(r =>
-			new Modules.ApplicationEnvironment.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", r.Resolve<ISimplifyWebSettings>()));
+			new Modules.ApplicationEnvironment.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", r.Resolve<ISimplifyWebSettings>()),
+			LifetimeType.Singleton);
 	}
 
 	/// <summary>
@@ -136,7 +148,7 @@ public partial class BaseBootstrapper
 			var settings = r.Resolve<ISimplifyWebSettings>();
 
 			return new TemplateFactory(
-				r.Resolve<IEnvironment>(),
+				r.Resolve<IDynamicEnvironment>(),
 				r.Resolve<ILanguageManagerProvider>(),
 				settings.DefaultLanguage,
 				settings.TemplatesMemoryCache,

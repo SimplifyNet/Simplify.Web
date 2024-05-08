@@ -19,7 +19,7 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IControllerExecutorResolver)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IControllerExecutorResolver, ControllerExecutorResolver>(LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<IControllerExecutorResolver, ControllerExecutorResolver>();
 	}
 
 	public virtual void RegisterControllerExecutorResolverExecutors()
@@ -31,7 +31,7 @@ public partial class BaseBootstrapper
 			new List<IControllerExecutor>
 			{
 				new Controller1Executor(r.Resolve<IController1Factory>())
-			}, LifetimeType.Singleton);
+			});
 	}
 
 	public virtual void RegisterControllerResponseExecutor()
