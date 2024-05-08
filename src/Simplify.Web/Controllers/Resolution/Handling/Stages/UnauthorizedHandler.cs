@@ -1,9 +1,8 @@
 using System.Net;
 using Simplify.Web.Controllers.ExecutionWorkOrder;
-using Simplify.Web.Controllers.Resolution;
-using Simplify.Web.Controllers.ResolutionHandling;
+using Simplify.Web.Controllers.Resolution.State;
 
-namespace Simplify.Web.Controllers.ResolutionResultHandling.Stages;
+namespace Simplify.Web.Controllers.Resolution.Handling.Stages;
 
 public class UnauthorizedHandler : ICrsHandler
 {

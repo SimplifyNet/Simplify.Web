@@ -1,9 +1,9 @@
 using System.Net;
 using Simplify.Web.Controllers.ExecutionWorkOrder;
-using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.Meta.MetaStore;
+using Simplify.Web.Controllers.Resolution.State;
 
-namespace Simplify.Web.Controllers.ResolutionHandling.Stages;
+namespace Simplify.Web.Controllers.Resolution.Handling.Stages;
 
 public class ForbiddenHandler : ICrsHandler
 {

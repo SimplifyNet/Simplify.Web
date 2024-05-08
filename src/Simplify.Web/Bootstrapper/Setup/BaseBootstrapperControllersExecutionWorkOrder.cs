@@ -5,7 +5,7 @@ using Simplify.DI;
 using Simplify.Web.Controllers.ExecutionWorkOrder;
 using Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
 using Simplify.Web.Controllers.Resolution;
-using Simplify.Web.Controllers.ResolutionHandling;
+using Simplify.Web.Controllers.Resolution.Handling;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
-using Simplify.Web.Controllers.ResolutionHandling;
-using Simplify.Web.Controllers.ResolutionHandling.Stages;
-using Simplify.Web.Controllers.ResolutionResultHandling.Stages;
+using Simplify.Web.Controllers.Resolution.Handling;
+using Simplify.Web.Controllers.Resolution.Handling.Stages;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 

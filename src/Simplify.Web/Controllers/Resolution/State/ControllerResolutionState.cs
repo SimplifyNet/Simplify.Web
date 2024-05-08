@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Simplify.Web.Controllers.Security;
 using Simplify.Web.Controllers.Meta;
 
-namespace Simplify.Web.Controllers.Resolution;
+namespace Simplify.Web.Controllers.Resolution.State;
 
 public class ControllerResolutionState(IControllerMetadata initialController)
 {

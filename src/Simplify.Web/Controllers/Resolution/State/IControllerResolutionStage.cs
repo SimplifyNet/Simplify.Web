@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Simplify.Web.Controllers.Resolution;
+namespace Simplify.Web.Controllers.Resolution.State;
 
 public interface IControllerResolutionStage
 {
