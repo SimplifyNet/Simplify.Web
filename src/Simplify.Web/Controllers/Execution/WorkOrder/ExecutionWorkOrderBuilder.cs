@@ -2,16 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace Simplify.Web.Controllers.ExecutionWorkOrder;
+namespace Simplify.Web.Controllers.Execution.WorkOrder;
 
-public class WorkOrderBuilder
+public class ExecutionWorkOrderBuilder
 {
 	public List<IMatchedController> Controllers { get; private set; } = [];
 
 	public HttpStatusCode? HttpStatusCode { get; set; }
 
-	public IWorkOrder Build() =>
-		new WorkOrder(
+	public IExecutionWorkOrder Build() =>
+		new ExecutionWorkOrder(
 			Controllers
 				.SortByRunPriority()
 				.ToList()

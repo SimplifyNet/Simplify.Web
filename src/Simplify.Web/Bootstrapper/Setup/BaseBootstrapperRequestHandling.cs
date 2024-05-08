@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
-using Simplify.Web.Controllers.ExecutionWorkOrder;
+using Simplify.Web.Controllers.Execution.WorkOrder.Director;
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.Modules.Redirection;
 using Simplify.Web.PageComposition;
@@ -42,7 +42,7 @@ public partial class BaseBootstrapper
 					r.Resolve<IStaticFile>()),
 				new SetLoginUrlForUnauthorizedRequestHandler(r.Resolve<IRedirector>()),
 				new ControllersHandler(
-					r.Resolve<IWorkOrderBuildDirector>(),
+					r.Resolve<IExecutionWorkOrderBuildDirector>(),
 					r.Resolve<IControllersExecutor>()),
 				new PageGenerationHandler(r.Resolve<IPageComposer>(), r.Resolve<IResponseWriter>())
 			});

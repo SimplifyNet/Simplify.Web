@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace Simplify.Web.Controllers.ExecutionWorkOrder;
+namespace Simplify.Web.Controllers.Execution.WorkOrder;
 
-public interface IWorkOrder
+public interface IExecutionWorkOrder
 {
 	IReadOnlyList<IMatchedController> Controllers { get; }
 

@@ -2,11 +2,11 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Meta.MetaStore;
 
-namespace Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
+namespace Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
 
-public class NotFoundBuilder : IWorkOrderBuildStage
+public class NotFoundBuilder : IExecutionWorkOrderBuildStage
 {
-	public void Execute(WorkOrderBuilder builder, HttpContext context)
+	public void Execute(ExecutionWorkOrderBuilder builder, HttpContext context)
 	{
 		if (builder.HttpStatusCode != null)
 			return;

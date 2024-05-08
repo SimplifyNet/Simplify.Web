@@ -3,12 +3,12 @@ using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.Meta.MetaStore;
 using Simplify.Web.Controllers.Resolution.Handling;
 
-namespace Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
+namespace Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
 
 public class RoutedControllersBuilder(IControllerResolutionPipeline resolutionPipeline,
-  ICrsHandlingPipeline crsHandlingPipeline) : IWorkOrderBuildStage
+  ICrsHandlingPipeline crsHandlingPipeline) : IExecutionWorkOrderBuildStage
 {
-	public void Execute(WorkOrderBuilder builder, HttpContext context)
+	public void Execute(ExecutionWorkOrderBuilder builder, HttpContext context)
 	{
 		foreach (var item in ControllersMetaStore.Current.RoutedControllers)
 			if (crsHandlingPipeline.Execute(resolutionPipeline.Execute(item, context), builder))

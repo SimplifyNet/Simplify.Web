@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Execution;
-using Simplify.Web.Controllers.ExecutionWorkOrder;
+using Simplify.Web.Controllers.Execution.WorkOrder.Director;
 
 namespace Simplify.Web.RequestHandling.Handlers;
 
-public class ControllersHandler(IWorkOrderBuildDirector workOrderBuildDirector, IControllersExecutor controllersExecutor) : IRequestHandler
+public class ControllersHandler(IExecutionWorkOrderBuildDirector workOrderBuildDirector, IControllersExecutor controllersExecutor) : IRequestHandler
 {
 	public async Task HandleAsync(HttpContext context, RequestHandlerAsync next)
 	{

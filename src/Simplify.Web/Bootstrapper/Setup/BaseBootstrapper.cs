@@ -45,6 +45,8 @@ public partial class BaseBootstrapper
 		RegisterDataCollector();
 		RegisterDynamicEnvironment();
 		RegisterEnvironment();
+		RegisterExecutionWorkOrderBuildDirector();
+		RegisterExecutionWorkOrderBuildDirectorStages();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterListsGenerator();
@@ -66,8 +68,6 @@ public partial class BaseBootstrapper
 		RegisterTemplateFactory();
 		RegisterViewFactory();
 		RegisterWebContextProvider();
-		RegisterWorkOrderBuildDirector();
-		RegisterWorkOrderBuildDirectorStages();
 
 		var typesToIgnore = SimplifyWebTypesFinder.GetIgnoredIocRegistrationTypes();
 

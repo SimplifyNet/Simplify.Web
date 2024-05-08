@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
-using Simplify.Web.Controllers.ExecutionWorkOrder;
-using Simplify.Web.Controllers.ExecutionWorkOrder.BuildStages;
+using Simplify.Web.Controllers.Execution.WorkOrder;
+using Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
+using Simplify.Web.Controllers.Execution.WorkOrder.Director;
 using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.Resolution.Handling;
 
@@ -17,21 +18,21 @@ public partial class BaseBootstrapper
 	/// <summary>
 	/// Registers the work order build director.
 	/// </summary>
-	public virtual void RegisterWorkOrderBuildDirector()
+	public virtual void RegisterExecutionWorkOrderBuildDirector()
 	{
-		if (TypesToExclude.Contains(typeof(IWorkOrderBuildDirector)))
+		if (TypesToExclude.Contains(typeof(IExecutionWorkOrderBuildDirector)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IWorkOrderBuildDirector, WorkOrderBuildDirector>(LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<IExecutionWorkOrderBuildDirector, ExecutionWorkOrderBuildDirector>(LifetimeType.Singleton);
 	}
 
-	public virtual void RegisterWorkOrderBuildDirectorStages()
+	public virtual void RegisterExecutionWorkOrderBuildDirectorStages()
 	{
-		if (TypesToExclude.Contains(typeof(IReadOnlyList<IWorkOrderBuildStage>)))
+		if (TypesToExclude.Contains(typeof(IReadOnlyList<IExecutionWorkOrderBuildStage>)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IWorkOrderBuildStage>>(r =>
-			new List<IWorkOrderBuildStage>
+		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IExecutionWorkOrderBuildStage>>(r =>
+			new List<IExecutionWorkOrderBuildStage>
 			{
 				new RoutedControllersBuilder(
 					r.Resolve<IControllerResolutionPipeline>(),

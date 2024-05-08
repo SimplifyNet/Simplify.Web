@@ -1,5 +1,5 @@
 using System.Net;
-using Simplify.Web.Controllers.ExecutionWorkOrder;
+using Simplify.Web.Controllers.Execution.WorkOrder;
 using Simplify.Web.Controllers.Meta.MetaStore;
 using Simplify.Web.Controllers.Resolution.State;
 
@@ -11,7 +11,7 @@ public class ForbiddenHandler : ICrsHandler
 
 	public bool CanHandle(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Forbidden;
 
-	public void Execute(ControllerResolutionState state, WorkOrderBuilder builder)
+	public void Execute(ControllerResolutionState state, ExecutionWorkOrderBuilder builder)
 	{
 		builder.Controllers.Clear();
 
