@@ -4,6 +4,7 @@ using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.ExecutionWorkOrder;
+using Simplify.Web.Modules.Redirection;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
 using Simplify.Web.StaticFiles;
@@ -37,9 +38,10 @@ public partial class BaseBootstrapper
 					r.Resolve<IStaticFileRequestHandlingPipeline>(),
 					r.Resolve<IStaticFileProcessingContextFactory>(),
 					r.Resolve<IStaticFile>()),
+				new SetLoginUrlForUnauthorizedRequestHandler(r.Resolve<IRedirector>()),
 				new ControllersHandler(
 					r.Resolve<IWorkOrderBuildDirector>(),
-					r.Resolve<IControllersExecutor>())
+					r.Resolve<IControllersExecutor>()),
 			});
 	}
 }
