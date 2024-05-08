@@ -12,5 +12,5 @@ public interface IPageRenderer
 	/// Processes (build web-page and send it to the client) the current web-page.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	Task Render(HttpContext context);
+	Task RenderAsync(HttpContext context);
 }
