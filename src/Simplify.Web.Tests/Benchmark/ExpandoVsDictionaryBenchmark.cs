@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 #nullable disable
 
-namespace Simplify.Web.Tests.Old.Benchmark;
+namespace Simplify.Web.Tests.Benchmark;
 
 [TestFixture]
 [Category("Benchmark")]
@@ -93,7 +93,7 @@ public class ExpandoVsDictionaryBenchmark
 
 	private void TestDynamic(dynamic list, int numValues)
 	{
-		for (int i = 0; i < numValues; i++)
+		for (var i = 0; i < numValues; i++)
 		{
 			string value = list.Key0;
 			Trace.WriteLine(value);
@@ -102,9 +102,9 @@ public class ExpandoVsDictionaryBenchmark
 
 	private void TestDictionary(IDictionary<string, object> list, int numValues)
 	{
-		for (int i = 0; i < numValues; i++)
+		for (var i = 0; i < numValues; i++)
 		{
-			string value = list[$"Key{i}"].ToString();
+			var value = list[$"Key{i}"].ToString();
 			Trace.WriteLine(value);
 		}
 	}
@@ -113,7 +113,7 @@ public class ExpandoVsDictionaryBenchmark
 	{
 		var expandoDict = (IDictionary<string, object>)new ExpandoObject();
 
-		for (int i = 0; i < numValues; i++)
+		for (var i = 0; i < numValues; i++)
 			expandoDict[$"Key{i}"] = $"Value{i}";
 
 		return expandoDict;
@@ -123,7 +123,7 @@ public class ExpandoVsDictionaryBenchmark
 	{
 		var dictionary = new Dictionary<string, object>();
 
-		for (int i = 0; i < numValues; i++)
+		for (var i = 0; i < numValues; i++)
 			dictionary[$"Key{i}"] = $"Value{i}";
 
 		return dictionary;

@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using Simplify.Web.Old.Diagnostics;
+using Simplify.Web.Diagnostics;
 
-namespace Simplify.Web.Tests.Old.Diagnostics;
+namespace Simplify.Web.Tests.Diagnostics;
 
 [TestFixture]
 public class ExceptionInfoPageGeneratorTests
@@ -13,9 +13,8 @@ public class ExceptionInfoPageGeneratorTests
 		try
 		{
 			string? text = null;
-			// ReSharper disable PossibleNullReferenceException
+			// ReSharper disable once ReturnValueOfPureMethodIsNotUsed
 			text!.IndexOf("test", StringComparison.Ordinal);
-			// ReSharper restore PossibleNullReferenceException
 		}
 		catch (Exception e)
 		{
@@ -25,7 +24,7 @@ public class ExceptionInfoPageGeneratorTests
 			}
 			catch (Exception ex)
 			{
-				Assert.IsTrue(ErrorPageGenerator.Generate(ex).Contains("html"));
+				Assert.That(ErrorPageGenerator.Generate(ex).Contains("html"), Is.True);
 			}
 		}
 	}
@@ -33,12 +32,12 @@ public class ExceptionInfoPageGeneratorTests
 	[Test]
 	public void Generate_ExceptionNoFrames_Generated()
 	{
-		Assert.IsNotNull(ErrorPageGenerator.Generate(new Exception("test")));
+		Assert.That(ErrorPageGenerator.Generate(new Exception("test")), Is.Not.Null);
 	}
 
 	[Test]
 	public void Generate_HideDetails_Null()
 	{
-		Assert.IsTrue(ErrorPageGenerator.Generate(new Exception("test"), true).Contains("html"));
+		Assert.That(ErrorPageGenerator.Generate(new Exception("test"), true).Contains("html"), Is.True);
 	}
 }

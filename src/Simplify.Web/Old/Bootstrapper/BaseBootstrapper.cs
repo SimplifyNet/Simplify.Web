@@ -48,7 +48,6 @@ public class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
-		RegisterSimplifyWebSettings();
 		RegisterViewFactory();
 		RegisterController1Factory();
 		RegisterController2Factory();
@@ -103,17 +102,6 @@ public class BaseBootstrapper
 			.AddJsonFile($"appsettings.{environmentName}.json", true);
 
 		BootstrapperFactory.ContainerProvider.Register<IConfiguration>(r => builder.Build(), LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the Simplify.Web settings.
-	/// </summary>
-	public virtual void RegisterSimplifyWebSettings()
-	{
-		if (TypesToExclude.Contains(typeof(ISimplifyWebSettings)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<ISimplifyWebSettings, SimplifyWebSettings>(LifetimeType.Singleton);
 	}
 
 	/// <summary>
