@@ -1,7 +1,8 @@
 ﻿using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Data;
+using Simplify.Web.Pages.Composition;
 
-namespace Simplify.Web.PageComposition.Stages;
+namespace Simplify.Web.Pages.Composition.Stages;
 
 public class EnvironmentVariablesInjectionStage(IDynamicEnvironment dynamicEnvironment) : IPageCompositionStage
 {

@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.PageComposition;
+namespace Simplify.Web.Pages.Generation;
 
 /// <summary>
 /// Represent web-page generator.

@@ -6,7 +6,7 @@ using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.Execution.WorkOrder.Director;
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.Modules.Redirection;
-using Simplify.Web.PageComposition;
+using Simplify.Web.Pages.Composition;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
 using Simplify.Web.StaticFiles;

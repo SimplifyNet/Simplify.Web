@@ -1,7 +1,7 @@
 ﻿using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.PageComposition;
+namespace Simplify.Web.Pages.Generation;
 
 /// <summary>
 /// Provides the web-page HTML generator.

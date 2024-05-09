@@ -1,8 +1,9 @@
 ﻿using System.Threading;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
+using Simplify.Web.Pages.Composition;
 
-namespace Simplify.Web.PageComposition.Stages;
+namespace Simplify.Web.Pages.Composition.Stages;
 
 public class LanguageInjectionStage(ILanguageManagerProvider languageManagerProvider) : IPageCompositionStage
 {

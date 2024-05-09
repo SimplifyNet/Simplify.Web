@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.PageComposition;
+﻿namespace Simplify.Web.Pages.Composition;
 
 /// <summary>
 /// Represents a web-page composer.

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Http.ResponseWriting;
-using Simplify.Web.PageComposition;
+using Simplify.Web.Pages.Composition;
 
 namespace Simplify.Web.RequestHandling.Handlers;
 

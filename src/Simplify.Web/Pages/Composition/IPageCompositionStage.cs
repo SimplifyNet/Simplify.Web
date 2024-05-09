@@ -1,6 +1,6 @@
 using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.PageComposition;
+namespace Simplify.Web.Pages.Composition;
 
 public interface IPageCompositionStage
 {
