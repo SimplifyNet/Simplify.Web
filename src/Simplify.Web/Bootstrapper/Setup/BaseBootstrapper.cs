@@ -19,6 +19,11 @@ public partial class BaseBootstrapper
 	protected IEnumerable<Type> TypesToExclude { get; private set; } = [];
 
 	/// <summary>
+	/// Registers the DI container scope resolver
+	/// </summary>
+	public static void RegisterDIResolver() => BootstrapperFactory.ContainerProvider.Register(r => r);
+
+	/// <summary>
 	/// Registers the types in container.
 	/// </summary>
 	public void Register(IEnumerable<Type>? typesToExclude = null)
@@ -76,16 +81,13 @@ public partial class BaseBootstrapper
 		RegisterViewFactory();
 		RegisterWebContextProvider();
 
-		var typesToIgnore = SimplifyWebTypesFinder.GetIgnoredIocRegistrationTypes();
+		var typesToIgnore = SimplifyWebTypesFinder
+			.GetIgnoredIocRegistrationTypes()
+			.ToList();
 
 		RegisterControllers(typesToIgnore);
 		RegisterViews(typesToIgnore);
 	}
-
-	/// <summary>
-	/// Registers the DI container scope resolver
-	/// </summary>
-	public static void RegisterDIResolver() => BootstrapperFactory.ContainerProvider.Register(r => r);
 
 	/// <summary>
 	/// Registers the controllers.
