@@ -1,5 +1,4 @@
 ﻿using Simplify.Web.Diagnostics.Measurement;
-using Simplify.Web.Pages.Composition;
 
 namespace Simplify.Web.Pages.Composition.Stages;
 

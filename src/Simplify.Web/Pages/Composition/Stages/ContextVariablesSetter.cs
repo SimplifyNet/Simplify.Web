@@ -1,5 +1,4 @@
 ﻿using Simplify.Web.Modules.Context;
-using Simplify.Web.Pages.Composition;
 
 namespace Simplify.Web.Pages.Composition.Stages;
 
@@ -11,7 +10,7 @@ public class ContextVariablesSetter(IWebContextProvider webContextProvider) : IP
 	public const string VariableNameSiteUrl = "SV:SiteUrl";
 
 	/// <summary>
-	/// The site variable name site virtual path (returns '/yoursite' if your site is placed in virtual directory like http://yourdomain.com/yoursite/).
+	/// The site variable name site virtual path (returns '/your-site' if your site is placed in virtual directory like http://yourdomain.com/yoursite/).
 	/// </summary>
 	public const string VariableNameSiteVirtualPath = "~";
 
