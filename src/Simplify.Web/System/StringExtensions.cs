@@ -14,5 +14,5 @@ public static class StringExtensions
 	/// <param name="source">The source.</param>
 	public static IEnumerable<string> ParseCommaSeparatedList(this string source) => source
 		.Replace(" ", "")
-		.Split(new char[','], StringSplitOptions.RemoveEmptyEntries);
+		.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 }

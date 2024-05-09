@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Simplify.Web.Old.Attributes;
+using Simplify.Web.Attributes;
 
-namespace Simplify.Web.Tests.Old.Attributes;
+namespace Simplify.Web.Tests.Attributes;
 
 [TestFixture]
 public class AuthorizeAttributeTests
