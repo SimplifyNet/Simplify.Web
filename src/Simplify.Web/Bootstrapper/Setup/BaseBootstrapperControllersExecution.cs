@@ -43,14 +43,6 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IControllerResponseExecutor, ControllerResponseExecutor>();
 	}
 
-	public virtual void RegisterControllerResponsePropertiesInjector()
-	{
-		if (TypesToExclude.Contains(typeof(IControllerResponsePropertiesInjector)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllerResponsePropertiesInjector>(r => new ControllerResponsePropertiesInjector(r));
-	}
-
 	/// <summary>
 	/// Registers the controllers executor.
 	/// </summary>
