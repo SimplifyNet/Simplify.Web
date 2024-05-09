@@ -24,25 +24,23 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	/// <summary>
 	/// Gets the model binders types.
 	/// </summary>
-	// ReSharper disable once ConvertToAutoProperty
-	public static IList<Type> ModelBindersTypes { get; } = new List<Type>
-	{
+	public static IList<Type> ModelBindersTypes { get; } =
+	[
 		// Default model binders
 
 		typeof (HttpQueryModelBinder),
 		typeof (HttpFormModelBinder)
-	};
+	];
 
 	/// <summary>
 	/// Gets the model validators types.
 	/// </summary>
-	// ReSharper disable once ConvertToAutoProperty
-	public static IList<Type> ModelValidatorsTypes { get; } = new List<Type>
-	{
+	public static IList<Type> ModelValidatorsTypes { get; } =
+	[
 		// Default model validators
 
 		typeof (ValidationAttributesExecutor)
-	};
+	];
 
 	/// <summary>
 	/// Gets a value indicating whether model has been processed (parsed/validated).
@@ -69,7 +67,6 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	/// Parses model and validates it asynchronously
 	/// </summary>
 	/// <typeparam name="T">Model type</typeparam>
-	/// <param name="resolver">The resolver.</param>
 	public async Task ProcessAsync<T>()
 	{
 		var args = new ModelBinderEventArgs<T>(context);

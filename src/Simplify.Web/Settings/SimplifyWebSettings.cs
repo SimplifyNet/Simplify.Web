@@ -54,11 +54,9 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	public bool StaticFilesEnabled { get; private set; } = true;
 
-	public IList<string> StaticFilesPaths { get; }
-		= new List<string> { "styles", "scripts", "images", "content", "fonts" };
+	public IList<string> StaticFilesPaths { get; } = ["styles", "scripts", "images", "content", "fonts"];
 
-	public IList<string> StringTableFiles { get; }
-		= new List<string> { "StringTable.xml" };
+	public IList<string> StringTableFiles { get; } = ["StringTable.xml"];
 
 	public bool DisableAutomaticSiteTitleSet { get; private set; }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Resolution;
@@ -32,12 +31,11 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IControllerResolutionStage>>(r =>
-			new List<IControllerResolutionStage>
-			{
+			[
 				new RouteMatchingStage(
 					r.Resolve<IRouteMatcherResolver>()),
 				new SecurityCheckStage(
 					r.Resolve<ISecurityChecker>())
-			}, LifetimeType.Singleton);
+			], LifetimeType.Singleton);
 	}
 }

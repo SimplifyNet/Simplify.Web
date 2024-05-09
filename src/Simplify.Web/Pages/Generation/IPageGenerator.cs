@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Simplify.Web.Modules.Data;
+﻿using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Pages.Generation;
 

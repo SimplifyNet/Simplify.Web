@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Http.ResponseWriting;
@@ -53,10 +52,9 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IStaticFileRequestHandler>>(r =>
-			new List<IStaticFileRequestHandler>
-			{
+			[
 				new CachedFileHandler(),
 				new NewFileHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>())
-			}, LifetimeType.Singleton);
+			], LifetimeType.Singleton);
 	}
 }

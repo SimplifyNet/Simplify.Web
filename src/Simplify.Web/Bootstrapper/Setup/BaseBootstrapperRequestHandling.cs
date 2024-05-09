@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
@@ -34,8 +33,7 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IRequestHandler>>(r =>
-			new List<IRequestHandler>
-			{
+			[
 				new StaticFilesHandler(
 					r.Resolve<IStaticFileRequestHandlingPipeline>(),
 					r.Resolve<IStaticFileProcessingContextFactory>(),
@@ -45,6 +43,6 @@ public partial class BaseBootstrapper
 					r.Resolve<IExecutionWorkOrderBuildDirector>(),
 					r.Resolve<IControllersExecutor>()),
 				new PageGenerationHandler(r.Resolve<IPageComposer>(), r.Resolve<IResponseWriter>())
-			});
+			]);
 	}
 }

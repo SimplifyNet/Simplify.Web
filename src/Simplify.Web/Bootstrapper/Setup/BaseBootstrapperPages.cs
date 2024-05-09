@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Diagnostics.Measurement;
@@ -43,14 +42,13 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IPageCompositionStage>>(r =>
-			new List<IPageCompositionStage>
-			{
+			[
 				new StringTableItemsInjectionStage(r.Resolve<IStringTable>()),
 				new LanguageInjectionStage(r.Resolve<ILanguageManagerProvider>()),
 				new EnvironmentVariablesInjectionStage(r.Resolve<IDynamicEnvironment>()),
 				new ContextVariablesInjectionStage(r.Resolve<IWebContextProvider>()),
 				new SiteTitleInjectionStage(r.Resolve<IWebContextProvider>(), r.Resolve<IStringTable>()),
 				new StopwatchDataInjectionStage(r.Resolve<IStopwatchProvider>())
-			});
+			]);
 	}
 }

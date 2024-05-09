@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
@@ -28,10 +27,9 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IControllerExecutor>>(r =>
-			new List<IControllerExecutor>
-			{
+			[
 				new Controller1Executor(r.Resolve<IController1Factory>())
-			});
+			]);
 	}
 
 	public virtual void RegisterControllerResponseExecutor()

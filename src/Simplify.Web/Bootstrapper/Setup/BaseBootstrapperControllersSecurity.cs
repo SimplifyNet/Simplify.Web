@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Security;
@@ -26,10 +25,9 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<ISecurityRule>>(r =>
-			new List<ISecurityRule>
-			{
+			[
 				new UnauthorizedRule(),
 				new RoleAuthorizationRule()
-			}, LifetimeType.Singleton);
+			], LifetimeType.Singleton);
 	}
 }

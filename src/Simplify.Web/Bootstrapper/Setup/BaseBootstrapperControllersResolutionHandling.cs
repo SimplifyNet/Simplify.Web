@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Resolution.Handling;
@@ -29,11 +28,10 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<ICrsHandler>>(r =>
-			new List<ICrsHandler>
-			{
+			[
 				new UnauthorizedHandler(),
 				new ForbiddenHandler(),
 				new MatchedControllerHandler()
-			}, LifetimeType.Singleton);
+			], LifetimeType.Singleton);
 	}
 }

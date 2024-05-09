@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Execution.WorkOrder;
@@ -32,13 +31,12 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IExecutionWorkOrderBuildStage>>(r =>
-			new List<IExecutionWorkOrderBuildStage>
-			{
+			[
 				new RoutedControllersBuilder(
 					r.Resolve<IControllerResolutionPipeline>(),
 					r.Resolve<ICrsHandlingPipeline>()),
 				new NotFoundBuilder(),
 				new GlobalControllersBuilder()
-			}, LifetimeType.Singleton);
+			], LifetimeType.Singleton);
 	}
 }
