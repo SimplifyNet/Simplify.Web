@@ -1,8 +1,10 @@
 ﻿using NUnit.Framework;
-using Simplify.Web.Old.Bootstrapper;
-using Simplify.Web.Old.Meta;
+using Simplify.Web.Bootstrapper;
+using Simplify.Web.Bootstrapper.Setup;
+using Simplify.Web.System;
+using Simplify.Web.Tests.Bootstrapper.TestTypes;
 
-namespace Simplify.Web.Tests.Old.Bootstrapper;
+namespace Simplify.Web.Tests.Bootstrapper;
 
 [TestFixture]
 public class BootstrapperFactoryTests
@@ -10,7 +12,7 @@ public class BootstrapperFactoryTests
 	[Test]
 	public void CreateBootstrapper_NoUserType_BaseBootstrapperReturned()
 	{
-		// Assign
+		// Arrange
 
 		if (!SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Contains("Simplify"))
 			SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Add("Simplify");
@@ -21,14 +23,13 @@ public class BootstrapperFactoryTests
 		var bootstrapper = BootstrapperFactory.CreateBootstrapper();
 
 		// Assert
-
-		Assert.AreEqual("Simplify.Web.Bootstrapper.BaseBootstrapper", bootstrapper.GetType().FullName);
+		Assert.That(bootstrapper.GetType(), Is.EqualTo(typeof(BaseBootstrapper)));
 	}
 
 	[Test]
-	public void CreateBootstrapper_HaveUserType_TestBootstrapperReturned()
+	public void CreateBootstrapper_HasUserType_TestBootstrapperReturned()
 	{
-		// Assign
+		// Arrange
 
 		SimplifyWebTypesFinder.ExcludedAssembliesPrefixes.Remove("Simplify");
 		SimplifyWebTypesFinder.CleanLoadedTypesAndAssembliesInfo();
@@ -37,7 +38,6 @@ public class BootstrapperFactoryTests
 		var bootstrapper = BootstrapperFactory.CreateBootstrapper();
 
 		// Assert
-
-		Assert.AreEqual("Simplify.Web.Tests.Bootstrapper.TestTypes.TestBootstrapper", bootstrapper.GetType().FullName);
+		Assert.That(bootstrapper.GetType(), Is.EqualTo(typeof(TestBootstrapper)));
 	}
 }

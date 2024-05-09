@@ -35,7 +35,7 @@ public class SimplifyWebTypesFinderTests
 		var type = SimplifyWebTypesFinder.FindTypeDerivedFrom<TestBootstrapper>();
 
 		// Assert
-		Assert.IsNull(type);
+		Assert.That(type, Is.Null);
 	}
 
 	[Test]

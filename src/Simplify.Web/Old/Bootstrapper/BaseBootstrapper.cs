@@ -49,9 +49,6 @@ public class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
-		RegisterControllersMetaStore();
-		RegisterViewsMetaStore();
-
 		RegisterSimplifyWebSettings();
 		RegisterViewFactory();
 		RegisterController1Factory();
@@ -88,33 +85,6 @@ public class BaseBootstrapper
 		RegisterModelHandler();
 		RegisterDefaultModelBinders();
 		RegisterDefaultModelValidators();
-
-		var typesToIgnore = SimplifyWebTypesFinder.GetTypesToIgnore();
-
-		RegisterControllers(typesToIgnore);
-		RegisterViews(typesToIgnore);
-	}
-
-	/// <summary>
-	/// Registers the controllers.
-	/// </summary>
-	/// <param name="typesToIgnore">The types to ignore.</param>
-	public virtual void RegisterControllers(IEnumerable<Type> typesToIgnore)
-	{
-		foreach (var controllerMetaData in ControllersMetaStore.Current.ControllersMetaData
-			.Where(controllerMetaData => typesToIgnore.All(x => x != controllerMetaData.ControllerType)))
-			BootstrapperFactory.ContainerProvider.Register(controllerMetaData.ControllerType, LifetimeType.Transient);
-	}
-
-	/// <summary>
-	/// Registers the views.
-	/// </summary>
-	/// <param name="typesToIgnore">The types to ignore.</param>
-	public virtual void RegisterViews(IEnumerable<Type> typesToIgnore)
-	{
-		foreach (var viewType in ViewsMetaStore.Current.ViewsTypes
-			.Where(viewType => typesToIgnore.All(x => x != viewType)))
-			BootstrapperFactory.ContainerProvider.Register(viewType, LifetimeType.Transient);
 	}
 
 	#region Simplify.Web types registration
@@ -134,28 +104,6 @@ public class BaseBootstrapper
 			.AddJsonFile($"appsettings.{environmentName}.json", true);
 
 		BootstrapperFactory.ContainerProvider.Register<IConfiguration>(r => builder.Build(), LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the controllers meta store.
-	/// </summary>
-	public virtual void RegisterControllersMetaStore()
-	{
-		if (TypesToExclude.Contains(typeof(IControllersMetaStore)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register(r => ControllersMetaStore.Current, LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the views meta store.
-	/// </summary>
-	public virtual void RegisterViewsMetaStore()
-	{
-		if (TypesToExclude.Contains(typeof(IViewsMetaStore)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register(r => ViewsMetaStore.Current, LifetimeType.Singleton);
 	}
 
 	/// <summary>
