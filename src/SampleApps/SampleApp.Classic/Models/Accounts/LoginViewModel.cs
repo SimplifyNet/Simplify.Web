@@ -1,4 +1,4 @@
-﻿using Simplify.Web.Old.Model.Validation.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SampleApp.Classic.Models.Accounts;
 

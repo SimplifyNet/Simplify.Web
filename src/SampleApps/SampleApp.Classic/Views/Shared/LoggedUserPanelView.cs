@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Simplify.Templates;
-using Simplify.Web.Old;
+using Simplify.Web;
 
 namespace SampleApp.Classic.Views.Shared;
 

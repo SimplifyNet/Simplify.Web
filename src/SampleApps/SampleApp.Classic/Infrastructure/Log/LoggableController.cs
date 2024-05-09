@@ -1,5 +1,5 @@
 ﻿using System;
-using Simplify.Web.Old;
+using Simplify.Web;
 
 namespace SampleApp.Classic.Infrastructure.Log;
 

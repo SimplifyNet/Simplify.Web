@@ -1,4 +1,4 @@
-﻿using Simplify.Web.Old;
+﻿using Simplify.Web;
 
 namespace SampleApp.Classic.Views;
 

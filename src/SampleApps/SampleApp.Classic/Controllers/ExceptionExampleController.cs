@@ -1,6 +1,6 @@
 ﻿using System;
-using Simplify.Web.Old;
-using Simplify.Web.Old.Attributes;
+using Simplify.Web;
+using Simplify.Web.Attributes;
 
 namespace SampleApp.Classic.Controllers;
 
