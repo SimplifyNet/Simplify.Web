@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Meta.MetaStore;
@@ -26,6 +27,8 @@ public partial class BaseBootstrapper
 		if (typesToExclude != null)
 			TypesToExclude = typesToExclude;
 
+		RegisterDIResolver();
+
 		// Registering non Simplify.Web types
 		RegisterConfiguration();
 
@@ -39,7 +42,6 @@ public partial class BaseBootstrapper
 		RegisterControllerResolutionPipeline();
 		RegisterControllerResolutionPipelineStages();
 		RegisterControllerResponseExecutor();
-		RegisterControllerResponsePropertiesInjector();
 		RegisterCrsHandlers();
 		RegisterCrsHandlingPipeline();
 		RegisterDataCollector();
@@ -77,6 +79,11 @@ public partial class BaseBootstrapper
 		RegisterControllers(typesToIgnore);
 		RegisterViews(typesToIgnore);
 	}
+
+	/// <summary>
+	/// Registers the DI container scope resolver
+	/// </summary>
+	public static void RegisterDIResolver() => BootstrapperFactory.ContainerProvider.Register(r => r);
 
 	/// <summary>
 	/// Registers the controllers.
