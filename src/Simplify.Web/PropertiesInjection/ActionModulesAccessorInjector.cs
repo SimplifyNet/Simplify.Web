@@ -4,7 +4,7 @@ using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
 using Simplify.Web.Modules.Redirection;
 
-namespace Simplify.Web.Controllers.Response.Injection;
+namespace Simplify.Web.PropertiesInjection;
 
 /// <summary>
 /// Provides the builder for ActionModulesAccessor objects.

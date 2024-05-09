@@ -1,20 +1,21 @@
 ﻿using Simplify.DI;
 using Simplify.Web.Http.ResponseWriting;
+using Simplify.Web.PropertiesInjection;
 
 namespace Simplify.Web.Controllers.Response.Injection;
 
 /// <summary>
-/// Provides a controller response builder.
+/// Provides the controller response properties injector.
 /// </summary>
-public class ControllerResponsePropertiesInjector(IDIResolver resolver) : ActionModulesAccessorInjector(resolver), IControllerResponsePropertiesInjector
+public class ControllerResponsePropertiesInjector(IDIResolver resolver) : ActionModulesAccessorInjector(resolver)
 {
 	private readonly IDIResolver _resolver = resolver;
 
 	/// <summary>
-	/// Builds the controller response properties.
+	/// Injects the controller response properties.
 	/// </summary>
 	/// <param name="controllerResponse">The controller response.</param>
-	public void Inject(ControllerResponse controllerResponse)
+	public void InjectControllerResponseProperties(ControllerResponse controllerResponse)
 	{
 		InjectActionModulesAccessorProperties(controllerResponse);
 

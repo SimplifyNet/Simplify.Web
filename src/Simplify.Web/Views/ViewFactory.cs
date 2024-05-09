@@ -1,9 +1,9 @@
 ﻿using System;
 using Simplify.DI;
-using Simplify.Web.Controllers.Response.Injection;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
+using Simplify.Web.PropertiesInjection;
 
 namespace Simplify.Web.Views;
 

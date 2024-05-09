@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
 using Simplify.DI;
-using Simplify.Web.Controllers.Response.Injection;
 using Simplify.Web.Modules.Data;
+using Simplify.Web.PropertiesInjection;
 using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.V1.Execution;
