@@ -23,7 +23,7 @@ public class Controller1Factory(IDIResolver resolver) : ActionModulesAccessorInj
 
 		InjectActionModulesAccessorProperties(controller);
 
-		controller.RouteParameters = matchedController.RouteParameters!.ToExpandoObject() ?? new ExpandoObject()!;
+		controller.RouteParameters = matchedController.RouteParameters?.ToExpandoObject() ?? new ExpandoObject()!;
 		controller.StringTable = _resolver.Resolve<IStringTable>().Items;
 
 		return controller;
