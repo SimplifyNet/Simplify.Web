@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Simplify.Web.Controllers.Processing;
 using Simplify.Web.Http.Mime;
 using Simplify.Web.Http.ResponseTime;
 using Simplify.Web.Http.ResponseWriting;
+using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.IO;
 
-namespace Simplify.Web.StaticFiles.Stages;
+namespace Simplify.Web.StaticFiles.Handlers;
 
 public class NewFileHandler(IResponseWriter responseWriter, IStaticFile fileHandler) : IStaticFileRequestHandler
 {

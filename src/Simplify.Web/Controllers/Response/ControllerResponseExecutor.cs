@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Simplify.DI;
-using Simplify.Web.Controllers.Response.Injection;
 
 namespace Simplify.Web.Controllers.Response;
 

@@ -2,7 +2,7 @@
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.PropertiesInjection;
 
-namespace Simplify.Web.Controllers.Response.Injection;
+namespace Simplify.Web.Controllers.Response;
 
 /// <summary>
 /// Provides the controller response properties injector.

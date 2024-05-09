@@ -5,7 +5,6 @@ using Simplify.DI;
 using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.Execution.Resolver;
 using Simplify.Web.Controllers.Response;
-using Simplify.Web.Controllers.Response.Injection;
 using Simplify.Web.Controllers.V1.Execution;
 
 namespace Simplify.Web.Bootstrapper.Setup;

@@ -1,6 +1,6 @@
 using System;
 
-namespace Simplify.Web.StaticFiles;
+namespace Simplify.Web.StaticFiles.Context;
 
 public interface IStaticFileProcessingContext
 {
