@@ -39,17 +39,6 @@ public class SimplifyWebRegistrationsOverride
 	}
 
 	/// <summary>
-	/// Overrides the `IViewsMetaStore` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideViewsMetaStore(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IViewsMetaStore), registrator);
-
-		return this;
-	}
-
-	/// <summary>
 	/// Overrides the `ISimplifyWebSettings` registration.
 	/// </summary>
 	/// <param name="registrator">IOC Container registrator.</param>
