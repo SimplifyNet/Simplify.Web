@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
+using Simplify.Web.Bootstrapper.SimplifyWebRegistrationsOverride;
 
 namespace Simplify.Web;
 
@@ -16,7 +17,7 @@ public static class SimplifyDIContainerProviderExtensions
 	/// <param name="containerProvider">The container provider.</param>
 	/// <param name="registrationsOverride">The `Simplify.Web` types registrations override</param>
 	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider,
-		Action<SimplifyWebRegistrationsOverride>? registrationsOverride = null)
+		Action<RegistrationsOverride>? registrationsOverride = null)
 	{
 		BootstrapperFactory.ContainerProvider = containerProvider;
 
@@ -29,9 +30,9 @@ public static class SimplifyDIContainerProviderExtensions
 		return containerProvider;
 	}
 
-	private static IEnumerable<Type>? PerformTypesOverride(Action<SimplifyWebRegistrationsOverride> registrationsOverride)
+	private static IEnumerable<Type> PerformTypesOverride(Action<RegistrationsOverride> registrationsOverride)
 	{
-		var overrideObj = new SimplifyWebRegistrationsOverride();
+		var overrideObj = new RegistrationsOverride();
 
 		registrationsOverride.Invoke(overrideObj);
 
