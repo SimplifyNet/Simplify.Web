@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Simplify.Web.Attributes.Setup;
-using Simplify.Web.System;
 
 namespace Simplify.Web.System;
 
@@ -30,6 +29,7 @@ public static class SimplifyWebTypesFinder
 	];
 
 	private static IList<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ??= AppDomain.CurrentDomain.GetAssemblies();
+
 	private static IList<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes
 		??= CurrentDomainAssemblies.GetAssembliesTypes(ExcludedAssembliesPrefixes).ToList();
 
@@ -50,25 +50,30 @@ public static class SimplifyWebTypesFinder
 	/// <typeparam name="T"></typeparam>
 	public static IEnumerable<Type> FindTypesDerivedFrom<T>() => FindTypesDerivedFrom(typeof(T));
 
-	public static IEnumerable<Type> FindTypesDerivedFrom(params Type[] types) => types.SelectMany(FindTypesDerivedFrom);
+	public static IEnumerable<Type> FindTypesDerivedFrom(IEnumerable<Type> types) => types
+		.SelectMany(FindTypesDerivedFrom);
+
+	public static IEnumerable<Type> FindTypesDerivedFrom(params Type[] types) => types
+		.SelectMany(FindTypesDerivedFrom);
 
 	/// <summary>
 	/// Finds all the types derived from specified type in the current domain assemblies.
 	/// </summary>
 	/// <param name="type">Type to find types derived from.</param>
-	public static IList<Type> FindTypesDerivedFrom(Type type) =>
-		CurrentDomainAssembliesTypes.Where(t => t.IsDerivedFrom(type)).ToList();
+	public static IEnumerable<Type> FindTypesDerivedFrom(Type type) =>
+		CurrentDomainAssembliesTypes
+			.Where(t => t.IsDerivedFrom(type));
 
 	/// <summary>
 	/// Gets the controller types to ignore.
 	/// </summary>
-	public static IEnumerable<Type> GetControllerTypesToIgnore()
+	public static IList<Type> GetControllerTypesToIgnore()
 	{
 		var ignoreContainingClass = CurrentDomainAssembliesTypes
 			.FirstOrDefault(t => t.IsDefined(typeof(IgnoreControllersAttribute), true));
 
 		if (ignoreContainingClass == null)
-			return new List<Type>();
+			return [];
 
 		var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreControllersAttribute), false);
 
@@ -78,13 +83,13 @@ public static class SimplifyWebTypesFinder
 	/// <summary>
 	/// Gets the types to ignore.
 	/// </summary>
-	public static IEnumerable<Type> GetIgnoredIocRegistrationTypes()
+	public static IList<Type> GetIgnoredIocRegistrationTypes()
 	{
 		var ignoreContainingClass = CurrentDomainAssembliesTypes
 			.FirstOrDefault(t => t.IsDefined(typeof(IgnoreTypesRegistrationAttribute), true));
 
 		if (ignoreContainingClass == null)
-			return new List<Type>();
+			return [];
 
 		var attributes = ignoreContainingClass.GetCustomAttributes(typeof(IgnoreTypesRegistrationAttribute), false);
 

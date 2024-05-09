@@ -26,6 +26,6 @@ public static class AssembliesFilterExtensions
 	/// <param name="assemblies">The assemblies.</param>
 	/// <param name="excludedAssembliesPrefixes">The filter prefixes.</param>
 	public static IEnumerable<Assembly> FilterExcludedAssemblies(this IEnumerable<Assembly> assemblies, IEnumerable<string> excludedAssembliesPrefixes) => assemblies
-		.Where(assembly => !excludedAssembliesPrefixes
-		.Any(prefix => assembly.FullName!.StartsWith(prefix)));
+		.Where(assembly => excludedAssembliesPrefixes
+		.All(prefix => !assembly.FullName!.StartsWith(prefix)));
 }

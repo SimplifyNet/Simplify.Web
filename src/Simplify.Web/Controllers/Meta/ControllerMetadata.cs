@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Simplify.Web.Attributes;
 using Simplify.Web.Http;
-using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.Meta;
 
@@ -11,7 +10,7 @@ namespace Simplify.Web.Controllers.Meta;
 /// Provides the controller base metadata information.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="ControllerMetaData" /> class.
+/// Initializes a new instance of the <see cref="ControllerMetadata" /> class.
 /// </remarks>
 /// <param name="controllerType">Type of the controller.</param>
 public abstract class ControllerMetadata(Type controllerType) : IControllerMetadata

@@ -4,5 +4,5 @@ namespace Simplify.Web.Controllers.Meta.Loader;
 
 public interface IMetadataLoader
 {
-	IReadOnlyCollection<IControllerMetadata> Load();
+	IReadOnlyList<IControllerMetadata> Load();
 }

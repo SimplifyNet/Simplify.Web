@@ -1,8 +1,7 @@
 ﻿using System;
-using Simplify.Web.Old;
-using Simplify.Web.Old.Attributes;
+using Simplify.Web.Attributes;
 
-namespace Simplify.Web.Meta.Tests.Old.TestTypes;
+namespace Simplify.Web.Meta.Tests.TestTypes.Controllers.V2;
 
 [Get("/test-action")]
 public class TestControllerV2 : Controller2

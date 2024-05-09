@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Meta.Tests.Old.TestTypes;
+﻿namespace Simplify.Web.Meta.Tests.TestTypes.Models;
 
 public class TestModel
 {

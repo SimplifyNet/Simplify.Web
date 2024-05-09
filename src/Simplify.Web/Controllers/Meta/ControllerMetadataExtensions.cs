@@ -19,17 +19,17 @@ public static class ControllerMetadataRouteExtensions
 	public static IControllerMetadata? GetHandlerController(this IEnumerable<IControllerMetadata> list, HandlerControllerType controllerType) =>
 		controllerType switch
 		{
-			HandlerControllerType.ForbiddenHandler => list.FirstOrDefault(x =>
-				x.Role is { IsForbiddenHandler: true }),
-			HandlerControllerType.NotFoundHandler => list.FirstOrDefault(x =>
-				x.Role is { IsNotFoundHandler: true }),
+			HandlerControllerType.ForbiddenHandler => list.FirstOrDefault(x => x.Role is { IsForbiddenHandler: true }),
+			HandlerControllerType.NotFoundHandler => list.FirstOrDefault(x => x.Role is { IsNotFoundHandler: true }),
 			_ => null
 		};
 
-	public static bool IsSpecialController(this IControllerMetadata x) =>
-		x.Role is { IsForbiddenHandler: true } ||
-		x.Role is { IsNotFoundHandler: true };
+	public static bool IsSpecialController(this IControllerMetadata controller) =>
+		controller.Role
+			is { IsForbiddenHandler: true }
+			or { IsNotFoundHandler: true };
 
-	public static bool ContainsRoute(this IControllerMetadata x) =>
-		x.ExecParameters!.Routes.Any(x => !string.IsNullOrEmpty(x.Value));
+	public static bool ContainsRoute(this IControllerMetadata controller) =>
+		controller.ExecParameters != null &&
+		controller.ExecParameters.Routes.Any(route => !string.IsNullOrEmpty(route.Value));
 }

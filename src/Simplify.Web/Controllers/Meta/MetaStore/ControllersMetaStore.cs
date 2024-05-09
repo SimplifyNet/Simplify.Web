@@ -36,11 +36,11 @@ public class ControllersMetaStore : IControllersMetaStore
 		set => _current = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
-	public IReadOnlyCollection<IControllerMetadata> AllControllers { get; }
+	public IReadOnlyList<IControllerMetadata> AllControllers { get; }
 
-	public IReadOnlyCollection<IControllerMetadata> StandardControllers { get; }
-	public IReadOnlyCollection<IControllerMetadata> RoutedControllers { get; }
-	public IReadOnlyCollection<IControllerMetadata> GlobalControllers { get; }
+	public IReadOnlyList<IControllerMetadata> StandardControllers { get; }
+	public IReadOnlyList<IControllerMetadata> RoutedControllers { get; }
+	public IReadOnlyList<IControllerMetadata> GlobalControllers { get; }
 
 	public IControllerMetadata? ForbiddenController { get; }
 	public IControllerMetadata? NotFoundController { get; }
