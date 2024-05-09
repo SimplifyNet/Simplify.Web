@@ -13,11 +13,26 @@
 			"launchBrowser": true,
 			"applicationUrl": "http://localhost:5000;https://localhost:5001",
 			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		},
+		"SampleApp.Angular SPA": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"applicationUrl": "http://localhost:5000;https://localhost:5001",
+			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
 				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
 			}
 		},
 		"IIS Express": {
+			"commandName": "IISExpress",
+			"launchBrowser": true,
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+			}
+		},
+		"IIS Express SPA": {
 			"commandName": "IISExpress",
 			"launchBrowser": true,
 			"environmentVariables": {
