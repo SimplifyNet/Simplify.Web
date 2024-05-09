@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Simplify.Web.StaticFiles.Context;
 
 namespace Simplify.Web.StaticFiles;
 
@@ -11,5 +12,4 @@ public class StaticFileRequestHandlingPipeline(IReadOnlyList<IStaticFileRequestH
 		await handlers
 			.First(x => x.CanHandle(context))
 			.Execute(context, response);
-
 }

@@ -7,6 +7,7 @@ using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Settings;
 using Simplify.Web.StaticFiles;
 using Simplify.Web.StaticFiles.Context;
+using Simplify.Web.StaticFiles.Handlers;
 using Simplify.Web.StaticFiles.IO;
 
 namespace Simplify.Web.Bootstrapper.Setup;
