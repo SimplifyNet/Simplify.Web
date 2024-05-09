@@ -1,4 +1,5 @@
-﻿using Simplify.Web.Views;
+﻿using Simplify.DI;
+using Simplify.Web.Views;
 
 namespace Simplify.Web;
 
@@ -8,6 +9,8 @@ namespace Simplify.Web;
 public abstract class ViewAccessor
 {
 	internal IViewFactory ViewFactory { get; set; } = null!;
+
+	internal IDIResolver Resolver { get; set; } = null!;
 
 	/// <summary>
 	/// Gets a view instance.

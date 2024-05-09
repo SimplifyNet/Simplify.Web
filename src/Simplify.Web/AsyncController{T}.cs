@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Simplify.DI;
 using Simplify.Web.Model;
 
 #nullable disable
@@ -29,16 +30,16 @@ public abstract class AsyncController<T> : AsyncControllerBase
 		}
 	}
 
-	internal virtual IModelHandler ModelHandler { get; set; } = null!;
-
 	/// <summary>
 	/// Reads the model asynchronously.
 	/// </summary>
 	public virtual async Task ReadModelAsync()
 	{
-		if (!ModelHandler.Processed)
-			await ModelHandler.ProcessAsync<T>();
+		var handler = Resolver.Resolve<IModelHandler>();
 
-		_model = ModelHandler.GetModel<T>();
+		if (!handler.Processed)
+			await handler.ProcessAsync<T>();
+
+		_model = handler.GetModel<T>();
 	}
 }
