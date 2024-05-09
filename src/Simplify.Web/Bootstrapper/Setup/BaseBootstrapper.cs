@@ -75,6 +75,7 @@ public partial class BaseBootstrapper
 		var typesToIgnore = SimplifyWebTypesFinder.GetIgnoredIocRegistrationTypes();
 
 		RegisterControllers(typesToIgnore);
+		RegisterViews(typesToIgnore);
 	}
 
 	/// <summary>
