@@ -19,9 +19,9 @@ public static class ControllerMetadataRouteExtensions
 	public static IControllerMetadata? GetHandlerController(this IEnumerable<IControllerMetadata> list, HandlerControllerType controllerType) =>
 		controllerType switch
 		{
-			HandlerControllerType.ForbiddenHandler => list.GetStandardControllers().FirstOrDefault(x =>
+			HandlerControllerType.ForbiddenHandler => list.FirstOrDefault(x =>
 				x.Role is { IsForbiddenHandler: true }),
-			HandlerControllerType.NotFoundHandler => list.GetStandardControllers().FirstOrDefault(x =>
+			HandlerControllerType.NotFoundHandler => list.FirstOrDefault(x =>
 				x.Role is { IsNotFoundHandler: true }),
 			_ => null
 		};
