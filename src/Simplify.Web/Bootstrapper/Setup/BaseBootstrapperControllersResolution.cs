@@ -34,11 +34,10 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IControllerResolutionStage>>(r =>
 			new List<IControllerResolutionStage>
 			{
-				new SecurityCheckStage(
-					r.Resolve<ISecurityChecker>()),
 				new RouteMatchingStage(
-					r.Resolve<IRouteMatcherResolver>()
-				),
+					r.Resolve<IRouteMatcherResolver>()),
+				new SecurityCheckStage(
+					r.Resolve<ISecurityChecker>())
 			}, LifetimeType.Singleton);
 	}
 }
