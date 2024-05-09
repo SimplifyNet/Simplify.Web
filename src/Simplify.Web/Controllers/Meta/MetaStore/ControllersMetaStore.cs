@@ -11,7 +11,6 @@ namespace Simplify.Web.Controllers.Meta.MetaStore;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllersMetaStore"/> class.
 /// </remarks>
-/// <param name="resolver">The factory resolver</param>
 public class ControllersMetaStore : IControllersMetaStore
 {
 	private static IControllersMetaStore? _current;
@@ -37,11 +36,11 @@ public class ControllersMetaStore : IControllersMetaStore
 		set => _current = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
-	public IReadOnlyCollection<IControllerMetadata> AllControllers { get; } = new List<IControllerMetadata>();
+	public IReadOnlyCollection<IControllerMetadata> AllControllers { get; }
 
-	public IReadOnlyCollection<IControllerMetadata> StandardControllers { get; } = new List<IControllerMetadata>();
-	public IReadOnlyCollection<IControllerMetadata> RoutedControllers { get; } = new List<IControllerMetadata>();
-	public IReadOnlyCollection<IControllerMetadata> GlobalControllers { get; } = new List<IControllerMetadata>();
+	public IReadOnlyCollection<IControllerMetadata> StandardControllers { get; }
+	public IReadOnlyCollection<IControllerMetadata> RoutedControllers { get; }
+	public IReadOnlyCollection<IControllerMetadata> GlobalControllers { get; }
 
 	public IControllerMetadata? ForbiddenController { get; }
 	public IControllerMetadata? NotFoundController { get; }
