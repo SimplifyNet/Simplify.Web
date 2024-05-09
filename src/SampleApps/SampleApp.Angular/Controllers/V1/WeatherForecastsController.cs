@@ -3,7 +3,7 @@ using SampleApp.Angular.ViewModels;
 using Simplify.Web;
 using Simplify.Web.Attributes;
 
-namespace SampleApp.Angular.Controllers.v1;
+namespace SampleApp.Angular.Controllers.V1;
 
 [Get("api/v1/weatherForecasts")]
 public class WeatherForecastsController : Controller

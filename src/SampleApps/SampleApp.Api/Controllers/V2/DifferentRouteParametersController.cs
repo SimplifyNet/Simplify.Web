@@ -1,7 +1,7 @@
 using Simplify.Web.Old;
 using Simplify.Web.Old.Attributes;
 
-namespace SampleApp.Api.Controllers.v2;
+namespace SampleApp.Api.Controllers.V2;
 
 [Get("api/v2/different-route-parameters/{StringParam}/{IntParam:int}/{BoolParam:bool}/{StringArrayParam:string[]}")]
 public class DifferentRouteParametersController : Controller2
