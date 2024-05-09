@@ -12,23 +12,20 @@ namespace Simplify.Web.StaticFiles.IO;
 /// </summary>
 /// <seealso cref="IStaticFile" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="StaticFileHandler"/> class.
+/// Initializes a new instance of the <see cref="StaticFile"/> class.
 /// </remarks>
 /// <param name="staticFilesPaths">The static files paths.</param>
 /// <param name="sitePhysicalPath">The site physical path.</param>
 public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath) : IStaticFile
 {
-	private readonly IList<string> _staticFilesPaths = staticFilesPaths;
-	private readonly string _sitePhysicalPath = sitePhysicalPath;
-
 	/// <summary>
 	/// Determines whether the relative file path is a static file route path.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
 	public bool IsValidPath(string relativeFilePath) =>
-		_staticFilesPaths
+		staticFilesPaths
 			.Where(relativeFilePath.ToLower().StartsWith)
-			.Any(_ => File.Exists(_sitePhysicalPath + relativeFilePath));
+			.Any(_ => File.Exists(sitePhysicalPath + relativeFilePath));
 
 	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(relativeFilePath).TrimMilliseconds();
 

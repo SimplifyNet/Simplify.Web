@@ -12,14 +12,13 @@ namespace Simplify.Web.Old.Modules;
 /// <param name="settings">The settings.</param>
 public class LanguageManagerProvider(ISimplifyWebSettings settings) : ILanguageManagerProvider
 {
-	private readonly ISimplifyWebSettings _settings = settings;
 	private ILanguageManager? _languageManager;
 
 	/// <summary>
 	/// Creates the language manager instance.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	public void Setup(HttpContext context) => _languageManager ??= new LanguageManager(_settings, context);
+	public void Setup(HttpContext context) => _languageManager ??= new LanguageManager(settings, context);
 
 	/// <summary>
 	/// Gets the language manager.

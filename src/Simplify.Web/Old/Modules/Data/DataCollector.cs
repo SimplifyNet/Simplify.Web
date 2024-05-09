@@ -15,9 +15,6 @@ namespace Simplify.Web.Old.Modules.Data;
 /// <param name="stringTable">The string table.</param>
 public class DataCollector(string mainContentVariableName, string titleVariableName, IStringTable stringTable) : IDataCollector
 {
-	private readonly string _mainContentVariableName = mainContentVariableName;
-	private readonly IStringTable _stringTable = stringTable;
-
 	/// <summary>
 	/// Gets the name of the title variable.
 	/// </summary>
@@ -76,13 +73,13 @@ public class DataCollector(string mainContentVariableName, string titleVariableN
 	/// Set template main content variable value (all occurrences will be replaced).
 	/// </summary>
 	/// <param name="value">Value to set.</param>
-	public void Add(string? value) => Add(_mainContentVariableName, value);
+	public void Add(string? value) => Add(mainContentVariableName, value);
 
 	/// <summary>
 	/// Set template main content variable value with data from template (all occurrences will be replaced).
 	/// </summary>
 	/// <param name="template">The template.</param>
-	public void Add(ITemplate template) => Add(_mainContentVariableName, template);
+	public void Add(ITemplate template) => Add(mainContentVariableName, template);
 
 	/// <summary>
 	/// Set template title variable value (all occurrences will be replaced).
@@ -95,19 +92,19 @@ public class DataCollector(string mainContentVariableName, string titleVariableN
 	/// </summary>
 	/// <param name="variableName">Variable name in master template file.</param>
 	/// <param name="stringTableKey">StringTable key.</param>
-	public void AddSt(string variableName, string stringTableKey) => Add(variableName, _stringTable.GetItem(stringTableKey));
+	public void AddSt(string variableName, string stringTableKey) => Add(variableName, stringTable.GetItem(stringTableKey));
 
 	/// <summary>
 	/// Set template main content variable value from StringTable (all occurrences will be replaced).
 	/// </summary>
 	/// <param name="stringTableKey">StringTable key.</param>
-	public void AddSt(string stringTableKey) => Add(_stringTable.GetItem(stringTableKey));
+	public void AddSt(string stringTableKey) => Add(stringTable.GetItem(stringTableKey));
 
 	/// <summary>
 	/// Set template title variable value from StringTable (all occurrences will be replaced).
 	/// </summary>
 	/// <param name="stringTableKey">StringTable key.</param>
-	public void AddTitleSt(string stringTableKey) => AddTitle(_stringTable.GetItem(stringTableKey));
+	public void AddTitleSt(string stringTableKey) => AddTitle(stringTable.GetItem(stringTableKey));
 
 	/// <summary>
 	/// Checking if some variable data is already exist in a data collector.

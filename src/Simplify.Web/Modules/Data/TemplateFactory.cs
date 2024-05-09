@@ -33,20 +33,15 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 	private static readonly object Locker = new();
 	private readonly SemaphoreSlim _cacheSemaphore = new(1, 1);
 
-	private readonly IDynamicEnvironment _environment = environment;
-	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
-	private readonly string _defaultLanguage = defaultLanguage;
-	private readonly bool _templatesMemoryCache = templatesMemoryCache;
-	private readonly bool _loadTemplatesFromAssembly = loadTemplatesFromAssembly;
 	private ILanguageManager _languageManager = null!;
 
-	public void Setup() => _languageManager = _languageManagerProvider.Get();
+	public void Setup() => _languageManager = languageManagerProvider.Get();
 
 	public ITemplate Load(string fileName)
 	{
 		var filePath = BuildFilePath(fileName);
 
-		if (!_templatesMemoryCache)
+		if (!templatesMemoryCache)
 			return LoadFromFile(filePath);
 
 		var tpl = TryLoadFromCache(filePath);
@@ -61,7 +56,7 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 			if (tpl != null)
 				return tpl;
 
-			tpl = !_loadTemplatesFromAssembly
+			tpl = !loadTemplatesFromAssembly
 				? LoadFromFile(filePath)
 				: LoadFromAssembly(filePath, Assembly.GetCallingAssembly());
 
@@ -77,7 +72,7 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 	{
 		var filePath = BuildFilePath(fileName);
 
-		if (!_templatesMemoryCache)
+		if (!templatesMemoryCache)
 			return await LoadFromFileAsync(filePath);
 
 		var tpl = TryLoadFromCache(filePath);
@@ -94,7 +89,7 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 			if (tpl != null)
 				return tpl;
 
-			tpl = !_loadTemplatesFromAssembly
+			tpl = !loadTemplatesFromAssembly
 				? await LoadFromFileAsync(filePath)
 				: await LoadFromAssemblyAsync(filePath, assembly);
 
@@ -116,27 +111,27 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 		if (!fileName.EndsWith(".tpl"))
 			fileName += ".tpl";
 
-		return !_loadTemplatesFromAssembly ? Path.Combine(_environment.TemplatesPhysicalPath, fileName) : fileName;
+		return !loadTemplatesFromAssembly ? Path.Combine(environment.TemplatesPhysicalPath, fileName) : fileName;
 	}
 
 	private ITemplate LoadFromFile(string filePath) =>
 		TemplateBuilder.FromFile(filePath)
-			.Localizable(_languageManager.Language, _defaultLanguage)
+			.Localizable(_languageManager.Language, defaultLanguage)
 			.Build();
 
 	private Task<ITemplate> LoadFromFileAsync(string filePath) =>
 		TemplateBuilder.FromFile(filePath)
-			.Localizable(_languageManager.Language, _defaultLanguage)
+			.Localizable(_languageManager.Language, defaultLanguage)
 			.BuildAsync();
 
 	private ITemplate LoadFromAssembly(string filePath, Assembly assembly) =>
 		TemplateBuilder.FromAssembly(filePath, assembly)
-			.Localizable(_languageManager.Language, _defaultLanguage)
+			.Localizable(_languageManager.Language, defaultLanguage)
 			.Build();
 
 	private Task<ITemplate> LoadFromAssemblyAsync(string filePath, Assembly assembly) =>
 		TemplateBuilder.FromAssembly(filePath, assembly)
-			.Localizable(_languageManager.Language, _defaultLanguage)
+			.Localizable(_languageManager.Language, defaultLanguage)
 			.BuildAsync();
 
 	private ITemplate? TryLoadFromCache(string filePath)

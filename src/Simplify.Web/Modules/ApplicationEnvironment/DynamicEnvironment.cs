@@ -9,11 +9,9 @@ namespace Simplify.Web.Modules.ApplicationEnvironment;
 /// <param name="settings">The settings.</param>
 public sealed class DynamicEnvironment(IEnvironment environment, ISimplifyWebSettings settings) : IDynamicEnvironment
 {
-	private readonly IEnvironment _environment = environment;
-
 	public string TemplatesPath { get; set; } = settings.DefaultTemplatesPath;
 
-	public string TemplatesPhysicalPath => _environment.AppPhysicalPath + TemplatesPath + "/";
+	public string TemplatesPhysicalPath => environment.AppPhysicalPath + TemplatesPath + "/";
 
 	public string SiteStyle { get; set; } = settings.DefaultStyle;
 

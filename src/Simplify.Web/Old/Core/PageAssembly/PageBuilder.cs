@@ -14,9 +14,6 @@ namespace Simplify.Web.Old.Core.PageAssembly;
 /// <param name="dataCollector">The data collector.</param>
 public class PageBuilder(ITemplateFactory templateFactory, IDataCollector dataCollector) : IPageBuilder
 {
-	private readonly ITemplateFactory _templateFactory = templateFactory;
-	private readonly IDataCollector _dataCollector = dataCollector;
-
 	/// <summary>
 	/// Builds a web page
 	/// </summary>
@@ -27,10 +24,10 @@ public class PageBuilder(ITemplateFactory templateFactory, IDataCollector dataCo
 		resolver.Resolve<IStringTableItemsSetter>().Set();
 		resolver.Resolve<IContextVariablesSetter>().SetVariables(resolver);
 
-		var tpl = _templateFactory.Load(resolver.Resolve<IEnvironment>().MasterTemplateFileName);
+		var tpl = templateFactory.Load(resolver.Resolve<IEnvironment>().MasterTemplateFileName);
 
-		foreach (var item in _dataCollector.Items.Keys)
-			tpl.Set(item, _dataCollector.Items[item]);
+		foreach (var item in dataCollector.Items.Keys)
+			tpl.Set(item, dataCollector.Items[item]);
 
 		return tpl.Get();
 	}

@@ -14,9 +14,6 @@ namespace Simplify.Web.Old.Core.PageAssembly;
 /// <param name="responseWriter">The response writer.</param>
 public class PageProcessor(IPageBuilder pageBuilder, IResponseWriter responseWriter) : IPageProcessor
 {
-	private readonly IPageBuilder _pageBuilder = pageBuilder;
-	private readonly IResponseWriter _responseWriter = responseWriter;
-
 	/// <summary>
 	/// Processes (build web-page and send to client, process current page state) the current web-page
 	/// </summary>
@@ -26,7 +23,7 @@ public class PageProcessor(IPageBuilder pageBuilder, IResponseWriter responseWri
 	{
 		context.Response.ContentType = "text/html";
 
-		await _responseWriter.WriteAsync(_pageBuilder.Build(resolver), context.Response);
+		await responseWriter.WriteAsync(pageBuilder.Build(resolver), context.Response);
 
 		return RequestHandlingStatus.RequestWasHandled;
 	}

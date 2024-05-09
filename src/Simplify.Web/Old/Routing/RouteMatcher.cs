@@ -14,8 +14,6 @@ namespace Simplify.Web.Old.Routing;
 /// <param name="controllerPathParser">The controller path parser.</param>
 public class RouteMatcher(IControllerPathParser controllerPathParser) : IRouteMatcher
 {
-	private readonly IControllerPathParser _controllerPathParser = controllerPathParser;
-
 	/// <summary>
 	/// Matches the current path with controller path.
 	/// Only "/", "/action", "/action/{userName}/{id}", "/action/{id:int}", "/{id}" etc. route types allowed
@@ -32,7 +30,7 @@ public class RouteMatcher(IControllerPathParser controllerPathParser) : IRouteMa
 		if (string.IsNullOrEmpty(controllerPath))
 			return new RouteMatchResult(true);
 
-		var controllerPathParsed = _controllerPathParser.Parse(controllerPath!);
+		var controllerPathParsed = controllerPathParser.Parse(controllerPath!);
 		var currentPathItems = currentPath!.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
 		if (currentPathItems.Length != controllerPathParsed.Items.Count)

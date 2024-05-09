@@ -17,8 +17,6 @@ namespace Simplify.Web.Controllers.V1.Matcher;
 /// <param name="controllerPathParser">The controller path parser.</param>
 public class Controller1RouteMatcher(IController1PathParser controllerPathParser) : IRouteMatcher
 {
-	private readonly IController1PathParser _controllerPathParser = controllerPathParser;
-
 	public bool CanHandle(IControllerMetadata controller) => controller is IController1Metadata;
 
 	/// <summary>
@@ -37,7 +35,7 @@ public class Controller1RouteMatcher(IController1PathParser controllerPathParser
 		if (string.IsNullOrEmpty(controllerPath))
 			return new RouteMatchResult(true);
 
-		var controllerPathParsed = _controllerPathParser.Parse(controllerPath!);
+		var controllerPathParsed = controllerPathParser.Parse(controllerPath!);
 		var currentPathItems = currentPath!.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
 		if (currentPathItems.Length != controllerPathParsed.Items.Count)

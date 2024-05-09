@@ -17,8 +17,6 @@ namespace Simplify.Web.Old.Modules.Data.Html;
 /// <param name="stringTable">The string table.</param>
 public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 {
-	private readonly IStringTable _stringTable = stringTable;
-
 	/// <summary>
 	/// Generate number selected HTML list.
 	/// </summary>
@@ -202,7 +200,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 			.Aggregate(data,
 				(current, item) =>
 					current +
-					string.Format("<option value='{0}'{2}>{1}</option>", Convert.ToInt32(item), _stringTable.GetAssociatedValue(item),
+					string.Format("<option value='{0}'{2}>{1}</option>", Convert.ToInt32(item), stringTable.GetAssociatedValue(item),
 						selectedItem.ToString() == item.ToString() ? " selected='selected'" : ""));
 	}
 
@@ -223,7 +221,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 			.Aggregate(data,
 				(current, item) =>
 					current +
-					$"<option value='{Convert.ToInt32(item)}'>{_stringTable.GetAssociatedValue(item)}</option>");
+					$"<option value='{Convert.ToInt32(item)}'>{stringTable.GetAssociatedValue(item)}</option>");
 	}
 
 	/// <summary>
@@ -235,5 +233,5 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// Generating HTML list default item.
 	/// </summary>
 	public string GenerateDefaultListItem(bool isSelected = true) =>
-		string.Format("<option value=''{1}>{0}</option>", _stringTable.GetItem("HtmlListDefaultItemLabel"), isSelected ? " selected='selected'" : "");
+		string.Format("<option value=''{1}>{0}</option>", stringTable.GetItem("HtmlListDefaultItemLabel"), isSelected ? " selected='selected'" : "");
 }

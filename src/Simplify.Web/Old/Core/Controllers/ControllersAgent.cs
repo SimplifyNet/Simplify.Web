@@ -18,15 +18,12 @@ namespace Simplify.Web.Old.Core.Controllers;
 /// <param name="routeMatcher">The route matcher.</param>
 public class ControllersAgent(IControllersMetaStore controllersMetaStore, IRouteMatcher routeMatcher) : IControllersAgent
 {
-	private readonly IControllersMetaStore _controllersMetaStore = controllersMetaStore;
-	private readonly IRouteMatcher _routeMatcher = routeMatcher;
-
 	/// <summary>
 	/// Gets the standard controllers meta data.
 	/// </summary>
 	/// <returns></returns>
 	public IList<IControllerMetaData> GetStandardControllersMetaData() =>
-		SortControllersMetaContainers(_controllersMetaStore.ControllersMetaData.Where(x =>
+		SortControllersMetaContainers(controllersMetaStore.ControllersMetaData.Where(x =>
 			x.Role == null || (
 			x.Role.Is400Handler == false &&
 			x.Role.Is403Handler == false &&
@@ -42,13 +39,13 @@ public class ControllersAgent(IControllersMetaStore controllersMetaStore, IRoute
 	public IRouteMatchResult? MatchControllerRoute(IControllerMetaData controllerMetaData, string? sourceRoute, string httpMethod)
 	{
 		if (controllerMetaData.ExecParameters == null || controllerMetaData.ExecParameters.Routes.Count == 0)
-			return _routeMatcher.Match(sourceRoute, null);
+			return routeMatcher.Match(sourceRoute, null);
 
 		var item = controllerMetaData.ExecParameters.Routes.FirstOrDefault(x => x.Key == HttpRequestUtil.HttpMethodStringToHttpMethod(httpMethod));
 
 		return default(KeyValuePair<HttpMethod, string>).Equals(item)
 			? null
-			: _routeMatcher.Match(sourceRoute, item.Value);
+			: routeMatcher.Match(sourceRoute, item.Value);
 	}
 
 	/// <summary>
@@ -59,9 +56,9 @@ public class ControllersAgent(IControllersMetaStore controllersMetaStore, IRoute
 	public IControllerMetaData? GetHandlerController(HandlerControllerType controllerType) =>
 		controllerType switch
 		{
-			HandlerControllerType.Http403Handler => _controllersMetaStore.ControllersMetaData.FirstOrDefault(x =>
+			HandlerControllerType.Http403Handler => controllersMetaStore.ControllersMetaData.FirstOrDefault(x =>
 				x.Role is { Is403Handler: true }),
-			HandlerControllerType.Http404Handler => _controllersMetaStore.ControllersMetaData.FirstOrDefault(x =>
+			HandlerControllerType.Http404Handler => controllersMetaStore.ControllersMetaData.FirstOrDefault(x =>
 				x.Role is { Is404Handler: true }),
 			_ => null
 		};

@@ -6,9 +6,6 @@ namespace Simplify.Web.Modules.Data;
 
 public class DataCollector(string mainContentVariableName, string titleVariableName, IStringTable stringTable) : IDataCollector
 {
-	private readonly string _mainContentVariableName = mainContentVariableName;
-	private readonly IStringTable _stringTable = stringTable;
-
 	public string TitleVariableName { get; } = titleVariableName;
 
 	public IDictionary<string, string> Items { get; } = new Dictionary<string, string>();
@@ -39,17 +36,17 @@ public class DataCollector(string mainContentVariableName, string titleVariableN
 		Add(variableName, template.Get());
 	}
 
-	public void Add(string? value) => Add(_mainContentVariableName, value);
+	public void Add(string? value) => Add(mainContentVariableName, value);
 
-	public void Add(ITemplate template) => Add(_mainContentVariableName, template);
+	public void Add(ITemplate template) => Add(mainContentVariableName, template);
 
 	public void AddTitle(string? value) => Add(TitleVariableName, value);
 
-	public void AddSt(string variableName, string stringTableKey) => Add(variableName, _stringTable.GetItem(stringTableKey));
+	public void AddSt(string variableName, string stringTableKey) => Add(variableName, stringTable.GetItem(stringTableKey));
 
-	public void AddSt(string stringTableKey) => Add(_stringTable.GetItem(stringTableKey));
+	public void AddSt(string stringTableKey) => Add(stringTable.GetItem(stringTableKey));
 
-	public void AddTitleSt(string stringTableKey) => AddTitle(_stringTable.GetItem(stringTableKey));
+	public void AddTitleSt(string stringTableKey) => AddTitle(stringTable.GetItem(stringTableKey));
 
 	public bool IsDataExist(string variableName) => Items.ContainsKey(variableName);
 }

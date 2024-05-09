@@ -17,10 +17,6 @@ namespace Simplify.Web.Old.Core.Controllers;
 /// <param name="redirector">The redirector.</param>
 public class ControllersProcessor(IControllersAgent controllersAgent, IControllerExecutor controllerExecutor, IRedirector redirector) : IControllersProcessor
 {
-	private readonly IControllersAgent _agent = controllersAgent;
-	private readonly IControllerExecutor _controllerExecutor = controllerExecutor;
-	private readonly IRedirector _redirector = redirector;
-
 	/// <summary>
 	/// Process controllers for current HTTP request
 	/// </summary>
@@ -31,14 +27,14 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 	{
 		var atLeastOneNonAnyPageControllerMatched = false;
 
-		foreach (var controller in _agent.GetStandardControllersMetaData())
+		foreach (var controller in controllersAgent.GetStandardControllersMetaData())
 		{
-			var matcherResult = _agent.MatchControllerRoute(controller, context.Request.Path.Value, context.Request.Method);
+			var matcherResult = controllersAgent.MatchControllerRoute(controller, context.Request.Path.Value, context.Request.Method);
 
 			if (matcherResult == null || !matcherResult.Success)
 				continue;
 
-			var securityResult = _agent.IsSecurityRulesViolated(controller, context.User);
+			var securityResult = controllersAgent.IsSecurityRulesViolated(controller, context.User);
 
 			if (securityResult == SecurityRuleCheckResult.NotAuthenticated)
 				return ControllersProcessorResult.Http401;
@@ -51,7 +47,7 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 			if (result != ControllersProcessorResult.Ok)
 				return result;
 
-			if (!_agent.IsAnyPageController(controller))
+			if (!controllersAgent.IsAnyPageController(controller))
 				atLeastOneNonAnyPageControllerMatched = true;
 		}
 
@@ -63,14 +59,14 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 				return result;
 		}
 		else
-			_redirector.SetPreviousPageUrlToCurrentPage();
+			redirector.SetPreviousPageUrlToCurrentPage();
 
 		return ControllersProcessorResult.Ok;
 	}
 
 	private async Task<ControllersProcessorResult> ProcessController(IControllerExecutionArgs args)
 	{
-		var result = await _controllerExecutor.Execute(args);
+		var result = await controllerExecutor.Execute(args);
 
 		if (result == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;
@@ -83,12 +79,12 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 
 	private async Task<ControllersProcessorResult> ProcessOnlyAnyPageControllersMatched(IDIResolver resolver, HttpContext context)
 	{
-		var http404Controller = _agent.GetHandlerController(HandlerControllerType.Http404Handler);
+		var http404Controller = controllersAgent.GetHandlerController(HandlerControllerType.Http404Handler);
 
 		if (http404Controller == null)
 			return ControllersProcessorResult.Http404;
 
-		var handlerControllerResult = await _controllerExecutor.Execute(new ControllerExecutionArgs(http404Controller, resolver, context));
+		var handlerControllerResult = await controllerExecutor.Execute(new ControllerExecutionArgs(http404Controller, resolver, context));
 
 		if (handlerControllerResult == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;
@@ -101,12 +97,12 @@ public class ControllersProcessor(IControllersAgent controllersAgent, IControlle
 
 	private async Task<ControllersProcessorResult> ProcessForbiddenSecurityRule(IDIResolver resolver, HttpContext context)
 	{
-		var http403Controller = _agent.GetHandlerController(HandlerControllerType.Http403Handler);
+		var http403Controller = controllersAgent.GetHandlerController(HandlerControllerType.Http403Handler);
 
 		if (http403Controller == null)
 			return ControllersProcessorResult.Http403;
 
-		var handlerControllerResult = await _controllerExecutor.Execute(new ControllerExecutionArgs(http403Controller, resolver, context));
+		var handlerControllerResult = await controllerExecutor.Execute(new ControllerExecutionArgs(http403Controller, resolver, context));
 
 		if (handlerControllerResult == ControllerResponseResult.RawOutput)
 			return ControllersProcessorResult.RawOutput;

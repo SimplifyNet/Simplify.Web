@@ -19,18 +19,15 @@ namespace Simplify.Web.Old.Core.StaticFiles;
 /// <param name="sitePhysicalPath">The site physical path.</param>
 public class StaticFileHandler(IList<string> staticFilesPaths, string sitePhysicalPath) : IStaticFileHandler
 {
-	private readonly IList<string> _staticFilesPaths = staticFilesPaths;
-	private readonly string _sitePhysicalPath = sitePhysicalPath;
-
 	/// <summary>
 	/// Determines whether  relative file path is a static file route path.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
 	/// <returns></returns>
 	public bool IsStaticFileRoutePath(string relativeFilePath) =>
-		_staticFilesPaths
+		staticFilesPaths
 			.Where(relativeFilePath.ToLower().StartsWith)
-			.Any(_ => File.Exists(_sitePhysicalPath + relativeFilePath));
+			.Any(_ => File.Exists(sitePhysicalPath + relativeFilePath));
 
 	/// <summary>
 	/// Gets If-Modified-Since time header from headers collection.

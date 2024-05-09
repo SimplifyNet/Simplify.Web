@@ -16,15 +16,12 @@ public class StringTableItemsSetter(IDataCollector dataCollector, IStringTable s
 {
 	private const string StringTablePrefix = "StringTable.";
 
-	private readonly IDataCollector _dataCollector = dataCollector;
-	private readonly IStringTable _stringTable = stringTable;
-
 	/// <summary>
 	/// Sets this items from string table to data collector.
 	/// </summary>
 	public void Set()
 	{
-		foreach (var item in (IDictionary<string, Object>)_stringTable.Items)
-			_dataCollector.Add(StringTablePrefix + item.Key, item.Value.ToString());
+		foreach (var item in (IDictionary<string, Object>)stringTable.Items)
+			dataCollector.Add(StringTablePrefix + item.Key, item.Value.ToString());
 	}
 }

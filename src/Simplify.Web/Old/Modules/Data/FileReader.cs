@@ -27,11 +27,6 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 
 	private static readonly object Locker = new();
 
-	private readonly string _dataPhysicalPath = dataPhysicalPath;
-	private readonly string _defaultLanguage = defaultLanguage;
-	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
-	private readonly bool _disableCache = disableCache;
-
 	private ILanguageManager _languageManager = null!;
 
 	/// <summary>
@@ -49,7 +44,7 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 	/// <summary>
 	/// Setups the file reader.
 	/// </summary>
-	public void Setup() => _languageManager = _languageManagerProvider.Get();
+	public void Setup() => _languageManager = languageManagerProvider.Get();
 
 	#region Paths
 
@@ -76,12 +71,12 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 		var indexOfPoint = fileName!.LastIndexOf(".", StringComparison.Ordinal);
 
 		if (indexOfPoint == -1)
-			return $"{_dataPhysicalPath}{fileName}.{language}";
+			return $"{dataPhysicalPath}{fileName}.{language}";
 
 		var fileNameFirstPart = fileName.Substring(0, indexOfPoint);
 		var fileNameLastPart = fileName.Substring(indexOfPoint, fileName.Length - indexOfPoint);
 
-		return $"{_dataPhysicalPath}{fileNameFirstPart}.{language}{fileNameLastPart}";
+		return $"{dataPhysicalPath}{fileNameFirstPart}.{language}{fileNameLastPart}";
 	}
 
 	#endregion Paths
@@ -115,12 +110,12 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 
 		string? data;
 
-		if (!memoryCache || _disableCache)
+		if (!memoryCache || disableCache)
 		{
 			if (LoadTextFileFromFileSystem(fileName, language, out data))
 				return data;
 
-			return LoadTextFileFromFileSystem(fileName, _defaultLanguage, out data)
+			return LoadTextFileFromFileSystem(fileName, defaultLanguage, out data)
 				? data
 				: null;
 		}
@@ -128,7 +123,7 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 		if (LoadTextFileCached(fileName, language, out data))
 			return data;
 
-		return LoadTextFileCached(fileName, _defaultLanguage, out data)
+		return LoadTextFileCached(fileName, defaultLanguage, out data)
 			? data
 			: null;
 	}
@@ -167,12 +162,12 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 
 		XDocument? data;
 
-		if (!memoryCache || _disableCache)
+		if (!memoryCache || disableCache)
 		{
 			if (LoadXDocumentFromFileSystem(fileName, language, out data))
 				return data;
 
-			return LoadXDocumentFromFileSystem(fileName, _defaultLanguage, out data)
+			return LoadXDocumentFromFileSystem(fileName, defaultLanguage, out data)
 				? data
 				: null;
 		}
@@ -180,7 +175,7 @@ public class FileReader(string dataPhysicalPath, string defaultLanguage, ILangua
 		if (LoadXDocumentCached(fileName, language, out data))
 			return data;
 
-		return LoadXDocumentCached(fileName, _defaultLanguage, out data)
+		return LoadXDocumentCached(fileName, defaultLanguage, out data)
 			? data
 			: null;
 	}

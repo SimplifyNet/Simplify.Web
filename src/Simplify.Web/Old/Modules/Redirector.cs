@@ -34,8 +34,6 @@ public class Redirector(IWebContext context) : IRedirector
 	/// </summary>
 	public const string PreviousNavigatedUrlCookieFieldName = "PreviousNavigatedUrl";
 
-	private readonly IWebContext _context = context;
-
 	/// <summary>
 	/// Gets or sets the previous page url.
 	/// </summary>
@@ -44,8 +42,8 @@ public class Redirector(IWebContext context) : IRedirector
 	/// </value>
 	public string? PreviousPageUrl
 	{
-		get => _context.Request.Cookies[PreviousPageUrlCookieFieldName];
-		set => _context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value ?? "", new CookieOptions
+		get => context.Request.Cookies[PreviousPageUrlCookieFieldName];
+		set => context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value ?? "", new CookieOptions
 		{
 			SameSite = SameSiteMode.None,
 			Secure = true
@@ -60,8 +58,8 @@ public class Redirector(IWebContext context) : IRedirector
 	/// </value>
 	public string? RedirectUrl
 	{
-		get => _context.Request.Cookies[RedirectUrlCookieFieldName];
-		set => _context.Response.Cookies.Append(RedirectUrlCookieFieldName, value ?? "", new CookieOptions
+		get => context.Request.Cookies[RedirectUrlCookieFieldName];
+		set => context.Response.Cookies.Append(RedirectUrlCookieFieldName, value ?? "", new CookieOptions
 		{
 			SameSite = SameSiteMode.None,
 			Secure = true
@@ -76,8 +74,8 @@ public class Redirector(IWebContext context) : IRedirector
 	/// </value>
 	public string? LoginReturnUrl
 	{
-		get => _context.Request.Cookies[LoginReturnUrlCookieFieldName];
-		set => _context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value ?? "", new CookieOptions
+		get => context.Request.Cookies[LoginReturnUrlCookieFieldName];
+		set => context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value ?? "", new CookieOptions
 		{
 			SameSite = SameSiteMode.None,
 			Secure = true
@@ -92,8 +90,8 @@ public class Redirector(IWebContext context) : IRedirector
 	/// </value>
 	public string? PreviousNavigatedUrl
 	{
-		get => _context.Request.Cookies[PreviousNavigatedUrlCookieFieldName];
-		set => _context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value ?? "", new CookieOptions
+		get => context.Request.Cookies[PreviousNavigatedUrlCookieFieldName];
+		set => context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value ?? "", new CookieOptions
 		{
 			SameSite = SameSiteMode.None,
 			Secure = true
@@ -103,17 +101,17 @@ public class Redirector(IWebContext context) : IRedirector
 	/// <summary>
 	/// Sets the redirect url to current page.
 	/// </summary>
-	public void SetRedirectUrlToCurrentPage() => RedirectUrl = _context.Request.GetEncodedUrl();
+	public void SetRedirectUrlToCurrentPage() => RedirectUrl = context.Request.GetEncodedUrl();
 
 	/// <summary>
 	/// Sets the login return URL from current URI.
 	/// </summary>
-	public void SetLoginReturnUrlFromCurrentUri() => LoginReturnUrl = _context.Request.GetEncodedUrl();
+	public void SetLoginReturnUrlFromCurrentUri() => LoginReturnUrl = context.Request.GetEncodedUrl();
 
 	/// <summary>
 	/// Sets the previous page URL to current page.
 	/// </summary>
-	public void SetPreviousPageUrlToCurrentPage() => PreviousPageUrl = _context.Request.GetEncodedUrl();
+	public void SetPreviousPageUrlToCurrentPage() => PreviousPageUrl = context.Request.GetEncodedUrl();
 
 	/// <summary>
 	/// Navigates the client by specifying redirection type.
@@ -122,32 +120,32 @@ public class Redirector(IWebContext context) : IRedirector
 	/// <param name="bookmarkName">Name of the bookmark.</param>
 	public void Redirect(RedirectionType redirectionType, string? bookmarkName = null)
 	{
-		PreviousNavigatedUrl = _context.Request.GetEncodedUrl();
+		PreviousNavigatedUrl = context.Request.GetEncodedUrl();
 
 		switch (redirectionType)
 		{
 			case RedirectionType.RedirectUrl:
-				Redirect(string.IsNullOrEmpty(RedirectUrl) ? _context.SiteUrl : RedirectUrl);
+				Redirect(string.IsNullOrEmpty(RedirectUrl) ? context.SiteUrl : RedirectUrl);
 				break;
 
 			case RedirectionType.LoginReturnUrl:
-				Redirect(string.IsNullOrEmpty(LoginReturnUrl) ? _context.SiteUrl : LoginReturnUrl);
+				Redirect(string.IsNullOrEmpty(LoginReturnUrl) ? context.SiteUrl : LoginReturnUrl);
 				break;
 
 			case RedirectionType.PreviousPage:
-				Redirect(string.IsNullOrEmpty(PreviousPageUrl) ? _context.SiteUrl : PreviousPageUrl);
+				Redirect(string.IsNullOrEmpty(PreviousPageUrl) ? context.SiteUrl : PreviousPageUrl);
 				break;
 
 			case RedirectionType.PreviousPageWithBookmark:
-				Redirect(string.IsNullOrEmpty(PreviousPageUrl) ? _context.SiteUrl : PreviousPageUrl + "#" + bookmarkName);
+				Redirect(string.IsNullOrEmpty(PreviousPageUrl) ? context.SiteUrl : PreviousPageUrl + "#" + bookmarkName);
 				break;
 
 			case RedirectionType.CurrentPage:
-				Redirect(_context.Request.GetEncodedUrl());
+				Redirect(context.Request.GetEncodedUrl());
 				break;
 
 			case RedirectionType.DefaultPage:
-				Redirect(_context.SiteUrl);
+				Redirect(context.SiteUrl);
 				break;
 
 			default:
@@ -164,9 +162,9 @@ public class Redirector(IWebContext context) : IRedirector
 		if (string.IsNullOrEmpty(url))
 			throw new ArgumentNullException(nameof(url));
 
-		if (!url!.StartsWith(_context.SiteUrl))
+		if (!url!.StartsWith(context.SiteUrl))
 			throw new SecurityException("Redirection outside of the website, redirection URL: " + url);
 
-		_context.Response.Redirect(url);
+		context.Response.Redirect(url);
 	}
 }

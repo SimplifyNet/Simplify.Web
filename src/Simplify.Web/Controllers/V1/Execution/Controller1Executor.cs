@@ -13,13 +13,11 @@ namespace Simplify.Web.Controllers.V1.Execution;
 /// <param name="controllerFactory">The v1 controller factory.</param>
 public class Controller1Executor(IController1Factory controllerFactory) : IControllerExecutor
 {
-	private readonly IController1Factory _controllerFactory = controllerFactory;
-
 	public bool CanHandle(IControllerMetadata controllerMetadata) => controllerMetadata is IController1Metadata;
 
 	public async Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController, HttpContext context)
 	{
-		var controller = _controllerFactory.CreateController(matchedController);
+		var controller = controllerFactory.CreateController(matchedController);
 
 		return controller switch
 		{

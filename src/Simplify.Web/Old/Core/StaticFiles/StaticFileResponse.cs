@@ -17,9 +17,6 @@ namespace Simplify.Web.Old.Core.StaticFiles;
 /// <param name="responseWriter">The response writer.</param>
 public class StaticFileResponse(HttpResponse response, IResponseWriter responseWriter) : IStaticFileResponse
 {
-	private readonly HttpResponse _response = response;
-	private readonly IResponseWriter _responseWriter = responseWriter;
-
 	/// <summary>
 	/// Sends the not modified static file response.
 	/// </summary>
@@ -31,7 +28,7 @@ public class StaticFileResponse(HttpResponse response, IResponseWriter responseW
 		SetModificationHeaders(lastModifiedTime);
 		SetMimeType(fileName);
 
-		_response.StatusCode = 304;
+		response.StatusCode = 304;
 		return Task.CompletedTask;
 	}
 
@@ -47,16 +44,16 @@ public class StaticFileResponse(HttpResponse response, IResponseWriter responseW
 		SetModificationHeaders(lastModifiedTime);
 		SetMimeType(fileName);
 
-		_response.Headers["Expires"] = new DateTimeOffset(TimeProvider.Current.Now.AddYears(1)).ToString("R");
+		response.Headers["Expires"] = new DateTimeOffset(TimeProvider.Current.Now.AddYears(1)).ToString("R");
 
-		return _responseWriter.WriteAsync(data, _response);
+		return responseWriter.WriteAsync(data, response);
 	}
 
-	private void SetModificationHeaders(DateTime lastModifiedTime) => _response.Headers.Append("Last-Modified", lastModifiedTime.ToString("r"));
+	private void SetModificationHeaders(DateTime lastModifiedTime) => response.Headers.Append("Last-Modified", lastModifiedTime.ToString("r"));
 
 	/// <summary>
 	/// Sets the MIME type of response.
 	/// </summary>
 	/// <param name="fileName">Name of the file.</param>
-	private void SetMimeType(string fileName) => _response.ContentType = MimeTypeAssistant.GetMimeTypeByFilePath(fileName);
+	private void SetMimeType(string fileName) => response.ContentType = MimeTypeAssistant.GetMimeTypeByFilePath(fileName);
 }

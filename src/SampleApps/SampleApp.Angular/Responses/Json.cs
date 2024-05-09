@@ -14,8 +14,6 @@ namespace SampleApp.Angular.Responses;
 /// <param name="statusCode">The HTTP response status code.</param>
 public class Json(object objectToConvert, int statusCode = 200) : ControllerResponse
 {
-	private readonly object _objectToConvert = objectToConvert;
-
 	/// <summary>
 	/// Gets the HTTP response status code.
 	/// </summary>
@@ -34,7 +32,7 @@ public class Json(object objectToConvert, int statusCode = 200) : ControllerResp
 		Context.Response.StatusCode = _statusCode;
 
 		await ResponseWriter.WriteAsync(Context.Response,
-			JsonSerializer.Serialize(_objectToConvert,
+			JsonSerializer.Serialize(objectToConvert,
 				new JsonSerializerOptions
 				{
 					PropertyNamingPolicy = JsonNamingPolicy.CamelCase

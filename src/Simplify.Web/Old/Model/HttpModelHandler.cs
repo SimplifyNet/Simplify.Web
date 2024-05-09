@@ -18,8 +18,6 @@ namespace Simplify.Web.Old.Model;
 /// <param name="context">The context.</param>
 public class HttpModelHandler(IWebContext context) : IModelHandler
 {
-	private readonly IWebContext _context = context;
-
 	private object? _model;
 
 	/// <summary>
@@ -80,7 +78,7 @@ public class HttpModelHandler(IWebContext context) : IModelHandler
 	/// <returns></returns>
 	public async Task ProcessAsync<T>(IDIResolver resolver)
 	{
-		var args = new ModelBinderEventArgs<T>(_context);
+		var args = new ModelBinderEventArgs<T>(context);
 
 		foreach (var binder in ModelBindersTypes.Select(binderType => (IModelBinder)resolver.Resolve(binderType)))
 		{
@@ -97,7 +95,7 @@ public class HttpModelHandler(IWebContext context) : IModelHandler
 			return;
 		}
 
-		throw new ModelBindingException($"Unrecognized request content type for binding: {_context.Request.ContentType}");
+		throw new ModelBindingException($"Unrecognized request content type for binding: {context.Request.ContentType}");
 	}
 
 	/// <summary>

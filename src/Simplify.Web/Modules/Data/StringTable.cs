@@ -25,18 +25,13 @@ public sealed class StringTable(IList<string> stringTableFiles,
 	private static readonly IDictionary<string, IDictionary<string, object?>> Cache = new Dictionary<string, IDictionary<string, object?>>();
 	private static readonly object Locker = new();
 
-	private readonly IList<string> _stringTableFiles = stringTableFiles;
-	private readonly string _defaultLanguage = defaultLanguage;
-	private readonly ILanguageManagerProvider _languageManagerProvider = languageManagerProvider;
-	private readonly IFileReader _fileReader = fileReader;
-	private readonly bool _memoryCache = memoryCache;
 	private ILanguageManager _languageManager = null!;
 
 	public IDictionary<string, object?> Items { get; private set; } = null!;
 
 	public void Setup()
 	{
-		_languageManager = _languageManagerProvider.Get();
+		_languageManager = languageManagerProvider.Get();
 
 		TryLoad();
 	}
@@ -96,7 +91,7 @@ public sealed class StringTable(IList<string> stringTableFiles,
 
 	private void TryLoad()
 	{
-		if (!_memoryCache)
+		if (!memoryCache)
 		{
 			Items = Load();
 			return;
@@ -130,8 +125,8 @@ public sealed class StringTable(IList<string> stringTableFiles,
 	{
 		IDictionary<string, object?> currentItems = new ExpandoObject()!;
 
-		foreach (var file in _stringTableFiles)
-			Load(file, _defaultLanguage, _languageManager.Language, _fileReader, currentItems);
+		foreach (var file in stringTableFiles)
+			Load(file, defaultLanguage, _languageManager.Language, fileReader, currentItems);
 
 		return currentItems;
 	}

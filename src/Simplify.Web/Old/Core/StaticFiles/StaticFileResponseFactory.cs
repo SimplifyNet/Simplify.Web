@@ -12,12 +12,10 @@ namespace Simplify.Web.Old.Core.StaticFiles;
 /// <param name="responseWriter">The response writer.</param>
 public class StaticFileResponseFactory(IResponseWriter responseWriter) : IStaticFileResponseFactory
 {
-	private readonly IResponseWriter _responseWriter = responseWriter;
-
 	/// <summary>
 	/// Creates the static file response.
 	/// </summary>
 	/// <param name="response">The response.</param>
 	/// <returns></returns>
-	public IStaticFileResponse Create(HttpResponse response) => new StaticFileResponse(response, _responseWriter);
+	public IStaticFileResponse Create(HttpResponse response) => new StaticFileResponse(response, responseWriter);
 }

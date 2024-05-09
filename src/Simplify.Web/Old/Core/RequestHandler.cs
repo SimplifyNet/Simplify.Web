@@ -19,10 +19,6 @@ public class RequestHandler(IControllersRequestHandler controllersRequestHandler
 	IStaticFilesRequestHandler staticFilesRequestHandler,
 	bool staticFilesHandling) : IRequestHandler
 {
-	private readonly IControllersRequestHandler _controllersRequestHandler = controllersRequestHandler;
-	private readonly IStaticFilesRequestHandler _staticFilesRequestHandler = staticFilesRequestHandler;
-	private readonly bool _staticFilesHandling = staticFilesHandling;
-
 	/// <summary>
 	/// Processes the OWIN HTTP request.
 	/// </summary>
@@ -30,7 +26,7 @@ public class RequestHandler(IControllersRequestHandler controllersRequestHandler
 	/// <param name="context">The context.</param>
 	/// <returns></returns>
 	public Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context) =>
-		_staticFilesHandling && _staticFilesRequestHandler.IsStaticFileRoutePath(context)
-			? _staticFilesRequestHandler.ProcessRequest(context)
-			: _controllersRequestHandler.ProcessRequest(resolver, context);
+		staticFilesHandling && staticFilesRequestHandler.IsStaticFileRoutePath(context)
+			? staticFilesRequestHandler.ProcessRequest(context)
+			: controllersRequestHandler.ProcessRequest(resolver, context);
 }

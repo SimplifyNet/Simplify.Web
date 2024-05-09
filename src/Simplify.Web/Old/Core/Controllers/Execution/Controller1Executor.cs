@@ -9,8 +9,6 @@ namespace Simplify.Web.Old.Core.Controllers.Execution;
 /// <param name="controllerFactory">The v1 controller factory.</param>
 public class Controller1Executor(IController1Factory controllerFactory) : IVersionedControllerExecutor
 {
-	private readonly IController1Factory _controllerFactory = controllerFactory;
-
 	/// <summary>
 	/// Gets the controller version.
 	/// </summary>
@@ -24,7 +22,7 @@ public class Controller1Executor(IController1Factory controllerFactory) : IVersi
 	public async Task<ControllerResponse?> Execute(IControllerExecutionArgs args)
 	{
 		ControllerResponse? response = null;
-		var controller = _controllerFactory.CreateController(args);
+		var controller = controllerFactory.CreateController(args);
 
 		switch (controller)
 		{

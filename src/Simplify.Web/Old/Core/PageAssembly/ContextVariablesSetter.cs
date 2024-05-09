@@ -66,9 +66,6 @@ public class ContextVariablesSetter(IDataCollector dataCollector, bool disableAu
 	/// </summary>
 	public const string SiteTitleStringTableVariableName = "SiteTitle";
 
-	private readonly IDataCollector _dataCollector = dataCollector;
-	private readonly bool _disableAutomaticSiteTitleSet = disableAutomaticSiteTitleSet;
-
 	/// <summary>
 	/// Sets the context variables to data collector
 	/// </summary>
@@ -80,31 +77,31 @@ public class ContextVariablesSetter(IDataCollector dataCollector, bool disableAu
 		var context = resolver.Resolve<IWebContextProvider>().Get();
 		var stopWatchProvider = resolver.Resolve<IStopwatchProvider>();
 
-		_dataCollector.Add(VariableNameTemplatesPath, environment.TemplatesPath);
-		_dataCollector.Add(VariableNameSiteStyle, environment.SiteStyle);
+		dataCollector.Add(VariableNameTemplatesPath, environment.TemplatesPath);
+		dataCollector.Add(VariableNameSiteStyle, environment.SiteStyle);
 
 		if (!string.IsNullOrEmpty(languageManager.Language))
 		{
-			_dataCollector.Add(VariableNameCurrentLanguage, languageManager.Language);
-			_dataCollector.Add(VariableNameCurrentLanguageExtension, "." + languageManager.Language);
-			_dataCollector.Add(VariableNameCurrentLanguageCultureName, Thread.CurrentThread.CurrentCulture.TextInfo.CultureName);
-			_dataCollector.Add(VariableNameCurrentLanguageCultureNameExtension, "." + Thread.CurrentThread.CurrentCulture.TextInfo.CultureName);
+			dataCollector.Add(VariableNameCurrentLanguage, languageManager.Language);
+			dataCollector.Add(VariableNameCurrentLanguageExtension, "." + languageManager.Language);
+			dataCollector.Add(VariableNameCurrentLanguageCultureName, Thread.CurrentThread.CurrentCulture.TextInfo.CultureName);
+			dataCollector.Add(VariableNameCurrentLanguageCultureNameExtension, "." + Thread.CurrentThread.CurrentCulture.TextInfo.CultureName);
 		}
 		else
 		{
-			_dataCollector.Add(VariableNameCurrentLanguage, (string?)null);
-			_dataCollector.Add(VariableNameCurrentLanguageExtension, (string?)null);
-			_dataCollector.Add(VariableNameCurrentLanguageCultureName, (string?)null);
-			_dataCollector.Add(VariableNameCurrentLanguageCultureNameExtension, (string?)null);
+			dataCollector.Add(VariableNameCurrentLanguage, (string?)null);
+			dataCollector.Add(VariableNameCurrentLanguageExtension, (string?)null);
+			dataCollector.Add(VariableNameCurrentLanguageCultureName, (string?)null);
+			dataCollector.Add(VariableNameCurrentLanguageCultureNameExtension, (string?)null);
 		}
 
-		_dataCollector.Add(VariableNameSiteUrl, context.SiteUrl);
-		_dataCollector.Add(VariableNameSiteVirtualPath, context.VirtualPath);
+		dataCollector.Add(VariableNameSiteUrl, context.SiteUrl);
+		dataCollector.Add(VariableNameSiteVirtualPath, context.VirtualPath);
 
-		if (!_disableAutomaticSiteTitleSet)
+		if (!disableAutomaticSiteTitleSet)
 			SetSiteTitleFromStringTable(context.Request.Path.Value, resolver.Resolve<IStringTable>());
 
-		_dataCollector.Add(VariableNameExecutionTime, stopWatchProvider.StopAndGetMeasurement().ToString("mm\\:ss\\:fff"));
+		dataCollector.Add(VariableNameExecutionTime, stopWatchProvider.StopAndGetMeasurement().ToString("mm\\:ss\\:fff"));
 	}
 
 	private void SetSiteTitleFromStringTable(string? currentPath, IStringTable stringTable)
@@ -114,9 +111,9 @@ public class ContextVariablesSetter(IDataCollector dataCollector, bool disableAu
 		if (string.IsNullOrEmpty(siteTitle))
 			return;
 
-		if (string.IsNullOrEmpty(currentPath) || currentPath == "/" || currentPath!.StartsWith("/?") || !_dataCollector.IsDataExist(_dataCollector.TitleVariableName))
-			_dataCollector.Add(_dataCollector.TitleVariableName, siteTitle);
+		if (string.IsNullOrEmpty(currentPath) || currentPath == "/" || currentPath!.StartsWith("/?") || !dataCollector.IsDataExist(dataCollector.TitleVariableName))
+			dataCollector.Add(dataCollector.TitleVariableName, siteTitle);
 		else
-			_dataCollector.Add(_dataCollector.TitleVariableName, " - " + siteTitle);
+			dataCollector.Add(dataCollector.TitleVariableName, " - " + siteTitle);
 	}
 }

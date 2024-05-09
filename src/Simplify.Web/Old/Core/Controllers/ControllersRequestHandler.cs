@@ -17,10 +17,6 @@ namespace Simplify.Web.Old.Core.Controllers;
 /// <param name="redirector">The redirector.</param>
 public class ControllersRequestHandler(IControllersProcessor controllersProcessor, IPageProcessor pageProcessor, IRedirector redirector) : IControllersRequestHandler
 {
-	private readonly IControllersProcessor _controllersProcessor = controllersProcessor;
-	private readonly IPageProcessor _pageProcessor = pageProcessor;
-	private readonly IRedirector _redirector = redirector;
-
 	/// <summary>
 	/// Gets or sets a value indicating whether Simplify.Web is terminal middleware.
 	/// </summary>
@@ -34,16 +30,16 @@ public class ControllersRequestHandler(IControllersProcessor controllersProcesso
 	/// <returns></returns>
 	public async Task<RequestHandlingStatus> ProcessRequest(IDIResolver resolver, HttpContext context)
 	{
-		var result = await _controllersProcessor.ProcessControllers(resolver, context);
+		var result = await controllersProcessor.ProcessControllers(resolver, context);
 
 		switch (result)
 		{
 			case ControllersProcessorResult.Ok:
-				return await _pageProcessor.ProcessPage(resolver, context);
+				return await pageProcessor.ProcessPage(resolver, context);
 
 			case ControllersProcessorResult.Http401:
 				context.Response.StatusCode = 401;
-				_redirector.SetLoginReturnUrlFromCurrentUri();
+				redirector.SetLoginReturnUrlFromCurrentUri();
 				break;
 
 			case ControllersProcessorResult.Http403:
