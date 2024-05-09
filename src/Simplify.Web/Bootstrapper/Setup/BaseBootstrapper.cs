@@ -50,6 +50,9 @@ public partial class BaseBootstrapper
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterListsGenerator();
+		RegisterPageComposer();
+		RegisterPageCompositionStages();
+		RegisterPageGenerator();
 		RegisterRedirector();
 		RegisterRequestHandlingPipeline();
 		RegisterRequestHandlingPipelineHandlers();

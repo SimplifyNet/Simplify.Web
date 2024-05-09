@@ -2,7 +2,7 @@
 
 namespace Simplify.Web.Pages.Composition.Stages;
 
-public class ContextVariablesSetter(IWebContextProvider webContextProvider) : IPageCompositionStage
+public class ContextVariablesInjectionStage(IWebContextProvider webContextProvider) : IPageCompositionStage
 {
 	/// <summary>
 	/// The site variable name site URL.
