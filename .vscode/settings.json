@@ -12,6 +12,7 @@
 		"Expando",
 		"HOSTINGSTARTUPASSEMBLIES",
 		"localizable",
+		"Loggable",
 		"mscorlib",
 		"NETSTANDARD",
 		"OWIN",
