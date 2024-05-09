@@ -44,6 +44,8 @@ public partial class BaseBootstrapper
 		RegisterCrsHandlers();
 		RegisterCrsHandlingPipeline();
 		RegisterDataCollector();
+		RegisterDefaultModelBinders();
+		RegisterDefaultModelValidators();
 		RegisterDynamicEnvironment();
 		RegisterEnvironment();
 		RegisterExecutionWorkOrderBuildDirector();
@@ -51,6 +53,7 @@ public partial class BaseBootstrapper
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterListsGenerator();
+		RegisterModelHandler();
 		RegisterPageComposer();
 		RegisterPageCompositionStages();
 		RegisterPageGenerator();
