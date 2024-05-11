@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Simplify.DI;
-using Simplify.Web.Old.Diagnostics.Measurement;
+using Simplify.Web.Diagnostics.Measurement;
 using Simplify.Web.Old.Modules;
 using Simplify.Web.Old.Modules.Data;
 
@@ -57,11 +57,6 @@ public class ContextVariablesSetter(IDataCollector dataCollector, bool disableAu
 	public const string VariableNameSiteVirtualPath = "~";
 
 	/// <summary>
-	/// Site generation time templates variable name.
-	/// </summary>
-	public const string VariableNameExecutionTime = "SV:SiteExecutionTime";
-
-	/// <summary>
 	/// The site title string table variable name.
 	/// </summary>
 	public const string SiteTitleStringTableVariableName = "SiteTitle";
@@ -100,8 +95,6 @@ public class ContextVariablesSetter(IDataCollector dataCollector, bool disableAu
 
 		if (!disableAutomaticSiteTitleSet)
 			SetSiteTitleFromStringTable(context.Request.Path.Value, resolver.Resolve<IStringTable>());
-
-		dataCollector.Add(VariableNameExecutionTime, stopWatchProvider.StopAndGetMeasurement().ToString("mm\\:ss\\:fff"));
 	}
 
 	private void SetSiteTitleFromStringTable(string? currentPath, IStringTable stringTable)

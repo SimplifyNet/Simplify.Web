@@ -6,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using Simplify.DI;
 using Simplify.Web.Old.Core.PageAssembly;
-using Simplify.Web.Old.Diagnostics.Measurement;
 using Simplify.Web.Old.Modules;
 using Simplify.Web.Old.Modules.Data;
 
@@ -25,7 +24,6 @@ public class ContextVariablesSetterTests
 	private Mock<IWebContextProvider> _contextProvider = null!;
 	private Mock<IWebContext> _context = null!;
 	private Mock<IStringTable> _stringTable = null!;
-	private Mock<IStopwatchProvider> _stopwatchProvider = null!;
 
 	[SetUp]
 	public void Initialize()
@@ -40,7 +38,6 @@ public class ContextVariablesSetterTests
 		_contextProvider = new Mock<IWebContextProvider>();
 		_context = new Mock<IWebContext>();
 		_stringTable = new Mock<IStringTable>();
-		_stopwatchProvider = new Mock<IStopwatchProvider>();
 
 		_dataCollector.SetupGet(x => x.TitleVariableName).Returns("Title");
 
@@ -58,13 +55,10 @@ public class ContextVariablesSetterTests
 		_contextProvider.Setup(x => x.Get()).Returns(_context.Object);
 		_context.SetupGet(x => x.Request.PathBase).Returns(new PathString("/mysite"));
 
-		_stopwatchProvider.Setup(x => x.StopAndGetMeasurement()).Returns(new TimeSpan(0, 0, 1, 15, 342));
-
 		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IEnvironment)))).Returns(_environment.Object);
 		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(ILanguageManagerProvider)))).Returns(_languageManagerProvider.Object);
 		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IWebContextProvider)))).Returns(_contextProvider.Object);
 		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IStringTable)))).Returns(_stringTable.Object);
-		_containerProvider.Setup(x => x.Resolve(It.Is<Type>(d => d == typeof(IStopwatchProvider)))).Returns(_stopwatchProvider.Object);
 	}
 
 	[Test]
@@ -84,7 +78,6 @@ public class ContextVariablesSetterTests
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == ContextVariablesSetter.VariableNameCurrentLanguageCultureNameExtension), It.Is<string>(d => d == ".ru-RU")));
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == ContextVariablesSetter.VariableNameSiteUrl), It.Is<string>(d => d == "http://localhost/mysite/")));
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == ContextVariablesSetter.VariableNameSiteVirtualPath), It.Is<string>(d => d == "/mysite")));
-		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == ContextVariablesSetter.VariableNameExecutionTime), It.Is<string>(d => d == "01:15:342")));
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "Title"), It.IsAny<string>()), Times.Never);
 	}
 

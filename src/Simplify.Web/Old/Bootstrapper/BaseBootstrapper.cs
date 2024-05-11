@@ -9,7 +9,6 @@ using Simplify.Web.Old.Core.Controllers.Execution;
 using Simplify.Web.Old.Core.PageAssembly;
 using Simplify.Web.Old.Core.StaticFiles;
 using Simplify.Web.Old.Core.Views;
-using Simplify.Web.Old.Diagnostics.Measurement;
 using Simplify.Web.Old.Model;
 using Simplify.Web.Old.Model.Binding;
 using Simplify.Web.Old.Model.Validation;
@@ -76,7 +75,6 @@ public class BaseBootstrapper
 		RegisterStaticFileHandler();
 		RegisterStaticFilesRequestHandler();
 		RegisterRequestHandler();
-		RegisterStopwatchProvider();
 		RegisterContextVariablesSetter();
 		RegisterWebContextProvider();
 		RegisterRedirector();
@@ -459,17 +457,6 @@ public class BaseBootstrapper
 				r.Resolve<IControllersRequestHandler>(),
 				r.Resolve<IStaticFilesRequestHandler>(),
 				r.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
-	}
-
-	/// <summary>
-	/// Registers the stopwatch provider.
-	/// </summary>
-	public virtual void RegisterStopwatchProvider()
-	{
-		if (TypesToExclude.Contains(typeof(IStopwatchProvider)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IStopwatchProvider, StopwatchProvider>();
 	}
 
 	/// <summary>

@@ -1,4 +1,5 @@
 ﻿using Simplify.Web.Diagnostics.Measurement;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Page.Composition.Stages;
 
@@ -6,6 +7,6 @@ public class StopwatchDataInjectionStage(IStopwatchProvider stopwatchProvider) :
 {
 	public const string VariableNameExecutionTime = "SV:SiteExecutionTime";
 
-	public void Execute(Modules.Data.IDataCollector dataCollector) =>
+	public void Execute(IDataCollector dataCollector) =>
 		dataCollector.Add(VariableNameExecutionTime, stopwatchProvider.StopAndGetMeasurement().ToString("mm\\:ss\\:fff"));
 }
