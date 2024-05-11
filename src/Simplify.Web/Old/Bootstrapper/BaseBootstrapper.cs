@@ -66,7 +66,6 @@ public class BaseBootstrapper
 		RegisterStringTable();
 		RegisterDataCollector();
 		RegisterListsGenerator();
-		RegisterStringTableItemsSetter();
 		RegisterPageBuilder();
 		RegisterResponseWriter();
 		RegisterPageProcessor();
@@ -350,17 +349,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IListsGenerator, ListsGenerator>();
-	}
-
-	/// <summary>
-	/// Registers the string table items setter.
-	/// </summary>
-	public virtual void RegisterStringTableItemsSetter()
-	{
-		if (TypesToExclude.Contains(typeof(IStringTableItemsSetter)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IStringTableItemsSetter, StringTableItemsSetter>();
 	}
 
 	/// <summary>
