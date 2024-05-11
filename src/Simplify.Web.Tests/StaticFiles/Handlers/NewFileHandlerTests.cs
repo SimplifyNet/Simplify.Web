@@ -29,14 +29,12 @@ public class NewFileHandlerTests
 	public void CanHandle_CanBeCached_False()
 	{
 		// Arrange
-
 		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached == true);
 
 		// Act
 		var result = _handler.CanHandle(context);
 
 		// Assert
-
 		Assert.That(result, Is.False);
 	}
 
@@ -52,7 +50,6 @@ public class NewFileHandlerTests
 		var result = _handler.CanHandle(context);
 
 		// Assert
-
 		Assert.That(result, Is.True);
 	}
 
