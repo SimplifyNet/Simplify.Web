@@ -73,7 +73,6 @@ public class BaseBootstrapper
 		RegisterStaticFileResponseFactory();
 		RegisterStaticFileHandler();
 		RegisterStaticFilesRequestHandler();
-		RegisterRequestHandler();
 		RegisterWebContextProvider();
 		RegisterRedirector();
 		RegisterModelHandler();
@@ -429,21 +428,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IStaticFilesRequestHandler, StaticFilesRequestHandler>();
-	}
-
-	/// <summary>
-	/// Registers the request handler.
-	/// </summary>
-	public virtual void RegisterRequestHandler()
-	{
-		if (TypesToExclude.Contains(typeof(IRequestHandler)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IRequestHandler>(r =>
-			new RequestHandler(
-				r.Resolve<IControllersRequestHandler>(),
-				r.Resolve<IStaticFilesRequestHandler>(),
-				r.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
 	}
 
 	/// <summary>

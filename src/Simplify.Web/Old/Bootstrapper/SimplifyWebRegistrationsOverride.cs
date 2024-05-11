@@ -345,17 +345,6 @@ public class SimplifyWebRegistrationsOverride
 	}
 
 	/// <summary>
-	/// Overrides the `IRequestHandler` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideRequestHandler(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IRequestHandler), registrator);
-
-		return this;
-	}
-
-	/// <summary>
 	/// Overrides the `IContextVariablesSetter` registration.
 	/// </summary>
 	/// <param name="registrator">IOC Container registrator.</param>
