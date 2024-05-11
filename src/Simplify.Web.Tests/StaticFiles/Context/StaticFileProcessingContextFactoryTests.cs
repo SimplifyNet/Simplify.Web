@@ -10,8 +10,9 @@ namespace Simplify.Web.Tests.StaticFiles.Context;
 [TestFixture]
 public class StaticFileProcessingContextFactoryTests
 {
-	private Mock<IStaticFile> _file = null!;
 	private StaticFileProcessingContextFactory _factory = null!;
+
+	private Mock<IStaticFile> _file = null!;
 
 	[SetUp]
 	public void Initialize()

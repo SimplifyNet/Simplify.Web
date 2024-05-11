@@ -13,9 +13,10 @@ namespace Simplify.Web.Tests.Page.Composition.Stages;
 [TestFixture]
 public class NewFileHandlerTests
 {
+	private NewFileHandler _handler = null!;
+
 	private Mock<IResponseWriter> _responseWriter = null!;
 	private Mock<IStaticFile> _staticFile = null!;
-	private NewFileHandler _handler = null!;
 
 	[SetUp]
 	public void Initialize()

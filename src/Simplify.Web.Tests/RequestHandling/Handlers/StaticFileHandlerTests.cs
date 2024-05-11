@@ -1,11 +1,5 @@
-using System;
-using System.IO.Compression;
-using System.Linq.Expressions;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing.Tree;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.RequestHandling;
@@ -19,11 +13,11 @@ namespace Simplify.Web.Tests.RequestHandling.Handlers;
 [TestFixture]
 public class StaticFileHandlerTests
 {
+	private StaticFilesHandler _handler = null!;
+
 	private Mock<IStaticFileRequestHandlingPipeline> _pipeline = null!;
 	private Mock<IStaticFileProcessingContextFactory> _contextFactory = null!;
 	private Mock<IStaticFile> _staticFile = null!;
-
-	private StaticFilesHandler _handler = null!;
 
 	[SetUp]
 	public void Initialize()
