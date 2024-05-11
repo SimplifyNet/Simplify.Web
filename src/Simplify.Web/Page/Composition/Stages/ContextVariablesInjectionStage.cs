@@ -1,4 +1,5 @@
 ﻿using Simplify.Web.Modules.Context;
+using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Page.Composition.Stages;
 
@@ -14,7 +15,7 @@ public class ContextVariablesInjectionStage(IWebContextProvider webContextProvid
 	/// </summary>
 	public const string VariableNameSiteVirtualPath = "~";
 
-	public void Execute(Modules.Data.IDataCollector dataCollector)
+	public void Execute(IDataCollector dataCollector)
 	{
 		var context = webContextProvider.Get();
 

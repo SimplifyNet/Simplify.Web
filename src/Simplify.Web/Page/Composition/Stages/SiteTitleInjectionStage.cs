@@ -12,12 +12,13 @@ public class SiteTitleInjectionStage(IWebContextProvider webContextProvider, ISt
 
 	public void Execute(IDataCollector dataCollector)
 	{
-		var context = webContextProvider.Get();
-		var currentPath = context.Request.Path.Value;
 		var siteTitle = stringTable.GetItem(SiteTitleStringTableVariableName);
 
 		if (string.IsNullOrEmpty(siteTitle))
 			return;
+
+		var context = webContextProvider.Get();
+		var currentPath = context.Request.Path.Value;
 
 		if (string.IsNullOrEmpty(currentPath) ||
 			currentPath == "/" ||

@@ -75,7 +75,6 @@ public class BaseBootstrapper
 		RegisterStaticFileHandler();
 		RegisterStaticFilesRequestHandler();
 		RegisterRequestHandler();
-		RegisterContextVariablesSetter();
 		RegisterWebContextProvider();
 		RegisterRedirector();
 		RegisterModelHandler();
@@ -457,20 +456,6 @@ public class BaseBootstrapper
 				r.Resolve<IControllersRequestHandler>(),
 				r.Resolve<IStaticFilesRequestHandler>(),
 				r.Resolve<ISimplifyWebSettings>().StaticFilesEnabled));
-	}
-
-	/// <summary>
-	/// Registers the context variables setter.
-	/// </summary>
-	public virtual void RegisterContextVariablesSetter()
-	{
-		if (TypesToExclude.Contains(typeof(IContextVariablesSetter)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IContextVariablesSetter>(r =>
-			new ContextVariablesSetter(
-				r.Resolve<IDataCollector>(),
-				r.Resolve<ISimplifyWebSettings>().DisableAutomaticSiteTitleSet));
 	}
 
 	/// <summary>
