@@ -12,10 +12,7 @@ public class EnvironmentVariablesInjectionStageTests
 	private Mock<IDataCollector> _dataCollector = null!;
 
 	[SetUp]
-	public void Initialize()
-	{
-		_dataCollector = new Mock<IDataCollector>();
-	}
+	public void Initialize() => _dataCollector = new Mock<IDataCollector>();
 
 	[Test]
 	public void Execute_NormalData_DataInjectedToDataCollector()

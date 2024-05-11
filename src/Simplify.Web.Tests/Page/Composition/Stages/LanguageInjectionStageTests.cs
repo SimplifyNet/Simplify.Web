@@ -27,6 +27,7 @@ public class LanguageInjectionStageTests
 		// Arrange
 
 		var languageManager = Mock.Of<ILanguageManager>(x => x.Language == "ru");
+
 		Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
 
 		_languageManagerProvider.Setup(x => x.Get()).Returns(languageManager);

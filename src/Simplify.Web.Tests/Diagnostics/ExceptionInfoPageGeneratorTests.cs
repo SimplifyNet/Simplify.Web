@@ -30,14 +30,10 @@ public class ExceptionInfoPageGeneratorTests
 	}
 
 	[Test]
-	public void Generate_ExceptionNoFrames_Generated()
-	{
+	public void Generate_ExceptionNoFrames_Generated() =>
 		Assert.That(ErrorPageGenerator.Generate(new Exception("test")), Is.Not.Null);
-	}
 
 	[Test]
-	public void Generate_HideDetails_Null()
-	{
+	public void Generate_HideDetails_Null() =>
 		Assert.That(ErrorPageGenerator.Generate(new Exception("test"), true).Contains("html"), Is.True);
-	}
 }

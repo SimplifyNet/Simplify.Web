@@ -45,9 +45,9 @@ public class SiteTitleInjectionStageTests
 	{
 		// Arrange
 
-		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		var context = Mock.Of<IWebContext>(x => x.Request.Path == new PathString("/"));
 
+		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		_contextProvider.Setup(x => x.Get()).Returns(context);
 
 		var stage = new SiteTitleInjectionStage(_contextProvider.Object, _stringTable.Object);
@@ -64,9 +64,9 @@ public class SiteTitleInjectionStageTests
 	{
 		// Arrange
 
-		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		var context = Mock.Of<IWebContext>(x => x.Request.Path == new PathString("/?=lang=ru"));
 
+		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		_contextProvider.Setup(x => x.Get()).Returns(context);
 
 		var stage = new SiteTitleInjectionStage(_contextProvider.Object, _stringTable.Object);
@@ -83,9 +83,9 @@ public class SiteTitleInjectionStageTests
 	{
 		// Arrange
 
-		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		var context = Mock.Of<IWebContext>(x => x.Request.Path == new PathString("/foo"));
 
+		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		_contextProvider.Setup(x => x.Get()).Returns(context);
 
 		var stage = new SiteTitleInjectionStage(_contextProvider.Object, _stringTable.Object);
@@ -102,10 +102,10 @@ public class SiteTitleInjectionStageTests
 	{
 		// Arrange
 
-		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
 		var context = Mock.Of<IWebContext>(x => x.Request.Path == new PathString("/foo"));
-		_dataCollector.Setup(x => x.IsDataExist(It.Is<string>(d => d == "Title"))).Returns(true);
 
+		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == SiteTitleInjectionStage.SiteTitleStringTableVariableName))).Returns("Foo");
+		_dataCollector.Setup(x => x.IsDataExist(It.Is<string>(d => d == "Title"))).Returns(true);
 		_contextProvider.Setup(x => x.Get()).Returns(context);
 
 		var stage = new SiteTitleInjectionStage(_contextProvider.Object, _stringTable.Object);

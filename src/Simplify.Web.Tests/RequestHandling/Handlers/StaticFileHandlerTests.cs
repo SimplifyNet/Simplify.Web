@@ -58,9 +58,10 @@ public class StaticFileHandlerTests
 	{
 		// Arrange
 
-		_staticFile.Setup(x => x.IsValidPath(It.IsAny<string>())).Returns(false);
 		var httpContext = Mock.Of<HttpContext>(x => x.Request.Path == new PathString("/foo"));
 		var next = new Mock<RequestHandlerAsync>();
+
+		_staticFile.Setup(x => x.IsValidPath(It.IsAny<string>())).Returns(false);
 
 		// Act
 		await _handler.HandleAsync(httpContext, next.Object);
