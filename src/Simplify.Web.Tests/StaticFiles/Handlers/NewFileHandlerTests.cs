@@ -1,12 +1,15 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
+using Simplify.System;
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.Handlers;
 using Simplify.Web.StaticFiles.IO;
+using TimeProvider = Simplify.System.TimeProvider;
 
 namespace Simplify.Web.Tests.Page.Composition.Stages;
 
@@ -67,6 +70,8 @@ public class NewFileHandlerTests
 			x.RelativeFilePath == filePath &&
 			x.LastModificationTime == lastModificationTime);
 
+		TimeProvider.Current = Mock.Of<ITimeProvider>(x => x.Now == new DateTime(2013, 1, 1));
+
 		_staticFile.Setup(x => x.GetDataAsync(It.Is<string>(s => s == filePath))).Returns(Task.FromResult(data));
 
 		var response = Mock.Of<HttpResponse>(x => x.Headers == new HeaderDictionary());
@@ -78,6 +83,7 @@ public class NewFileHandlerTests
 
 		Assert.That(response.ContentType, Is.EqualTo("text/plain"));
 		Assert.That(response.Headers.LastModified, Is.EqualTo(lastModificationTime.ToString("r")));
+		Assert.That(response.Headers.Expires.First(), Is.EqualTo(new DateTimeOffset(new DateTime(2014, 1, 1)).ToString("R")));
 
 		_responseWriter.Verify(x => x.WriteAsync(It.Is<HttpResponse>(r => r == response), It.Is<byte[]>(b => b == data)));
 	}

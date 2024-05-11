@@ -16,6 +16,10 @@
 - V1 controllers RouteParameters defaulted to empty ExpandoObject to exclude NRE
 - Environment split to Environment and DynamicEnvironment
 
+### Dependencies
+
+- Switched to explicit Simplify.System 1.6.2 instead of internal Simplify.System.Sources
+
 ## [4.9.0] - 2024-01-08
 
 ### Added

@@ -6,9 +6,6 @@ using Simplify.DI;
 using Simplify.Web.Old.Core;
 using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
-using Simplify.Web.Old.Core.PageAssembly;
-using Simplify.Web.Old.Core.StaticFiles;
-using Simplify.Web.Old.Core.Views;
 using Simplify.Web.Old.Model;
 using Simplify.Web.Old.Model.Binding;
 using Simplify.Web.Old.Model.Validation;
@@ -67,9 +64,6 @@ public class BaseBootstrapper
 		RegisterListsGenerator();
 		RegisterResponseWriter();
 		RegisterControllersRequestHandler();
-		RegisterStaticFileResponseFactory();
-		RegisterStaticFileHandler();
-		RegisterStaticFilesRequestHandler();
 		RegisterWebContextProvider();
 		RegisterRedirector();
 		RegisterModelHandler();
@@ -356,42 +350,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IControllersRequestHandler, ControllersRequestHandler>();
-	}
-
-	/// <summary>
-	/// Registers the static file response factory
-	/// </summary>
-	public virtual void RegisterStaticFileResponseFactory()
-	{
-		if (TypesToExclude.Contains(typeof(IStaticFileResponseFactory)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IStaticFileResponseFactory, StaticFileResponseFactory>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the static file handler.
-	/// </summary>
-	public virtual void RegisterStaticFileHandler()
-	{
-		if (TypesToExclude.Contains(typeof(IStaticFileHandler)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IStaticFileHandler>(r =>
-			new StaticFileHandler(
-				r.Resolve<ISimplifyWebSettings>().StaticFilesPaths,
-				r.Resolve<IEnvironment>().SitePhysicalPath));
-	}
-
-	/// <summary>
-	/// Registers the static files request handler.
-	/// </summary>
-	public virtual void RegisterStaticFilesRequestHandler()
-	{
-		if (TypesToExclude.Contains(typeof(IStaticFilesRequestHandler)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IStaticFilesRequestHandler, StaticFilesRequestHandler>();
 	}
 
 	/// <summary>

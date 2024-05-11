@@ -7,7 +7,6 @@ using Simplify.Web.Old.Core;
 using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
 using Simplify.Web.Old.Core.PageAssembly;
-using Simplify.Web.Old.Core.StaticFiles;
 using Simplify.Web.Old.Core.Views;
 using Simplify.Web.Old.Model;
 using Simplify.Web.Old.Modules;
@@ -285,39 +284,6 @@ public class SimplifyWebRegistrationsOverride
 	public SimplifyWebRegistrationsOverride OverrideControllersRequestHandler(Action<IDIRegistrator> registrator)
 	{
 		_actions.Add(typeof(IControllersRequestHandler), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IStaticFileResponseFactory` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideStaticFileResponseFactory(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IStaticFileResponseFactory), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IStaticFileHandler` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideStaticFileHandler(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IStaticFileHandler), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IStaticFilesRequestHandler` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideStaticFilesRequestHandler(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IStaticFilesRequestHandler), registrator);
 
 		return this;
 	}
