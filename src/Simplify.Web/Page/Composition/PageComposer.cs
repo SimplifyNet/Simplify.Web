@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Simplify.Web.Modules.Data;
-using Simplify.Web.Pages.Generation;
+using Simplify.Web.Page.Generation;
 
-namespace Simplify.Web.Pages.Composition;
+namespace Simplify.Web.Page.Composition;
 
 public class PageComposer(IReadOnlyList<IPageCompositionStage> stages, IDataCollector dataCollector, IPageGenerator pageGenerator) : IPageComposer
 {

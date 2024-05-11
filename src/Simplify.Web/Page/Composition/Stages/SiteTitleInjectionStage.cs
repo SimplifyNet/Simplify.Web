@@ -1,7 +1,7 @@
 ﻿using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.Pages.Composition.Stages;
+namespace Simplify.Web.Page.Composition.Stages;
 
 public class SiteTitleInjectionStage(IWebContextProvider webContextProvider, IStringTable stringTable) : IPageCompositionStage
 {

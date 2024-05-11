@@ -1,6 +1,6 @@
 ﻿using Simplify.Web.Diagnostics.Measurement;
 
-namespace Simplify.Web.Pages.Composition.Stages;
+namespace Simplify.Web.Page.Composition.Stages;
 
 public class StopwatchDataInjectionStage(IStopwatchProvider stopwatchProvider) : IPageCompositionStage
 {

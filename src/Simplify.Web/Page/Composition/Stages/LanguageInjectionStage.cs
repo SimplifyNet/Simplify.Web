@@ -2,7 +2,7 @@
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
 
-namespace Simplify.Web.Pages.Composition.Stages;
+namespace Simplify.Web.Page.Composition.Stages;
 
 public class LanguageInjectionStage(ILanguageManagerProvider languageManagerProvider) : IPageCompositionStage
 {

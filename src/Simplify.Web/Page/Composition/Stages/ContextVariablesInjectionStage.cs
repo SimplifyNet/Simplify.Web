@@ -1,6 +1,6 @@
 ﻿using Simplify.Web.Modules.Context;
 
-namespace Simplify.Web.Pages.Composition.Stages;
+namespace Simplify.Web.Page.Composition.Stages;
 
 public class ContextVariablesInjectionStage(IWebContextProvider webContextProvider) : IPageCompositionStage
 {

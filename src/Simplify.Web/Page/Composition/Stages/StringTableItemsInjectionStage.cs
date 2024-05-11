@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.Pages.Composition.Stages;
+namespace Simplify.Web.Page.Composition.Stages;
 
 public class StringTableItemsInjectionStage(IStringTable stringTable) : IPageCompositionStage
 {
