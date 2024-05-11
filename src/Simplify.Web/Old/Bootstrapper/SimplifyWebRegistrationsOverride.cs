@@ -257,28 +257,6 @@ public class SimplifyWebRegistrationsOverride
 	}
 
 	/// <summary>
-	/// Overrides the `IStringTableItemsSetter` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideStringTableItemsSetter(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IStringTableItemsSetter), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IPageBuilder` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverridePageBuilder(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IPageBuilder), registrator);
-
-		return this;
-	}
-
-	/// <summary>
 	/// Overrides the `IResponseWriter` registration.
 	/// </summary>
 	/// <param name="registrator">IOC Container registrator.</param>
@@ -340,17 +318,6 @@ public class SimplifyWebRegistrationsOverride
 	public SimplifyWebRegistrationsOverride OverrideStaticFilesRequestHandler(Action<IDIRegistrator> registrator)
 	{
 		_actions.Add(typeof(IStaticFilesRequestHandler), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IContextVariablesSetter` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideContextVariablesSetter(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IContextVariablesSetter), registrator);
 
 		return this;
 	}

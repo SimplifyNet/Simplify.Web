@@ -65,9 +65,7 @@ public class BaseBootstrapper
 		RegisterStringTable();
 		RegisterDataCollector();
 		RegisterListsGenerator();
-		RegisterPageBuilder();
 		RegisterResponseWriter();
-		RegisterPageProcessor();
 		RegisterControllersRequestHandler();
 		RegisterStaticFileResponseFactory();
 		RegisterStaticFileHandler();
@@ -339,17 +337,6 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the page builder.
-	/// </summary>
-	public virtual void RegisterPageBuilder()
-	{
-		if (TypesToExclude.Contains(typeof(IPageBuilder)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IPageBuilder, PageBuilder>();
-	}
-
-	/// <summary>
 	/// Registers the response writer.
 	/// </summary>
 	public virtual void RegisterResponseWriter()
@@ -358,17 +345,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IResponseWriter, ResponseWriter>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the page processor.
-	/// </summary>
-	public virtual void RegisterPageProcessor()
-	{
-		if (TypesToExclude.Contains(typeof(IPageProcessor)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IPageProcessor, PageProcessor>();
 	}
 
 	/// <summary>
