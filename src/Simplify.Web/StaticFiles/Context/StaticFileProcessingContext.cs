@@ -10,5 +10,5 @@ public class StaticFileProcessingContext(string relativeFilePath,
 
 	public DateTime LastModificationTime { get; } = lastModificationTime;
 
-	public bool IsCached { get; } = isCached;
+	public bool CanBeCached { get; } = isCached;
 }

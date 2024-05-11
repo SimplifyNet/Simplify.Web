@@ -9,7 +9,7 @@ namespace Simplify.Web.StaticFiles.Handlers;
 
 public class CachedFileHandler : IStaticFileRequestHandler
 {
-	public bool CanHandle(IStaticFileProcessingContext context) => context.IsCached;
+	public bool CanHandle(IStaticFileProcessingContext context) => context.CanBeCached;
 
 	public Task Execute(IStaticFileProcessingContext context, HttpResponse response)
 	{

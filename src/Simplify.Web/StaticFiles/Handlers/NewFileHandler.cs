@@ -10,7 +10,7 @@ namespace Simplify.Web.StaticFiles.Handlers;
 
 public class NewFileHandler(IResponseWriter responseWriter, IStaticFile fileHandler) : IStaticFileRequestHandler
 {
-	public bool CanHandle(IStaticFileProcessingContext context) => !context.IsCached;
+	public bool CanHandle(IStaticFileProcessingContext context) => !context.CanBeCached;
 
 	public async Task Execute(IStaticFileProcessingContext context, HttpResponse response)
 	{

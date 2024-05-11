@@ -17,5 +17,5 @@ public interface IStaticFileProcessingContext
 	/// <summary>
 	/// Determines whether the file can be used from cached.
 	/// </summary>
-	bool IsCached { get; }
+	bool CanBeCached { get; }
 }
