@@ -8,7 +8,7 @@ using Simplify.Web.StaticFiles.IO;
 
 namespace Simplify.Web.StaticFiles.Handlers;
 
-public class NewFileHandler(IResponseWriter responseWriter, IStaticFile fileHandler) : IStaticFileRequestHandler
+public class NewFileHandler(IResponseWriter responseWriter, IStaticFile staticFile) : IStaticFileRequestHandler
 {
 	public bool CanHandle(IStaticFileProcessingContext context) => !context.CanBeCached;
 
@@ -17,6 +17,6 @@ public class NewFileHandler(IResponseWriter responseWriter, IStaticFile fileHand
 		response.SetContentMimeType(context.RelativeFilePath);
 		response.SetLastModifiedTime(context.LastModificationTime);
 
-		await responseWriter.WriteAsync(response, await fileHandler.GetDataAsync(context.RelativeFilePath));
+		await responseWriter.WriteAsync(response, await staticFile.GetDataAsync(context.RelativeFilePath));
 	}
 }
