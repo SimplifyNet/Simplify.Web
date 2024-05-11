@@ -12,6 +12,6 @@ public partial class RegistrationsOverride
 	/// <summary>
 	/// Overrides the `IControllerResponseExecutor` registration.
 	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public RegistrationsOverride OverrideControllerResponseExecutor(Action<IDIRegistrator> registrator) => AddAction(typeof(IControllerResponseExecutor), registrator);
+	/// <param name="action">The custom registration action.</param>
+	public RegistrationsOverride OverrideControllerResponseExecutor(Action<IDIRegistrator> action) => AddAction<IControllerResponseExecutor>(action);
 }

@@ -12,6 +12,6 @@ public partial class RegistrationsOverride
 	/// <summary>
 	/// Overrides the `IConfiguration` registration.
 	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public RegistrationsOverride OverrideConfiguration(Action<IDIRegistrator> registrator) => AddAction(typeof(IConfiguration), registrator);
+	/// <param name="action">The custom registration action.</param>
+	public RegistrationsOverride OverrideConfiguration(Action<IDIRegistrator> action) => AddAction<IConfiguration>(action);
 }

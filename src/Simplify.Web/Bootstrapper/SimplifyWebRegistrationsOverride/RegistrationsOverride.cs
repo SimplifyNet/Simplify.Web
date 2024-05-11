@@ -30,6 +30,13 @@ public partial class RegistrationsOverride
 	/// <summary>
 	/// Adds the custom registration action for specified type.
 	/// </summary>
+	/// <typeparam name="T">The specified type</typeparam>
+	/// <param name="action">The custom registration action.</param>
+	private RegistrationsOverride AddAction<T>(Action<IDIRegistrator> action) => AddAction(typeof(T), action);
+
+	/// <summary>
+	/// Adds the custom registration action for specified type.
+	/// </summary>
 	/// <param name="type">The specified type.</param>
 	/// <param name="action">The custom registration action.</param>
 	private RegistrationsOverride AddAction(Type type, Action<IDIRegistrator> action)
