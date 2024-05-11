@@ -6,9 +6,9 @@ using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Localization;
-using Simplify.Web.Pages.Composition;
-using Simplify.Web.Pages.Composition.Stages;
-using Simplify.Web.Pages.Generation;
+using Simplify.Web.Page.Composition;
+using Simplify.Web.Page.Composition.Stages;
+using Simplify.Web.Page.Generation;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
