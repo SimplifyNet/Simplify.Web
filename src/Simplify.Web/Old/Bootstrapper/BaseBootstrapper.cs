@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
-using Simplify.Web.Old.Core;
 using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
-using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Modules.Data;
-using Simplify.Web.Old.Modules.Data.Html;
-using Simplify.Web.Old.Routing;
-using Simplify.Web.Old.Settings;
 
 namespace Simplify.Web.Old.Bootstrapper;
 
@@ -50,8 +44,6 @@ public class BaseBootstrapper
 		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
 		RegisterControllersProcessor();
-		RegisterResponseWriter();
-		RegisterControllersRequestHandler();
 	}
 
 	#region Simplify.Web types registration
@@ -175,29 +167,6 @@ public class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IControllersProcessor, ControllersProcessor>();
 	}
-
-	/// <summary>
-	/// Registers the response writer.
-	/// </summary>
-	public virtual void RegisterResponseWriter()
-	{
-		if (TypesToExclude.Contains(typeof(IResponseWriter)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IResponseWriter, ResponseWriter>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the controllers request handler.
-	/// </summary>
-	public virtual void RegisterControllersRequestHandler()
-	{
-		if (TypesToExclude.Contains(typeof(IControllersRequestHandler)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllersRequestHandler, ControllersRequestHandler>();
-	}
-
 
 	#endregion Simplify.Web types registration
 }

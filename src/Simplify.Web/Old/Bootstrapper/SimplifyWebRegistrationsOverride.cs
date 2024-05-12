@@ -6,7 +6,6 @@ using Simplify.DI;
 using Simplify.Web.Old.Core;
 using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
-using Simplify.Web.Old.Core.PageAssembly;
 using Simplify.Web.Old.Core.Views;
 using Simplify.Web.Old.Model;
 using Simplify.Web.Old.Modules;
@@ -262,28 +261,6 @@ public class SimplifyWebRegistrationsOverride
 	public SimplifyWebRegistrationsOverride OverrideResponseWriter(Action<IDIRegistrator> registrator)
 	{
 		_actions.Add(typeof(IResponseWriter), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IPageProcessor` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverridePageProcessor(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IPageProcessor), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IControllersRequestHandler` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideControllersRequestHandler(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IControllersRequestHandler), registrator);
 
 		return this;
 	}
