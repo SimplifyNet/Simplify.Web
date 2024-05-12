@@ -52,8 +52,6 @@ public class BaseBootstrapper
 		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
 		RegisterControllersProcessor();
-		RegisterStringTable();
-		RegisterListsGenerator();
 		RegisterResponseWriter();
 		RegisterControllersRequestHandler();
 	}
@@ -200,38 +198,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IControllersProcessor, ControllersProcessor>();
-	}
-
-	/// <summary>
-	/// Registers the string table.
-	/// </summary>
-	public virtual void RegisterStringTable()
-	{
-		if (TypesToExclude.Contains(typeof(IStringTable)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IStringTable>(r =>
-		{
-			var settings = r.Resolve<ISimplifyWebSettings>();
-
-			return new StringTable(
-				settings.StringTableFiles,
-				settings.DefaultLanguage,
-				r.Resolve<ILanguageManagerProvider>(),
-				r.Resolve<IFileReader>(),
-				settings.StringTableMemoryCache);
-		});
-	}
-
-	/// <summary>
-	/// Registers the lists generator.
-	/// </summary>
-	public virtual void RegisterListsGenerator()
-	{
-		if (TypesToExclude.Contains(typeof(IListsGenerator)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IListsGenerator, ListsGenerator>();
 	}
 
 	/// <summary>
