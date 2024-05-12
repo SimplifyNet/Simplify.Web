@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Settings;
+using Simplify.Web.Modules.Localization;
+using Simplify.Web.Settings;
 
-namespace Simplify.Web.Tests.Old.Modules;
+namespace Simplify.Web.Tests.Modules;
 
 [TestFixture]
 public class LanguageManagerTests
 {
 	private LanguageManager _languageManager = null!;
+
 	private Mock<ISimplifyWebSettings> _settings = null!;
 	private Mock<HttpContext> _context = null!;
 
@@ -40,7 +41,7 @@ public class LanguageManagerTests
 		_settings.SetupGet(x => x.AcceptCookieLanguage).Returns(true);
 
 		// Assert
-		Assert.AreEqual("en", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("en"));
 	}
 
 	[Test]
@@ -61,7 +62,7 @@ public class LanguageManagerTests
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("ru", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("ru"));
 	}
 
 	[Test]
@@ -82,8 +83,8 @@ public class LanguageManagerTests
 
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
-			Assert.AreEqual("Set-Cookie", key);
-			Assert.IsTrue(value.Contains("language=ru"));
+			Assert.That(key, Is.EqualTo("Set-Cookie"));
+			Assert.That(value.Contains("language=ru"), Is.True);
 		});
 
 		// Act
@@ -95,7 +96,7 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+		var header = new HeaderDictionary([]);
 
 		header.Append("Accept-Language", "ru-RU");
 
@@ -106,7 +107,7 @@ public class LanguageManagerTests
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("ru", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("ru"));
 	}
 
 	[Test]
@@ -114,7 +115,7 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+		var header = new HeaderDictionary([]);
 
 		header.Append("Accept-Language", "ru-RU;q=0.5");
 
@@ -125,7 +126,7 @@ public class LanguageManagerTests
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("ru", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("ru"));
 	}
 
 	[Test]
@@ -134,7 +135,7 @@ public class LanguageManagerTests
 		// Assign
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+		var header = new HeaderDictionary([]);
 
 		header.Append("Accept-Language", "ru-RU");
 
@@ -150,7 +151,7 @@ public class LanguageManagerTests
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("fr", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("fr"));
 	}
 
 	[Test]
@@ -174,7 +175,7 @@ public class LanguageManagerTests
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("ru", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("ru"));
 	}
 
 	[Test]
@@ -191,19 +192,19 @@ public class LanguageManagerTests
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("en", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("en"));
 	}
 
 	[Test]
 	public void Constructor_BadDefaultLanguage_InvariantLanguageSet()
 	{
 		// Arrange
-		_settings.SetupGet(x => x.DefaultLanguage).Returns("badlanguage");
+		_settings.SetupGet(x => x.DefaultLanguage).Returns("bad-language");
 
 		// Act
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
 		// Assert
-		Assert.AreEqual("iv", _languageManager.Language);
+		Assert.That(_languageManager.Language, Is.EqualTo("iv"));
 	}
 }
