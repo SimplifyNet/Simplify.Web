@@ -160,7 +160,7 @@ public class LanguageManagerTests
 		// Assign
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+		var header = new HeaderDictionary([]);
 
 		header.Append("Accept-Language", "ru-RU");
 
@@ -183,7 +183,7 @@ public class LanguageManagerTests
 	{
 		// Assign
 
-		var header = new HeaderDictionary(new Dictionary<string, StringValues>());
+		var header = new HeaderDictionary([]);
 
 		_settings.SetupGet(x => x.AcceptHeaderLanguage).Returns(true);
 		_context.SetupGet(x => x.Request.Headers).Returns(header);
