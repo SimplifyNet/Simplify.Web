@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.Page.Composition;
+using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
 
 namespace Simplify.Web.Tests.Old.Core.PageAssembly;
@@ -38,13 +39,16 @@ public class PageGenerationHandlerTests
 			x.Request.Path == new PathString("/foo") &&
 			x.Response == response);
 
+		var next = new Mock<RequestHandlerAsync>();
+
 		// Act
-		await _handler.HandleAsync(httpContext, null!);
+		await _handler.HandleAsync(httpContext, next.Object);
 
 		// Assert
 
 		Assert.That(response.ContentType, Is.EqualTo("text/html"));
 
 		_responseWriter.Verify(x => x.WriteAsync(It.Is<HttpResponse>(r => r == response), It.Is<string>(s => s == "Foo")));
+		next.Verify(x => x.Invoke(), Times.Never);
 	}
 }
