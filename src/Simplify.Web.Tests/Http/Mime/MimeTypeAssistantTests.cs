@@ -17,7 +17,7 @@ public class MimeTypeAssistantTests
 		var result = Assert.Throws<ArgumentException>(() => MimeTypeAssistant.GetExtension(mimeType));
 
 		// Assert
-		Assert.AreEqual("Requested mime type is not registered: test", result?.Message);
+		Assert.That(result?.Message, Is.EqualTo("Requested mime type is not registered: test"));
 	}
 
 	[Test]
@@ -30,7 +30,7 @@ public class MimeTypeAssistantTests
 		var result = MimeTypeAssistant.GetExtension(mimeType, false);
 
 		// Assert
-		Assert.AreEqual("", result);
+		Assert.That(result, Is.EqualTo(""));
 	}
 
 	[Test]
@@ -43,7 +43,7 @@ public class MimeTypeAssistantTests
 		var result = MimeTypeAssistant.GetExtension(mimeType);
 
 		// Assert
-		Assert.AreEqual(".txt", result);
+		Assert.That(result, Is.EqualTo(".txt"));
 	}
 
 	[Test]
@@ -56,7 +56,7 @@ public class MimeTypeAssistantTests
 		var result = MimeTypeAssistant.GetMimeType(extension);
 
 		// Assert
-		Assert.AreEqual("text/plain", result);
+		Assert.That(result, Is.EqualTo("text/plain"));
 	}
 
 	[Test]
@@ -69,7 +69,7 @@ public class MimeTypeAssistantTests
 		var result = MimeTypeAssistant.GetMimeType(extension);
 
 		// Assert
-		Assert.AreEqual("text/plain", result);
+		Assert.That(result, Is.EqualTo("text/plain"));
 	}
 
 	[Test]
@@ -82,6 +82,6 @@ public class MimeTypeAssistantTests
 		var result = MimeTypeAssistant.GetMimeTypeByFilePath(filePath);
 
 		// Assert
-		Assert.AreEqual("text/plain", result);
+		Assert.That(result, Is.EqualTo("text/plain"));
 	}
 }

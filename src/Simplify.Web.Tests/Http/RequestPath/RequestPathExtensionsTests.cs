@@ -21,7 +21,7 @@ public class RequestPathExtensionsTests
 
 		// Assert
 
-		Assert.AreEqual("test", result);
+		Assert.That(result, Is.EqualTo("test"));
 	}
 
 	[Test]
@@ -37,6 +37,6 @@ public class RequestPathExtensionsTests
 
 		// Assert
 
-		Assert.AreEqual("", result);
+		Assert.That(result, Is.EqualTo(""));
 	}
 }

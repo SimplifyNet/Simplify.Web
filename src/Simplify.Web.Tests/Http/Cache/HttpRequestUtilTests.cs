@@ -16,7 +16,7 @@ public class CacheControlHeaderExtensions
 		var result = str.IsNoCacheRequested();
 
 		// Assert
-		Assert.IsFalse(result);
+		Assert.That(result, Is.False);
 	}
 
 	[Test]
@@ -26,6 +26,6 @@ public class CacheControlHeaderExtensions
 		var result = "no-cache".IsNoCacheRequested();
 
 		// Assert
-		Assert.IsTrue(result);
+		Assert.That(result, Is.True);
 	}
 }

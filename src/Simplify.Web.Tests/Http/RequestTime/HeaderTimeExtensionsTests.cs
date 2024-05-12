@@ -24,7 +24,7 @@ public class HeaderTimeExtensionsTests
 
 		// Assert
 
-		Assert.IsNotNull(result);
+		Assert.That(result, Is.Not.Null);
 		Assert.AreEqual(time, result);
 	}
 
@@ -40,6 +40,6 @@ public class HeaderTimeExtensionsTests
 		var result = headers.Object.GetIfModifiedSinceTime();
 
 		// Assert
-		Assert.IsNull(result);
+		Assert.That(result, Is.Null);
 	}
 }
