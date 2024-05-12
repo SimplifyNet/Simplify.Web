@@ -56,8 +56,6 @@ public class BaseBootstrapper
 		RegisterListsGenerator();
 		RegisterResponseWriter();
 		RegisterControllersRequestHandler();
-		RegisterWebContextProvider();
-		RegisterRedirector();
 	}
 
 	#region Simplify.Web types registration
@@ -256,28 +254,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IControllersRequestHandler, ControllersRequestHandler>();
-	}
-
-	/// <summary>
-	/// Registers the web context provider.
-	/// </summary>
-	public virtual void RegisterWebContextProvider()
-	{
-		if (TypesToExclude.Contains(typeof(IWebContextProvider)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IWebContextProvider, WebContextProvider>();
-	}
-
-	/// <summary>
-	/// Registers the redirector.
-	/// </summary>
-	public virtual void RegisterRedirector()
-	{
-		if (TypesToExclude.Contains(typeof(IRedirector)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IRedirector>(r => new Redirector(r.Resolve<IWebContextProvider>().Get()));
 	}
 
 

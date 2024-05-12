@@ -2,15 +2,17 @@
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old.Modules;
+using Simplify.Web.Modules.Context;
+using Simplify.Web.Modules.Redirection;
 
-namespace Simplify.Web.Tests.Old.Modules;
+namespace Simplify.Web.Tests.Modules.Redirection;
 
 [TestFixture]
 public class RedirectorTests
 {
-	private Mock<IWebContext> _context = null!;
 	private Redirector _redirector = null!;
+
+	private Mock<IWebContext> _context = null!;
 	private Mock<IResponseCookies> _responseCookies = null!;
 
 	[SetUp]
@@ -24,31 +26,29 @@ public class RedirectorTests
 
 		_context.SetupGet(x => x.Request.Scheme).Returns("http");
 		_context.SetupGet(x => x.Request.Host).Returns(new HostString("localhost"));
-		_context.SetupGet(x => x.Request.PathBase).Returns("/mywebsite");
-		_context.SetupGet(x => x.Request.Path).Returns("/myaction?=foo");
-		_context.SetupGet(x => x.SiteUrl).Returns("http://localhost/mywebsite/");
+		_context.SetupGet(x => x.Request.PathBase).Returns("/my-website");
+		_context.SetupGet(x => x.Request.Path).Returns("/my-action?=foo");
+		_context.SetupGet(x => x.SiteUrl).Returns("http://localhost/my-website/");
 
 		_context.SetupGet(x => x.Response.Cookies).Returns(_responseCookies.Object);
 		_context.SetupGet(x => x.Request.Cookies).Returns(Mock.Of<IRequestCookieCollection>());
 	}
 
 	[Test]
-	public void Redirect_NullUrl_ArgumentNullExceptionThrown()
-	{
+	public void Redirect_NullUrl_ArgumentNullExceptionThrown() =>
 		Assert.Throws<ArgumentNullException>(() => _redirector.Redirect(null));
-	}
 
 	[Test]
 	public void Redirect_NormalUrl_ResponseRedirectCalled()
 	{
 		// Arrange
-		_context.SetupGet(x => x.SiteUrl).Returns("http://testwebsite.com");
+		_context.SetupGet(x => x.SiteUrl).Returns("http://test-website.com");
 
 		// Act
-		_redirector.Redirect("http://testwebsite.com");
+		_redirector.Redirect("http://test-website.com");
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://testwebsite.com")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://test-website.com")), Times.Once);
 	}
 
 	[Test]
@@ -64,8 +64,8 @@ public class RedirectorTests
 
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
-			Assert.AreEqual(Redirector.PreviousNavigatedUrlCookieFieldName, key);
-			Assert.AreEqual("http://localhost/mywebsite/myaction%3F=foo", value);
+			Assert.That(key, Is.EqualTo(Redirector.PreviousNavigatedUrlCookieFieldName));
+			Assert.That(value, Is.EqualTo("http://localhost/my-website/myaction%3F=foo"));
 		});
 
 		// Act
@@ -82,7 +82,7 @@ public class RedirectorTests
 		_redirector.Redirect(RedirectionType.RedirectUrl);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/mywebsite/")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/")), Times.Once);
 	}
 
 	[Test]
@@ -92,7 +92,7 @@ public class RedirectorTests
 		_redirector.Redirect(RedirectionType.LoginReturnUrl);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/mywebsite/")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/")), Times.Once);
 	}
 
 	[Test]
@@ -156,7 +156,7 @@ public class RedirectorTests
 		_redirector.Redirect(RedirectionType.CurrentPage);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/mywebsite/myaction%3F=foo")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/my-action%3F=foo")), Times.Once);
 	}
 
 	[Test]
@@ -166,7 +166,7 @@ public class RedirectorTests
 		_redirector.Redirect(RedirectionType.DefaultPage);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/mywebsite/")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/")), Times.Once);
 	}
 
 	[Test]
@@ -175,8 +175,8 @@ public class RedirectorTests
 		// Arrange
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
-			Assert.AreEqual(Redirector.RedirectUrlCookieFieldName, key);
-			Assert.AreEqual("http://localhost/mywebsite/myaction%3F=foo", value);
+			Assert.That(key, Is.EqualTo(Redirector.RedirectUrlCookieFieldName));
+			Assert.That(value, Is.EqualTo("http://localhost/my-website/my-action%3F=foo"));
 		});
 
 		// Act
@@ -192,8 +192,8 @@ public class RedirectorTests
 
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
-			Assert.AreEqual(Redirector.LoginReturnUrlCookieFieldName, key);
-			Assert.AreEqual("http://localhost/mywebsite/foo2", value);
+			Assert.That(key, Is.EqualTo(Redirector.LoginReturnUrlCookieFieldName));
+			Assert.That(value, Is.EqualTo("http://localhost/my-website/foo2"));
 		});
 
 		// Act
@@ -232,8 +232,8 @@ public class RedirectorTests
 		// Arrange
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
-			Assert.AreEqual(Redirector.PreviousPageUrlCookieFieldName, key);
-			Assert.AreEqual("foo", value);
+			Assert.That(key, Is.EqualTo(Redirector.PreviousPageUrlCookieFieldName));
+			Assert.That(value, Is.EqualTo("foo"));
 		});
 
 		// Act & Assert
