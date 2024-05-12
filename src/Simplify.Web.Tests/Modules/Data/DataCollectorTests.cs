@@ -2,29 +2,29 @@
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
-using Simplify.Web.Old.Modules.Data;
+using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.Tests.Old.Modules.Data;
+namespace Simplify.Web.Tests.Modules.Data;
 
 [TestFixture]
 public class DataCollectorTests
 {
-	private Mock<IStringTable> _stringTable = null!;
 	private DataCollector _dataCollector = null!;
+
+	private Mock<IStringTable> _stringTable = null!;
 
 	[SetUp]
 	public void Initialize()
 	{
 		_stringTable = new Mock<IStringTable>();
+
 		_dataCollector = new DataCollector("MainContent", "Title", _stringTable.Object);
 	}
 
 	[Test]
-	public void AddVariableWithTest_Nulls_ArgumentException()
-	{
+	public void AddVariableWithTest_Nulls_ArgumentException() =>
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => _dataCollector.Add(null, (string?)null));
-	}
 
 	[Test]
 	public void AddVariableWithTest_NotExist_Created()
@@ -33,34 +33,39 @@ public class DataCollectorTests
 		_dataCollector.Add("Foo", "Bar");
 
 		// Assert
-		Assert.AreEqual(1, _dataCollector.Items.Count);
-		Assert.AreEqual("Bar", _dataCollector["Foo"]);
-		Assert.IsTrue(_dataCollector.IsDataExist("Foo"));
+
+		Assert.That(_dataCollector.Items.Count, Is.EqualTo(1));
+		Assert.That(_dataCollector["Foo"], Is.EqualTo("Bar"));
+		Assert.That(_dataCollector.IsDataExist("Foo"), Is.True);
 	}
 
 	[Test]
 	public void AddVariableWithTest_Exist_AddedToExisting()
 	{
 		// Act
+
 		_dataCollector.Add("Foo", "Bar");
 		_dataCollector.Add("Foo", "Test");
 
 		// Assert
-		Assert.AreEqual(1, _dataCollector.Items.Count);
-		Assert.AreEqual("BarTest", _dataCollector["Foo"]);
+
+		Assert.That(_dataCollector.Items.Count, Is.EqualTo(1));
+		Assert.That(_dataCollector["Foo"], Is.EqualTo("BarTest"));
 	}
 
 	[Test]
 	public void AddVariableWithTest_AnotherVariable_2Variables()
 	{
 		// Act
+
 		_dataCollector.Add("Foo", "Bar");
 		_dataCollector.Add("Foo2", "Test");
 
 		// Assert
-		Assert.AreEqual(2, _dataCollector.Items.Count);
-		Assert.AreEqual("Bar", _dataCollector["Foo"]);
-		Assert.AreEqual("Test", _dataCollector["Foo2"]);
+
+		Assert.That(_dataCollector.Items.Count, Is.EqualTo(2));
+		Assert.That(_dataCollector["Foo"], Is.EqualTo("Bar"));
+		Assert.That(_dataCollector["Foo2"], Is.EqualTo("Test"));
 	}
 
 	[Test]
@@ -70,7 +75,7 @@ public class DataCollectorTests
 		_dataCollector.Add("Foo", (ITemplate?)null);
 
 		// Assert
-		Assert.AreEqual(0, _dataCollector.Items.Count);
+		Assert.That(_dataCollector.Items.Count, Is.EqualTo(0));
 	}
 
 	[Test]
@@ -80,7 +85,7 @@ public class DataCollectorTests
 		_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
 
 		// Assert
-		Assert.AreEqual("Bar", _dataCollector["Foo"]);
+		Assert.That(_dataCollector["Foo"], Is.EqualTo("Bar"));
 	}
 
 	[Test]
@@ -90,7 +95,7 @@ public class DataCollectorTests
 		_dataCollector.Add("Foo");
 
 		// Assert
-		Assert.AreEqual("Foo", _dataCollector["MainContent"]);
+		Assert.That(_dataCollector["MainContent"], Is.EqualTo("Foo"));
 	}
 
 	[Test]
@@ -100,7 +105,7 @@ public class DataCollectorTests
 		_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
 
 		// Assert
-		Assert.AreEqual("Bar", _dataCollector["Foo"]);
+		Assert.That(_dataCollector["Foo"], Is.EqualTo("Bar"));
 	}
 
 	[Test]
@@ -110,7 +115,7 @@ public class DataCollectorTests
 		_dataCollector.AddTitle("Foo");
 
 		// Assert
-		Assert.AreEqual("Foo", _dataCollector["Title"]);
+		Assert.That(_dataCollector["Title"], Is.EqualTo("Foo"));
 	}
 
 	[Test]
@@ -123,7 +128,7 @@ public class DataCollectorTests
 		_dataCollector.AddSt("Foo", "Bar");
 
 		// Assert
-		Assert.AreEqual("Test", _dataCollector["Foo"]);
+		Assert.That(_dataCollector["Foo"], Is.EqualTo("Test"));
 	}
 
 	[Test]
@@ -136,7 +141,7 @@ public class DataCollectorTests
 		_dataCollector.AddSt("Bar");
 
 		// Assert
-		Assert.AreEqual("Test", _dataCollector["MainContent"]);
+		Assert.That(_dataCollector["MainContent"], Is.EqualTo("Test"));
 	}
 
 	[Test]
@@ -149,6 +154,6 @@ public class DataCollectorTests
 		_dataCollector.AddTitleSt("Bar");
 
 		// Assert
-		Assert.AreEqual("Test", _dataCollector["Title"]);
+		Assert.That(_dataCollector["Title"], Is.EqualTo("Test"));
 	}
 }
