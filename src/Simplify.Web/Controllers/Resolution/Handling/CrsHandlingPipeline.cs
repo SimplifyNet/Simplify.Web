@@ -7,7 +7,7 @@ namespace Simplify.Web.Controllers.Resolution.Handling;
 
 public class CrsHandlingPipeline(IReadOnlyList<ICrsHandler> handlers) : ICrsHandlingPipeline
 {
-	public bool Execute(ControllerResolutionState state, ExecutionWorkOrderBuilder builder)
+	public bool Execute(IControllerResolutionState state, ExecutionWorkOrderBuilder builder)
 	{
 		var handler = handlers.FirstOrDefault(x => x.CanHandle(state));
 

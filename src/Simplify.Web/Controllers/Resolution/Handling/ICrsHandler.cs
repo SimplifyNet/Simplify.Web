@@ -7,7 +7,7 @@ public interface ICrsHandler
 {
 	bool IsTerminal { get; }
 
-	bool CanHandle(ControllerResolutionState state);
+	bool CanHandle(IControllerResolutionState state);
 
-	void Execute(ControllerResolutionState state, ExecutionWorkOrderBuilder builder);
+	void Execute(IControllerResolutionState state, ExecutionWorkOrderBuilder builder);
 }

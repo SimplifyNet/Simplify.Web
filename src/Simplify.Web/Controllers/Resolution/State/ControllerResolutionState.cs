@@ -5,7 +5,8 @@ using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.Resolution.State;
 
-public class ControllerResolutionState(IControllerMetadata initialController)
+
+public class ControllerResolutionState(IControllerMetadata initialController) : IControllerResolutionState
 {
 	public IControllerMetadata Controller { get; } = initialController;
 

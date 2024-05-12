@@ -9,9 +9,9 @@ public class ForbiddenHandler : ICrsHandler
 {
 	public bool IsTerminal => true;
 
-	public bool CanHandle(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Forbidden;
+	public bool CanHandle(IControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Forbidden;
 
-	public void Execute(ControllerResolutionState state, ExecutionWorkOrderBuilder builder)
+	public void Execute(IControllerResolutionState state, ExecutionWorkOrderBuilder builder)
 	{
 		builder.Controllers.Clear();
 

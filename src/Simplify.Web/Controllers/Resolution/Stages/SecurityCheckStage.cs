@@ -7,7 +7,7 @@ namespace Simplify.Web.Controllers.Resolution.Stages;
 
 public class SecurityCheckStage(ISecurityChecker securityChecker) : IControllerResolutionStage
 {
-	public void Execute(ControllerResolutionState state, HttpContext context, Action stopExecution)
+	public void Execute(IControllerResolutionState state, HttpContext context, Action stopExecution)
 	{
 		state.SecurityStatus = securityChecker.CheckSecurityRules(state.Controller, context.User);
 

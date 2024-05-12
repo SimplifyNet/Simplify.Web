@@ -10,7 +10,7 @@ namespace Simplify.Web.Controllers.Resolution.Stages;
 
 public class RouteMatchingStage(IRouteMatcherResolver routeMatcherResolver) : IControllerResolutionStage
 {
-	public void Execute(ControllerResolutionState state, HttpContext context, Action stopExecution)
+	public void Execute(IControllerResolutionState state, HttpContext context, Action stopExecution)
 	{
 		var execParameters = state.Controller.ExecParameters
 			?? throw new InvalidOperationException($"Controller execution parameters should not be null, controller type: '{state.Controller.GetType().Name}'");

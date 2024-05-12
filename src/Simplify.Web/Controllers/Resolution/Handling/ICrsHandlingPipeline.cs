@@ -5,5 +5,5 @@ namespace Simplify.Web.Controllers.Resolution.Handling;
 
 public interface ICrsHandlingPipeline
 {
-	bool Execute(ControllerResolutionState state, ExecutionWorkOrderBuilder builder);
+	bool Execute(IControllerResolutionState state, ExecutionWorkOrderBuilder builder);
 }

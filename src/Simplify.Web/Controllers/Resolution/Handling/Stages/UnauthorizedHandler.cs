@@ -8,8 +8,8 @@ public class UnauthorizedHandler : ICrsHandler
 {
 	public bool IsTerminal => true;
 
-	public bool CanHandle(ControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Unauthorized;
+	public bool CanHandle(IControllerResolutionState state) => state.SecurityStatus == Security.SecurityStatus.Unauthorized;
 
-	public void Execute(ControllerResolutionState state, ExecutionWorkOrderBuilder builder) =>
+	public void Execute(IControllerResolutionState state, ExecutionWorkOrderBuilder builder) =>
 		builder.HttpStatusCode = HttpStatusCode.Unauthorized;
 }
