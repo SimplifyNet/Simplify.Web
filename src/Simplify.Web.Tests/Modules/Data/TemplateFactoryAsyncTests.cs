@@ -2,9 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Simplify.Web.Old.Modules.Data;
+using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.Tests.Old.Modules.Data;
+namespace Simplify.Web.Tests.Modules.Data;
 
 [TestFixture]
 public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
@@ -14,7 +14,7 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 	[Test]
 	public async Task LoadAsync_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true, true);
 
 		// Act
@@ -23,13 +23,13 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 		var result = await tf.LoadAsync("Templates/Test.tpl");
 
 		// Assert
-		Assert.AreEqual("Hello!", result.Get());
+		Assert.That(result.Get(), Is.EqualTo("Hello!"));
 	}
 
 	[Test]
 	public async Task LoadAsync_NameWithoutTpl_TemplateLoadedCorrectly()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
@@ -38,13 +38,13 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 		var data = await tf.LoadAsync("FooAsync");
 
 		// Assert
-		Assert.AreEqual("Dummy data", data.Get());
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 	}
 
 	[Test]
 	public async Task LoadAsync_NoCache_TemplateLoadedCorrectly()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
@@ -53,13 +53,13 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 		var data = await tf.LoadAsync(FileName);
 
 		// Assert
-		Assert.AreEqual("Dummy data", data.Get());
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 	}
 
 	[Test]
 	public void LoadAsync_NullFileName_ArgumentNullExceptionThrown()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
@@ -69,13 +69,13 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 		var ex = Assert.Throws<AggregateException>(() => tf.LoadAsync(null!).Wait());
 
 		// Assert
-		Assert.AreEqual(typeof(ArgumentNullException), ex?.InnerException?.GetType());
+		Assert.That(ex?.InnerException?.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 	}
 
 	[Test]
 	public async Task LoadAsync_WithCache_TemplateLoadedCorrectly()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
 
 		// Act
@@ -83,10 +83,10 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 		tf.Setup();
 		var data = await tf.LoadAsync(FileName);
 
-		// Asset
-		Assert.AreEqual("Dummy data", data.Get());
+		// Assert
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 
-		// Assign
+		// Arrange
 
 		tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
 		tf.Setup();
@@ -97,7 +97,6 @@ public class TemplateFactoryAsyncTests : TemplateFactoryTestsBase
 		data = await tf.LoadAsync(FileName);
 
 		// Assert
-
-		Assert.AreEqual("Dummy data", data.Get());
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 	}
 }

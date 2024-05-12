@@ -1,19 +1,20 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old.Modules;
+using Simplify.Web.Modules.ApplicationEnvironment;
+using Simplify.Web.Modules.Localization;
 
-namespace Simplify.Web.Tests.Old.Modules.Data;
+namespace Simplify.Web.Tests.Modules.Data;
 
 public class TemplateFactoryTestsBase
 {
-	protected Mock<IEnvironment> Environment = null!;
+	protected Mock<IDynamicEnvironment> Environment = null!;
 	protected Mock<ILanguageManagerProvider> LanguageManagerProvider = null!;
 	protected Mock<ILanguageManager> LanguageManager = null!;
 
 	[OneTimeSetUp]
 	public void Initialize()
 	{
-		Environment = new Mock<IEnvironment>();
+		Environment = new Mock<IDynamicEnvironment>();
 		LanguageManagerProvider = new Mock<ILanguageManagerProvider>();
 		LanguageManager = new Mock<ILanguageManager>();
 

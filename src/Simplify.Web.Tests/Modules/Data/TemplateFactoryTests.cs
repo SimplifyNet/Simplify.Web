@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
-using Simplify.Web.Old.Modules.Data;
+using Simplify.Web.Modules.Data;
 
-namespace Simplify.Web.Tests.Old.Modules.Data;
+namespace Simplify.Web.Tests.Modules.Data;
 
 [TestFixture]
 public class TemplateFactoryTests : TemplateFactoryTestsBase
@@ -13,7 +13,7 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 	[Test]
 	public void Load_NullFileName_ArgumentNullExceptionThrown()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
@@ -26,7 +26,7 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 	[Test]
 	public void Load_NoCache_TemplateLoadedCorrectly()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
@@ -35,13 +35,13 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 		var data = tf.Load(FileName);
 
 		// Assert
-		Assert.AreEqual("Dummy data", data.Get());
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 	}
 
 	[Test]
 	public void Load_NameWithoutTpl_TemplateLoadedCorrectly()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en");
 
 		// Act
@@ -50,13 +50,13 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 		var data = tf.Load("Foo");
 
 		// Assert
-		Assert.AreEqual("Dummy data", data.Get());
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 	}
 
 	[Test]
 	public void Load_WithCache_TemplateLoadedCorrectly()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
 
 		// Act
@@ -64,10 +64,10 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 		tf.Setup();
 		var data = tf.Load(FileName);
 
-		// Asset
-		Assert.AreEqual("Dummy data", data.Get());
+		// Assert
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 
-		// Assign
+		// Arrange
 
 		tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true);
 		tf.Setup();
@@ -78,14 +78,13 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 		data = tf.Load(FileName);
 
 		// Assert
-
-		Assert.AreEqual("Dummy data", data.Get());
+		Assert.That(data.Get(), Is.EqualTo("Dummy data"));
 	}
 
 	[Test]
 	public void Load_FromManifestEnabled_CalledCorrectlyPathFixedWithDots()
 	{
-		// Assign
+		// Arrange
 		var tf = new TemplateFactory(Environment.Object, LanguageManagerProvider.Object, "en", true, true);
 
 		// Act
@@ -94,6 +93,6 @@ public class TemplateFactoryTests : TemplateFactoryTestsBase
 		var result = tf.Load("Templates/Test.tpl");
 
 		// Assert
-		Assert.AreEqual("Hello!", result.Get());
+		Assert.That(result.Get(), Is.EqualTo("Hello!"));
 	}
 }
