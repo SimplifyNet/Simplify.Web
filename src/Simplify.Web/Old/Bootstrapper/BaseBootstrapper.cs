@@ -55,12 +55,7 @@ public class BaseBootstrapper
 		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
 		RegisterControllersProcessor();
-		RegisterEnvironment();
-		RegisterLanguageManagerProvider();
-		RegisterTemplateFactory();
-		RegisterFileReader();
 		RegisterStringTable();
-		RegisterDataCollector();
 		RegisterListsGenerator();
 		RegisterResponseWriter();
 		RegisterControllersRequestHandler();
@@ -216,70 +211,6 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the environment.
-	/// </summary>
-	public virtual void RegisterEnvironment()
-	{
-		if (TypesToExclude.Contains(typeof(IEnvironment)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IEnvironment>(r =>
-			new Modules.Environment(AppDomain.CurrentDomain.BaseDirectory ?? "", r.Resolve<ISimplifyWebSettings>()));
-	}
-
-	/// <summary>
-	/// Registers the language manager provider.
-	/// </summary>
-	public virtual void RegisterLanguageManagerProvider()
-	{
-		if (TypesToExclude.Contains(typeof(ILanguageManagerProvider)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<ILanguageManagerProvider>(r => new LanguageManagerProvider(r.Resolve<ISimplifyWebSettings>()));
-	}
-
-	/// <summary>
-	/// Registers the template factory.
-	/// </summary>
-	public virtual void RegisterTemplateFactory()
-	{
-		if (TypesToExclude.Contains(typeof(ITemplateFactory)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<ITemplateFactory>(r =>
-		{
-			var settings = r.Resolve<ISimplifyWebSettings>();
-
-			return new TemplateFactory(
-				r.Resolve<IEnvironment>(),
-				r.Resolve<ILanguageManagerProvider>(),
-				settings.DefaultLanguage,
-				settings.TemplatesMemoryCache,
-				settings.LoadTemplatesFromAssembly);
-		});
-	}
-
-	/// <summary>
-	/// Registers the file reader.
-	/// </summary>
-	public virtual void RegisterFileReader()
-	{
-		if (TypesToExclude.Contains(typeof(IFileReader)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IFileReader>(r =>
-		{
-			var settings = r.Resolve<ISimplifyWebSettings>();
-
-			return new FileReader(
-				r.Resolve<IEnvironment>().DataPhysicalPath,
-				r.Resolve<ISimplifyWebSettings>().DefaultLanguage,
-				r.Resolve<ILanguageManagerProvider>(),
-				settings.DisableFileReaderCache);
-		});
-	}
-
-	/// <summary>
 	/// Registers the string table.
 	/// </summary>
 	public virtual void RegisterStringTable()
@@ -297,25 +228,6 @@ public class BaseBootstrapper
 				r.Resolve<ILanguageManagerProvider>(),
 				r.Resolve<IFileReader>(),
 				settings.StringTableMemoryCache);
-		});
-	}
-
-	/// <summary>
-	/// Registers the data collector.
-	/// </summary>
-	public virtual void RegisterDataCollector()
-	{
-		if (TypesToExclude.Contains(typeof(IDataCollector)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IDataCollector>(r =>
-		{
-			var settings = r.Resolve<ISimplifyWebSettings>();
-
-			return new DataCollector(
-				settings.DefaultMainContentVariableName,
-				settings.DefaultTitleVariableName,
-				r.Resolve<IStringTable>());
 		});
 	}
 
