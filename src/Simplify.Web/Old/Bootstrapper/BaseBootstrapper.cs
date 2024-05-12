@@ -6,9 +6,6 @@ using Simplify.DI;
 using Simplify.Web.Old.Core;
 using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
-using Simplify.Web.Old.Model;
-using Simplify.Web.Old.Model.Binding;
-using Simplify.Web.Old.Model.Validation;
 using Simplify.Web.Old.Modules;
 using Simplify.Web.Old.Modules.Data;
 using Simplify.Web.Old.Modules.Data.Html;
@@ -61,9 +58,6 @@ public class BaseBootstrapper
 		RegisterControllersRequestHandler();
 		RegisterWebContextProvider();
 		RegisterRedirector();
-		RegisterModelHandler();
-		RegisterDefaultModelBinders();
-		RegisterDefaultModelValidators();
 	}
 
 	#region Simplify.Web types registration
@@ -286,31 +280,6 @@ public class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IRedirector>(r => new Redirector(r.Resolve<IWebContextProvider>().Get()));
 	}
 
-	/// <summary>
-	/// Registers the model handler.
-	/// </summary>
-	public virtual void RegisterModelHandler()
-	{
-		if (TypesToExclude.Contains(typeof(IModelHandler)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IModelHandler>(r => new HttpModelHandler(r.Resolve<IWebContextProvider>().Get()));
-	}
-
-	/// <summary>
-	/// Registers the default model binders.
-	/// </summary>
-	public virtual void RegisterDefaultModelBinders()
-	{
-		BootstrapperFactory.ContainerProvider.Register<HttpQueryModelBinder>(LifetimeType.Singleton);
-		BootstrapperFactory.ContainerProvider.Register<HttpFormModelBinder>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the default model validators.
-	/// </summary>
-	public virtual void RegisterDefaultModelValidators() =>
-		BootstrapperFactory.ContainerProvider.Register(r => new ValidationAttributesExecutor(), LifetimeType.Singleton);
 
 	#endregion Simplify.Web types registration
 }
