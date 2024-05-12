@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using Simplify.Web.Old.Util;
+using Simplify.Web.Http.Mime;
 
-namespace Simplify.Web.Tests.Old.Util;
+namespace Simplify.Web.Tests.Http.Mime;
 
 [TestFixture]
 public class MimeTypeAssistantTests
