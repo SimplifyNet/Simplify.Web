@@ -43,8 +43,6 @@ public class BaseBootstrapper
 
 		RegisterController1Factory();
 		RegisterController2Factory();
-		RegisterControllerPathParser();
-		RegisterRouteMatcher();
 		RegisterControllersAgent();
 		RegisterControllerResponseBuilder();
 		RegisterController1Executor();
@@ -95,28 +93,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IController2Factory, Controller2Factory>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the controller path parser.
-	/// </summary>
-	public virtual void RegisterControllerPathParser()
-	{
-		if (TypesToExclude.Contains(typeof(IControllerPathParser)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllerPathParser, ControllerPathParser>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the route matcher.
-	/// </summary>
-	public virtual void RegisterRouteMatcher()
-	{
-		if (TypesToExclude.Contains(typeof(IRouteMatcher)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IRouteMatcher, RouteMatcher>(LifetimeType.Singleton);
 	}
 
 	/// <summary>

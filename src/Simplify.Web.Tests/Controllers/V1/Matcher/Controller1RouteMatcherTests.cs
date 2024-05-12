@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old.Routing;
+using Simplify.Web.Controllers.V1.Matcher;
 
-namespace Simplify.Web.Tests.Old.Routing;
+namespace Simplify.Web.Tests.Routing;
 
 [TestFixture]
-public class RouteMatcherTests
+public class Controller1RouteMatcherTests
 {
-	private RouteMatcher _matcher = null!;
-	private Mock<IControllerPathParser> _controllerPathParser = null!;
+	private Controller1RouteMatcher _matcher = null!;
+
+	private Mock<IController1PathParser> _controllerPathParser = null!;
 
 	[SetUp]
 	public void Initialize()
 	{
-		_controllerPathParser = new Mock<IControllerPathParser>();
-		_matcher = new RouteMatcher(_controllerPathParser.Object);
+		_controllerPathParser = new Mock<IController1PathParser>();
+		_matcher = new Controller1RouteMatcher(_controllerPathParser.Object);
 	}
 
 	[Test]
@@ -27,7 +28,7 @@ public class RouteMatcherTests
 
 		// Assert
 		Assert.That(result.Success, Is.False);
-		Assert.IsFalse(result2.Success);
+		Assert.That(result2.Success, Is.False);
 	}
 
 	[Test]
@@ -118,13 +119,13 @@ public class RouteMatcherTests
 
 		// Act
 
-		var result = _matcher.Match("/user/testuser", "/user/{userName}");
+		var result = _matcher.Match("/user/test-user", "/user/{userName}");
 		var routeParameters = result.RouteParameters!;
 
 		// Assert
 
 		Assert.That(result.Success, Is.True);
-		Assert.AreEqual("testuser", routeParameters["userName"]);
+		Assert.That(routeParameters["userName"], Is.EqualTo("test-user"));
 	}
 
 	[Test]
@@ -135,7 +136,7 @@ public class RouteMatcherTests
 			.Returns(new ControllerPath(new List<PathItem> { new PathSegment("bar"), new PathParameter("userName", typeof(string)) }));
 
 		// Act
-		var result = _matcher.Match("/user/testuser", "/bar/{userName}");
+		var result = _matcher.Match("/user/test-user", "/bar/{userName}");
 
 		// Assert
 
@@ -156,7 +157,7 @@ public class RouteMatcherTests
 				}));
 
 		// Act
-		var result = _matcher.Match("/user/testuser", "/foo/{test}/{userName}");
+		var result = _matcher.Match("/user/test-user", "/foo/{test}/{userName}");
 
 		// Assert
 		Assert.That(result.Success, Is.False);
@@ -177,7 +178,7 @@ public class RouteMatcherTests
 		// Assert
 
 		Assert.That(result.Success, Is.True);
-		Assert.AreEqual("user", routeParameters["userName"]);
+		Assert.That(routeParameters["userName"], Is.EqualTo("user"));
 	}
 
 	[Test]
@@ -209,8 +210,8 @@ public class RouteMatcherTests
 		// Assert
 
 		Assert.That(result.Success, Is.True);
-		Assert.AreEqual("foo", routeParameters["test"]);
-		Assert.AreEqual("bar", routeParameters["name"]);
+		Assert.That(routeParameters["test"], Is.EqualTo("foo"));
+		Assert.That(routeParameters["name"], Is.EqualTo("bar"));
 	}
 
 	[Test]
@@ -228,7 +229,7 @@ public class RouteMatcherTests
 		// Assert
 
 		Assert.That(result.Success, Is.True);
-		Assert.AreEqual(15, routeParameters["id"]);
+		Assert.That(routeParameters["id"], Is.EqualTo(15));
 	}
 
 	[Test]
@@ -246,7 +247,7 @@ public class RouteMatcherTests
 		// Assert
 
 		Assert.That(result.Success, Is.True);
-		Assert.AreEqual((decimal)15, routeParameters["id"]);
+		Assert.That(routeParameters["id"], Is.EqualTo((decimal)15));
 	}
 
 	[Test]
@@ -264,7 +265,7 @@ public class RouteMatcherTests
 		// Assert
 
 		Assert.That(result.Success, Is.True);
-		Assert.AreEqual(true, routeParameters["foo"]);
+		Assert.That(routeParameters["foo"], Is.EqualTo(true));
 	}
 
 	[Test]
@@ -285,10 +286,10 @@ public class RouteMatcherTests
 
 		var items = (IList<string>)routeParameters["foo"];
 
-		Assert.AreEqual(3, items.Count);
-		Assert.AreEqual("hello", items[0]);
-		Assert.AreEqual("world", items[1]);
-		Assert.AreEqual("test", items[2]);
+		Assert.That(items.Count, Is.EqualTo(3));
+		Assert.That(items[0], Is.EqualTo("hello"));
+		Assert.That(items[1], Is.EqualTo("world"));
+		Assert.That(items[2], Is.EqualTo("test"));
 	}
 
 	[Test]
@@ -309,10 +310,10 @@ public class RouteMatcherTests
 
 		var items = (IList<int>)routeParameters["foo"];
 
-		Assert.AreEqual(3, items.Count);
-		Assert.AreEqual(1, items[0]);
-		Assert.AreEqual(2, items[1]);
-		Assert.AreEqual(3, items[2]);
+		Assert.That(items.Count, Is.EqualTo(3));
+		Assert.That(items[0], Is.EqualTo(1));
+		Assert.That(items[1], Is.EqualTo(2));
+		Assert.That(items[2], Is.EqualTo(3));
 	}
 
 	[Test]
@@ -333,10 +334,10 @@ public class RouteMatcherTests
 
 		var items = (IList<decimal>)routeParameters["foo"];
 
-		Assert.AreEqual(3, items.Count);
-		Assert.AreEqual(1, items[0]);
-		Assert.AreEqual(2, items[1]);
-		Assert.AreEqual(3, items[2]);
+		Assert.That(items.Count, Is.EqualTo(3));
+		Assert.That(items[0], Is.EqualTo(1));
+		Assert.That(items[1], Is.EqualTo(2));
+		Assert.That(items[2], Is.EqualTo(3));
 	}
 
 	[Test]
@@ -348,7 +349,7 @@ public class RouteMatcherTests
 
 		// Act
 
-		var result = _matcher.Match("/true,false,asdasd", "/{foo:bool[]}");
+		var result = _matcher.Match("/true,false,str", "/{foo:bool[]}");
 		var routeParameters = result.RouteParameters!;
 
 		// Assert
@@ -357,8 +358,8 @@ public class RouteMatcherTests
 
 		var items = (IList<bool>)routeParameters["foo"];
 
-		Assert.AreEqual(2, items.Count);
-		Assert.AreEqual(true, items[0]);
-		Assert.AreEqual(false, items[1]);
+		Assert.That(items.Count, Is.EqualTo(2));
+		Assert.That(items[0], Is.EqualTo(true));
+		Assert.That(items[1], Is.EqualTo(false));
 	}
 }
