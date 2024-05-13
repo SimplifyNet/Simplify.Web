@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Simplify.Web.Controllers.Execution.WorkOrder;
 
-public class ExecutionWorkOrderBuilder
+public sealed class ExecutionWorkOrderBuilder
 {
 	public List<IMatchedController> Controllers { get; } = [];
 

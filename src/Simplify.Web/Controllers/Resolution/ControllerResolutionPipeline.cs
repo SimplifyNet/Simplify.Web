@@ -7,7 +7,7 @@ namespace Simplify.Web.Controllers.Resolution;
 
 public class ControllerResolutionPipeline(IReadOnlyList<IControllerResolutionStage> stages) : IControllerResolutionPipeline
 {
-	public ControllerResolutionState Execute(IControllerMetadata initialController, HttpContext context)
+	public IControllerResolutionState Execute(IControllerMetadata initialController, HttpContext context)
 	{
 		var state = new ControllerResolutionState(initialController);
 
