@@ -7,7 +7,7 @@ using Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
 using Simplify.Web.Controllers.Meta;
 using Simplify.Web.Controllers.Meta.MetaStore;
 
-namespace Simplify.Web.Tests.Controllers.Resolution.Handling.Stages;
+namespace Simplify.Web.Tests.Controllers.Execution.WorkOrder.BuildStages;
 
 [TestFixture]
 public class NotFoundBuilderTests
@@ -20,7 +20,7 @@ public class NotFoundBuilderTests
 		// Arrange
 		var builder = new ExecutionWorkOrderBuilder
 		{
-			HttpStatusCode = HttpStatusCode.Forbidden
+			HttpStatusCode = HttpStatusCode.BadRequest
 		};
 
 		// Act
@@ -74,7 +74,6 @@ public class NotFoundBuilderTests
 		// Arrange
 
 		var builder = new ExecutionWorkOrderBuilder();
-
 		var notFoundController = Mock.Of<IControllerMetadata>();
 
 		ControllersMetaStore.Current = Mock.Of<IControllersMetaStore>(x => x.NotFoundController == notFoundController);
