@@ -13,9 +13,9 @@ public class RoleAuthorizationRule : ISecurityRule
 		if (security.RequiredUserRoles == null || !security.RequiredUserRoles.Any())
 			return false;
 
-		if (user == null || !security.RequiredUserRoles.All(user.IsInRole))
-			return true;
+		if (user != null && security.RequiredUserRoles.Any(user.IsInRole))
+			return false;
 
-		return false;
+		return true;
 	}
 }
