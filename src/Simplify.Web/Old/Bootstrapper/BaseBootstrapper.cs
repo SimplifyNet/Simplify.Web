@@ -43,7 +43,6 @@ public class BaseBootstrapper
 		RegisterController2Executor();
 		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
-		RegisterControllersProcessor();
 	}
 
 	#region Simplify.Web types registration
@@ -155,17 +154,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IControllerExecutor, ControllerExecutor>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the controllers processor.
-	/// </summary>
-	public virtual void RegisterControllersProcessor()
-	{
-		if (TypesToExclude.Contains(typeof(IControllersProcessor)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllersProcessor, ControllersProcessor>();
 	}
 
 	#endregion Simplify.Web types registration
