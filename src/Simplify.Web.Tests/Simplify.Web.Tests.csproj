@@ -21,9 +21,15 @@
 		<PackageReference Include="Simplify.Xml" Version="1.3.*" />
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Templates\*.tpl" />
+		<None Remove="Templates\Test.tpl" />
 	</ItemGroup>
 	<ItemGroup>
+		<EmbeddedResource Include="Templates\Test.tpl" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Templates\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="WebSites\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
