@@ -44,8 +44,13 @@ public class RouteMatchingStageTests
 		_routeMatcherResolver.Verify(x => x.Resolve(It.IsAny<IControllerMetadata>()), Times.Never);
 	}
 
-	[Test]
-	public void Execute_MatchedMethodButNotMatchedRoute_ExecutionStoppedAndIsMatchedSetAndNoRouteParametersSet()
+	[TestCase(HttpMethod.Get)]
+	[TestCase(HttpMethod.Post)]
+	[TestCase(HttpMethod.Put)]
+	[TestCase(HttpMethod.Patch)]
+	[TestCase(HttpMethod.Delete)]
+	[TestCase(HttpMethod.Options)]
+	public void Execute_MatchedMethodButNotMatchedRoute_ExecutionStoppedAndIsMatchedSetAndNoRouteParametersSet(HttpMethod httpMethod)
 	{
 		// Arrange
 
@@ -56,11 +61,11 @@ public class RouteMatchingStageTests
 			x.Controller.ExecParameters == new ControllerExecParameters(
 				new Dictionary<HttpMethod, string> {
 				{
-					HttpMethod.Post, controllerPath }
+					httpMethod, controllerPath }
 				}, 0));
 
 		var context = Mock.Of<HttpContext>(x =>
-			x.Request.Method == Relations.HttpMethodToToHttpMethodStringRelation[HttpMethod.Post] &&
+			x.Request.Method == Relations.HttpMethodToToHttpMethodStringRelation[httpMethod] &&
 			x.Request.Path == new PathString(currentPath));
 
 		var stopExecution = new Mock<Action>();
@@ -84,8 +89,13 @@ public class RouteMatchingStageTests
 		routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == currentPath), It.Is<string>(s => s == controllerPath)));
 	}
 
-	[Test]
-	public void Execute_MatchedMethodAndMatchedRoute_IsMatchedAndRouteParametersAreSet()
+	[TestCase(HttpMethod.Get)]
+	[TestCase(HttpMethod.Post)]
+	[TestCase(HttpMethod.Put)]
+	[TestCase(HttpMethod.Patch)]
+	[TestCase(HttpMethod.Delete)]
+	[TestCase(HttpMethod.Options)]
+	public void Execute_MatchedMethodAndMatchedRoute_IsMatchedAndRouteParametersAreSet(HttpMethod httpMethod)
 	{
 		// Arrange
 
@@ -96,11 +106,11 @@ public class RouteMatchingStageTests
 			x.Controller.ExecParameters == new ControllerExecParameters(
 				new Dictionary<HttpMethod, string> {
 				{
-					HttpMethod.Post, controllerPath }
+					httpMethod, controllerPath }
 				}, 0));
 
 		var context = Mock.Of<HttpContext>(x =>
-			x.Request.Method == Relations.HttpMethodToToHttpMethodStringRelation[HttpMethod.Post] &&
+			x.Request.Method == Relations.HttpMethodToToHttpMethodStringRelation[httpMethod] &&
 			x.Request.Path == new PathString(currentPath));
 
 		var stopExecution = new Mock<Action>();
