@@ -35,9 +35,7 @@ public class BaseBootstrapper
 
 		// Registering Simplify.Web core types
 
-		RegisterController1Factory();
 		RegisterController2Factory();
-		RegisterControllerResponseBuilder();
 		RegisterController2Executor();
 		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
@@ -63,17 +61,6 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the controller v1 factory.
-	/// </summary>
-	public virtual void RegisterController1Factory()
-	{
-		if (TypesToExclude.Contains(typeof(IController1Factory)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IController1Factory, Controller1Factory>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
 	/// Registers the controller v2 factory.
 	/// </summary>
 	public virtual void RegisterController2Factory()
@@ -82,17 +69,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IController2Factory, Controller2Factory>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the controller response builder.
-	/// </summary>
-	public virtual void RegisterControllerResponseBuilder()
-	{
-		if (TypesToExclude.Contains(typeof(IControllerResponseBuilder)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllerResponseBuilder, ControllerResponseBuilder>(LifetimeType.Singleton);
 	}
 
 	/// <summary>
