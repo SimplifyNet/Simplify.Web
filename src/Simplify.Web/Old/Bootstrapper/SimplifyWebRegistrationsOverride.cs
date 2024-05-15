@@ -101,17 +101,6 @@ public class SimplifyWebRegistrationsOverride
 	}
 
 	/// <summary>
-	/// Overrides the `IControllersAgent` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideControllersAgent(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IControllersAgent), registrator);
-
-		return this;
-	}
-
-	/// <summary>
 	/// Overrides the `IControllerResponseBuilder` registration.
 	/// </summary>
 	/// <param name="registrator">IOC Container registrator.</param>

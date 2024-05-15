@@ -37,7 +37,6 @@ public class BaseBootstrapper
 
 		RegisterController1Factory();
 		RegisterController2Factory();
-		RegisterControllersAgent();
 		RegisterControllerResponseBuilder();
 		RegisterController1Executor();
 		RegisterController2Executor();
@@ -84,17 +83,6 @@ public class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IController2Factory, Controller2Factory>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
-	/// Registers the controllers agent.
-	/// </summary>
-	public virtual void RegisterControllersAgent()
-	{
-		if (TypesToExclude.Contains(typeof(IControllersAgent)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IControllersAgent, ControllersAgent>(LifetimeType.Singleton);
 	}
 
 	/// <summary>
