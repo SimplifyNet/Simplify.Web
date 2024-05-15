@@ -6,9 +6,6 @@ using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.V1.Execution;
 
-/// <summary>
-/// Provides v1 controller factory.
-/// </summary>
 public class Controller1Factory(IDIResolver resolver) : ActionModulesAccessorInjector(resolver), IController1Factory
 {
 	private readonly IDIResolver _resolver = resolver;

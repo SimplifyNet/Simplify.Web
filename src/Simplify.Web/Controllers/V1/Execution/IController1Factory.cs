@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Controllers.V1.Execution;
 
 /// <summary>
-/// Represent controller v1 factory.
+/// Represents a v1 controller factory.
 /// </summary>
 public interface IController1Factory
 {
