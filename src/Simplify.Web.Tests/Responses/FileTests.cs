@@ -2,21 +2,24 @@
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Responses;
+using Simplify.Web.Http.ResponseWriting;
+using Simplify.Web.Modules.Context;
+using Simplify.Web.Responses;
 
-namespace Simplify.Web.Tests.Old.Responses;
+namespace Simplify.Web.Tests.Responses;
 
 [TestFixture]
 public class FileTests
 {
 	private Mock<IWebContext> _context = null!;
+	private Mock<IResponseWriter> _responseWriter = null!;
 	private HeaderDictionary _headerDictionary = null!;
 
 	[SetUp]
 	public void Initialize()
 	{
 		_context = new Mock<IWebContext>();
+		_responseWriter = new Mock<IResponseWriter>();
 		_headerDictionary = new HeaderDictionary();
 
 		_context.SetupGet(x => x.Response.Headers).Returns(_headerDictionary);
@@ -28,17 +31,22 @@ public class FileTests
 	{
 		// Assign
 
-		var file = new Mock<File>("Foo.txt", "application/example", new byte[] { 13 }, 200) { CallBase = true };
+		var data = new byte[] { 13 };
+		var file = new Mock<File>("Foo.txt", "application/example", data, 200) { CallBase = true };
+
 		file.SetupGet(x => x.Context).Returns(_context.Object);
+		file.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
 
 		// Act
 		var result = await file.Object.ExecuteAsync();
 
 		// Assert
 
+		Assert.That(_headerDictionary.Count, Is.EqualTo(1));
+		Assert.That(_headerDictionary["Content-Disposition"], Is.EqualTo("attachment; filename=\"Foo.txt\""));
+		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
+
 		_context.VerifySet(x => x.Response.ContentType = "application/example");
-		Assert.AreEqual(1, _headerDictionary.Count);
-		Assert.AreEqual("attachment; filename=\"Foo.txt\"", _headerDictionary["Content-Disposition"]);
-		Assert.AreEqual(ResponseBehavior.RawOutput, result);
+		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<byte[]>(d => d == data)));
 	}
 }

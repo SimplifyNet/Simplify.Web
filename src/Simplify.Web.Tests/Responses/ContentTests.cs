@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Old.Core;
-using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Responses;
+using Simplify.Web.Http.ResponseWriting;
+using Simplify.Web.Modules.Context;
+using Simplify.Web.Responses;
 
-namespace Simplify.Web.Tests.Old.Responses;
+namespace Simplify.Web.Tests.Responses;
 
 [TestFixture]
 public class ContentTests
@@ -27,6 +27,7 @@ public class ContentTests
 		// Assign
 
 		var content = new Mock<Content>("test", 123, "") { CallBase = true };
+
 		content.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
 		content.SetupGet(x => x.Context).Returns(_context.Object);
 		_context.SetupSet(x => x.Response.StatusCode = It.IsAny<int>());
@@ -36,8 +37,9 @@ public class ContentTests
 
 		// Assert
 
-		_responseWriter.Verify(x => x.WriteAsync(It.Is<string>(d => d == "test"), It.IsAny<HttpResponse>()));
+		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
+
+		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<string>(d => d == "test")));
 		_context.VerifySet(x => x.Response.StatusCode = It.Is<int>(code => code == 123));
-		Assert.AreEqual(ResponseBehavior.RawOutput, result);
 	}
 }

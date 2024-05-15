@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
-using Simplify.Web.Old.Modules;
-using Simplify.Web.Old.Modules.Data;
-using Simplify.Web.Old.Responses;
+using Simplify.Web.Modules.Context;
+using Simplify.Web.Modules.Data;
+using Simplify.Web.Responses;
 
-namespace Simplify.Web.Tests.Old.Responses;
+namespace Simplify.Web.Tests.Responses;
 
 [TestFixture]
 public class TplTests
@@ -32,6 +32,7 @@ public class TplTests
 		// Assign
 
 		var tplData = new Mock<Tpl>("test", null!, 200) { CallBase = true };
+
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 
@@ -40,8 +41,9 @@ public class TplTests
 
 		// Assert
 
+		Assert.That(result, Is.EqualTo(ResponseBehavior.Default));
+
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "test")));
-		Assert.AreEqual(ResponseBehavior.Default, result);
 	}
 
 	[Test]
@@ -50,6 +52,7 @@ public class TplTests
 		// Assign
 
 		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null!, 200) { CallBase = true };
+
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 

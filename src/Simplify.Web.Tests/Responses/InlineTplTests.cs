@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
-using Simplify.Web.Old.Modules.Data;
-using Simplify.Web.Old.Responses;
+using Simplify.Web.Modules.Data;
+using Simplify.Web.Responses;
 
-namespace Simplify.Web.Tests.Old.Responses;
+namespace Simplify.Web.Tests.Responses;
 
 [TestFixture]
 public class InlineTplTests
@@ -31,6 +31,7 @@ public class InlineTplTests
 		// Assign
 
 		var tplData = new Mock<InlineTpl>("foo", "test") { CallBase = true };
+
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 		// Act
@@ -38,8 +39,9 @@ public class InlineTplTests
 
 		// Assert
 
+		Assert.That(result, Is.EqualTo(ResponseBehavior.Default));
+
 		_dataCollector.Verify(x => x.Add(It.Is<string>(d => d == "foo"), It.Is<string>(d => d == "test")));
-		Assert.AreEqual(ResponseBehavior.Default, result);
 	}
 
 	[Test]
@@ -48,6 +50,7 @@ public class InlineTplTests
 		// Assign
 
 		var tplData = new Mock<InlineTpl>("foo", await TemplateBuilder.FromString("test").BuildAsync()) { CallBase = true };
+
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 
 		// Act
