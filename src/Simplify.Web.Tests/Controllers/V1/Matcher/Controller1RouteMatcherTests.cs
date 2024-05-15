@@ -3,7 +3,7 @@ using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers.V1.Matcher;
 
-namespace Simplify.Web.Tests.Routing;
+namespace Simplify.Web.Tests.Controllers.V1.Matcher;
 
 [TestFixture]
 public class Controller1RouteMatcherTests
