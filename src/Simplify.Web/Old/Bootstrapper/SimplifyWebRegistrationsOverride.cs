@@ -99,17 +99,6 @@ public class SimplifyWebRegistrationsOverride
 	}
 
 	/// <summary>
-	/// Overrides the `Controller1Executor` registrations
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideController1Executor(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(Controller1Executor), registrator);
-
-		return this;
-	}
-
-	/// <summary>
 	/// Overrides the `Controller2Executor` registrations
 	/// </summary>
 	/// <param name="registrator">IOC Container registrator.</param>

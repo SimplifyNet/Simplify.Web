@@ -1,4 +1,4 @@
-using Simplify.Web.Tests.Old.Core.Controllers.Execution.TestTypes;
+using Simplify.Web.Tests.Controllers.V1.Execution.TestTypes;
 
 namespace Simplify.Web.Tests.Old.Core.Controllers.Execution.Controller2ExecutorTestTypes;
 

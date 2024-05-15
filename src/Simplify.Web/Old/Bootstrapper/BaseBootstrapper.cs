@@ -38,7 +38,6 @@ public class BaseBootstrapper
 		RegisterController1Factory();
 		RegisterController2Factory();
 		RegisterControllerResponseBuilder();
-		RegisterController1Executor();
 		RegisterController2Executor();
 		RegisterVersionedControllerExecutorsList();
 		RegisterControllerExecutor();
@@ -97,17 +96,6 @@ public class BaseBootstrapper
 	}
 
 	/// <summary>
-	/// Registers the controller v1 executor.
-	/// </summary>
-	public virtual void RegisterController1Executor()
-	{
-		if (TypesToExclude.Contains(typeof(Controller1Executor)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<Controller1Executor>(LifetimeType.Singleton);
-	}
-
-	/// <summary>
 	/// Registers the controller v2 executor.
 	/// </summary>
 	public virtual void RegisterController2Executor()
@@ -128,7 +116,6 @@ public class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IList<IVersionedControllerExecutor>>(r => new List<IVersionedControllerExecutor>
 		{
-			r.Resolve<Controller1Executor>(),
 			r.Resolve<Controller2Executor>()
 		}, LifetimeType.Singleton);
 	}
