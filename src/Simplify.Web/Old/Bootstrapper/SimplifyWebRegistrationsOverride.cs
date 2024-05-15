@@ -44,28 +44,6 @@ public class SimplifyWebRegistrationsOverride
 	}
 
 	/// <summary>
-	/// Overrides the `IController1Factory` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideController1Factory(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IController1Factory), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IController2Factory` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideController2Factory(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IController2Factory), registrator);
-
-		return this;
-	}
-
-	/// <summary>
 	/// Overrides the `IControllerPathParser` registration.
 	/// </summary>
 	/// <param name="registrator">IOC Container registrator.</param>
@@ -83,50 +61,6 @@ public class SimplifyWebRegistrationsOverride
 	public SimplifyWebRegistrationsOverride OverrideRouteMatcher(Action<IDIRegistrator> registrator)
 	{
 		_actions.Add(typeof(IRouteMatcher), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IControllerResponseBuilder` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideControllerResponseBuilder(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IControllerResponseBuilder), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `Controller2Executor` registrations
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideController2Executor(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(Controller2Executor), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IControllerExecutor` registrations
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideVersionedControllerExecutorsList(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IList<IVersionedControllerExecutor>), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IControllerExecutor` registrations
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideControllerExecutor(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IControllerExecutor), registrator);
 
 		return this;
 	}

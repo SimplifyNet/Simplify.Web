@@ -7,7 +7,7 @@ namespace Simplify.Web.Old.Core.Controllers.Execution;
 /// <summary>
 /// Provides v2 controller factory.
 /// </summary>
-public class Controller2Factory : ActionModulesAccessorBuilder, IController2Factory
+public class Controller2Factory : ActionModulesAccessorBuilder
 {
 	/// <summary>
 	/// Creates the controller.
