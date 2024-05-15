@@ -121,7 +121,7 @@ public class DataCollectorTests
 	[Test]
 	public void AddStWithVariableName_NormalData_Added()
 	{
-		// Assign
+		// Arrange
 		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == "Bar"))).Returns("Test");
 
 		// Act
@@ -134,7 +134,7 @@ public class DataCollectorTests
 	[Test]
 	public void AddStMainContentVariable_NormalData_Added()
 	{
-		// Assign
+		// Arrange
 		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == "Bar"))).Returns("Test");
 
 		// Act
@@ -147,7 +147,7 @@ public class DataCollectorTests
 	[Test]
 	public void AddStTitleVariable_NormalData_Added()
 	{
-		// Assign
+		// Arrange
 		_stringTable.Setup(x => x.GetItem(It.Is<string>(d => d == "Bar"))).Returns("Test");
 
 		// Act

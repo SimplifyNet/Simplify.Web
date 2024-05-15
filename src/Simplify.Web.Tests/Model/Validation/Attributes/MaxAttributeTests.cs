@@ -25,7 +25,7 @@ public class MaxAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_AboveMaxValue_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		var value = 15;
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required maximum value is {MaxValue}, actual value: {value}";

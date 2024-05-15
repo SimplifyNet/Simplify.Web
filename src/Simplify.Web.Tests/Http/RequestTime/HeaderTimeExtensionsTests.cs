@@ -12,7 +12,7 @@ public class HeaderTimeExtensionsTests
 	[Test]
 	public void GetIfModifiedSinceTime_Exists_Parsed()
 	{
-		// Assign
+		// Arrange
 
 		var time = new DateTime(2016, 03, 04);
 		var headers = new Mock<IHeaderDictionary>();
@@ -31,7 +31,7 @@ public class HeaderTimeExtensionsTests
 	[Test]
 	public void GetIfModifiedSinceTime_NoExists_Null()
 	{
-		// Assign
+		// Arrange
 
 		var headers = new Mock<IHeaderDictionary>();
 		headers.Setup(x => x.ContainsKey(It.Is<string>(p => p == "If-Modified-Since"))).Returns(false);

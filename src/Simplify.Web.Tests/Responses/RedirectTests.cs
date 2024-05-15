@@ -20,7 +20,7 @@ public class RedirectTests
 	[Test]
 	public async Task Process_RedirectWithUrl_RedirectorRedirectCalled()
 	{
-		// Assign
+		// Arrange
 
 		var redirect = new Mock<Redirect>("foo") { CallBase = true };
 
@@ -39,7 +39,7 @@ public class RedirectTests
 	[Test]
 	public async Task Process_RedirectWitRedirectionType_RedirectorRedirectWithRedirectionTypeCalled()
 	{
-		// Assign
+		// Arrange
 
 		var redirect = new Mock<Redirect>(RedirectionType.PreviousPageWithBookmark, "test") { CallBase = true };
 

@@ -24,7 +24,7 @@ public class MinLengthAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_BelowMinLength_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		const string value = "a";
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required minimum length is '{MinimumPropertyLength}', actual value: '{value}'";

@@ -12,7 +12,7 @@ public class NavbarControllerTests
 	[Test]
 	public void Invoke_InlineTplNavbarDataDataReturned()
 	{
-		// Assign
+		// Arrange
 
 		var c = new Mock<NavbarController> { CallBase = true };
 

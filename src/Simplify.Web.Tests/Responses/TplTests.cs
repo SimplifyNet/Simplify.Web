@@ -29,7 +29,7 @@ public class TplTests
 	[Test]
 	public async Task Process_NormalData_DataAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<Tpl>("test", null!, 200) { CallBase = true };
 
@@ -49,7 +49,7 @@ public class TplTests
 	[Test]
 	public async Task Process_NormalTemplate_DataAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null!, 200) { CallBase = true };
 
@@ -66,7 +66,7 @@ public class TplTests
 	[Test]
 	public async Task Process_NormalTemplateAndTitle_DataAndTitleAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), "foo title", 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
@@ -84,7 +84,7 @@ public class TplTests
 	[Test]
 	public async Task Process_NormalDataAndTitle_DataAndTitleAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<Tpl>("test", "foo title", 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
@@ -102,7 +102,7 @@ public class TplTests
 	[Test]
 	public async Task Process_NormalDataAndNullTitle_DataAddedTitleNotAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<Tpl>("test", null!, 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);

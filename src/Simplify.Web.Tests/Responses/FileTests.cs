@@ -29,7 +29,7 @@ public class FileTests
 	[Test]
 	public async Task Process_NormalData_FileSent()
 	{
-		// Assign
+		// Arrange
 
 		var data = new byte[] { 13 };
 		var file = new Mock<File>("Foo.txt", "application/example", data, 200) { CallBase = true };

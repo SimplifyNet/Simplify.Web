@@ -18,7 +18,7 @@ public class ValidationAttributesExecutorTests
 	[Test]
 	public void Validate_ModelWithOnePropertyAndOneValidateAttribute_AttributeValidationCalled()
 	{
-		// Assign
+		// Arrange
 		var model = new TestModel();
 
 		// Act

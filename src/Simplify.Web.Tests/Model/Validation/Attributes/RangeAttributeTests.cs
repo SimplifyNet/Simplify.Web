@@ -20,7 +20,7 @@ public class RangeAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_BelowMinValue_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		var value = 1;
 		var defaultMessage = $"The value is out of range. The range constraint - {MinValue} - {MaxValue}, actual value: {value}";
@@ -32,7 +32,7 @@ public class RangeAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_AboveMaxValue_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		var value = 13;
 		var defaultMessage = $"The value is out of range. The range constraint - {MinValue} - {MaxValue}, actual value: {value}";

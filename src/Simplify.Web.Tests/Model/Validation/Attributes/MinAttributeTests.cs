@@ -25,7 +25,7 @@ public class MinAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_BelowMinValue_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		var value = 8;
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required minimum value is {MinValue}, actual value: {value}";

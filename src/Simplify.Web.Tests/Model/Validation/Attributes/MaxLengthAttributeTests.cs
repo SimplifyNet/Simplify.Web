@@ -24,7 +24,7 @@ public class MaxLengthAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_AboveMaxLength_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		const string value = "test";
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' required maximum length is '{MaximumPropertyLength}', actual value: '{value}'";

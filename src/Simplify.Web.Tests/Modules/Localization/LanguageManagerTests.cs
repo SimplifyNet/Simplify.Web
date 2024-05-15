@@ -47,7 +47,7 @@ public class LanguageManagerTests
 	[Test]
 	public void Constructor_HaveRequestCookieLanguageAndCookieLanguageIsEnabled_CurrentLanguageSet()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 
@@ -75,7 +75,7 @@ public class LanguageManagerTests
 	[Test]
 	public void SetCookieLanguage_CorrectLanguage_CorrectCookieCreated()
 	{
-		// Assign
+		// Arrange
 
 		_languageManager = new LanguageManager(_settings.Object, _context.Object);
 
@@ -94,7 +94,7 @@ public class LanguageManagerTests
 	[Test]
 	public void Constructor_HaveHeaderLanguageAndSettingIsEnabledCase1_LanguageSetFromHeader()
 	{
-		// Assign
+		// Arrange
 
 		var header = new HeaderDictionary([]);
 
@@ -113,7 +113,7 @@ public class LanguageManagerTests
 	[Test]
 	public void Constructor_HaveHeaderLanguageAndSettingIsEnabledCase2_LanguageSetFromHeader()
 	{
-		// Assign
+		// Arrange
 
 		var header = new HeaderDictionary([]);
 
@@ -132,7 +132,7 @@ public class LanguageManagerTests
 	[Test]
 	public void Constructor_HaveHeaderLanguageAndCookieLanguageAndCookieLanguageIsEnabled_LanguageSetFromCookie()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		var header = new HeaderDictionary([]);
@@ -157,7 +157,7 @@ public class LanguageManagerTests
 	[Test]
 	public void Constructor_HaveHeaderLanguageAndCookieLanguageAndCookieLanguageIsDisabled_LanguageSetFromHeader()
 	{
-		// Assign
+		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
 		var header = new HeaderDictionary([]);
@@ -181,7 +181,7 @@ public class LanguageManagerTests
 	[Test]
 	public void Constructor_NoHeaderLanguage_DefaultLanguageSet()
 	{
-		// Assign
+		// Arrange
 
 		var header = new HeaderDictionary([]);
 

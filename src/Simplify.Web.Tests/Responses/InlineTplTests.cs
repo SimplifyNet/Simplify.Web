@@ -28,7 +28,7 @@ public class InlineTplTests
 	[Test]
 	public async Task InlineTplProcess_NormalData_DataAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<InlineTpl>("foo", "test") { CallBase = true };
 
@@ -47,7 +47,7 @@ public class InlineTplTests
 	[Test]
 	public async Task InlineTplProcess_NormalTemplate_DataAddedToDataCollector()
 	{
-		// Assign
+		// Arrange
 
 		var tplData = new Mock<InlineTpl>("foo", await TemplateBuilder.FromString("test").BuildAsync()) { CallBase = true };
 

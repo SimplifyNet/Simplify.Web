@@ -24,7 +24,7 @@ public class ContentTests
 	[Test]
 	public async Task Process_NormalData_DataWrittenToResponse()
 	{
-		// Assign
+		// Arrange
 
 		var content = new Mock<Content>("test", 123, "") { CallBase = true };
 

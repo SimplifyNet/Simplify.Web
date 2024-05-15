@@ -56,7 +56,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_SingleSegments_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathSegment("foo") }));
 
@@ -70,7 +70,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_SingleSegmentsNotMatching_False()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathSegment("bar") }));
 
@@ -84,7 +84,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_MultipleSegmentsWithFirstMatchedSegment_False()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathSegment("foo") }));
 
@@ -98,7 +98,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_SingleSegmentsWithMultipleSegments_False()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(
 				new ControllerPath(new List<PathItem> { new PathSegment("foo"), new PathSegment("bar"), new PathSegment("test") }));
@@ -113,7 +113,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_TwoSegmentsWithSegmentAndParameter_TrueValueParsed()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathSegment("user"), new PathParameter("userName", typeof(string)) }));
 
@@ -131,7 +131,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_TwoSegmentsWithSegmentAndParameterNotMatched_False()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathSegment("bar"), new PathParameter("userName", typeof(string)) }));
 
@@ -146,7 +146,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_TwoSegmentsWithOneSegmentAndTwoParameters_False()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(
 				new ControllerPath(new List<PathItem>
@@ -166,7 +166,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_OneSegmentWithOneParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("userName", typeof(string)) }));
 
@@ -184,7 +184,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_ParameterTypeMismatch_False()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("userName", typeof(int)) }));
 
@@ -198,7 +198,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_TwoSegmentsWithTwoParameters_TrueParsed()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("test", typeof(string)), new PathParameter("name", typeof(string)) }));
 
@@ -217,7 +217,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_OneSegmentWithOneIntegerParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("id", typeof(int)) }));
 
@@ -235,7 +235,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_OneSegmentWithOneDecimalParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("id", typeof(decimal)) }));
 
@@ -253,7 +253,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_BoolParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("foo", typeof(bool)) }));
 
@@ -271,7 +271,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_StringArrayShortVersionParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("foo", typeof(string[])) }));
 
@@ -295,7 +295,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_IntArrayShortVersionParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("foo", typeof(int[])) }));
 
@@ -319,7 +319,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_DecimalArrayShortVersionParameter_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("foo", typeof(decimal[])) }));
 
@@ -343,7 +343,7 @@ public class Controller1RouteMatcherTests
 	[Test]
 	public void Match_BoolArrayShortVersionParameterWithTypeMismatch_True()
 	{
-		// Assign
+		// Arrange
 		_controllerPathParser.Setup(x => x.Parse(It.IsAny<string>()))
 			.Returns(new ControllerPath(new List<PathItem> { new PathParameter("foo", typeof(bool[])) }));
 

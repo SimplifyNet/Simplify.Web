@@ -11,7 +11,7 @@ public class RequestPathExtensionsTests
 	[Test]
 	public void GetRelativeFilePath_PathWhtStartSlash_StartSlashTrimmed()
 	{
-		// Assign
+		// Arrange
 
 		var request = new Mock<HttpRequest>();
 		request.SetupGet(x => x.Path).Returns(new PathString("/test"));
@@ -27,7 +27,7 @@ public class RequestPathExtensionsTests
 	[Test]
 	public void GetRelativeFilePath_EmptyPath_EmptyString()
 	{
-		// Assign
+		// Arrange
 
 		var request = new Mock<HttpRequest>();
 		request.SetupGet(x => x.Path).Returns(new PathString());

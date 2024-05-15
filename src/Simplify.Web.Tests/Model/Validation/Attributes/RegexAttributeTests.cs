@@ -24,7 +24,7 @@ public class RegexAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_InvalidRegex_ExceptionThrown()
 	{
-		// Assign
+		// Arrange
 
 		const string value = "test1";
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' regex not matched, actual value: '{value}', pattern: '{RegexPattern}'";

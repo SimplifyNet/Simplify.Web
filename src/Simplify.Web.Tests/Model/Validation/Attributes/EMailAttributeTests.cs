@@ -22,7 +22,7 @@ public class EMailAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_InvalidEMail_NoExceptions()
 	{
-		// Assign
+		// Arrange
 
 		const string value = "test";
 		var defaultMessage = $"Property '{nameof(TestEntityWithProperty.Prop1)}' should be an email, actual value: '{value}'";

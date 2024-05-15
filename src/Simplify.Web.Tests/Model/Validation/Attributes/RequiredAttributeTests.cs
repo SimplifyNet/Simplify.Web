@@ -44,7 +44,7 @@ public class RequiredAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_NullReferenceWithCustomError_ModelValidationExceptionWithCustomError()
 	{
-		// Assign
+		// Arrange
 
 		var attr = new RequiredAttribute(_customMessage, false);
 
@@ -55,7 +55,7 @@ public class RequiredAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_NullReferenceWithMessageFromStringTable_ModelValidationExceptionWithMessageFromStringTable()
 	{
-		// Assign
+		// Arrange
 
 		var attr = new RequiredAttribute("MyKey");
 		var st = Mock.Of<IStringTable>(x => x.GetItem(It.Is<string>(s => s == "MyKey")) == _customMessage);

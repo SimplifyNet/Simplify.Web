@@ -11,7 +11,7 @@ public class DefaultPageControllerTests
 	[Test]
 	public void Invoke_Default_MainContentSet()
 	{
-		// Assign
+		// Arrange
 		var c = new Mock<DefaultController> { CallBase = true };
 
 		// Act
