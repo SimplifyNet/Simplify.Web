@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
 using Simplify.Web.Old.Core;
-using Simplify.Web.Old.Core.Controllers;
 using Simplify.Web.Old.Core.Controllers.Execution;
 using Simplify.Web.Old.Core.Views;
 using Simplify.Web.Old.Model;
@@ -12,7 +11,6 @@ using Simplify.Web.Old.Modules;
 using Simplify.Web.Old.Modules.Data;
 using Simplify.Web.Old.Modules.Data.Html;
 using Simplify.Web.Old.Routing;
-using Simplify.Web.Old.Settings;
 
 namespace Simplify.Web.Old.Bootstrapper;
 
@@ -30,17 +28,6 @@ public class SimplifyWebRegistrationsOverride
 	public SimplifyWebRegistrationsOverride OverrideConfiguration(Action<IDIRegistrator> registrator)
 	{
 		_actions.Add(typeof(IConfiguration), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `ISimplifyWebSettings` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideSimplifyWebSettings(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(ISimplifyWebSettings), registrator);
 
 		return this;
 	}
@@ -151,17 +138,6 @@ public class SimplifyWebRegistrationsOverride
 	public SimplifyWebRegistrationsOverride OverrideControllerExecutor(Action<IDIRegistrator> registrator)
 	{
 		_actions.Add(typeof(IControllerExecutor), registrator);
-
-		return this;
-	}
-
-	/// <summary>
-	/// Overrides the `IControllersProcessor` registration.
-	/// </summary>
-	/// <param name="registrator">IOC Container registrator.</param>
-	public SimplifyWebRegistrationsOverride OverrideControllersProcessor(Action<IDIRegistrator> registrator)
-	{
-		_actions.Add(typeof(IControllersProcessor), registrator);
 
 		return this;
 	}
