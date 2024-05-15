@@ -1,6 +1,6 @@
-using Simplify.Web.Tests.Controllers.V1.Execution.TestTypes;
+using Simplify.Web.Tests.Controllers.V2.Execution.TestTypes;
 
-namespace Simplify.Web.Tests.Old.Core.Controllers.Execution.Controller2ExecutorTestTypes;
+namespace Simplify.Web.Tests.Controllers.V2.Execution.Controller2ExecutorTestTypes;
 
 public class ModelControllerController : Controller2<TestModel>
 {

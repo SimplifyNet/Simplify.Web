@@ -13,7 +13,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers.TestTypes;
 [Http404]
 [Priority(1)]
 [Authorize("Admin, User")]
-public class TestController1 : Web.Old.Controller
+public class TestController1 : Controller
 {
-	public override Web.Old.ControllerResponse Invoke() => throw new NotImplementedException();
+	public override ControllerResponse Invoke() => throw new NotImplementedException();
 }
