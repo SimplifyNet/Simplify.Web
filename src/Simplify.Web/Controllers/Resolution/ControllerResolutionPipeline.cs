@@ -17,7 +17,7 @@ public class ControllerResolutionPipeline(IReadOnlyList<IControllerResolutionSta
 		{
 			item.Execute(state, context, StopProcessing);
 
-			if (stopProcessing)
+			if (stopProcessing) //-V3022
 				break;
 		}
 
