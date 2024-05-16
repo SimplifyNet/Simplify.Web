@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Simplify.Web.Http.Cache;
 
-namespace Simplify.Web.Tests.StaticFiles.Context;
+namespace Simplify.Web.Tests.Http.Cache;
 
 [TestFixture]
 public class RequestCacheExtensionsTests

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Modules.Localization;
 using Simplify.Web.Settings;
 
-namespace Simplify.Web.Tests.Modules;
+namespace Simplify.Web.Tests.Modules.Localization;
 
 [TestFixture]
 public class LanguageManagerTests

@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Security.Claims;
-using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers.Meta;
 using Simplify.Web.Controllers.Security;
 using Simplify.Web.Controllers.Security.Rules;
 
-namespace Simplify.Web.Tests.Controllers.Resolution.Handling.Stages;
+namespace Simplify.Web.Tests.Controllers.Security.Rules;
 
 [TestFixture]
 public class RoleAuthorizationRuleTests

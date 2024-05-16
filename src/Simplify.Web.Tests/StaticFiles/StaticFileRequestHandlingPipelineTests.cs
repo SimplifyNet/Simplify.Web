@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Simplify.Web.StaticFiles;
 using Simplify.Web.StaticFiles.Context;
 
-namespace Simplify.Web.Tests.RequestHandling;
+namespace Simplify.Web.Tests.StaticFiles;
 
 [TestFixture]
 public class StaticFileRequestHandlingPipelineTests

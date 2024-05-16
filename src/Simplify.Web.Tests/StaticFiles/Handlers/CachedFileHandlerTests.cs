@@ -7,7 +7,7 @@ using NUnit.Framework;
 using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.Handlers;
 
-namespace Simplify.Web.Tests.Page.Composition.Stages;
+namespace Simplify.Web.Tests.StaticFiles.Handlers;
 
 [TestFixture]
 public class CachedFileHandlerTests

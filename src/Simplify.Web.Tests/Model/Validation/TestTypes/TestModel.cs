@@ -1,6 +1,6 @@
 ﻿using Simplify.Web.Model.Validation.Attributes;
 
-namespace Simplify.Web.Tests.Model.Validation.TestTypes.Nesting;
+namespace Simplify.Web.Tests.Model.Validation.TestTypes;
 
 public class TestModel
 {

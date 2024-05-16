@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Simplify.Web.Controllers.Security;
 using Simplify.Web.Controllers.Security.Rules;
 
-namespace Simplify.Web.Tests.Controllers.Resolution.Handling.Stages;
+namespace Simplify.Web.Tests.Controllers.Security.Rules;
 
 [TestFixture]
 public class UnauthorizedRuleTests

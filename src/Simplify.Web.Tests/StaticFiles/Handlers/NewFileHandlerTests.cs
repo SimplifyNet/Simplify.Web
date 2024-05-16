@@ -11,7 +11,7 @@ using Simplify.Web.StaticFiles.Handlers;
 using Simplify.Web.StaticFiles.IO;
 using TimeProvider = Simplify.System.TimeProvider;
 
-namespace Simplify.Web.Tests.Page.Composition.Stages;
+namespace Simplify.Web.Tests.StaticFiles.Handlers;
 
 [TestFixture]
 public class NewFileHandlerTests

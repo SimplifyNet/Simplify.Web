@@ -7,7 +7,7 @@ using Simplify.Web.Page.Composition;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
 
-namespace Simplify.Web.Tests.Old.Core.PageAssembly;
+namespace Simplify.Web.Tests.RequestHandling.Handlers;
 
 [TestFixture]
 public class PageGenerationHandlerTests
