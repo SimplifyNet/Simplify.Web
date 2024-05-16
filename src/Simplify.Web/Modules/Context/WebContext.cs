@@ -80,10 +80,7 @@ public sealed class WebContext : IWebContext
 
 			ReadRequestBodyAsync().Wait();
 
-			if (_requestBody == null)
-				throw new InvalidOperationException("Request body is null");
-
-			return _requestBody;
+			return _requestBody!;
 		}
 	}
 
