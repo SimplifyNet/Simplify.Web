@@ -67,10 +67,12 @@ public static class SimplifyWebRequestMiddleware
 
 	internal static bool ProcessOnException(Exception e)
 	{
-		if (OnException == null)
+		var handler = OnException;
+
+		if (handler == null)
 			return false;
 
-		OnException(e);
+		handler(e);
 
 		return true;
 	}
