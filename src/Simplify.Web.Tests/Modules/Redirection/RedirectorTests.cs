@@ -210,7 +210,7 @@ public class RedirectorTests
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 		// Act & Assert
-		Assert.AreEqual("foo", _redirector.PreviousPageUrl);
+		Assert.That(_redirector.PreviousPageUrl, Is.EqualTo("foo"));
 	}
 
 	[Test]
@@ -223,7 +223,7 @@ public class RedirectorTests
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
 
 		// Act & Assert
-		Assert.AreEqual("foo", _redirector.PreviousNavigatedUrl);
+		Assert.That(_redirector.PreviousNavigatedUrl, Is.EqualTo("foo"));
 	}
 
 	[Test]

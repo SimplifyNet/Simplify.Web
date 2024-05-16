@@ -84,7 +84,7 @@ public class Controller1PathParserTests
 		Assert.That(result.Items[1].Name, Is.EqualTo("name"));
 		Assert.That(((PathParameter)result.Items[1]).Type, Is.EqualTo(typeof(string)));
 
-		Assert.IsNotNull(result.Items[2] as PathParameter);
+		Assert.That(result.Items[2] as PathParameter, Is.Not.Null);
 		Assert.That(result.Items[2].Name, Is.EqualTo("id"));
 		Assert.That(((PathParameter)result.Items[2]).Type, Is.EqualTo(typeof(int)));
 	}

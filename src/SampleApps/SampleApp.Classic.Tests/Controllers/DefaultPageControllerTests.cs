@@ -18,6 +18,6 @@ public class DefaultPageControllerTests
 		var result = c.Object.Invoke();
 
 		// Assert
-		Assert.AreEqual("Default", ((StaticTpl)result).TemplateFileName);
+		Assert.That(((StaticTpl)result).TemplateFileName, Is.EqualTo("Default"));
 	}
 }

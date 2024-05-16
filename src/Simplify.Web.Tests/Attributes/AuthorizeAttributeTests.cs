@@ -15,9 +15,9 @@ public class AuthorizeAttributeTests
 
 		// Assert
 
-		Assert.AreEqual(2, attr.RequiredUserRoles.Count());
-		Assert.IsTrue(attr.RequiredUserRoles.Contains("Admin"));
-		Assert.IsTrue(attr.RequiredUserRoles.Contains("User"));
+		Assert.That(attr.RequiredUserRoles.Count(), Is.EqualTo(2));
+		Assert.That(attr.RequiredUserRoles.Contains("Admin"), Is.True);
+		Assert.That(attr.RequiredUserRoles.Contains("User"), Is.True);
 	}
 
 	[Test]
@@ -28,8 +28,8 @@ public class AuthorizeAttributeTests
 
 		// Assert
 
-		Assert.AreEqual(2, attr.RequiredUserRoles.Count());
-		Assert.IsTrue(attr.RequiredUserRoles.Contains("Admin"));
-		Assert.IsTrue(attr.RequiredUserRoles.Contains("User"));
+		Assert.That(attr.RequiredUserRoles.Count(), Is.EqualTo(2));
+		Assert.That(attr.RequiredUserRoles.Contains("Admin"), Is.True);
+		Assert.That(attr.RequiredUserRoles.Contains("User"), Is.True);
 	}
 }

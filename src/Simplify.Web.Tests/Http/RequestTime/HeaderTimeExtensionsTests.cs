@@ -25,7 +25,7 @@ public class HeaderTimeExtensionsTests
 		// Assert
 
 		Assert.That(result, Is.Not.Null);
-		Assert.AreEqual(time, result);
+		Assert.That(result, Is.EqualTo(time));
 	}
 
 	[Test]

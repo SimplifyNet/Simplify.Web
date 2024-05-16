@@ -23,8 +23,8 @@ public class NavbarControllerTests
 
 		// Assert
 
-		Assert.IsNotNull(result);
-		Assert.AreEqual("Navbar", result.DataCollectorVariableName);
-		Assert.AreEqual("Inline Data", result.Data);
+		Assert.That(result, Is.Not.Null);
+		Assert.That(result.DataCollectorVariableName, Is.EqualTo("Navbar"));
+		Assert.That(result.Data, Is.EqualTo("Inline Data"));
 	}
 }
