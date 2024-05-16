@@ -82,7 +82,7 @@ public class DataCollectorTests
 	public void AddVariableWithTemplate_NormalData_Added()
 	{
 		// Act
-		_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build());
+		_dataCollector.Add("Foo", TemplateBuilder.FromString("Bar").Build().Get());
 
 		// Assert
 		Assert.That(_dataCollector["Foo"], Is.EqualTo("Bar"));
