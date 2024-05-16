@@ -14,7 +14,7 @@ public class ExceptionInfoPageGeneratorTests
 		{
 			string? text = null;
 			// ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-			text!.IndexOf("test", StringComparison.Ordinal);
+			text!.IndexOf("test", StringComparison.Ordinal); //-V3010
 		}
 		catch (Exception e)
 		{
