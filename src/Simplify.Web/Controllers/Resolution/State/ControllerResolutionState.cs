@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Simplify.Web.Controllers.Security;
 using Simplify.Web.Controllers.Meta;
 
-namespace Simplify.Web.Controllers.Resolution.State;
+using Simplify.Web.Controllers.Security;
 
+namespace Simplify.Web.Controllers.Resolution.State;
 
 public class ControllerResolutionState(IControllerMetadata initialController) : IControllerResolutionState
 {

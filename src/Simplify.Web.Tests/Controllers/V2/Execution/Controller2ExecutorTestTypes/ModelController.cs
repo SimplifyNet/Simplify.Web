@@ -4,7 +4,7 @@ namespace Simplify.Web.Tests.Controllers.V2.Execution.Controller2ExecutorTestTyp
 
 public class ModelControllerController : Controller2<TestModel>
 {
-	public virtual void Invoke() => CheckModel = Model;
-
 	public TestModel? CheckModel { get; set; }
+
+	public virtual void Invoke() => CheckModel = Model;
 }

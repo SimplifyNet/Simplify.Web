@@ -14,7 +14,6 @@ namespace Simplify.Web.Model.Binding;
 /// <param name="context">The context.</param>
 public class ModelBinderEventArgs<T>(IWebContext context) : EventArgs
 {
-
 	/// <summary>
 	/// Gets the model.
 	/// </summary>

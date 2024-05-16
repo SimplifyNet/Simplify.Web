@@ -2,8 +2,24 @@ namespace Simplify.Web.Tests.Controllers.V2.Execution.Controller2ExecutorTestTyp
 
 public class AllParamsController : Controller2
 {
+	public string? StringParam { get; private set; }
+
+	public int IntParam { get; private set; }
+
+	public decimal DecimalParam { get; private set; }
+
+	public bool BoolParam { get; private set; }
+
+	public string[]? StringArrayParam { get; private set; }
+
+	public int[]? IntArrayParam { get; private set; }
+
+	public decimal[]? DecimalArrayParam { get; private set; }
+
+	public bool[]? BoolArrayParam { get; private set; }
+
 	public virtual void Invoke(
-		string stringParam,
+										string stringParam,
 		int intParam,
 		decimal decimalParam,
 		bool boolParam,
@@ -21,13 +37,4 @@ public class AllParamsController : Controller2
 		DecimalArrayParam = decimalArrayParam;
 		BoolArrayParam = boolArrayParam;
 	}
-
-	public string? StringParam { get; private set; }
-	public int IntParam { get; private set; }
-	public decimal DecimalParam { get; private set; }
-	public bool BoolParam { get; private set; }
-	public string[]? StringArrayParam { get; private set; }
-	public int[]? IntArrayParam { get; private set; }
-	public decimal[]? DecimalArrayParam { get; private set; }
-	public bool[]? BoolArrayParam { get; private set; }
 }

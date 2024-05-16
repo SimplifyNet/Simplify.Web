@@ -57,7 +57,6 @@ public class RoutedControllersBuilderTests
 		_crsHandlingPipeline.Verify(x => x.Execute(It.Is<IControllerResolutionState>(s => s == crs2), It.Is<ExecutionWorkOrderBuilder>(b => b == builder)));
 	}
 
-
 	[Test]
 	public void Execute_TwoControllersCrsHandlingPipelineTerminatedOnFirstController_OnlyFirstControllerProcessed()
 	{

@@ -22,7 +22,6 @@ public sealed class Environment : IEnvironment
 
 	public string AppPhysicalPath { get; }
 
-
 	public string DataPath { get; }
 
 	public string DataPhysicalPath => AppPhysicalPath + DataPath + "/";

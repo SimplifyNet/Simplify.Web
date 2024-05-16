@@ -91,7 +91,6 @@ public partial class BaseBootstrapper
 			new LanguageManagerProvider(r.Resolve<ISimplifyWebSettings>()));
 	}
 
-
 	/// <summary>
 	/// Registers the list generator.
 	/// </summary>

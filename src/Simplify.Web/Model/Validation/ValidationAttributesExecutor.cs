@@ -5,7 +5,6 @@ using System.Reflection;
 using Simplify.DI;
 using Simplify.Web.Model.Validation.Attributes;
 
-
 namespace Simplify.Web.Model.Validation;
 
 /// <summary>
@@ -17,7 +16,6 @@ namespace Simplify.Web.Model.Validation;
 /// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.</param>
 public class ValidationAttributesExecutor(bool nesting = true) : IModelValidator
 {
-
 	/// <summary>
 	/// Gets a value indicating whether <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.
 	/// </summary>

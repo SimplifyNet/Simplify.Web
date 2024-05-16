@@ -76,7 +76,6 @@ public class LanguageManager : ILanguageManager
 			if (!CultureExists(language))
 				return false;
 #endif
-
 		}
 		catch
 		{
@@ -91,14 +90,6 @@ public class LanguageManager : ILanguageManager
 		return true;
 	}
 
-	private void SetInvariantCulture()
-	{
-		Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-
-		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-	}
-
 	private static bool CultureExists(string name)
 	{
 		var availableCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
@@ -108,6 +99,14 @@ public class LanguageManager : ILanguageManager
 				return true;
 
 		return false;
+	}
+
+	private void SetInvariantCulture()
+	{
+		Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+		Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
 	}
 
 	private bool TrySetLanguageFromCookie(HttpContext context)

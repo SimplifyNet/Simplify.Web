@@ -11,7 +11,6 @@ namespace Simplify.Web.Controllers.V1.Matcher;
 /// <param name="items">The items.</param>
 public class ControllerPath(IList<PathItem> items) : IControllerPath
 {
-
 	/// <summary>
 	/// Gets the controller path items.
 	/// </summary>

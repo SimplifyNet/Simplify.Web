@@ -12,7 +12,6 @@ namespace Simplify.Web.Model.Binding.Attributes;
 [AttributeUsage(AttributeTargets.Property)]
 public class BindPropertyAttribute(string fieldName) : Attribute
 {
-
 	/// <summary>
 	/// Gets the name of the field.
 	/// </summary>

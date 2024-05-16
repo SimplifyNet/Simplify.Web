@@ -1,30 +1,25 @@
 @import 'Variables';
 
-.navbar
-{
+.navbar {
 	background: $primary-color;
 	color: $primary-color-opposite;
 	border: 0;
 	border-radius: 0;
 	box-shadow: $no-box-shadow;
 
-	a, .navbar-text
-	{
+	a, .navbar-text {
 		color: $primary-color-opposite !important;
 	}
 
-	a:hover, .navbar-toggle:hover, .navbar:focus
-	{
+	a:hover, .navbar-toggle:hover, .navbar:focus {
 		background-color: $primary-color-active !important;
 	}
 
-	.navbar-toggle
-	{
+	.navbar-toggle {
 		background-color: $primary-color !important;
 	}
 
-	.icon-bar
-	{
+	.icon-bar {
 		background-color: $primary-color-opposite !important;
 	}
 }

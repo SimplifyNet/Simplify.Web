@@ -1,20 +1,16 @@
 @import "Variables";
 
-div.MessageBox
-{
+div.MessageBox {
 	padding: 4em;
 	font-size: 1.4em;
 	text-align: center;
 }
 
-div.inline-message-box
-{
+div.inline-message-box {
 	padding: 0.5em;
 }
 
-div.inline-error-message-box
-{
+div.inline-error-message-box {
 	@extend div.inline-message-box;
-
 	color: #FF4753;
 }

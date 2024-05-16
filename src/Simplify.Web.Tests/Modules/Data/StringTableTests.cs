@@ -17,7 +17,6 @@ public class StringTableTests
 
 	private StringTable? _stringTable;
 
-
 	private Mock<IFileReader> _fileReader = null!;
 
 	private Mock<ILanguageManagerProvider> _languageManagerProvider = null!;

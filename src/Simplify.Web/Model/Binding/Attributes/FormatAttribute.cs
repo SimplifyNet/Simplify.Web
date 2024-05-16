@@ -12,7 +12,6 @@ namespace Simplify.Web.Model.Binding.Attributes;
 [AttributeUsage(AttributeTargets.Property)]
 public class FormatAttribute(string format) : Attribute
 {
-
 	/// <summary>
 	/// Gets the format.
 	/// </summary>

@@ -17,7 +17,6 @@ namespace Simplify.Web.Model.Validation.Attributes;
 [AttributeUsage(AttributeTargets.Property)]
 public abstract class ValidationAttribute(string? errorMessage, bool isMessageFromStringTable) : Attribute
 {
-
 	/// <summary>
 	/// Gets the error message.
 	/// </summary>

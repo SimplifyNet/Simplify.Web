@@ -61,6 +61,17 @@ public class ExpandoObjectAndDictionaryBenchmarks
 		TestDictionary(dictionary);
 	}
 
+	private static ExpandoObject ToExpando(Dictionary<string, object> dictionary)
+	{
+		var expando = new ExpandoObject();
+		var expandoDict = (IDictionary<string, object>)expando;
+
+		foreach (var kvp in dictionary)
+			expandoDict[kvp.Key] = kvp.Value;
+
+		return expando;
+	}
+
 	private void TestDynamic(dynamic list)
 	{
 		for (int i = 0; i < NumValues; i++)
@@ -97,16 +108,5 @@ public class ExpandoObjectAndDictionaryBenchmarks
 			dictionary[$"Key{i}"] = $"Value{i}";
 
 		return dictionary;
-	}
-
-	private static ExpandoObject ToExpando(Dictionary<string, object> dictionary)
-	{
-		var expando = new ExpandoObject();
-		var expandoDict = (IDictionary<string, object>)expando;
-
-		foreach (var kvp in dictionary)
-			expandoDict[kvp.Key] = kvp.Value;
-
-		return expando;
 	}
 }

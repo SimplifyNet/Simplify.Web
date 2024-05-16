@@ -9,7 +9,6 @@ using Simplify.Templates;
 using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Localization;
 
-
 namespace Simplify.Web.Modules.Data;
 
 /// <summary>

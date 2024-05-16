@@ -60,7 +60,6 @@ public class SecurityCheckStageTests
 		_securityChecker.Setup(x => x.CheckSecurityRules(It.Is<IControllerMetadata>(m => m == metadata), It.Is<ClaimsPrincipal>(c => c == user)))
 			.Returns(SecurityStatus.Forbidden);
 
-
 		// Act
 		_stage.Execute(state, context, stopExecution.Object);
 

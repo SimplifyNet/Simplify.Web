@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualBasic;
 using Moq;
 using NUnit.Framework;
 using Simplify.Templates;
