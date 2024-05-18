@@ -85,24 +85,21 @@ public class Controller1PathParserTests
 		Assert.That(((PathParameter)result[2]).Type, Is.EqualTo(typeof(int)));
 	}
 
-	[Test]
-	public void Parse_BadParameters_ExceptionThrown()
-	{
+	[TestCase("/foo/{id:int")]
+	[TestCase("/foo/id:int}")]
+	[TestCase("/foo/:")]
+	[TestCase("/foo/{{")]
+	[TestCase("/foo/}}")]
+	[TestCase("/foo/:}")]
+	[TestCase("/foo/{:")]
+	[TestCase("/foo/{}")]
+	[TestCase("/foo/{:}")]
+	[TestCase("/foo/{{a:int}}")]
+	[TestCase("/foo/]{a:int{")]
+	[TestCase("/foo/]{@#$32127!&}")]
+	public void Parse_BadParameters_ExceptionThrown(string path) =>
 		// Act & Assert
-
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{id:int"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/id:int}"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/:"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{{"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/}}"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/:}"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{:"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{}"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{:}"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{{a:int}}"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/]{a:int{"));
-		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/]{@#$32127!&}"));
-	}
+		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse(path));
 
 	[Test]
 	public void Parse_UnrecognizedParameterType_ExceptionThrown()
