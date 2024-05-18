@@ -6,26 +6,12 @@ using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.Controllers.V1.Metadata;
 
-namespace Simplify.Web.Controllers.V1;
+namespace Simplify.Web.Controllers.V1.Routing;
 
-/// <summary>
-/// Provides HTTP route parser and matcher.
-/// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="RouteMatcher"/> class.
-/// </remarks>
-/// <param name="controllerPathParser">The controller path parser.</param>
-public class Controller1RouteMatcher() : IRouteMatcher
+public class Controller1RouteMatcher : IRouteMatcher
 {
 	public bool CanHandle(IControllerMetadata controller) => controller is IController1Metadata;
 
-	/// <summary>
-	/// Matches the current path with controller path.
-	/// Only "/", "/action", "/action/{userName}/{id}", "/action/{id:int}", "/{id}" etc. route types allowed
-	/// </summary>
-	/// <param name="currentPath">The current path.</param>
-	/// <param name="controllerPath">The controller path.</param>
-	/// <returns></returns>
 	public IRouteMatchResult Match(IList<string> currentPath, IControllerRoute controllerRoute)
 	{
 		if (currentPath.Count != controllerRoute.Items.Count)

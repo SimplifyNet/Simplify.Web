@@ -35,11 +35,18 @@ public class Controller1MetadataFactoryTests
 		Assert.That(roles[0], Is.EqualTo("Admin"));
 		Assert.That(roles[1], Is.EqualTo("User"));
 
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Get).Value, Is.EqualTo("/test-action"));
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Post).Value, Is.EqualTo("/test-action1"));
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Put).Value, Is.EqualTo("/test-action2"));
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Patch).Value, Is.EqualTo("/test-action3"));
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Delete).Value, Is.EqualTo("/test-action4"));
-		Assert.That(metaData.ExecParameters!.Routes.First(x => x.Key == HttpMethod.Options).Value, Is.EqualTo("/test-action5"));
+		Assert.That(metaData.ExecParameters.Routes.Count, Is.EqualTo(6));
+
+		var firstControllerRoute = metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Get);
+
+		Assert.That(firstControllerRoute.Value.Items.Count, Is.EqualTo(1));
+		Assert.That(firstControllerRoute.Value.Path, Is.EqualTo("/test-action"));
+		Assert.That(firstControllerRoute.Value.Items[0].Name, Is.EqualTo("test-action"));
+
+		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Post).Value.Path, Is.EqualTo("/test-action1"));
+		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Put).Value.Path, Is.EqualTo("/test-action2"));
+		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Patch).Value.Path, Is.EqualTo("/test-action3"));
+		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Delete).Value.Path, Is.EqualTo("/test-action4"));
+		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Options).Value.Path, Is.EqualTo("/test-action5"));
 	}
 }
