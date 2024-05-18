@@ -2,7 +2,7 @@
 using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.V1.Routing;
 
-namespace Simplify.Web.Tests.Controllers.V1.Matcher;
+namespace Simplify.Web.Tests.Controllers.V1.Routing;
 
 [TestFixture]
 public class Controller1PathParserTests

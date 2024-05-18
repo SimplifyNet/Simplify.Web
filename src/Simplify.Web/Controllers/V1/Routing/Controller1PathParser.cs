@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Simplify.Web.Controllers.Meta.Routing;
 
@@ -7,62 +8,56 @@ namespace Simplify.Web.Controllers.V1.Routing;
 
 public static class Controller1PathParser
 {
-    /// <summary>
-    /// Parses the specified controller path.
-    /// </summary>
-    /// <param name="controllerPath">The controller path.</param>
-    /// <exception cref="ControllerRouteException">
-    /// Bad controller path:  + controllerPath
-    /// or
-    /// </exception>
-    public static IList<PathItem> Parse(string controllerPath)
-    {
-        var items = controllerPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-        var pathItems = new List<PathItem>();
+	private static readonly char[] RequiredSymbols = ['{', '}', ':'];
 
-        foreach (var item in items)
-        {
-            if (item.Contains("{") || item.Contains("}") || item.Contains(":"))
-            {
-                var matches = Regex.Matches(item, @"^{[a-zA-Z0-9:_\-\[\]]+}$");
+	/// <summary>
+	/// Parses the specified controller path.
+	/// </summary>
+	/// <param name="controllerPath">The controller path.</param>
+	/// <exception cref="ControllerRouteException">
+	/// Bad controller path:  + controllerPath
+	/// or
+	/// </exception>
+	public static IList<PathItem> Parse(string controllerPath) =>
+		controllerPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
+			.Select(item =>
+				Array.TrueForAll(RequiredSymbols, symbol => !item.Contains(symbol))
+					? new PathSegment(item)
+					: ParsePathItem(item, controllerPath))
+			.ToList();
 
-                if (matches.Count == 0)
-                    throw new ControllerRouteException("Bad controller path: " + controllerPath);
+	private static PathItem ParsePathItem(string item, string controllerPath)
+	{
+		var matches = Regex.Matches(item, @"^{[a-zA-Z0-9:_\-\[\]]+}$");
 
-                var subItem = item.Substring(1, item.Length - 2);
+		if (matches.Count == 0)
+			throw new ControllerRouteException("Bad controller path: " + controllerPath);
 
-                if (subItem.Contains(":"))
-                {
-                    var parameterData = subItem.Split(':');
-                    var type = ParseParameterType(parameterData[1])
-                               ?? throw new ControllerRouteException(
-                                   $"Undefined controller parameter type '{parameterData[1]}', path: {controllerPath}");
+		var subItem = item.Substring(1, item.Length - 2);
 
-                    pathItems.Add(new PathParameter(parameterData[0], type));
-                }
-                else
-                    pathItems.Add(new PathParameter(subItem, typeof(string)));
-            }
-            else
-                pathItems.Add(new PathSegment(item));
-        }
+		if (!subItem.Contains(':'))
+			return new PathParameter(subItem, typeof(string));
 
-        return pathItems;
-    }
+		var parameterData = subItem.Split(':');
 
-    private static Type? ParseParameterType(string typeData)
-    {
-        return typeData switch
-        {
-            "int" => typeof(int),
-            "decimal" => typeof(decimal),
-            "bool" => typeof(bool),
-            "[]" => typeof(string[]),
-            "string[]" => typeof(string[]),
-            "int[]" => typeof(int[]),
-            "decimal[]" => typeof(decimal[]),
-            "bool[]" => typeof(bool[]),
-            _ => null
-        };
-    }
+		var type = ParseParameterType(parameterData[1])
+				   ?? throw new ControllerRouteException(
+					   $"Undefined controller parameter type '{parameterData[1]}', path: {controllerPath}");
+
+		return new PathParameter(parameterData[0], type);
+	}
+
+	private static Type? ParseParameterType(string typeData) =>
+		typeData switch
+		{
+			"int" => typeof(int),
+			"decimal" => typeof(decimal),
+			"bool" => typeof(bool),
+			"[]" => typeof(string[]),
+			"string[]" => typeof(string[]),
+			"int[]" => typeof(int[]),
+			"decimal[]" => typeof(decimal[]),
+			"bool[]" => typeof(bool[]),
+			_ => null
+		};
 }
