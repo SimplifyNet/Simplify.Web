@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Controllers.Meta;
+using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.Controllers.V1.Metadata;
 
-namespace Simplify.Web.Controllers.V1.Matcher;
+namespace Simplify.Web.Controllers.V1;
 
 /// <summary>
 /// Provides HTTP route parser and matcher.
@@ -14,7 +15,7 @@ namespace Simplify.Web.Controllers.V1.Matcher;
 /// Initializes a new instance of the <see cref="RouteMatcher"/> class.
 /// </remarks>
 /// <param name="controllerPathParser">The controller path parser.</param>
-public class Controller1RouteMatcher(IController1PathParser controllerPathParser) : IRouteMatcher
+public class Controller1RouteMatcher() : IRouteMatcher
 {
 	public bool CanHandle(IControllerMetadata controller) => controller is IController1Metadata;
 
@@ -25,35 +26,25 @@ public class Controller1RouteMatcher(IController1PathParser controllerPathParser
 	/// <param name="currentPath">The current path.</param>
 	/// <param name="controllerPath">The controller path.</param>
 	/// <returns></returns>
-	public IRouteMatchResult Match(string? currentPath, string? controllerPath)
+	public IRouteMatchResult Match(IList<string> currentPath, IControllerRoute controllerRoute)
 	{
-		if (string.IsNullOrEmpty(currentPath))
-			return new RouteMatchResult();
-
-		// Run on all pages route
-		if (string.IsNullOrEmpty(controllerPath))
-			return new RouteMatchResult(true);
-
-		var controllerPathParsed = controllerPathParser.Parse(controllerPath!);
-		var currentPathItems = currentPath!.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-		if (currentPathItems.Length != controllerPathParsed.Items.Count)
+		if (currentPath.Count != controllerRoute.Items.Count)
 			return new RouteMatchResult();
 
 		IDictionary<string, object> routeParameters = new Dictionary<string, object>();
 
-		for (var i = 0; i < controllerPathParsed.Items.Count; i++)
+		for (var i = 0; i < controllerRoute.Items.Count; i++)
 		{
-			var currentItem = controllerPathParsed.Items[i];
+			var currentItem = controllerRoute.Items[i];
 
 			if (currentItem is PathSegment)
 			{
-				if (currentItem.Name != currentPathItems[i])
+				if (currentItem.Name != currentPath[i])
 					return new RouteMatchResult();
 			}
 			else if (currentItem is PathParameter item)
 			{
-				var value = GetParameterValue(item, currentPathItems[i]);
+				var value = GetParameterValue(item, currentPath[i]);
 
 				if (value == null)
 					return new RouteMatchResult();
@@ -65,31 +56,31 @@ public class Controller1RouteMatcher(IController1PathParser controllerPathParser
 		return new RouteMatchResult(true, (IReadOnlyDictionary<string, object>)routeParameters);
 	}
 
-	private static object? GetParameterValue(PathParameter pathParameter, string source)
+	private static object? GetParameterValue(PathParameter pathParameter, string sourceValue)
 	{
 		if (pathParameter.Type == typeof(string))
-			return source;
+			return sourceValue;
 
 		if (pathParameter.Type == typeof(int))
-			return GetIntParameterValue(source);
+			return GetIntParameterValue(sourceValue);
 
 		if (pathParameter.Type == typeof(decimal))
-			return GetDecimalParameterValue(source);
+			return GetDecimalParameterValue(sourceValue);
 
 		if (pathParameter.Type == typeof(bool))
-			return GetBoolParameterValue(source);
+			return GetBoolParameterValue(sourceValue);
 
 		if (pathParameter.Type == typeof(string[]))
-			return GetStringArrayParameterValue(source);
+			return GetStringArrayParameterValue(sourceValue);
 
 		if (pathParameter.Type == typeof(int[]))
-			return GetIntArrayParameterValue(source);
+			return GetIntArrayParameterValue(sourceValue);
 
 		if (pathParameter.Type == typeof(decimal[]))
-			return GetDecimalArrayParameterValue(source);
+			return GetDecimalArrayParameterValue(sourceValue);
 
 		if (pathParameter.Type == typeof(bool[]))
-			return GetBoolArrayParameterValue(source);
+			return GetBoolArrayParameterValue(sourceValue);
 
 		return null;
 	}

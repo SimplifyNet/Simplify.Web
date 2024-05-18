@@ -1,7 +1,7 @@
-﻿namespace Simplify.Web.Controllers.V1.Matcher;
+﻿namespace Simplify.Web.Controllers.Meta.Routing;
 
 /// <summary>
-/// Provides the path items base class.
+/// Provides the path item base class.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="PathItem"/> class.

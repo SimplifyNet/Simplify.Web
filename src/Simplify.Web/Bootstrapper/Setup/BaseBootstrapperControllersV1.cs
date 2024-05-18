@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.V1.Execution;
-using Simplify.Web.Controllers.V1.Matcher;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
@@ -16,13 +15,5 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IController1Factory, Controller1Factory>();
-	}
-
-	public virtual void RegisterController1PathParser()
-	{
-		if (TypesToExclude.Contains(typeof(IController1PathParser)))
-			return;
-
-		BootstrapperFactory.ContainerProvider.Register<IController1PathParser, Controller1PathParser>(LifetimeType.Singleton);
 	}
 }

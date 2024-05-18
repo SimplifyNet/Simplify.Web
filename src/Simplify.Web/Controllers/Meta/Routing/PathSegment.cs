@@ -1,4 +1,4 @@
-﻿namespace Simplify.Web.Controllers.V1.Matcher;
+﻿namespace Simplify.Web.Controllers.Meta.Routing;
 
 /// <summary>
 /// Provides the path segment element.

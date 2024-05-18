@@ -31,5 +31,5 @@ public static class ControllerMetadataRouteExtensions
 
 	public static bool ContainsRoute(this IControllerMetadata controller) =>
 		controller.ExecParameters != null &&
-		controller.ExecParameters.Routes.Any(route => !string.IsNullOrEmpty(route.Value));
+		controller.ExecParameters.Routes.Any(route => route.Value != null);
 }

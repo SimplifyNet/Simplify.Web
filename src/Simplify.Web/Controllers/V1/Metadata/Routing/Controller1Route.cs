@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Simplify.Web.Controllers.Meta.Routing;
 
-namespace Simplify.Web.Controllers.V1.Matcher;
+namespace Simplify.Web.Controllers.V1.Metadata.Routing;
 
-/// <summary>
-/// Provides the controller v1 path parser.
-/// </summary>
-public class Controller1PathParser : IController1PathParser
+public class Controller1Route : IControllerRoute
 {
+	/// <summary>
+	/// Gets the controller path items.
+	/// </summary>
+	public IList<PathItem> Items { get; }
+
+	public string Path { get; }
+
+	public Controller1Route(string path)
+	{
+		Items = Parse(path);
+		Path = path;
+	}
+
 	/// <summary>
 	/// Parses the specified controller path.
 	/// </summary>
@@ -17,7 +28,7 @@ public class Controller1PathParser : IController1PathParser
 	/// Bad controller path:  + controllerPath
 	/// or
 	/// </exception>
-	public IControllerPath Parse(string controllerPath)
+	private IList<PathItem> Parse(string controllerPath)
 	{
 		var items = controllerPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 		var pathItems = new List<PathItem>();
@@ -48,7 +59,7 @@ public class Controller1PathParser : IController1PathParser
 				pathItems.Add(new PathSegment(item));
 		}
 
-		return new ControllerPath(pathItems);
+		return pathItems;
 	}
 
 	private static Type? ParseParameterType(string typeData)

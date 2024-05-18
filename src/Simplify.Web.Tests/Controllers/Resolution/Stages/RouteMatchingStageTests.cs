@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers.Meta;
+using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.Resolution.Stages;
 using Simplify.Web.Controllers.Resolution.State;
 using Simplify.Web.Controllers.RouteMatching;
@@ -54,14 +55,14 @@ public class RouteMatchingStageTests
 	{
 		// Arrange
 
-		var controllerPath = "/foo";
 		var currentPath = "/bar";
+		var controllerRoute = Mock.Of<IControllerRoute>();
 
 		var state = Mock.Of<IControllerResolutionState>(x =>
 			x.Controller.ExecParameters == new ControllerExecParameters(
-				new Dictionary<HttpMethod, string> {
+				new Dictionary<HttpMethod, IControllerRoute> {
 				{
-					httpMethod, controllerPath }
+					httpMethod, controllerRoute }
 				}, 0));
 
 		var context = Mock.Of<HttpContext>(x =>
@@ -73,9 +74,10 @@ public class RouteMatchingStageTests
 
 		_routeMatcherResolver.Setup(x => x.Resolve(It.IsAny<IControllerMetadata>())).Returns(routeMatcher.Object);
 
-		routeMatcher.Setup(x => x.Match(It.Is<string>(s => s == currentPath), It.Is<string>(s => s == controllerPath)))
+		routeMatcher.Setup(x => x.Match(It.IsAny<IList<string>>(), It.Is<IControllerRoute>(r => r == controllerRoute)))
 			.Returns(Mock.Of<IRouteMatchResult>(x =>
 				x.Success == false));
+
 		// Act
 		_stage.Execute(state, context, stopExecution.Object);
 
@@ -86,7 +88,7 @@ public class RouteMatchingStageTests
 
 		stopExecution.Verify(x => x.Invoke());
 		_routeMatcherResolver.Verify(x => x.Resolve(It.IsAny<IControllerMetadata>()));
-		routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == currentPath), It.Is<string>(s => s == controllerPath)));
+		routeMatcher.Verify(x => x.Match(It.IsAny<IList<string>>(), It.Is<IControllerRoute>(s => s == controllerRoute)));
 	}
 
 	[TestCase(HttpMethod.Get)]
@@ -99,14 +101,14 @@ public class RouteMatchingStageTests
 	{
 		// Arrange
 
-		var controllerPath = "/foo";
+		var controllerRoute = Mock.Of<IControllerRoute>();
 		var currentPath = "/foo";
 
 		var state = Mock.Of<IControllerResolutionState>(x =>
 			x.Controller.ExecParameters == new ControllerExecParameters(
-				new Dictionary<HttpMethod, string> {
+				new Dictionary<HttpMethod, IControllerRoute> {
 				{
-					httpMethod, controllerPath }
+					httpMethod, controllerRoute }
 				}, 0));
 
 		var context = Mock.Of<HttpContext>(x =>
@@ -118,7 +120,7 @@ public class RouteMatchingStageTests
 
 		_routeMatcherResolver.Setup(x => x.Resolve(It.IsAny<IControllerMetadata>())).Returns(routeMatcher.Object);
 
-		routeMatcher.Setup(x => x.Match(It.Is<string>(s => s == currentPath), It.Is<string>(s => s == controllerPath)))
+		routeMatcher.Setup(x => x.Match(It.IsAny<IList<string>>(), It.Is<IControllerRoute>(s => s == controllerRoute)))
 			.Returns(Mock.Of<IRouteMatchResult>(x =>
 				x.Success == true &&
 			 	x.RouteParameters == new Dictionary<string, object>()));
@@ -133,6 +135,6 @@ public class RouteMatchingStageTests
 
 		stopExecution.Verify(x => x.Invoke(), Times.Never);
 		_routeMatcherResolver.Verify(x => x.Resolve(It.IsAny<IControllerMetadata>()));
-		routeMatcher.Verify(x => x.Match(It.Is<string>(s => s == currentPath), It.Is<string>(s => s == controllerPath)));
+		routeMatcher.Verify(x => x.Match(It.IsAny<IList<string>>(), It.Is<IControllerRoute>(s => s == controllerRoute)));
 	}
 }

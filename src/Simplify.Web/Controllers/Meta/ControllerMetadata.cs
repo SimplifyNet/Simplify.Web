@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Simplify.Web.Attributes;
+using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Http;
 
 namespace Simplify.Web.Controllers.Meta;
@@ -12,30 +13,38 @@ namespace Simplify.Web.Controllers.Meta;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerMetadata" /> class.
 /// </remarks>
-/// <param name="controllerType">Type of the controller.</param>
-public abstract class ControllerMetadata(Type controllerType) : IControllerMetadata
+public abstract class ControllerMetadata : IControllerMetadata
 {
 	/// <summary>
 	/// Gets the type of the controller.
 	/// </summary>
-	public Type ControllerType { get; } = controllerType;
+	public Type ControllerType { get; }
 
 	/// <summary>
 	/// Gets the controller execute parameters.
 	/// </summary>
-	public ControllerExecParameters? ExecParameters { get; } = GetControllerExecParameters(controllerType);
+	public ControllerExecParameters? ExecParameters { get; }
 
 	/// <summary>
 	/// Gets the controller role information.
 	/// </summary>
-	public ControllerRole? Role { get; } = GetControllerRole(controllerType);
+	public ControllerRole? Role { get; }
 
 	/// <summary>
 	/// Gets the controller security information.
 	/// </summary>
-	public ControllerSecurity? Security { get; } = GetControllerSecurity(controllerType);
+	public ControllerSecurity? Security { get; }
 
-	private static ControllerExecParameters? GetControllerExecParameters(ICustomAttributeProvider controllerType)
+	/// <param name="controllerType">Type of the controller.</param>
+	public ControllerMetadata(Type controllerType)
+	{
+		ControllerType = controllerType;
+		ExecParameters = GetControllerExecParameters(controllerType);
+		Role = GetControllerRole(controllerType);
+		Security = GetControllerSecurity(controllerType);
+	}
+
+	private ControllerExecParameters? GetControllerExecParameters(ICustomAttributeProvider controllerType)
 	{
 		var priority = 0;
 
@@ -51,16 +60,18 @@ public abstract class ControllerMetadata(Type controllerType) : IControllerMetad
 			: null;
 	}
 
-	private static IDictionary<HttpMethod, string> GetControllerRouteInfo(ICustomAttributeProvider controllerType)
+	protected abstract IControllerRoute ParseControllerRoute(string path);
+
+	private IDictionary<HttpMethod, IControllerRoute> GetControllerRouteInfo(ICustomAttributeProvider controllerType)
 	{
-		var routeInfo = new Dictionary<HttpMethod, string>();
+		var routeInfo = new Dictionary<HttpMethod, IControllerRoute>();
 
 		foreach (var item in Relations.HttpMethodToHttpMethodAttributeRelation)
 		{
 			var attributes = controllerType.GetCustomAttributes(item.Value, false);
 
 			if (attributes.Length > 0)
-				routeInfo.Add(item.Key, ((ControllerRouteAttribute)attributes[0]).Route);
+				routeInfo.Add(item.Key, ParseControllerRoute(((ControllerRouteAttribute)attributes[0]).Route));
 		}
 
 		return routeInfo;

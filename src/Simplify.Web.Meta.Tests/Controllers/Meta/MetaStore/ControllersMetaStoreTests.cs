@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Simplify.Web.Controllers.Meta;
 using Simplify.Web.Controllers.Meta.Loader;
 using Simplify.Web.Controllers.Meta.MetaStore;
+using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Http;
 
 namespace Simplify.Web.Meta.Tests.Controllers.Meta.MetaStore;
@@ -19,7 +20,7 @@ public class ControllersMetaStoreTests
 		var globalController = Mock.Of<IControllerMetadata>();
 
 		var regularController = Mock.Of<IControllerMetadata>(x =>
-			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, string> { { HttpMethod.Get, "/" } }, 0));
+			x.ExecParameters == new ControllerExecParameters(new Dictionary<HttpMethod, IControllerRoute> { { HttpMethod.Get, Mock.Of<IControllerRoute>() } }, 0));
 
 		var forbiddenController = Mock.Of<IControllerMetadata>(x =>
 			x.Role == new ControllerRole(true, false));
