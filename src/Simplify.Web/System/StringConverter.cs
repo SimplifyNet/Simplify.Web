@@ -6,7 +6,7 @@ namespace Simplify.Web.System;
 
 public static class StringConverter
 {
-	private static readonly Dictionary<Type, Func<string, object?>> ValueConverters =
+	public static readonly Dictionary<Type, Func<string, object?>> ValueConverters =
 		new()
 		{
 			{ typeof(string), sourceValue => sourceValue },
@@ -26,6 +26,8 @@ public static class StringConverter
 		ValueConverters.TryGetValue(destinationType, out var converter)
 			? converter(sourceValue)
 			: null;
+
+	public static string GetSupportedTypeNamesAsString() => string.Join(", ", ValueConverters.Keys.Select(type => type.Name));
 
 	private static object? GetIntParameterValue(string source)
 	{

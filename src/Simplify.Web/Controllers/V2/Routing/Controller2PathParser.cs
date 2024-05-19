@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Simplify.Web.Controllers.Meta.Routing;
+using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.V2.Routing;
 
@@ -11,18 +12,6 @@ public static class Controller2PathParser
 	private const string RegexPattern = @"^{[a-zA-Z0-9_\-]+}$";
 
 	private static readonly char[] RequiredSymbols = ['{', '}'];
-
-	public static IList<Type> SupportedTypes { get; } =
-	[
-		typeof(string),
-		typeof(int),
-		typeof(decimal),
-		typeof(bool),
-		typeof(string[]),
-		typeof(int[]),
-		typeof(decimal[]),
-		typeof(bool[])
-	];
 
 	/// <summary>
 	/// Parses the specified controller path.
@@ -70,11 +59,10 @@ public static class Controller2PathParser
 		if (!invokeMethodParameters.TryGetValue(parameterName, out var parameterType))
 			return new PathParameter(parameterName, typeof(string));
 
-		if (!SupportedTypes.Contains(parameterType))
-			throw new ControllerRouteException($"Unsupported parameter type '{parameterType.Name}' of parameter '{parameterName}'. Can be one of: {GetTypeNamesAsString()}");
+		if (!StringConverter.ValueConverters.ContainsKey(parameterType))
+			throw new ControllerRouteException(
+				$"Unsupported parameter type '{parameterType.Name}' of parameter '{parameterName}'. Can be one of: {StringConverter.GetSupportedTypeNamesAsString()}");
 
 		return new PathParameter(parameterName, parameterType);
 	}
-
-	private static string GetTypeNamesAsString() => string.Join(", ", SupportedTypes.Select(type => type.Name));
 }
