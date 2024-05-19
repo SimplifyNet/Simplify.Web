@@ -70,6 +70,7 @@ public class Controller1PathParserTests
 		TestPathMatching(expectedPath, result);
 	}
 
+	[TestCase("foo", "/{foo}", typeof(string))]
 	[TestCase("id", "/{id:decimal}", typeof(decimal))]
 	[TestCase("foo", "/{foo:bool}", typeof(bool))]
 	[TestCase("stringArray", "/{stringArray:[]}", typeof(string[]))]

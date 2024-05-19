@@ -24,10 +24,10 @@ public static class Controller1PathParser
 			.Select(item =>
 				Array.TrueForAll(RequiredSymbols, symbol => !item.Contains(symbol))
 					? new PathSegment(item)
-					: ParsePathItem(item, controllerPath))
+					: ParsePathParameter(item, controllerPath))
 			.ToList();
 
-	private static PathItem ParsePathItem(string item, string controllerPath)
+	private static PathItem ParsePathParameter(string item, string controllerPath)
 	{
 		var matches = Regex.Matches(item, RegexPattern);
 
