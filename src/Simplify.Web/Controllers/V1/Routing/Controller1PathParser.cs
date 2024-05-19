@@ -8,6 +8,7 @@ namespace Simplify.Web.Controllers.V1.Routing;
 
 public static class Controller1PathParser
 {
+	private const string RegexPattern = @"^{[a-zA-Z0-9:_\-\[\]]+}$";
 	private static readonly char[] RequiredSymbols = ['{', '}', ':'];
 
 	/// <summary>
@@ -28,7 +29,7 @@ public static class Controller1PathParser
 
 	private static PathItem ParsePathItem(string item, string controllerPath)
 	{
-		var matches = Regex.Matches(item, @"^{[a-zA-Z0-9:_\-\[\]]+}$");
+		var matches = Regex.Matches(item, RegexPattern);
 
 		if (matches.Count == 0)
 			throw new ControllerRouteException("Bad controller path: " + controllerPath);
