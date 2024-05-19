@@ -33,7 +33,11 @@ public static class Controller1PathParser
 		if (matches.Count == 0)
 			throw new ControllerRouteException("Bad controller path: " + controllerPath);
 
+#if NETSTANDARD2_0
 		var subItem = item.Substring(1, item.Length - 2);
+#else
+		var subItem = item[1..^1];
+#endif
 
 		if (!subItem.Contains(':'))
 			return new PathParameter(subItem, typeof(string));
