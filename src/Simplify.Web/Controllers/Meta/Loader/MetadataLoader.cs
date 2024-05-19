@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Controllers.Meta.Factory;
 using Simplify.Web.Controllers.V1.Metadata;
+using Simplify.Web.Controllers.V2.Metadata;
 using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.Meta.Loader;
@@ -11,6 +12,7 @@ public class MetadataLoader(IControllerMetadataFactoryResolver resolver, IEnumer
 {
 	private static readonly IList<IControllerMetadataFactory> DefaultControllersFactories =
 	[
+		new Controller2MetadataFactory(),
 		new Controller1MetadataFactory()
 	];
 

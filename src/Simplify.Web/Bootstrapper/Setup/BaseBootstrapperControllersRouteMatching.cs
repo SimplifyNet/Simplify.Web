@@ -27,6 +27,7 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IRouteMatcher>>(r =>
 			[
+				new Controller2RouteMatcher(),
 				new Controller1RouteMatcher()
 			], LifetimeType.Singleton);
 	}
