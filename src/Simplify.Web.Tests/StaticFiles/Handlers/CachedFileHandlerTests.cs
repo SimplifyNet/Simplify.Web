@@ -66,6 +66,6 @@ public class CachedFileHandlerTests
 
 		Assert.That(response.StatusCode, Is.EqualTo((int)HttpStatusCode.NotModified));
 		Assert.That(response.ContentType, Is.EqualTo("text/plain"));
-		Assert.That(response.Headers.LastModified, Is.EqualTo(lastModificationTime.ToString("r")));
+		Assert.That(response.Headers["Last-Modified"], Is.EqualTo(lastModificationTime.ToString("r")));
 	}
 }

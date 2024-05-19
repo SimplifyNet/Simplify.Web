@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -82,8 +81,8 @@ public class NewFileHandlerTests
 		// Assert
 
 		Assert.That(response.ContentType, Is.EqualTo("text/plain"));
-		Assert.That(response.Headers.LastModified, Is.EqualTo(lastModificationTime.ToString("r")));
-		Assert.That(response.Headers.Expires.First(), Is.EqualTo(new DateTimeOffset(new DateTime(2014, 1, 1)).ToString("R")));
+		Assert.That(response.Headers["Last-Modified"], Is.EqualTo(lastModificationTime.ToString("r")));
+		Assert.That(response.Headers["Expires"], Is.EqualTo(new DateTimeOffset(new DateTime(2014, 1, 1)).ToString("R")));
 
 		_responseWriter.Verify(x => x.WriteAsync(It.Is<HttpResponse>(r => r == response), It.Is<byte[]>(b => b == data)));
 	}

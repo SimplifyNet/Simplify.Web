@@ -14,9 +14,11 @@ public class ExecutionWorkOrderBuilderTests
 	public void Build()
 	{
 		// Arrange
-		var builder = new ExecutionWorkOrderBuilder();
 
-		builder.HttpStatusCode = HttpStatusCode.EarlyHints;
+		var builder = new ExecutionWorkOrderBuilder
+		{
+			HttpStatusCode = HttpStatusCode.BadRequest
+		};
 
 		builder.Controllers.Add(CreateController(3));
 		builder.Controllers.Add(CreateController(1));
@@ -29,7 +31,7 @@ public class ExecutionWorkOrderBuilderTests
 
 		// Assert
 
-		Assert.That(result.HttpStatusCode, Is.EqualTo(HttpStatusCode.EarlyHints));
+		Assert.That(result.HttpStatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
 		Assert.That(result.Controllers.Count, Is.EqualTo(5));
 		Assert.That(result.Controllers[0].Controller.ExecParameters!.RunPriority, Is.EqualTo(1));
