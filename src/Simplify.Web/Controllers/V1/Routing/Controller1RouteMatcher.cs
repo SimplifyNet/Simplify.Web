@@ -10,66 +10,61 @@ namespace Simplify.Web.Controllers.V1.Routing;
 
 public class Controller1RouteMatcher : IRouteMatcher
 {
+	private static readonly Dictionary<Type, Func<string, object?>> ParameterValueConverters =
+		new()
+		{
+			{ typeof(string), sourceValue => sourceValue },
+			{ typeof(int), GetIntParameterValue },
+			{ typeof(decimal), GetDecimalParameterValue },
+			{ typeof(bool), GetBoolParameterValue },
+			{ typeof(string[]), GetStringArrayParameterValue },
+			{ typeof(int[]), GetIntArrayParameterValue },
+			{ typeof(decimal[]), GetDecimalArrayParameterValue },
+			{ typeof(bool[]), GetBoolArrayParameterValue },
+		};
+
 	public bool CanHandle(IControllerMetadata controller) => controller is IController1Metadata;
 
 	public IRouteMatchResult Match(IList<string> currentPath, IControllerRoute controllerRoute)
 	{
+		// Run on all pages route
+		if (controllerRoute.Items.Count == 0)
+			return new RouteMatchResult(true);
+
 		if (currentPath.Count != controllerRoute.Items.Count)
 			return new RouteMatchResult();
 
-		IDictionary<string, object> routeParameters = new Dictionary<string, object>();
+		var routeParameters = new Dictionary<string, object>();
 
 		for (var i = 0; i < controllerRoute.Items.Count; i++)
 		{
 			var currentItem = controllerRoute.Items[i];
 
-			if (currentItem is PathSegment)
+			switch (currentItem)
 			{
-				if (currentItem.Name != currentPath[i])
-					return new RouteMatchResult();
-			}
-			else if (currentItem is PathParameter item)
-			{
-				var value = GetParameterValue(item, currentPath[i]);
-
-				if (value == null)
+				case PathSegment when currentItem.Name != currentPath[i]:
 					return new RouteMatchResult();
 
-				routeParameters.Add(item.Name, value);
+				case PathParameter item:
+					{
+						var value = GetParameterValue(item, currentPath[i]);
+
+						if (value == null)
+							return new RouteMatchResult();
+
+						routeParameters.Add(item.Name, value);
+						break;
+					}
 			}
 		}
 
-		return new RouteMatchResult(true, (IReadOnlyDictionary<string, object>)routeParameters);
+		return new RouteMatchResult(true, routeParameters);
 	}
 
-	private static object? GetParameterValue(PathParameter pathParameter, string sourceValue)
-	{
-		if (pathParameter.Type == typeof(string))
-			return sourceValue;
-
-		if (pathParameter.Type == typeof(int))
-			return GetIntParameterValue(sourceValue);
-
-		if (pathParameter.Type == typeof(decimal))
-			return GetDecimalParameterValue(sourceValue);
-
-		if (pathParameter.Type == typeof(bool))
-			return GetBoolParameterValue(sourceValue);
-
-		if (pathParameter.Type == typeof(string[]))
-			return GetStringArrayParameterValue(sourceValue);
-
-		if (pathParameter.Type == typeof(int[]))
-			return GetIntArrayParameterValue(sourceValue);
-
-		if (pathParameter.Type == typeof(decimal[]))
-			return GetDecimalArrayParameterValue(sourceValue);
-
-		if (pathParameter.Type == typeof(bool[]))
-			return GetBoolArrayParameterValue(sourceValue);
-
-		return null;
-	}
+	private static object? GetParameterValue(PathParameter pathParameter, string sourceValue) =>
+		ParameterValueConverters.TryGetValue(pathParameter.Type, out var converter)
+			? converter(sourceValue)
+			: null;
 
 	private static object? GetIntParameterValue(string source)
 	{

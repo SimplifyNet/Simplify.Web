@@ -3,12 +3,18 @@ using Simplify.Web.Controllers.Meta.Routing;
 
 namespace Simplify.Web.Controllers.V1.Routing;
 
-public class Controller1Route(string path) : IControllerRoute
+public class Controller1Route : IControllerRoute
 {
-	public string Path { get; } = path;
+	public Controller1Route(string? path)
+	{
+		Path = path ?? "";
+		Items = Controller1PathParser.Parse(Path);
+	}
+
+	public string Path { get; }
 
 	/// <summary>
 	/// Gets the controller path items.
 	/// </summary>
-	public IList<PathItem> Items { get; } = Controller1PathParser.Parse(path);
+	public IList<PathItem> Items { get; }
 }
