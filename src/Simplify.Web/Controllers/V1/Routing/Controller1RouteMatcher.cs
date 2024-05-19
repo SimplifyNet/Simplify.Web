@@ -36,29 +36,33 @@ public class Controller1RouteMatcher : IRouteMatcher
 
 		var routeParameters = new Dictionary<string, object>();
 
-		for (var i = 0; i < controllerRoute.Items.Count; i++)
+		return TryMatchPathItems(currentPath, controllerRoute.Items, routeParameters)
+			? new RouteMatchResult(true, routeParameters)
+			: new RouteMatchResult();
+	}
+
+	private static bool TryMatchPathItems(IList<string> currentPath, IList<PathItem> controllerRouteItems, Dictionary<string, object> routeParameters) =>
+		!controllerRouteItems.Where((currentItem, i) => !MatchPathItem(currentItem, currentPath[i], routeParameters)).Any();
+
+	private static bool MatchPathItem(PathItem item, string currentPathSegment, Dictionary<string, object> routeParameters)
+	{
+		switch (item)
 		{
-			var currentItem = controllerRoute.Items[i];
+			case PathSegment segment:
+				return segment.Name == currentPathSegment;
 
-			switch (currentItem)
-			{
-				case PathSegment when currentItem.Name != currentPath[i]:
-					return new RouteMatchResult();
+			case PathParameter parameter:
+				var value = GetParameterValue(parameter, currentPathSegment);
 
-				case PathParameter item:
-					{
-						var value = GetParameterValue(item, currentPath[i]);
+				if (value == null)
+					return false;
 
-						if (value == null)
-							return new RouteMatchResult();
+				routeParameters.Add(parameter.Name, value);
+				return true;
 
-						routeParameters.Add(item.Name, value);
-						break;
-					}
-			}
+			default:
+				return false;
 		}
-
-		return new RouteMatchResult(true, routeParameters);
 	}
 
 	private static object? GetParameterValue(PathParameter pathParameter, string sourceValue) =>
