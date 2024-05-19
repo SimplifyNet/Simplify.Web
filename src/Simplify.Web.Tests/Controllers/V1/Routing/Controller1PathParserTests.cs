@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.V1.Routing;
 
@@ -129,101 +130,23 @@ public class Controller1PathParserTests
 		Assert.That(result[2].Name, Is.EqualTo("bar"));
 	}
 
-	[Test]
-	public void Parse_DecimalParameter_Parsed()
+	[TestCase("id", "/{id:decimal}", typeof(decimal))]
+	[TestCase("foo", "/{foo:bool}", typeof(bool))]
+	[TestCase("stringArray", "/{stringArray:[]}", typeof(string[]))]
+	[TestCase("stringArray", "/{stringArray:string[]}", typeof(string[]))]
+	[TestCase("intArray", "/{intArray:int[]}", typeof(int[]))]
+	[TestCase("decimalArray", "/{decimalArray:decimal[]}", typeof(decimal[]))]
+	[TestCase("boolArray", "/{boolArray:bool[]}", typeof(bool[]))]
+	public void Parse_Parameter_Parsed(string name, string controllerPath, Type type)
 	{
 		// Act
-		var result = Controller1PathParser.Parse("/{id:decimal}");
+		var result = Controller1PathParser.Parse(controllerPath);
 
 		// Assert
 
 		Assert.That(result.Count, Is.EqualTo(1));
 		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("id"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(decimal)));
-	}
-
-	[Test]
-	public void Parse_BoolParameter_Parsed()
-	{
-		// Act
-		var result = Controller1PathParser.Parse("/{foo:bool}");
-
-		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("foo"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(bool)));
-	}
-
-	[Test]
-	public void Parse_StringArrayShortVersionParameter_Parsed()
-	{
-		// Act
-		var result = Controller1PathParser.Parse("/{stringArray:[]}");
-
-		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("stringArray"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(string[])));
-	}
-
-	[Test]
-	public void Parse_StringArrayParameter_Parsed()
-	{
-		// Act
-		var result = Controller1PathParser.Parse("/{stringArray:string[]}");
-
-		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("stringArray"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(string[])));
-	}
-
-	[Test]
-	public void Parse_IntArrayParameter_Parsed()
-	{
-		// Act
-		var result = Controller1PathParser.Parse("/{intArray:int[]}");
-
-		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("intArray"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(int[])));
-	}
-
-	[Test]
-	public void Parse_DecimalArrayParameter_Parsed()
-	{
-		// Act
-		var result = Controller1PathParser.Parse("/{decimalArray:decimal[]}");
-
-		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("decimalArray"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(decimal[])));
-	}
-
-	[Test]
-	public void Parse_privateBoolArrayParameter_Parsed()
-	{
-		// Act
-		var result = Controller1PathParser.Parse("/{boolArray:bool[]}");
-
-		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("boolArray"));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(typeof(bool[])));
+		Assert.That(result[0].Name, Is.EqualTo(name));
+		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(type));
 	}
 }
