@@ -13,7 +13,7 @@ public class Controller1Factory(IDIResolver resolver) : ActionModulesAccessorInj
 	/// <summary>
 	/// Creates the controller.
 	/// </summary>
-	/// <param name="args">The controller execution args.</param>
+	/// <param name="matchedController">The matched controller</param>
 	public ControllerBase CreateController(IMatchedController matchedController)
 	{
 		var controller = (ControllerBase)_resolver.Resolve(matchedController.Controller.ControllerType);
