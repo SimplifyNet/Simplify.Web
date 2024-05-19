@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.V1.Routing;
@@ -21,53 +22,52 @@ public class Controller1PathParserTests
 	[Test]
 	public void Parse_OneSegment_OneSegment()
 	{
+		// Arrange
+		var expectedPath = new PathItem[]
+		{
+			new PathSegment("foo")
+		};
+
 		// Act
 		var result = Controller1PathParser.Parse("/foo");
 
 		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathSegment, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("foo"));
+		TestPathMatching(expectedPath, result);
 	}
 
 	[Test]
 	public void Parse_OneSegmentOneParameter_OneSegmentOneParameter()
 	{
+		// Arrange
+		var expectedPath = new PathItem[]
+		{
+			new PathSegment("foo"),
+			new PathParameter("bar", typeof(string))
+		};
+
 		// Act
-		var result = Controller1PathParser.Parse("/foo/{name}");
+		var result = Controller1PathParser.Parse("/foo/{bar}");
 
 		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(2));
-
-		Assert.That(result[0] as PathSegment, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("foo"));
-
-		Assert.That(result[1] as PathParameter, Is.Not.Null);
-		Assert.That(result[1].Name, Is.EqualTo("name"));
-		Assert.That(((PathParameter)result[1]).Type, Is.EqualTo(typeof(string)));
+		TestPathMatching(expectedPath, result);
 	}
 
 	[Test]
 	public void Parse_OneSegmentTwoParameters_OneSegmentTwoParameters()
 	{
+		// Arrange
+		var expectedPath = new PathItem[]
+		{
+			new PathSegment("foo"),
+			new PathParameter("bar", typeof(string)),
+			new PathParameter("id", typeof(int))
+		};
+
 		// Act
-		var result = Controller1PathParser.Parse("/foo/{name}/{id:int}");
+		var result = Controller1PathParser.Parse("/foo/{bar}/{id:int}");
 
 		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(3));
-		Assert.That(result[0] as PathSegment, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("foo"));
-
-		Assert.That(result[1] as PathParameter, Is.Not.Null);
-		Assert.That(result[1].Name, Is.EqualTo("name"));
-		Assert.That(((PathParameter)result[1]).Type, Is.EqualTo(typeof(string)));
-
-		Assert.That(result[2] as PathParameter, Is.Not.Null);
-		Assert.That(result[2].Name, Is.EqualTo("id"));
-		Assert.That(((PathParameter)result[2]).Type, Is.EqualTo(typeof(int)));
+		TestPathMatching(expectedPath, result);
 	}
 
 	[TestCase("id", "/{id:decimal}", typeof(decimal))]
@@ -79,52 +79,53 @@ public class Controller1PathParserTests
 	[TestCase("boolArray", "/{boolArray:bool[]}", typeof(bool[]))]
 	public void Parse_OneParameter_Parsed(string name, string controllerPath, Type type)
 	{
+		// Arrange
+		var expectedPath = new PathItem[]
+		{
+			new PathParameter(name, type)
+		};
+
 		// Act
 		var result = Controller1PathParser.Parse(controllerPath);
 
 		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(1));
-		Assert.That(result[0] as PathParameter, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo(name));
-		Assert.That(((PathParameter)result[0]).Type, Is.EqualTo(type));
+		TestPathMatching(expectedPath, result);
 	}
 
 	[Test]
 	public void Parse_TwoSegmentsOneParameterInTheMiddle_TwoSegmentsOneParameterInTheMiddle()
 	{
+		// Arrange
+		var expectedPath = new PathItem[]
+		{
+			new PathSegment("foo"),
+			new PathParameter("name", typeof(string)),
+			new PathSegment("bar")
+		};
+
 		// Act
 		var result = Controller1PathParser.Parse("/foo/{name}/bar");
 
 		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(3));
-		Assert.That(result[0] as PathSegment, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("foo"));
-
-		Assert.That(result[1] as PathParameter, Is.Not.Null);
-		Assert.That(result[1].Name, Is.EqualTo("name"));
-		Assert.That(((PathParameter)result[1]).Type, Is.EqualTo(typeof(string)));
-
-		Assert.That(result[2] as PathSegment, Is.Not.Null);
-		Assert.That(result[2].Name, Is.EqualTo("bar"));
+		TestPathMatching(expectedPath, result);
 	}
 
 	[Test]
 	public void Parse_MultipleSegments_MultipleSegments()
 	{
+		// Arrange
+		var expectedPath = new PathItem[]
+		{
+			new PathSegment("foo"),
+			new PathSegment("bar"),
+			new PathSegment("test")
+		};
+
 		// Act
 		var result = Controller1PathParser.Parse("/foo/bar/test");
 
 		// Assert
-
-		Assert.That(result.Count, Is.EqualTo(3));
-		Assert.That(result[0] as PathSegment, Is.Not.Null);
-		Assert.That(result[0].Name, Is.EqualTo("foo"));
-		Assert.That(result[1] as PathSegment, Is.Not.Null);
-		Assert.That(result[1].Name, Is.EqualTo("bar"));
-		Assert.That(result[2] as PathSegment, Is.Not.Null);
-		Assert.That(result[2].Name, Is.EqualTo("test"));
+		TestPathMatching(expectedPath, result);
 	}
 
 	[TestCase("/foo/{id:int")]
@@ -144,10 +145,26 @@ public class Controller1PathParserTests
 		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse(path));
 
 	[Test]
-	public void Parse_UnrecognizedParameterType_ExceptionThrown()
-	{
+	public void Parse_UnrecognizedParameterType_ExceptionThrown() =>
 		// Act & Assert
-
 		Assert.Throws<ControllerRouteException>(() => Controller1PathParser.Parse("/foo/{id:foo}"));
+
+	private static void TestPathMatching(IList<PathItem> expectedPath, IList<PathItem> actualPath)
+	{
+		Assert.That(expectedPath.Count, Is.EqualTo(actualPath.Count));
+
+		for (var i = 0; i < expectedPath.Count; i++)
+		{
+			Assert.That(expectedPath[i].GetType(), Is.EqualTo(actualPath[i].GetType()));
+			Assert.That(expectedPath[i].Name, Is.EqualTo(actualPath[i].Name));
+
+			if (expectedPath[i] is not PathParameter)
+				continue;
+
+			var expectedPathParameter = (PathParameter)expectedPath[i];
+			var actualPathParameter = (PathParameter)expectedPath[i];
+
+			Assert.That(expectedPathParameter.Type, Is.EqualTo(actualPathParameter.Type));
+		}
 	}
 }
