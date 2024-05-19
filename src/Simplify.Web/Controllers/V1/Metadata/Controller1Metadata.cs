@@ -5,7 +5,12 @@ using Simplify.Web.Controllers.V1.Routing;
 
 namespace Simplify.Web.Controllers.V1.Metadata;
 
-public class Controller1Metadata(Type controllerType) : ControllerMetadata(controllerType), IController1Metadata
+public class Controller1Metadata : ControllerMetadata, IController1Metadata
 {
-	protected override IControllerRoute ParseControllerRoute(string path) => new Controller1Route(path);
+	public Controller1Metadata(Type controllerType) : base(controllerType)
+	{
+		ExecParameters = BuildControllerExecParameters(controllerType);
+	}
+
+	protected override IControllerRoute BuildControllerRoute(string path) => new Controller1Route(path);
 }

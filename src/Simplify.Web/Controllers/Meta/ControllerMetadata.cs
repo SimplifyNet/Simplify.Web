@@ -13,38 +13,32 @@ namespace Simplify.Web.Controllers.Meta;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerMetadata" /> class.
 /// </remarks>
-public abstract class ControllerMetadata : IControllerMetadata
+/// <param name="controllerType">Type of the controller.</param>
+public abstract class ControllerMetadata(Type controllerType) : IControllerMetadata
 {
 	/// <summary>
 	/// Gets the type of the controller.
 	/// </summary>
-	public Type ControllerType { get; }
+	public Type ControllerType { get; } = controllerType;
 
 	/// <summary>
 	/// Gets the controller execute parameters.
 	/// </summary>
-	public ControllerExecParameters? ExecParameters { get; }
+	public ControllerExecParameters? ExecParameters { get; protected set; }
 
 	/// <summary>
 	/// Gets the controller role information.
 	/// </summary>
-	public ControllerRole? Role { get; }
+	public ControllerRole? Role { get; } = BuildControllerRole(controllerType);
 
 	/// <summary>
 	/// Gets the controller security information.
 	/// </summary>
-	public ControllerSecurity? Security { get; }
+	public ControllerSecurity? Security { get; } = BuildControllerSecurity(controllerType);
 
-	/// <param name="controllerType">Type of the controller.</param>
-	public ControllerMetadata(Type controllerType)
-	{
-		ControllerType = controllerType;
-		ExecParameters = GetControllerExecParameters(controllerType);
-		Role = GetControllerRole(controllerType);
-		Security = GetControllerSecurity(controllerType);
-	}
+	protected abstract IControllerRoute BuildControllerRoute(string path);
 
-	private ControllerExecParameters? GetControllerExecParameters(ICustomAttributeProvider controllerType)
+	protected ControllerExecParameters? BuildControllerExecParameters(ICustomAttributeProvider controllerType)
 	{
 		var priority = 0;
 
@@ -53,31 +47,14 @@ public abstract class ControllerMetadata : IControllerMetadata
 		if (attributes.Length > 0)
 			priority = ((PriorityAttribute)attributes[0]).Priority;
 
-		var routeInfo = GetControllerRouteInfo(controllerType);
+		var routeInfo = BuildControllerRouteInfo(controllerType);
 
 		return routeInfo.Count > 0 || priority != 0
 			? new ControllerExecParameters(routeInfo, priority)
 			: null;
 	}
 
-	protected abstract IControllerRoute ParseControllerRoute(string path);
-
-	private IDictionary<HttpMethod, IControllerRoute> GetControllerRouteInfo(ICustomAttributeProvider controllerType)
-	{
-		var routeInfo = new Dictionary<HttpMethod, IControllerRoute>();
-
-		foreach (var item in Relations.HttpMethodToHttpMethodAttributeRelation)
-		{
-			var attributes = controllerType.GetCustomAttributes(item.Value, false);
-
-			if (attributes.Length > 0)
-				routeInfo.Add(item.Key, ParseControllerRoute(((ControllerRouteAttribute)attributes[0]).Route));
-		}
-
-		return routeInfo;
-	}
-
-	private static ControllerRole? GetControllerRole(ICustomAttributeProvider controllerType)
+	private static ControllerRole? BuildControllerRole(ICustomAttributeProvider controllerType)
 	{
 		var http403 = false;
 		var http404 = false;
@@ -97,7 +74,7 @@ public abstract class ControllerMetadata : IControllerMetadata
 				: null;
 	}
 
-	private static ControllerSecurity? GetControllerSecurity(ICustomAttributeProvider controllerType)
+	private static ControllerSecurity? BuildControllerSecurity(ICustomAttributeProvider controllerType)
 	{
 		var isAuthorizationRequired = false;
 		IEnumerable<string>? requiredUserRoles = null;
@@ -113,5 +90,20 @@ public abstract class ControllerMetadata : IControllerMetadata
 		return isAuthorizationRequired
 			? new ControllerSecurity(true, requiredUserRoles)
 			: null;
+	}
+
+	private IDictionary<HttpMethod, IControllerRoute> BuildControllerRouteInfo(ICustomAttributeProvider controllerType)
+	{
+		var routeInfo = new Dictionary<HttpMethod, IControllerRoute>();
+
+		foreach (var item in Relations.HttpMethodToHttpMethodAttributeRelation)
+		{
+			var attributes = controllerType.GetCustomAttributes(item.Value, false);
+
+			if (attributes.Length > 0)
+				routeInfo.Add(item.Key, BuildControllerRoute(((ControllerRouteAttribute)attributes[0]).Route));
+		}
+
+		return routeInfo;
 	}
 }
