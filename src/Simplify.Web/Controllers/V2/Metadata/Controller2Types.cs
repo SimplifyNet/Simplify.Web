@@ -7,6 +7,6 @@ public static class Controller2Types
 	public static Type[] Types =>
 	[
 		typeof(Controller2),
-		typeof(Controller2<>),
+		typeof(Controller2<>)
 	];
 }

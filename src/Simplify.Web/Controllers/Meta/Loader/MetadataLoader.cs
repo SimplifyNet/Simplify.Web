@@ -16,7 +16,7 @@ public class MetadataLoader(IControllerMetadataFactoryResolver resolver, IEnumer
 		new Controller1MetadataFactory()
 	];
 
-	private static readonly IEnumerable<Type> DefaultControllersTypes = Controller1Types.Types;
+	private static readonly IEnumerable<Type> DefaultControllersTypes = Controller2Types.Types.Concat(Controller1Types.Types);
 
 	private static IMetadataLoader? _loader;
 

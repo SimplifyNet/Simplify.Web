@@ -3,7 +3,7 @@ using Simplify.Web.Attributes;
 
 namespace SampleApp.Api.Controllers.V2;
 
-[Get("api/v2/different-route-parameters/{StringParam}/{IntParam:int}/{BoolParam:bool}/{StringArrayParam:string[]}")]
+[Get("api/v2/different-route-parameters/{StringParam}/{IntParam}/{BoolParam}/{StringArrayParam}")]
 public class DifferentRouteParametersController : Controller2
 {
 	public ControllerResponse Invoke(string stringParam, int intParam, bool boolParam, string[] stringArrayParam) =>
