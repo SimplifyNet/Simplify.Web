@@ -4,6 +4,7 @@ using Simplify.DI;
 using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.Controllers.RouteMatching.Resolver;
 using Simplify.Web.Controllers.V1.Routing;
+using Simplify.Web.Controllers.V2.Routing;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 

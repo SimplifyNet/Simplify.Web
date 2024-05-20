@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Simplify.Web.System;
 
-namespace Simplify.Web.Controllers.V1.Routing;
+namespace Simplify.Web.Tests.System;
 
 [TestFixture]
 public class StringConverterTests

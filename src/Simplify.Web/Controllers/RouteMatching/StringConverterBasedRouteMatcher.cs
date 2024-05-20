@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Simplify.Web.Controllers.Meta.Routing;
-using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.System;
 
-namespace Simplify.Web.Controllers.V1.Routing;
+namespace Simplify.Web.Controllers.RouteMatching;
 
 public static class StringConverterBasedRouteMatcher
 {

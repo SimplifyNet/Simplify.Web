@@ -4,7 +4,7 @@ using Simplify.Web.Controllers.Meta.Routing;
 using Simplify.Web.Controllers.RouteMatching;
 using Simplify.Web.Controllers.V2.Metadata;
 
-namespace Simplify.Web.Controllers.V1.Routing;
+namespace Simplify.Web.Controllers.V2.Routing;
 
 public class Controller2RouteMatcher : IRouteMatcher
 {
