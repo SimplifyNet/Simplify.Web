@@ -19,7 +19,7 @@ public class Controller2Metadata : ControllerMetadata, IController2Metadata
 	}
 
 	public MethodInfo InvokeMethodInfo { get; }
-	public IDictionary<string, Type> InvokeMethodParameters { get; set; }
+	public IDictionary<string, Type> InvokeMethodParameters { get; }
 
 	protected override IControllerRoute BuildControllerRoute(string path) => new Controller2Route(path, InvokeMethodParameters);
 

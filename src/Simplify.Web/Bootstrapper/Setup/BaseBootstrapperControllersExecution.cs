@@ -5,6 +5,7 @@ using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.Execution.Resolver;
 using Simplify.Web.Controllers.Response;
 using Simplify.Web.Controllers.V1.Execution;
+using Simplify.Web.Controllers.V2.Execution;
 using Simplify.Web.Modules.Redirection;
 
 namespace Simplify.Web.Bootstrapper.Setup;
@@ -29,6 +30,7 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IControllerExecutor>>(r =>
 			[
+				new Controller2Executor(r.Resolve<IController2Factory>()),
 				new Controller1Executor(r.Resolve<IController1Factory>())
 			]);
 	}
