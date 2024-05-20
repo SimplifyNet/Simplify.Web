@@ -6,8 +6,8 @@ namespace Simplify.Web.System;
 
 public static class StringConverter
 {
-	public static readonly Dictionary<Type, Func<string, object?>> ValueConverters =
-		new()
+	public static readonly IReadOnlyDictionary<Type, Func<string, object?>> ValueConverters =
+		new Dictionary<Type, Func<string, object?>>()
 		{
 			{ typeof(string), sourceValue => sourceValue },
 			{ typeof(int), GetIntParameterValue },
