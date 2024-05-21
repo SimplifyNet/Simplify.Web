@@ -45,7 +45,7 @@ public class Controller1ExecutorTests
 			.Returns(_syncController.Object);
 
 		// Act
-		var result = await _executor.ExecuteAsync(matchedController, null!);
+		var result = await _executor.ExecuteAsync(matchedController);
 
 		// Assert
 
@@ -68,7 +68,7 @@ public class Controller1ExecutorTests
 			.Returns(_syncController.Object);
 
 		// Act
-		var result = await _executor.ExecuteAsync(matchedController, null!);
+		var result = await _executor.ExecuteAsync(matchedController);
 
 		// Assert
 
@@ -91,7 +91,7 @@ public class Controller1ExecutorTests
 			.Returns(_syncModelController.Object);
 
 		// Act
-		var result = await _executor.ExecuteAsync(matchedController, null!);
+		var result = await _executor.ExecuteAsync(matchedController);
 
 		// Assert
 
@@ -114,7 +114,7 @@ public class Controller1ExecutorTests
 			.Returns(_asyncController.Object);
 
 		// Act
-		var result = await _executor.ExecuteAsync(matchedController, null!);
+		var result = await _executor.ExecuteAsync(matchedController);
 
 		// Assert
 
@@ -137,7 +137,7 @@ public class Controller1ExecutorTests
 			.Returns(_asyncModelController.Object);
 
 		// Act
-		var result = await _executor.ExecuteAsync(matchedController, null!);
+		var result = await _executor.ExecuteAsync(matchedController);
 
 		// Assert
 

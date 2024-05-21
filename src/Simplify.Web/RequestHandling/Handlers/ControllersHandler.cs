@@ -17,7 +17,7 @@ public class ControllersHandler(IExecutionWorkOrderBuildDirector workOrderBuildD
 			return;
 		}
 
-		var result = await controllersExecutor.ExecuteAsync(workOrder.Controllers, context);
+		var result = await controllersExecutor.ExecuteAsync(workOrder.Controllers);
 
 		if (result != ResponseBehavior.Default)
 			return;

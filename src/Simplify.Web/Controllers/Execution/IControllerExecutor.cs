@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.Execution;
@@ -18,6 +17,5 @@ public interface IControllerExecutor
 	/// Creates the actual controller and executes it.
 	/// </summary>
 	/// <param name="args">The matched controller.</param>
-	/// <param name="context">The HTTP contexts.</param>
-	Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController, HttpContext context);
+	Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController);
 }

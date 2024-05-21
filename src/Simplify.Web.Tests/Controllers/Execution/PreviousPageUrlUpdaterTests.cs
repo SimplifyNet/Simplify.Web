@@ -13,7 +13,6 @@ namespace Simplify.Web.Tests.Controllers.Execution;
 public class PreviousPageUrlUpdaterTests
 {
 	private readonly IReadOnlyList<IMatchedController> _controllers = new List<IMatchedController>();
-	private readonly HttpContext _context = Mock.Of<HttpContext>();
 
 	private PreviousPageUrlUpdater _updater = null!;
 
@@ -32,7 +31,7 @@ public class PreviousPageUrlUpdaterTests
 	public async Task ExecuteAsync_DefaultBehavior_UrlSet()
 	{
 		// Act
-		var result = await _updater.ExecuteAsync(null!, null!);
+		var result = await _updater.ExecuteAsync(null!);
 
 		// Assert
 
@@ -46,11 +45,11 @@ public class PreviousPageUrlUpdaterTests
 	public async Task Execute_NonDefaultBehavior_UrlIsNotSet(ResponseBehavior behavior)
 	{
 		// Arrange
-		_baseExecutor.Setup(x => x.ExecuteAsync(It.Is<IReadOnlyList<IMatchedController>>(c => c == _controllers), It.Is<HttpContext>(c => c == _context)))
+		_baseExecutor.Setup(x => x.ExecuteAsync(It.Is<IReadOnlyList<IMatchedController>>(c => c == _controllers)))
 			.ReturnsAsync(behavior);
 
 		// Act
-		var result = await _updater.ExecuteAsync(_controllers, _context);
+		var result = await _updater.ExecuteAsync(_controllers);
 
 		// Assert
 		Assert.That(result, Is.EqualTo(behavior));

@@ -15,7 +15,7 @@ public class Controller1Executor(IController1Factory controllerFactory) : IContr
 {
 	public bool CanHandle(IControllerMetadata controllerMetadata) => controllerMetadata is IController1Metadata;
 
-	public async Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController, HttpContext context)
+	public async Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController)
 	{
 		var controller = controllerFactory.CreateController(matchedController);
 
