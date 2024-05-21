@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.Meta;
 using Simplify.Web.Controllers.V1.Metadata;
