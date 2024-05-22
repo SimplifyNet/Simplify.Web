@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Simplify.Web.System;
@@ -47,4 +48,6 @@ public static class TypeExtensions
 
 		return false;
 	}
+
+	public static string GetTypeNamesAsString(this IEnumerable<Type> types) => string.Join(", ", types.Select(type => type.Name));
 }

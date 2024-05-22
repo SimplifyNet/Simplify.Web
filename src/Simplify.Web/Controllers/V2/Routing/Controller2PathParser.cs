@@ -61,7 +61,7 @@ public static class Controller2PathParser
 
 		if (!StringConverter.ValueConverters.ContainsKey(parameterType))
 			throw new ControllerRouteException(
-				$"Unsupported parameter type '{parameterType.Name}' of parameter '{parameterName}'. Can be one of: {StringConverter.GetSupportedTypeNamesAsString()}");
+				$"Unsupported parameter type '{parameterType.Name}' of parameter '{parameterName}'. Can be one of: {StringConverter.ValueConverters.Keys.GetTypeNamesAsString()}");
 
 		return new PathParameter(parameterName, parameterType);
 	}

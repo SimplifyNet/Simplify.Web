@@ -27,8 +27,6 @@ public static class StringConverter
 			? converter(sourceValue)
 			: null;
 
-	public static string GetSupportedTypeNamesAsString() => string.Join(", ", ValueConverters.Keys.Select(type => type.Name));
-
 	private static object? GetIntParameterValue(string source)
 	{
 		if (!int.TryParse(source, out var buffer))
