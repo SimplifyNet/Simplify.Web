@@ -31,7 +31,10 @@ public static class SimplifyWebTypesFinder
 	private static IList<Assembly> CurrentDomainAssemblies => _currentDomainAssemblies ??= AppDomain.CurrentDomain.GetAssemblies();
 
 	private static IList<Type> CurrentDomainAssembliesTypes => _currentDomainAssembliesTypes
+#pragma warning disable S2365
 		??= CurrentDomainAssemblies.GetAssembliesTypes(ExcludedAssembliesPrefixes).ToList();
+
+#pragma warning restore S2365
 
 	/// <summary>
 	/// Finds the type derived from specified type in the current domain assemblies.
