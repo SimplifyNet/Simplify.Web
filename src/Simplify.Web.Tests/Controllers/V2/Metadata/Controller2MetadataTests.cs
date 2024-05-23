@@ -22,7 +22,8 @@ public class Controller2MetadataTests
 	}
 
 	[TestCase(typeof(BadReturnTypeController))]
-	public void Ctor_InvalidResult_InvalidOperationException(Type type)
+	[TestCase(typeof(EmptyController))]
+	public void Ctor_InvalidController_InvalidOperationException(Type type)
 	{
 		// Act
 		Assert.Throws<InvalidOperationException>(() => new Controller2Metadata(type));
