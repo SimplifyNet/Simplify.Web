@@ -90,15 +90,16 @@ public class SimplifyWebTypesFinderTests
 	}
 
 	[Test]
-	public void FindTypesDerivedFrom_Controller2With1TypeDerived_1TestControllersReturned()
+	public void FindTypesDerivedFrom_Controller2With1TypeDerived_2TestControllersReturned()
 	{
 		// Act
 		var types = SimplifyWebTypesFinder.FindTypesDerivedFrom<Controller2>().ToList();
 
 		// Assert
 
-		Assert.That(types.Count, Is.EqualTo(1));
-		Assert.That(types[0], Is.EqualTo(typeof(TestControllerV2)));
+		Assert.That(types.Count, Is.EqualTo(2));
+		Assert.That(types[0], Is.EqualTo(typeof(AllAttributesControllerV2)));
+		Assert.That(types[1], Is.EqualTo(typeof(TestControllerV2ViaIntermediateBaseClass)));
 	}
 
 	[Test]
