@@ -1,4 +1,4 @@
-namespace Simplify.Web.Tests.Controllers.V2.Execution.Controller2ExecutorTestTypes;
+namespace Simplify.Web.Tests.Controllers.V2.Metadata.TestTypes;
 
 public class BadReturnTypeController : Controller2
 {
