@@ -1,5 +1,12 @@
+using System.Text.Json;
 using Simplify.Web;
 using Simplify.Web.Bootstrapper;
+using Simplify.Web.Responses;
+
+Json.DefaultOptions = new JsonSerializerOptions
+{
+	PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+};
 
 var builder = WebApplication.CreateBuilder(args);
 

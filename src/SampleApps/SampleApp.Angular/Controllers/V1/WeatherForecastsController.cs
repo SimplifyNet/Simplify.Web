@@ -1,4 +1,3 @@
-using SampleApp.Angular.Responses;
 using SampleApp.Angular.ViewModels;
 using Simplify.Web;
 using Simplify.Web.Attributes;
@@ -14,7 +13,7 @@ public class WeatherForecastsController : Controller
 	];
 
 	public override ControllerResponse Invoke() =>
-		new Json(Enumerable.Range(1, 5).Select(index => new WeatherForecast
+		Json(Enumerable.Range(1, 5).Select(index => new WeatherForecast
 		{
 			Date = DateTime.Now.AddDays(index),
 			TemperatureC = Random.Shared.Next(-20, 55),

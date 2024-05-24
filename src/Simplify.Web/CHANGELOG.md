@@ -5,6 +5,7 @@
 ### Added
 
 - Version 2 controllers
+- Built-in Json response using System.Text.Json
 
 ### Removed
 

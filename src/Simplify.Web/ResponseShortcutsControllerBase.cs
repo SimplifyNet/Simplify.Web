@@ -61,6 +61,13 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected InlineTpl InlineTpl(string dataCollectorVariableName, string data) => new(dataCollectorVariableName, data);
 
 	/// <summary>
+	/// Initializes a new instance of the <see cref="Responses.Json"/> class.
+	/// </summary>
+	/// <param name="objectToConvert">The object to convert to JSON.</param>
+	/// <param name="statusCode">The HTTP response status code.</param>
+	protected Json Json(object objectToConvert, int statusCode = 200) => new(objectToConvert, statusCode);
+
+	/// <summary>
 	/// Initializes a new instance of the <see cref="NoContent"/> class.
 	/// </summary>
 	protected NoContent NoContent() => new();
