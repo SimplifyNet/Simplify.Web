@@ -10,7 +10,7 @@ public static class StringConverterBasedRouteMatcher
 	public static IRouteMatchResult Match(IList<string> currentPath, IControllerRoute controllerRoute)
 	{
 		// Run on all pages route
-		if (controllerRoute.Items.Count == 0)
+		if (controllerRoute.Items.Count == 0 && controllerRoute.Path == "")
 			return new RouteMatchResult(true);
 
 		if (currentPath.Count != controllerRoute.Items.Count)

@@ -25,6 +25,7 @@ public class Controller1RouteMatcherTests
 
 	[TestCase(null, "/test")]
 	[TestCase("", "/test")]
+	[TestCase("/test", "/")]
 	[TestCase("/foo", "/bar")]
 	[TestCase("/foo/bar/test", "/foo")]
 	[TestCase("/foo", "/foo/bar/test")]
