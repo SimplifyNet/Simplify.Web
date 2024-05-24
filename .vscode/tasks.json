@@ -34,16 +34,18 @@
 		{
 			"label": "Build",
 			"command": "dotnet",
-			"type": "process",
+			"type": "shell",
 			"args": [
-				"build",
-				"${workspaceFolder}/src/Simplify.Web.sln"
+				"build"
 			],
-			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "src"
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			}
+			},
+			"problemMatcher": "$msCompile"
 		}
 	]
 }
