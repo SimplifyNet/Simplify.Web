@@ -34,7 +34,7 @@
 		{
 			"label": "Build",
 			"command": "dotnet",
-			"type": "shell",
+			"type": "process",
 			"args": [
 				"build"
 			],
@@ -50,7 +50,7 @@
 		{
 			"label": "Test",
 			"command": "dotnet",
-			"type": "shell",
+			"type": "process",
 			"args": [
 				"test",
 				"-f",
