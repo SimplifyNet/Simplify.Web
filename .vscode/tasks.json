@@ -46,6 +46,26 @@
 				"isDefault": true
 			},
 			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Test",
+			"command": "dotnet",
+			"type": "shell",
+			"args": [
+				"test",
+				"-f",
+				"net8.0",
+				"--filter",
+				"TestCategory!=\"Benchmark\""
+			],
+			"options": {
+				"cwd": "src"
+			},
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": "$msCompile"
 		}
 	]
 }
