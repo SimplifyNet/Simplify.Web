@@ -1,4 +1,5 @@
-﻿using Simplify.DI;
+﻿using System.Linq;
+using Simplify.DI;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.PropertiesInjection;
 
@@ -17,7 +18,7 @@ public class Controller2Factory(IDIResolver resolver) : ActionModulesAccessorInj
 
 		InjectActionModulesAccessorProperties(controller);
 
-		controller.StringTable = _resolver.Resolve<IStringTable>().Items;
+		controller.StringTable = _resolver.Resolve<IStringTable>().Items.ToDictionary(x => x.Key, x => (string?)x.Value);
 
 		return controller;
 	}
