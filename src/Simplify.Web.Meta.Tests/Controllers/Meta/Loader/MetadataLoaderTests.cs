@@ -29,15 +29,13 @@ public class MetadataLoaderTests
 
 		// Assert
 
-		Assert.That(items.Count, Is.EqualTo(8));
+		Assert.That(items.Count, Is.EqualTo(7));
 
-		Assert.That(items[0].ControllerType, Is.EqualTo(typeof(AllAttributesControllerV2)));
 		Assert.That(items[1].ControllerType, Is.EqualTo(typeof(TestControllerV2ViaIntermediateBaseClass)));
 		Assert.That(items[2].ControllerType, Is.EqualTo(typeof(TestControllerV2WithModel)));
-		Assert.That(items[3].ControllerType, Is.EqualTo(typeof(AllAttributesController)));
-		Assert.That(items[4].ControllerType, Is.EqualTo(typeof(TestControllerViaIntermediateBaseClass)));
-		Assert.That(items[5].ControllerType, Is.EqualTo(typeof(TestAsyncController)));
-		Assert.That(items[6].ControllerType, Is.EqualTo(typeof(TestControllerWithModel)));
-		Assert.That(items[7].ControllerType, Is.EqualTo(typeof(TestAsyncWithModelController)));
+		Assert.That(items[3].ControllerType, Is.EqualTo(typeof(TestControllerViaIntermediateBaseClass)));
+		Assert.That(items[4].ControllerType, Is.EqualTo(typeof(TestAsyncController)));
+		Assert.That(items[5].ControllerType, Is.EqualTo(typeof(TestControllerWithModel)));
+		Assert.That(items[6].ControllerType, Is.EqualTo(typeof(TestAsyncWithModelController)));
 	}
 }

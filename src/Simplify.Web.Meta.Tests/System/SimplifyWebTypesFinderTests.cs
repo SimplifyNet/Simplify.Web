@@ -46,11 +46,10 @@ public class SimplifyWebTypesFinderTests
 
 		// Assert
 
-		Assert.That(types.Count, Is.EqualTo(3));
+		Assert.That(types.Count, Is.EqualTo(2));
 
-		Assert.That(types[0], Is.EqualTo(typeof(AllAttributesController)));
-		Assert.That(types[1], Is.EqualTo(typeof(TestController)));
-		Assert.That(types[2], Is.EqualTo(typeof(TestControllerViaIntermediateBaseClass)));
+		Assert.That(types[0], Is.EqualTo(typeof(TestController)));
+		Assert.That(types[1], Is.EqualTo(typeof(TestControllerViaIntermediateBaseClass)));
 	}
 
 	[Test]
@@ -98,7 +97,6 @@ public class SimplifyWebTypesFinderTests
 		// Assert
 
 		Assert.That(types.Count, Is.EqualTo(2));
-		Assert.That(types[0], Is.EqualTo(typeof(AllAttributesControllerV2)));
 		Assert.That(types[1], Is.EqualTo(typeof(TestControllerV2ViaIntermediateBaseClass)));
 	}
 

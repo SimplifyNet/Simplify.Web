@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 using Simplify.Web.Controllers.V2.Metadata;
-using Simplify.Web.Tests.Controllers.V2.Metadata.TestTypes;
+using Simplify.Web.Tests.Controllers.V2.Metadata.MetadataTests.TestTypes;
 
-namespace Simplify.Web.Tests.Controllers.V2.Metadata;
+namespace Simplify.Web.Tests.Controllers.V2.Metadata.MetadataTests;
 
 [TestFixture]
 public class Controller2MetadataTests

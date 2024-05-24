@@ -2,12 +2,12 @@
 using NUnit.Framework;
 using Simplify.Web.Controllers.V1.Metadata;
 using Simplify.Web.Http;
-using Simplify.Web.Meta.Tests.TestTypes.Controllers.V2;
+using Simplify.Web.Tests.Controllers.V1.Metadata.MetadataFactoryTests.TestTypes;
 
-namespace Simplify.Web.Meta.Tests.Controllers.V2.Metadata;
+namespace Simplify.Web.Tests.Controllers.V1.Metadata.MetadataFactoryTests;
 
 [TestFixture]
-public class Controller2MetadataFactoryTests
+public class Controller1MetadataFactoryTests
 {
 	[Test]
 	public void Create_AllAttributesController_PropertiesSetCorrectly()
@@ -16,11 +16,11 @@ public class Controller2MetadataFactoryTests
 		var factory = new Controller1MetadataFactory();
 
 		// Act
-		var metaData = factory.Create(typeof(AllAttributesControllerV2));
+		var metaData = factory.Create(typeof(AllAttributesController));
 
 		// Assert
 
-		Assert.That(metaData.ControllerType, Is.EqualTo(typeof(AllAttributesControllerV2)));
+		Assert.That(metaData.ControllerType, Is.EqualTo(typeof(AllAttributesController)));
 		Assert.That(metaData.Role, Is.Not.Null);
 		Assert.That(metaData.Role!.IsForbiddenHandler, Is.True);
 		Assert.That(metaData.Role!.IsNotFoundHandler, Is.True);

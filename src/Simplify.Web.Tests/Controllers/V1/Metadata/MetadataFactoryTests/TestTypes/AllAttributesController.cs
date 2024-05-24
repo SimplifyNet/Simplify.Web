@@ -1,7 +1,7 @@
 ﻿using System;
 using Simplify.Web.Attributes;
 
-namespace Simplify.Web.Meta.Tests.TestTypes.Controllers.V1;
+namespace Simplify.Web.Tests.Controllers.V1.Metadata.MetadataFactoryTests.TestTypes;
 
 [Get("/test-action")]
 [Post("/test-action1")]

@@ -1,26 +1,26 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Simplify.Web.Controllers.V1.Metadata;
+using Simplify.Web.Controllers.V2.Metadata;
 using Simplify.Web.Http;
-using Simplify.Web.Meta.Tests.TestTypes.Controllers.V1;
+using Simplify.Web.Tests.Controllers.V2.Metadata.MetadataFactoryTests.TestTypes;
 
-namespace Simplify.Web.Meta.Tests.Controllers.V1.Metadata;
+namespace Simplify.Web.Tests.Controllers.V2.Metadata.MetadataFactoryTests;
 
 [TestFixture]
-public class Controller1MetadataFactoryTests
+public class Controller2MetadataFactoryTests
 {
 	[Test]
 	public void Create_AllAttributesController_PropertiesSetCorrectly()
 	{
 		// Arrange
-		var factory = new Controller1MetadataFactory();
+		var factory = new Controller2MetadataFactory();
 
 		// Act
-		var metaData = factory.Create(typeof(AllAttributesController));
+		var metaData = factory.Create(typeof(AllAttributesControllerV2));
 
 		// Assert
 
-		Assert.That(metaData.ControllerType, Is.EqualTo(typeof(AllAttributesController)));
+		Assert.That(metaData.ControllerType, Is.EqualTo(typeof(AllAttributesControllerV2)));
 		Assert.That(metaData.Role, Is.Not.Null);
 		Assert.That(metaData.Role!.IsForbiddenHandler, Is.True);
 		Assert.That(metaData.Role!.IsNotFoundHandler, Is.True);
@@ -48,5 +48,19 @@ public class Controller1MetadataFactoryTests
 		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Patch).Value.Path, Is.EqualTo("/test-action3"));
 		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Delete).Value.Path, Is.EqualTo("/test-action4"));
 		Assert.That(metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Options).Value.Path, Is.EqualTo("/test-action5"));
+	}
+
+	[Test]
+	public void Create_AllParamsController_ParamsParsedCorrectly()
+	{
+		// Arrange
+		var factory = new Controller2MetadataFactory();
+
+		// Act
+		var metaData = (IController2Metadata)factory.Create(typeof(AllParamsControllerV2));
+
+		// Assert
+
+		Assert.That(metaData.InvokeMethodParameters["stringparam"], Is.EqualTo(typeof(string)));
 	}
 }
