@@ -1,11 +1,10 @@
 ﻿using Simplify.Web;
 using Simplify.Web.Attributes;
-using Simplify.Web.Responses;
 
 namespace SampleApp.Classic.Controllers.HttpErrors;
 
 [Http404]
-public class Http404Controller : Controller
+public class Http404Controller : Controller2
 {
-	public override ControllerResponse Invoke() => new StaticTpl("HttpErrors/Http404", StringTable.PageTitle404, 404);
+	public ControllerResponse Invoke() => StaticTpl("HttpErrors/Http404", StringTable["PageTitle404"], 404);
 }

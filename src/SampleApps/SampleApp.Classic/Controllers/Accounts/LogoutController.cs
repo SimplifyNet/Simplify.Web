@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Simplify.Web;
 using Simplify.Web.Attributes;
-using Simplify.Web.Responses;
 
 namespace SampleApp.Classic.Controllers.Accounts;
 
@@ -13,6 +12,6 @@ public class LogoutController : AsyncController
 	{
 		await Context.Context.SignOutAsync();
 
-		return new Redirect();
+		return Redirect();
 	}
 }

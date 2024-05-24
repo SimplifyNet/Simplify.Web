@@ -4,7 +4,7 @@ using Simplify.Web.Attributes;
 namespace SampleApp.Api.Controllers;
 
 [Get("status")]
-public class StatusController : Controller
+public class StatusController : Controller2
 {
-	public override ControllerResponse Invoke() => Content("Service is running!");
+	public ControllerResponse Invoke() => Content("Service is running!");
 }

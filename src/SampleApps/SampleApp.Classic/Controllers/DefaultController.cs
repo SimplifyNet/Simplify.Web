@@ -1,11 +1,10 @@
 ﻿using Simplify.Web;
 using Simplify.Web.Attributes;
-using Simplify.Web.Responses;
 
 namespace SampleApp.Classic.Controllers;
 
 [Get("/")]
-public class DefaultController : Controller
+public class DefaultController : Controller2
 {
-	public override ControllerResponse Invoke() => new StaticTpl("Default");
+	public ControllerResponse Invoke() => StaticTpl("Default");
 }

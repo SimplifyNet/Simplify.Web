@@ -10,7 +10,6 @@ using SampleApp.Classic.Views.Accounts;
 using Simplify.Web;
 using Simplify.Web.Attributes;
 using Simplify.Web.Modules.Redirection;
-using Simplify.Web.Responses;
 
 namespace SampleApp.Classic.Controllers.Accounts;
 
@@ -34,9 +33,9 @@ public class LoginController : LoggableController<LoginViewModel>
 
 			await Context.Context.SignInAsync(new ClaimsPrincipal(id));
 
-			return new Redirect(RedirectionType.LoginReturnUrl);
+			return Redirect(RedirectionType.LoginReturnUrl);
 		}
 
-		return new Tpl(GetView<LoginView>().Get(Model, GetView<MessageBoxView>().Get(StringTable.WrongUserNameOrPassword)), StringTable.PageTitleLogin);
+		return Tpl(GetView<LoginView>().Get(Model, GetView<MessageBoxView>().Get(StringTable.WrongUserNameOrPassword)), StringTable.PageTitleLogin);
 	}
 }
