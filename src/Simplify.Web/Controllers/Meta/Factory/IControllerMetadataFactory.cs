@@ -8,7 +8,7 @@ namespace Simplify.Web.Controllers.Meta.Factory;
 public interface IControllerMetadataFactory
 {
 	/// <summary>
-	/// Determines whether this factory can create a metadata fro specified type
+	/// Determines whether this factory can create a metadata for specified type
 	/// </summary>
 	/// <param name="controllerType">Type of the controller.</param>
 	bool CanHandle(Type controllerType);
