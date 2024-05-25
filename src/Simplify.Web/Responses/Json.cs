@@ -13,6 +13,13 @@ namespace Simplify.Web.Responses;
 /// <param name="statusCode">The HTTP response status code.</param>
 public class Json(object objectToConvert, int statusCode = 200) : ControllerResponse
 {
+	/// <summary>
+	/// Gets the HTTP response status code.
+	/// </summary>
+	/// <value>
+	/// The HTTP response status code.
+	/// </value>
+	private readonly int _statusCode = statusCode;
 
 	/// <summary>
 	/// Gets or sets the default JsonSerializerOptions
@@ -21,14 +28,6 @@ public class Json(object objectToConvert, int statusCode = 200) : ControllerResp
 	/// The default JsonSerializerOptions.
 	/// </value>
 	public static JsonSerializerOptions? DefaultOptions { get; set; } = null;
-
-	/// <summary>
-	/// Gets the HTTP response status code.
-	/// </summary>
-	/// <value>
-	/// The HTTP response status code.
-	/// </value>
-	private readonly int _statusCode = statusCode;
 
 	/// <summary>
 	/// Processes this response

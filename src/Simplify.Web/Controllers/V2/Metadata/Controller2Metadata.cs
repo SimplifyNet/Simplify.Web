@@ -27,15 +27,15 @@ public class Controller2Metadata : ControllerMetadata, IController2Metadata
 
 	protected override IControllerRoute BuildControllerRoute(string path) => new Controller2Route(path, InvokeMethodParameters);
 
-	private MethodInfo BuildInvokeMethodInfo(string invokeMethodName) =>
-		ControllerType.GetMethod(invokeMethodName)
-		?? throw new InvalidOperationException($"Method {invokeMethodName} not found in class {ControllerType.Name}");
-
 	private static void ValidateReturnType(MethodInfo methodInfo)
 	{
 		if (!Controller2ValidReturnTypes.Types.Contains(methodInfo.ReturnType))
 			throw new InvalidOperationException($"Invoke method invalid return type, can be one of: {Controller2ValidReturnTypes.Types.GetTypeNamesAsString()}");
 	}
+
+	private MethodInfo BuildInvokeMethodInfo(string invokeMethodName) =>
+			ControllerType.GetMethod(invokeMethodName)
+		?? throw new InvalidOperationException($"Method {invokeMethodName} not found in class {ControllerType.Name}");
 
 	private IDictionary<string, Type> BuildInvokeMethodParameters() =>
 		InvokeMethodInfo
