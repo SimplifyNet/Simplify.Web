@@ -24,6 +24,8 @@ public class ControllersExecutorTests
 	private ControllerResponse _controllerResponse1 = null!;
 	private ControllerResponse _controllerResponse2 = null!;
 
+	private Mock<IControllerExecutorResolver> _resolver = null!;
+
 	private Mock<IControllerExecutor> _controllerExecutor1 = null!;
 	private Mock<IControllerExecutor> _controllerExecutor2 = null!;
 
@@ -35,6 +37,8 @@ public class ControllersExecutorTests
 		_controller1 = Mock.Of<IMatchedController>(x => x.Controller == _controllerMetadata1);
 		_controller2 = Mock.Of<IMatchedController>(x => x.Controller == _controllerMetadata2);
 		_controller3 = Mock.Of<IMatchedController>(x => x.Controller == _controllerMetadata3);
+
+		_resolver = new Mock<IControllerExecutorResolver>();
 
 		_controllerExecutor1 = new Mock<IControllerExecutor>();
 		_controllerExecutor2 = new Mock<IControllerExecutor>();
@@ -50,13 +54,12 @@ public class ControllersExecutorTests
 	{
 		// Arrange
 
-		var resolver = new Mock<IControllerExecutorResolver>();
 		var controllers = new List<IMatchedController> { _controller1 };
 
-		resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata1)))
+		_resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata1)))
 			.Returns(_controllerExecutor1.Object);
 
-		var executor = new ControllersExecutor(resolver.Object, _responseExecutor.Object);
+		var executor = new ControllersExecutor(_resolver.Object, _responseExecutor.Object);
 
 		// Act
 		var result = await executor.ExecuteAsync(controllers);
@@ -74,10 +77,9 @@ public class ControllersExecutorTests
 	{
 		// Arrange
 
-		var resolver = new Mock<IControllerExecutorResolver>();
 		var controllers = new List<IMatchedController> { _controller1 };
 
-		resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata1)))
+		_resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata1)))
 			.Returns(_controllerExecutor1.Object);
 
 		_controllerExecutor1.Setup(x => x.ExecuteAsync(It.Is<IMatchedController>(c => c == _controller1)))
@@ -86,7 +88,7 @@ public class ControllersExecutorTests
 		_responseExecutor.Setup(x => x.ExecuteAsync(It.Is<ControllerResponse>(r => r == _controllerResponse1)))
 			.ReturnsAsync(ResponseBehavior.RawOutput);
 
-		var executor = new ControllersExecutor(resolver.Object, _responseExecutor.Object);
+		var executor = new ControllersExecutor(_resolver.Object, _responseExecutor.Object);
 
 		// Act
 		var result = await executor.ExecuteAsync(controllers);
@@ -105,13 +107,12 @@ public class ControllersExecutorTests
 	{
 		// Arrange
 
-		var resolver = new Mock<IControllerExecutorResolver>();
 		var controllers = new List<IMatchedController> { _controller1, _controller2, _controller3 };
 
-		resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata1)))
+		_resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata1)))
 			.Returns(_controllerExecutor1.Object);
 
-		resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata2)))
+		_resolver.Setup(x => x.Resolve(It.Is<IControllerMetadata>(m => m == _controllerMetadata2)))
 			.Returns(_controllerExecutor2.Object);
 
 		_controllerExecutor1.Setup(x => x.ExecuteAsync(It.Is<IMatchedController>(c => c == _controller1)))
@@ -123,7 +124,7 @@ public class ControllersExecutorTests
 		_responseExecutor.Setup(x => x.ExecuteAsync(It.Is<ControllerResponse>(r => r == _controllerResponse1)));
 		_responseExecutor.Setup(x => x.ExecuteAsync(It.Is<ControllerResponse>(r => r == _controllerResponse2))).ReturnsAsync(secondControllerResult);
 
-		var executor = new ControllersExecutor(resolver.Object, _responseExecutor.Object);
+		var executor = new ControllersExecutor(_resolver.Object, _responseExecutor.Object);
 
 		// Act
 		var result = await executor.ExecuteAsync(controllers);
