@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers.Execution;
 using Simplify.Web.Controllers.Execution.Resolver;
@@ -54,5 +55,18 @@ public class ControllerExecutorResolverTests
 		Assert.That(result, Is.EqualTo(executor2.Object));
 
 		executor2.Verify(x => x.CanHandle(It.Is<IControllerMetadata>(m => m == md)));
+	}
+
+	[Test]
+	public void Resolve_NoExecutorsMatched_Exception()
+	{
+		// Arrange
+
+		var md = Mock.Of<IControllerMetadata>();
+
+		var resolver = new ControllerExecutorResolver([]);
+
+		// Act
+		Assert.Throws<InvalidOperationException>(() => resolver.Resolve(md));
 	}
 }
