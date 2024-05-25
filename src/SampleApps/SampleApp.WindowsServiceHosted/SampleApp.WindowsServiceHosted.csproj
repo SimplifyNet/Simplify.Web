@@ -11,10 +11,14 @@
 		<Copyright>Licensed under LGPL</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="System.ServiceModel" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
 		<PackageReference Include="Simplify.WindowsServices" Version="2.14.*" />
-		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
-		<Reference Include="System.ServiceModel" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="Templates\Master.tpl">
