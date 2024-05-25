@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Simplify.Web.Controllers.Meta;
 
@@ -11,10 +12,9 @@ public class SecurityChecker(IReadOnlyList<ISecurityRule> checks) : ISecurityChe
 		if (metaData.Security is not { IsAuthorizationRequired: true })
 			return SecurityStatus.Ok;
 
-		foreach (var check in checks)
-			if (check.IsViolated(metaData.Security, user))
-				return check.ViolationStatus;
-
-		return SecurityStatus.Ok;
+		return (from check in checks
+				where check.IsViolated(metaData.Security, user)
+				select check.ViolationStatus)
+			.FirstOrDefault();
 	}
 }
