@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 
+// ReSharper disable StringLiteralTypo
+
 namespace Simplify.Web.Http.Mime;
 
 /// <summary>
@@ -12,7 +14,7 @@ public static class MimeTypeAssistant
 	/// <summary>
 	/// Provides the file extension to MIME type relations
 	/// </summary>
-	public static readonly IDictionary<string, string> ExtensionsToMimeTypesRelation =
+	public static readonly IReadOnlyDictionary<string, string> ExtensionsToMimeTypesRelation =
 		new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
 	{
 		{ ".323", "text/h323" },
@@ -636,7 +638,7 @@ public static class MimeTypeAssistant
 	/// <summary>
 	/// The MIME type to file extension relations
 	/// </summary>
-	public static readonly IDictionary<string, string> MimeTypesToExtensionsRelation = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+	public static readonly IReadOnlyDictionary<string, string> MimeTypesToExtensionsRelation = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
 	{
 		{ "application/fsharp-script", ".fsx" },
 		{ "application/msaccess", ".adp" },
@@ -702,7 +704,9 @@ public static class MimeTypeAssistant
 		if (!fileExtension.StartsWith("."))
 			fileExtension = "." + fileExtension;
 
-		return ExtensionsToMimeTypesRelation.TryGetValue(fileExtension, out var mime) ? mime : "application/octet-stream";
+		return ExtensionsToMimeTypesRelation.TryGetValue(fileExtension, out var mime)
+			? mime
+			: "application/octet-stream";
 	}
 
 	/// <summary>
