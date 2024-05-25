@@ -22,12 +22,16 @@ public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath)
 	/// Determines whether the relative file path is a static file route path.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
-	public bool IsValidPath(string relativeFilePath) =>
-		staticFilesPaths
-			.Where(relativeFilePath.ToLower().StartsWith)
-			.Any(_ => File.Exists(sitePhysicalPath + relativeFilePath));
+	public bool IsValidPath(string relativeFilePath)
+	{
+		relativeFilePath = relativeFilePath.ToLower();
 
-	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(relativeFilePath).TrimMilliseconds();
+		return staticFilesPaths
+			.Where(relativeFilePath.StartsWith)
+			.Any(_ => File.Exists(sitePhysicalPath + relativeFilePath));
+	}
+
+	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(sitePhysicalPath + relativeFilePath).TrimMilliseconds();
 
 	/// <summary>
 	/// Gets the file data.
@@ -42,7 +46,7 @@ public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath)
 
 		await stream.ReadAsync(result, 0, (int)stream.Length);
 #else
-		await using var stream = File.Open(relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+		await using var stream = File.Open(sitePhysicalPath + relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
 		var result = new byte[stream.Length];
 
