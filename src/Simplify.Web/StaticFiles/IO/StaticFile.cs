@@ -35,13 +35,17 @@ public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath)
 	/// <param name="relativeFilePath">The relative file path.</param>
 	public async Task<byte[]> GetDataAsync(string relativeFilePath)
 	{
+#if NETSTANDARD2_0
 		using var stream = File.Open(relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
 		var result = new byte[stream.Length];
 
-#if NETSTANDARD2_0
 		await stream.ReadAsync(result, 0, (int)stream.Length);
 #else
+		await using var stream = File.Open(relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+		var result = new byte[stream.Length];
+
 		await stream.ReadAsync(result.AsMemory(0, (int)stream.Length));
 #endif
 
