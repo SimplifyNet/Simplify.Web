@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +22,7 @@ public static class ControllerMetadataRouteExtensions
 		{
 			HandlerControllerType.ForbiddenHandler => list.FirstOrDefault(x => x.Role is { IsForbiddenHandler: true }),
 			HandlerControllerType.NotFoundHandler => list.FirstOrDefault(x => x.Role is { IsNotFoundHandler: true }),
-			_ => null
+			_ => throw new InvalidOperationException("Invalid controller type: " + controllerType)
 		};
 
 	public static bool IsSpecialController(this IControllerMetadata controller) =>
