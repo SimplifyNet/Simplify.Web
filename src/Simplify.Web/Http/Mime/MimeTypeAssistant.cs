@@ -636,7 +636,7 @@ public static class MimeTypeAssistant
 	};
 
 	/// <summary>
-	/// The MIME type to file extension relations
+	/// Gets the MIME type to file extension relations
 	/// </summary>
 	public static readonly IReadOnlyDictionary<string, string> MimeTypesToExtensionsRelation = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
 	{

@@ -8,7 +8,17 @@ namespace Simplify.Web.Tests.Http.Mime;
 public class MimeTypeAssistantTests
 {
 	[Test]
-	public void GetExtension_NonExistingMimeType_FileExtensionReturned()
+	public void GetExtension_ArgumentNull_ArgumentException()
+	{
+		// Act & Assert
+		var result = Assert.Throws<ArgumentException>(() => MimeTypeAssistant.GetExtension(null!));
+
+		// Assert
+		Assert.That(result?.Message, Does.Contain("Value cannot be null or empty."));
+	}
+
+	[Test]
+	public void GetExtension_NonExistingMimeType_ArgumentException()
 	{
 		// Arrange
 		const string mimeType = "test";
@@ -18,6 +28,16 @@ public class MimeTypeAssistantTests
 
 		// Assert
 		Assert.That(result?.Message, Is.EqualTo("Requested mime type is not registered: test"));
+	}
+
+	[Test]
+	public void GetExtension_StartsWithDot_ArgumentException()
+	{
+		// Act & Assert
+		var result = Assert.Throws<ArgumentException>(() => MimeTypeAssistant.GetExtension(".foo"));
+
+		// Assert
+		Assert.That(result?.Message, Is.EqualTo("Requested mime type is not valid: .foo"));
 	}
 
 	[Test]
