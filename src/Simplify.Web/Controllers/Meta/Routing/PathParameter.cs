@@ -2,7 +2,6 @@
 
 namespace Simplify.Web.Controllers.Meta.Routing;
 
-
 /// <summary>
 /// Provides the path parameter element.
 /// </summary>
