@@ -84,4 +84,17 @@ public class MimeTypeAssistantTests
 		// Assert
 		Assert.That(result, Is.EqualTo("text/plain"));
 	}
+
+	[Test]
+	public void GetMimeType_UndefinedMimeType_DefaultMimeTypeReturned()
+	{
+		// Arrange
+		const string extension = ".foo";
+
+		// Act
+		var result = MimeTypeAssistant.GetMimeType(extension);
+
+		// Assert
+		Assert.That(result, Is.EqualTo("application/octet-stream"));
+	}
 }
