@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,16 +15,13 @@ public class StaticFileTests
 	// ReSharper disable once StringLiteralTypo
 	private readonly IList<string> _validPaths = ["staticfiles"];
 
-	private string _sitePhysicalPath = Directory.GetCurrentDirectory();
+	private readonly string _sitePhysicalPath = Directory.GetCurrentDirectory() + "/";
 
 	private StaticFile _staticFile = null!;
 
 	[SetUp]
 	public void Initialize()
 	{
-		if (!_sitePhysicalPath.EndsWith("/"))
-			_sitePhysicalPath += "/";
-
 		_staticFile = new StaticFile(_validPaths, _sitePhysicalPath);
 	}
 

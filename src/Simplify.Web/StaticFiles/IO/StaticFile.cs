@@ -24,10 +24,10 @@ public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath)
 	/// <param name="relativeFilePath">The relative file path.</param>
 	public bool IsValidPath(string relativeFilePath)
 	{
-		relativeFilePath = relativeFilePath.ToLower();
+		var relativeFilePathForCheck = relativeFilePath.ToLower();
 
 		return staticFilesPaths
-			.Where(relativeFilePath.StartsWith)
+			.Where(relativeFilePathForCheck.StartsWith)
 			.Any(_ => File.Exists(sitePhysicalPath + relativeFilePath));
 	}
 
