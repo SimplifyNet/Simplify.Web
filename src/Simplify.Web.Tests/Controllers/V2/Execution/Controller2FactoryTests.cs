@@ -39,7 +39,7 @@ public class Controller2FactoryTests
 		var languageManagerProvider = new Mock<ILanguageManagerProvider>();
 		var languageManager = Mock.Of<ILanguageManager>();
 		var redirector = Mock.Of<IRedirector>();
-		var stringTable = Mock.Of<IStringTable>(x => x.Items == new Dictionary<string, object?>());
+		var stringTable = Mock.Of<IStringTable>(x => x.Items == new Dictionary<string, object?> { { "foo", "bar" } });
 		var templateFactory = Mock.Of<ITemplateFactory>();
 
 		provider.Register<StringResponseController>(LifetimeType.Transient);
@@ -69,6 +69,8 @@ public class Controller2FactoryTests
 		Assert.That(r, Is.Not.Null);
 
 		Assert.That(r.StringTable, Is.Not.Null);
+		Assert.That(r.StringTable["foo"], Is.EqualTo("bar"));
+
 		Assert.That(r.Context, Is.EqualTo(webContext));
 		Assert.That(r.DataCollector, Is.EqualTo(dataCollector));
 		Assert.That(r.Environment, Is.EqualTo(environment));
