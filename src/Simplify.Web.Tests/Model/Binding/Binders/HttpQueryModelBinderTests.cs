@@ -66,13 +66,9 @@ public class HttpQueryModelBinderTests
 	{
 		// Arrange
 
-		var query = new Dictionary<string, StringValues>
-		{
-		};
-
 		var context = Mock.Of<IWebContext>(x =>
 			x.Request.Method == "GET" &&
-			x.Query == new QueryCollection(query));
+			x.Query == new QueryCollection(new Dictionary<string, StringValues>()));
 
 		var args = new ModelBinderEventArgs<FooModel>(context);
 
