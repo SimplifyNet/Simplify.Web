@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers;
+using Simplify.Web.Controllers.V1.Metadata;
 using Simplify.Web.Controllers.V2.Execution;
 using Simplify.Web.Controllers.V2.Metadata;
 using Simplify.Web.Responses;
@@ -23,6 +24,26 @@ public class Controller2ExecutorTests
 		_controllerFactory = new Mock<IController2Factory>();
 
 		_executor = new Controller2Executor(_controllerFactory.Object);
+	}
+
+	[Test]
+	public void CanHandle_MatchedControllerMetadata_True()
+	{
+		// Act
+		var result = _executor.CanHandle(Mock.Of<IController2Metadata>());
+
+		// Assert
+		Assert.That(result, Is.True);
+	}
+
+	[Test]
+	public void CanHandle_NotMatchedControllerMetadata_False()
+	{
+		// Act
+		var result = _executor.CanHandle(Mock.Of<IController1Metadata>());
+
+		// Assert
+		Assert.That(result, Is.False);
 	}
 
 	[Test]
