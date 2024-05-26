@@ -3,6 +3,8 @@ using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers;
 using Simplify.Web.Controllers.V1.Execution;
+using Simplify.Web.Controllers.V1.Metadata;
+using Simplify.Web.Controllers.V2.Metadata;
 using Simplify.Web.Tests.Controllers.V1.Execution.TestModels;
 
 namespace Simplify.Web.Tests.Controllers.V1.Execution;
@@ -32,6 +34,26 @@ public class Controller1ExecutorTests
 		_asyncController = new Mock<AsyncController>();
 		_syncModelController = new Mock<Controller<TestModel>>();
 		_asyncModelController = new Mock<AsyncController<TestModel>>();
+	}
+
+	[Test]
+	public void CanHandle_MatchedControllerMetadata_True()
+	{
+		// Act
+		var result = _executor.CanHandle(Mock.Of<IController1Metadata>());
+
+		// Assert
+		Assert.That(result, Is.True);
+	}
+
+	[Test]
+	public void CanHandle_NotMatchedControllerMetadata_False()
+	{
+		// Act
+		var result = _executor.CanHandle(Mock.Of<IController2Metadata>());
+
+		// Assert
+		Assert.That(result, Is.False);
 	}
 
 	[Test]
@@ -79,7 +101,7 @@ public class Controller1ExecutorTests
 	}
 
 	[Test]
-	public async Task Process_ModelControllerWithResponse_InvokedAndResponseReturned()
+	public async Task ExecuteAsync_ModelControllerWithResponse_InvokedAndResponseReturned()
 	{
 		// Arrange
 
