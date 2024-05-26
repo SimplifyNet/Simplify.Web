@@ -54,9 +54,9 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	public bool StaticFilesEnabled { get; private set; } = true;
 
-	public IList<string> StaticFilesPaths { get; } = ["styles", "scripts", "images", "content", "fonts"];
+	public IReadOnlyList<string> StaticFilesPaths { get; private set; } = ["styles", "scripts", "images", "content", "fonts"];
 
-	public IList<string> StringTableFiles { get; } = ["StringTable.xml"];
+	public IReadOnlyList<string> StringTableFiles { get; private set; } = ["StringTable.xml"];
 
 	public bool DisableAutomaticSiteTitleSet { get; private set; }
 
@@ -101,13 +101,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		if (string.IsNullOrEmpty(stringTableFiles))
 			return;
 
-		{
-			StringTableFiles.Clear();
-			var items = stringTableFiles!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-			foreach (var item in items)
-				StringTableFiles.Add(item);
-		}
+		StringTableFiles = stringTableFiles!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 	}
 
 	private void LoadStyleSettings(IConfiguration config) =>
@@ -122,12 +116,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		if (string.IsNullOrEmpty(staticFilesPaths))
 			return;
 
-		StaticFilesPaths.Clear();
-
-		var items = staticFilesPaths!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-		foreach (var item in items)
-			StaticFilesPaths.Add(item);
+		StaticFilesPaths = staticFilesPaths!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 	}
 
 	private void LoadEngineBehaviorSettings(IConfiguration config)

@@ -16,7 +16,7 @@ namespace Simplify.Web.StaticFiles.IO;
 /// </remarks>
 /// <param name="staticFilesPaths">The static files paths.</param>
 /// <param name="sitePhysicalPath">The site physical path.</param>
-public class StaticFile(IList<string> staticFilesPaths, string sitePhysicalPath) : IStaticFile
+public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysicalPath) : IStaticFile
 {
 	/// <summary>
 	/// Determines whether the relative file path is a static file route path.

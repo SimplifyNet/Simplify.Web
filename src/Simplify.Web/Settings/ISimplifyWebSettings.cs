@@ -65,12 +65,12 @@ public interface ISimplifyWebSettings
 	/// <summary>
 	/// Gets the static files paths.
 	/// </summary>
-	IList<string> StaticFilesPaths { get; }
+	IReadOnlyList<string> StaticFilesPaths { get; }
 
 	/// <summary>
 	/// Gets the string table files.
 	/// </summary>
-	IList<string> StringTableFiles { get; }
+	IReadOnlyList<string> StringTableFiles { get; }
 
 	/// <summary>
 	/// Gets the value indicating whether site title postfix should be set automatically.

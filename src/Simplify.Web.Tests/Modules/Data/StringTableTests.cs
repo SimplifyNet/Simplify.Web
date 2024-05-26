@@ -13,7 +13,7 @@ public class StringTableTests
 {
 	private const string DefaultLanguage = "en";
 
-	private readonly IList<string> _stringTableFiles = new[] { "StringTable.xml" };
+	private readonly IReadOnlyList<string> _stringTableFiles = new[] { "StringTable.xml" };
 
 	private StringTable? _stringTable;
 

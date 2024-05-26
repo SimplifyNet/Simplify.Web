@@ -13,7 +13,7 @@ public class StaticFileTests
 	private const string ValidRelativeFilePath = "StaticFiles/IO/TestFiles/TestStaticFile.html";
 
 	// ReSharper disable once StringLiteralTypo
-	private readonly IList<string> _validPaths = ["staticfiles"];
+	private readonly IReadOnlyList<string> _validPaths = ["staticfiles"];
 
 	private readonly string _sitePhysicalPath = Directory.GetCurrentDirectory() + "/";
 

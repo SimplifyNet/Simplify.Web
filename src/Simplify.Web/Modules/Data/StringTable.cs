@@ -16,7 +16,7 @@ namespace Simplify.Web.Modules.Data;
 /// <param name="languageManagerProvider">The language manager provider.</param>
 /// <param name="fileReader">The file reader.</param>
 /// <param name="memoryCache">Enables the memory cache.</param>
-public sealed class StringTable(IList<string> stringTableFiles,
+public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 	string defaultLanguage,
 	ILanguageManagerProvider languageManagerProvider,
 	IFileReader fileReader,
