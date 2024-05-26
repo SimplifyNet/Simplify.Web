@@ -46,7 +46,7 @@ public class HttpFormModelBinderTests
 		var context = new Mock<IWebContext>();
 
 		context.SetupGet(x => x.Request.ContentType).Returns("application/x-www-form-urlencoded");
-		context.SetupGet(x => x.Form).Returns(new FormCollection(query, null));
+		context.SetupGet(x => x.Form).Returns(new FormCollection(query));
 
 		var args = new ModelBinderEventArgs<FooModel>(context.Object);
 
