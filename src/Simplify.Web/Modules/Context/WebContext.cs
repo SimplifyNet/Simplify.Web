@@ -30,7 +30,7 @@ public sealed class WebContext : IWebContext
 
 		VirtualPath = string.IsNullOrEmpty(Request.PathBase.Value) ? "" : Request.PathBase.Value;
 
-		SiteUrl = Request.Scheme + "://" + Request.Host.Value + VirtualPath + "/";
+		SiteUrl = $"{Request.Scheme}://{Request.Host.Value}{VirtualPath}/";
 
 		IsAjax = Request.Headers.ContainsKey("X-Requested-With");
 
@@ -112,7 +112,7 @@ public sealed class WebContext : IWebContext
 		{
 			using var reader = new StreamReader(Context.Request.Body);
 
-			_requestBody = await reader.ReadToEndAsync() ?? "";
+			_requestBody = await reader.ReadToEndAsync();
 		}
 		finally
 		{

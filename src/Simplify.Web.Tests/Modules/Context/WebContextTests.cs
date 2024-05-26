@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -27,7 +30,7 @@ public class WebContextTests
 		_httpContext.SetupGet(x => x.Request.Query).Returns(new Mock<IQueryCollection>().Object);
 
 		_httpContext.SetupGet(x => x.Request.Headers)
-			.Returns(new HeaderDictionary(new Dictionary<string, StringValues>()));
+			.Returns(new HeaderDictionary([]));
 	}
 
 	[Test]
@@ -240,5 +243,112 @@ public class WebContextTests
 
 		// Act & Assert
 		Assert.That(context.IsAuthenticated, Is.False);
+	}
+
+	[Test]
+	public void Form_Sync_DataRetrieved()
+	{
+		// Arrange
+
+		var formDictionary = new Dictionary<string, StringValues>
+		{
+			{ "foo", "bar" }
+		};
+
+		_httpContext.Setup(x => x.Request.ReadFormAsync(It.IsAny<CancellationToken>()))
+			.ReturnsAsync(new FormCollection(formDictionary));
+
+		var context = new WebContext(_httpContext.Object);
+
+		// Act
+		var form = context.Form;
+
+		// Assert
+
+		Assert.That(form["foo"], Is.EqualTo("bar"));
+	}
+
+	[Test]
+	public async Task Form_Async_DataRetrieved()
+	{
+		// Arrange
+
+		var formDictionary = new Dictionary<string, StringValues>
+		{
+			{ "foo", "bar" }
+		};
+
+		_httpContext.Setup(x => x.Request.ReadFormAsync(It.IsAny<CancellationToken>()))
+			.ReturnsAsync(new FormCollection(formDictionary));
+
+		var context = new WebContext(_httpContext.Object);
+
+		// Act
+
+		await context.ReadFormAsync();
+		var form = context.Form;
+
+		// Assert
+
+		Assert.That(form["foo"], Is.EqualTo("bar"));
+	}
+
+	[Test]
+	public void RequestBody_Sync_DataRetrieved()
+	{
+		// Arrange
+
+		_httpContext.SetupGet(x => x.Request.Body)
+			.Returns(new MemoryStream("foo"u8.ToArray()));
+
+		var context = new WebContext(_httpContext.Object);
+
+		// Act
+
+		var data = context.RequestBody;
+
+		// Assert
+
+		Assert.That(data, Is.EqualTo("foo"));
+	}
+
+	[Test]
+	public async Task RequestBody_Async_DataRetrieved()
+	{
+		// Arrange
+
+		_httpContext.SetupGet(x => x.Request.Body)
+			.Returns(new MemoryStream("foo"u8.ToArray()));
+
+		var context = new WebContext(_httpContext.Object);
+
+		// Act
+
+		await context.ReadRequestBodyAsync();
+		var data = context.RequestBody;
+
+		// Assert
+
+		Assert.That(data, Is.EqualTo("foo"));
+	}
+
+	[Test]
+	public async Task RequestBody_EmptyBufferAsync_DataRetrieved()
+	{
+		// Arrange
+
+		_httpContext.SetupGet(x => x.Request.Body)
+			.Returns(new MemoryStream([]));
+
+		var context = new WebContext(_httpContext.Object);
+
+		// Act
+
+		await context.ReadRequestBodyAsync();
+		var data = context.RequestBody;
+
+		// Assert
+
+		Assert.That(data, Is.Empty);
 	}
 }
