@@ -33,6 +33,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Simplify.DI" Version="4.2.10" />
 		<PackageReference Include="Simplify.Templates" Version="2.0.2" />
 		<PackageReference Include="Simplify.String.Sources" Version="1.2.2" PrivateAssets="All" />
@@ -44,7 +45,6 @@
 	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' Or'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net48' ">
 		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.32" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\images\icon.png" Pack="true" Visible="false" PackagePath="" />

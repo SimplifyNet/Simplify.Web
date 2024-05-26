@@ -27,6 +27,10 @@
 ### Dependencies
 
 - Switched to explicit Simplify.System 1.6.2 instead of internal Simplify.System.Sources
+- Microsoft.Extensions.Configuration.Json bump to 8.0.0
+- Microsoft.Extensions.Configuration.Binder 8.0.1 added
+- Simplify.Templates bump to 2.0.2
+- Internal Simplify.Xml.Sources bump to 1.4
 
 ## [4.9.0] - 2024-01-08
 
