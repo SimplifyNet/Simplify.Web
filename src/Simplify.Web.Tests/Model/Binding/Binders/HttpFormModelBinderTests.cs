@@ -43,11 +43,12 @@ public class HttpFormModelBinderTests
 			{ "Name", "Bar" }
 		};
 
-		var context = Mock.Of<IWebContext>(x =>
-			x.Request.ContentType == "application/x-www-form-urlencoded" &&
-			x.Form == new FormCollection(query, null));
+		var context = new Mock<IWebContext>();
 
-		var args = new ModelBinderEventArgs<FooModel>(context);
+		context.SetupGet(x => x.Request.ContentType).Returns("application/x-www-form-urlencoded");
+		context.SetupGet(x => x.Form).Returns(new FormCollection(query, null));
+
+		var args = new ModelBinderEventArgs<FooModel>(context.Object);
 
 		// Act
 		await new HttpFormModelBinder().BindAsync(args);
@@ -58,6 +59,8 @@ public class HttpFormModelBinderTests
 		Assert.That(args.Model, Is.Not.Null);
 		Assert.That(args.Model.ID, Is.EqualTo(1));
 		Assert.That(args.Model.Name, Is.EqualTo("Bar"));
+
+		context.Verify(x => x.ReadFormAsync());
 	}
 
 	[Test]
