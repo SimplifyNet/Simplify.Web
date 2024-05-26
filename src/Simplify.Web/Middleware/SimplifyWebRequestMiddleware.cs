@@ -36,7 +36,6 @@ public static class SimplifyWebRequestMiddleware
 	/// Process an individual request.
 	/// </summary>
 	/// <param name="context">The context.</param>
-	/// <param name="isTerminalMiddleware">if set to <c>true</c> [is terminal middleware].</param>
 	public static async Task InvokeAsync(HttpContext context)
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
