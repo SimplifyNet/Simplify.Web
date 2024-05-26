@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -16,7 +17,7 @@ namespace Simplify.Web.Tests.Model.Binding.Binders;
 public class HttpQueryModelBinderTests
 {
 	[Test]
-	public void BindAsync_NotMatchedRequestMethod_NotBoundAndModelIsNull()
+	public async Task BindAsync_NotMatchedRequestMethod_NotBoundAndModelIsNull()
 	{
 		// Arrange
 
@@ -24,7 +25,7 @@ public class HttpQueryModelBinderTests
 		var args = new ModelBinderEventArgs<FooModel>(context);
 
 		// Act
-		new HttpQueryModelBinder().BindAsync(args);
+		await new HttpQueryModelBinder().BindAsync(args);
 
 		// Assert
 
@@ -33,7 +34,7 @@ public class HttpQueryModelBinderTests
 	}
 
 	[Test]
-	public void BindAsync_MatchedRequestMethodAndDataExist_Bound()
+	public async Task BindAsync_MatchedRequestMethodAndDataExist_Bound()
 	{
 		// Arrange
 
@@ -50,7 +51,7 @@ public class HttpQueryModelBinderTests
 		var args = new ModelBinderEventArgs<FooModel>(context);
 
 		// Act
-		new HttpQueryModelBinder().BindAsync(args);
+		await new HttpQueryModelBinder().BindAsync(args);
 
 		// Assert
 
@@ -61,7 +62,7 @@ public class HttpQueryModelBinderTests
 	}
 
 	[Test]
-	public void BindAsync_MatchedRequestMethodAndNoDataExist_BoundWithDefaultValues()
+	public async Task BindAsync_MatchedRequestMethodAndNoDataExist_BoundWithDefaultValues()
 	{
 		// Arrange
 
@@ -76,7 +77,7 @@ public class HttpQueryModelBinderTests
 		var args = new ModelBinderEventArgs<FooModel>(context);
 
 		// Act
-		new HttpQueryModelBinder().BindAsync(args);
+		await new HttpQueryModelBinder().BindAsync(args);
 
 		// Assert
 
