@@ -69,7 +69,7 @@ public sealed class WebContext : IWebContext
 
 	public bool IsAjax { get; }
 
-	public bool IsAuthenticated => Context.User != null && Context.User.Identity != null && Context.User.Identity.IsAuthenticated;
+	public bool IsAuthenticated => Context.User is { Identity.IsAuthenticated: true };
 
 	public string RequestBody
 	{

@@ -224,7 +224,7 @@ public class WebContextTests
 		// Arrange
 
 		_httpContext.SetupGet(x => x.User)
-			.Returns(Mock.Of<ClaimsPrincipal>(f => f.Identity == Mock.Of<IIdentity>(i => i.IsAuthenticated == false)));
+			.Returns(Mock.Of<ClaimsPrincipal>(f => f.Identity == Mock.Of<IIdentity>(i => !i.IsAuthenticated)));
 
 		var context = new WebContext(_httpContext.Object);
 
