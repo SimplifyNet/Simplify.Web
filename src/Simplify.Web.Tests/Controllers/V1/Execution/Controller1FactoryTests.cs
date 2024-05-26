@@ -39,7 +39,7 @@ public class Controller1FactoryTests
 		var languageManagerProvider = new Mock<ILanguageManagerProvider>();
 		var languageManager = Mock.Of<ILanguageManager>();
 		var redirector = Mock.Of<IRedirector>();
-		var stringTable = Mock.Of<IStringTable>();
+		var stringTable = Mock.Of<IStringTable>(x => x.Items == new Dictionary<string, object?>());
 		var templateFactory = Mock.Of<ITemplateFactory>();
 
 		provider.Register<FooController>(LifetimeType.Transient);
