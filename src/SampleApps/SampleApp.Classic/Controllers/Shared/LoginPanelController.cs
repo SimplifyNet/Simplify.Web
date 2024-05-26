@@ -11,5 +11,5 @@ public class LoginPanelController : Controller2
 	public async Task<ControllerResponse> Invoke() =>
 		!Context.IsAuthenticated
 			? InlineTpl("LoginPanel", await TemplateFactory.LoadAsync("Shared/LoginPanel/GuestPanel"))
-			: InlineTpl("LoginPanel", await GetView<LoggedUserPanelView>().Get(Context.Context.User.Identity.Name));
+			: InlineTpl("LoginPanel", await GetView<LoggedUserPanelView>().Get(Context.Context.User.Identity!.Name));
 }

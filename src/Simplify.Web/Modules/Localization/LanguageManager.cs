@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Settings;
@@ -90,16 +91,9 @@ public class LanguageManager : ILanguageManager
 		return true;
 	}
 
-	private static bool CultureExists(string name)
-	{
-		var availableCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
-
-		foreach (var culture in availableCultures)
-			if (culture.Name.Equals(name))
-				return true;
-
-		return false;
-	}
+	private static bool CultureExists(string name) =>
+		CultureInfo.GetCultures(CultureTypes.AllCultures)
+			.Any(culture => culture.Name.Equals(name));
 
 	private void SetInvariantCulture()
 	{
