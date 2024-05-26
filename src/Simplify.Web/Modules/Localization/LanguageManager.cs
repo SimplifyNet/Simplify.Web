@@ -125,7 +125,7 @@ public class LanguageManager : ILanguageManager
 
 		var languageString = languages[0];
 
-		var items = languageString.Split(';');
+		var items = languageString!.Split(';');
 
 		return SetCurrentLanguage(items[0]);
 	}

@@ -15,7 +15,7 @@ public static class HeaderTimeExtensions
 		DateTime? ifModifiedSinceTime = null;
 
 		if (headers.ContainsKey("If-Modified-Since"))
-			ifModifiedSinceTime = DateTime.ParseExact(headers["If-Modified-Since"], "r",
+			ifModifiedSinceTime = DateTime.ParseExact(headers["If-Modified-Since"]!, "r",
 				CultureInfo.InvariantCulture);
 
 		return ifModifiedSinceTime;

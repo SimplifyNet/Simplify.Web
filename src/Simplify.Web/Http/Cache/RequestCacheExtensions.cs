@@ -7,7 +7,7 @@ namespace Simplify.Web.Http.Cache;
 public static class RequestCacheExtensions
 {
 	public static bool IsFileCanBeUsedFromCache(this HttpRequest request, DateTime fileLastModifiedTime) =>
-		IsFileCanBeUsedFromCache(request.Headers["Cache-Control"], request.Headers.GetIfModifiedSinceTime(), fileLastModifiedTime);
+		IsFileCanBeUsedFromCache(request.Headers["Cache-Control"]!, request.Headers.GetIfModifiedSinceTime(), fileLastModifiedTime);
 
 	private static bool IsFileCanBeUsedFromCache(string cacheControlHeader, DateTime? ifModifiedSinceHeader, DateTime fileLastModifiedTime) =>
 		!cacheControlHeader.IsNoCacheRequested()

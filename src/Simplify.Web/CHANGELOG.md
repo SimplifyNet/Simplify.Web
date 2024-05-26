@@ -13,9 +13,16 @@
 
 ### Changed
 
-- Internal framework restructure and modules rewrite
+- Internal framework restructure and modules rewrite (http request and respose handing rewrite from scratch)
 - V1 controllers RouteParameters defaulted to empty ExpandoObject to exclude NRE
 - Environment split to Environment and DynamicEnvironment
+- SimplifyWebSettings loading thru binder
+- Controllers search on execution optimized
+
+### Fixed
+
+- Multiple one route controllers handling
+- Multiple middlewares same IsTerminal status
 
 ### Dependencies
 

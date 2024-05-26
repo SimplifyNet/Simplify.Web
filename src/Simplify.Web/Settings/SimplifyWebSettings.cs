@@ -24,8 +24,8 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		LoadLanguageManagerSettings(config);
 		LoadTemplatesSettings(config);
 		LoadDataCollectorSettings(config);
+		LoadDataSettings(config);
 		LoadStyleSettings(config);
-		LoadOtherSettings(config);
 		LoadStaticFilesSettings(config);
 		LoadEngineBehaviorSettings(config);
 		LoadCacheSettings(config);
@@ -74,74 +74,27 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	private void LoadLanguageManagerSettings(IConfiguration config)
 	{
-		var defaultLanguage = config[nameof(DefaultLanguage)];
-
-		if (!string.IsNullOrEmpty(defaultLanguage))
-			DefaultLanguage = defaultLanguage;
-
-		var acceptCookieLanguage = config[nameof(AcceptCookieLanguage)];
-
-		bool buffer;
-
-		if (!string.IsNullOrEmpty(acceptCookieLanguage))
-			if (bool.TryParse(acceptCookieLanguage, out buffer))
-				AcceptCookieLanguage = buffer;
-
-		var acceptHeaderLanguage = config[nameof(AcceptHeaderLanguage)];
-
-		if (string.IsNullOrEmpty(acceptHeaderLanguage))
-			return;
-
-		if (bool.TryParse(acceptHeaderLanguage, out buffer))
-			AcceptHeaderLanguage = buffer;
+		DefaultLanguage = config.TrySetNotNullOrEmptyString(nameof(DefaultLanguage), DefaultLanguage);
+		AcceptCookieLanguage = config.GetValue<bool>(nameof(AcceptCookieLanguage));
+		AcceptHeaderLanguage = config.GetValue<bool>(nameof(AcceptHeaderLanguage));
 	}
 
 	private void LoadTemplatesSettings(IConfiguration config)
 	{
-		var defaultTemplatesPath = config[nameof(DefaultTemplatesPath)];
-
-		if (!string.IsNullOrEmpty(defaultTemplatesPath))
-			DefaultTemplatesPath = defaultTemplatesPath;
-
-		var loadTemplatesFromAssembly = config[nameof(LoadTemplatesFromAssembly)];
-
-		if (!string.IsNullOrEmpty(loadTemplatesFromAssembly))
-			if (bool.TryParse(loadTemplatesFromAssembly, out var buffer))
-				LoadTemplatesFromAssembly = buffer;
-
-		var defaultMasterTemplateFileName = config[nameof(DefaultMasterTemplateFileName)];
-
-		if (!string.IsNullOrEmpty(defaultMasterTemplateFileName))
-			DefaultMasterTemplateFileName = defaultMasterTemplateFileName;
+		DefaultTemplatesPath = config.TrySetNotNullOrEmptyString(nameof(DefaultTemplatesPath), DefaultTemplatesPath);
+		LoadTemplatesFromAssembly = config.GetValue<bool>(nameof(LoadTemplatesFromAssembly));
+		DefaultMasterTemplateFileName = config.TrySetNotNullOrEmptyString(nameof(DefaultMasterTemplateFileName), DefaultMasterTemplateFileName);
 	}
 
 	private void LoadDataCollectorSettings(IConfiguration config)
 	{
-		var defaultMainContentVariableName = config[nameof(DefaultMainContentVariableName)];
-
-		if (!string.IsNullOrEmpty(defaultMainContentVariableName))
-			DefaultMainContentVariableName = defaultMainContentVariableName;
-
-		var defaultTitleVariableName = config[nameof(DefaultTitleVariableName)];
-
-		if (!string.IsNullOrEmpty(defaultTitleVariableName))
-			DefaultTitleVariableName = defaultTitleVariableName;
+		DefaultMainContentVariableName = config.TrySetNotNullOrEmptyString(nameof(DefaultMainContentVariableName), DefaultMainContentVariableName);
+		DefaultTitleVariableName = config.TrySetNotNullOrEmptyString(nameof(DefaultTitleVariableName), DefaultTitleVariableName);
 	}
 
-	private void LoadStyleSettings(IConfiguration config)
+	private void LoadDataSettings(IConfiguration config)
 	{
-		var defaultStyle = config[nameof(DefaultStyle)];
-
-		if (!string.IsNullOrEmpty(defaultStyle))
-			DefaultStyle = defaultStyle;
-	}
-
-	private void LoadOtherSettings(IConfiguration config)
-	{
-		var dataPath = config[nameof(DataPath)];
-
-		if (!string.IsNullOrEmpty(dataPath))
-			DataPath = dataPath;
+		DataPath = config.TrySetNotNullOrEmptyString(nameof(DataPath), DataPath);
 
 		var stringTableFiles = config[nameof(StringTableFiles)];
 
@@ -150,83 +103,47 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 		{
 			StringTableFiles.Clear();
-			var items = stringTableFiles.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			var items = stringTableFiles!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (var item in items)
 				StringTableFiles.Add(item);
 		}
 	}
 
+	private void LoadStyleSettings(IConfiguration config) =>
+		DefaultStyle = config.TrySetNotNullOrEmptyString(nameof(DefaultStyle), DefaultStyle);
+
 	private void LoadStaticFilesSettings(IConfiguration config)
 	{
-		var staticFilesEnabled = config[nameof(StaticFilesEnabled)];
-
-		if (!string.IsNullOrEmpty(staticFilesEnabled))
-			if (bool.TryParse(staticFilesEnabled, out var buffer))
-				StaticFilesEnabled = buffer;
+		StaticFilesEnabled = config.GetValue<bool>(nameof(StaticFilesEnabled));
 
 		var staticFilesPaths = config[nameof(StaticFilesPaths)];
 
-		if (!string.IsNullOrEmpty(staticFilesPaths))
-		{
-			StaticFilesPaths.Clear();
-			var items = staticFilesPaths.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+		if (string.IsNullOrEmpty(staticFilesPaths))
+			return;
 
-			foreach (var item in items)
-				StaticFilesPaths.Add(item);
-		}
+		StaticFilesPaths.Clear();
+
+		var items = staticFilesPaths!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+		foreach (var item in items)
+			StaticFilesPaths.Add(item);
 	}
 
 	private void LoadEngineBehaviorSettings(IConfiguration config)
 	{
-		var disableAutomaticSiteTitleSet = config[nameof(DisableAutomaticSiteTitleSet)];
-
-		if (!string.IsNullOrEmpty(disableAutomaticSiteTitleSet))
-			if (bool.TryParse(disableAutomaticSiteTitleSet, out var buffer))
-				DisableAutomaticSiteTitleSet = buffer;
-
-		var hideExceptionDetails = config[nameof(HideExceptionDetails)];
-
-		if (!string.IsNullOrEmpty(hideExceptionDetails))
-			if (bool.TryParse(hideExceptionDetails, out var buffer))
-				HideExceptionDetails = buffer;
-
-		var errorPageDarkStyle = config[nameof(ErrorPageDarkStyle)];
-
-		if (!string.IsNullOrEmpty(errorPageDarkStyle))
-			if (bool.TryParse(errorPageDarkStyle, out var buffer))
-				ErrorPageDarkStyle = buffer;
+		DisableAutomaticSiteTitleSet = config.GetValue<bool>(nameof(DisableAutomaticSiteTitleSet));
+		HideExceptionDetails = config.GetValue<bool>(nameof(HideExceptionDetails));
+		ErrorPageDarkStyle = config.GetValue<bool>(nameof(ErrorPageDarkStyle));
 	}
 
 	private void LoadCacheSettings(IConfiguration config)
 	{
-		var templatesMemoryCache = config[nameof(TemplatesMemoryCache)];
-
-		if (!string.IsNullOrEmpty(templatesMemoryCache))
-			if (bool.TryParse(templatesMemoryCache, out var buffer))
-				TemplatesMemoryCache = buffer;
-
-		var stringTableMemoryCache = config[nameof(StringTableMemoryCache)];
-
-		if (!string.IsNullOrEmpty(stringTableMemoryCache))
-			if (bool.TryParse(stringTableMemoryCache, out var buffer))
-				StringTableMemoryCache = buffer;
-
-		var disableFileReaderCache = config[nameof(DisableFileReaderCache)];
-
-		if (!string.IsNullOrEmpty(disableFileReaderCache))
-			if (bool.TryParse(disableFileReaderCache, out var buffer))
-				DisableFileReaderCache = buffer;
+		TemplatesMemoryCache = config.GetValue<bool>(nameof(TemplatesMemoryCache));
+		StringTableMemoryCache = config.GetValue<bool>(nameof(StringTableMemoryCache));
+		DisableFileReaderCache = config.GetValue<bool>(nameof(DisableFileReaderCache));
 	}
 
-	private void LoadDiagnosticSettings(IConfiguration config)
-	{
-		var consoleTracing = config[nameof(ConsoleTracing)];
-
-		if (string.IsNullOrEmpty(consoleTracing))
-			return;
-
-		if (bool.TryParse(consoleTracing, out var buffer))
-			ConsoleTracing = buffer;
-	}
+	private void LoadDiagnosticSettings(IConfiguration config) =>
+		ConsoleTracing = config.GetValue<bool>(nameof(ConsoleTracing));
 }

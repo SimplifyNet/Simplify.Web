@@ -21,6 +21,6 @@ public class HttpFormModelBinder : IModelBinder
 
 		await args.Context.ReadFormAsync();
 
-		args.SetModel(ListToModelParser.Parse<T>(args.Context.Form.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value)).ToList()));
+		args.SetModel(ListToModelParser.Parse<T>(args.Context.Form.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value!)).ToList()));
 	}
 }

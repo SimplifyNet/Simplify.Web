@@ -17,7 +17,7 @@ public class HttpQueryModelBinder : IModelBinder
 	public Task BindAsync<T>(ModelBinderEventArgs<T> args)
 	{
 		if (args.Context.Request.Method == "GET")
-			args.SetModel(ListToModelParser.Parse<T>(args.Context.Query.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value))
+			args.SetModel(ListToModelParser.Parse<T>(args.Context.Query.Select(x => new KeyValuePair<string, string[]>(x.Key, x.Value!))
 				.ToList()));
 
 		return Task.CompletedTask;
