@@ -49,6 +49,29 @@ public class Controller2ExecutorTests
 	}
 
 	[Test]
+	public async Task ExecuteAsync_TaskResultController_InvokedAndNull()
+	{
+		// Arrange
+
+		var md = new Controller2Metadata(typeof(TaskResultController));
+		var mc = new MatchedController(md);
+		var controller = new TaskResultController();
+
+		_controllerFactory.Setup(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)))
+			.Returns(controller);
+
+		// Act
+		var result = await _executor.ExecuteAsync(mc);
+
+		// Assert
+
+		Assert.That(result, Is.Null);
+		Assert.That(controller.Invoked, Is.True);
+
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)));
+	}
+
+	[Test]
 	public async Task ExecuteAsync_NullResponseController_InvokedAndNull()
 	{
 		// Arrange
@@ -79,6 +102,31 @@ public class Controller2ExecutorTests
 		var md = new Controller2Metadata(typeof(StringResponseController));
 		var mc = new MatchedController(md);
 		var controller = new StringResponseController();
+
+		_controllerFactory.Setup(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)))
+			.Returns(controller);
+
+		// Act
+		var result = await _executor.ExecuteAsync(mc);
+
+		// Assert
+
+		Assert.That(result, Is.Not.Null);
+		Assert.That(result, Is.TypeOf(typeof(Content)));
+		Assert.That(controller.Invoked, Is.True);
+		Assert.That(((Content)result!).StringContent, Is.EqualTo("Foo"));
+
+		_controllerFactory.Verify(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)));
+	}
+
+	[Test]
+	public async Task ExecuteAsync_TaskStringResponseController_InvokedAndContentResponseReturned()
+	{
+		// Arrange
+
+		var md = new Controller2Metadata(typeof(TaskStringResponseController));
+		var mc = new MatchedController(md);
+		var controller = new TaskStringResponseController();
 
 		_controllerFactory.Setup(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)))
 			.Returns(controller);
