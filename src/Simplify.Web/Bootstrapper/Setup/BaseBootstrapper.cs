@@ -38,8 +38,8 @@ public partial class BaseBootstrapper
 
 		// Registering Simplify.Web types
 
-		RegisterIController1Factory();
-		RegisterIController2Factory();
+		RegisterController1Factory();
+		RegisterController2Factory();
 		RegisterControllerExecutorResolver();
 		RegisterControllerExecutorResolverExecutors();
 		RegisterControllersExecutor();
