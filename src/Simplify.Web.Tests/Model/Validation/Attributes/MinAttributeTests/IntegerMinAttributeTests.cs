@@ -1,11 +1,11 @@
-using System;
 using NUnit.Framework;
 using Simplify.Web.Model.Validation.Attributes;
+using System;
 
-namespace Simplify.Web.Tests.Model.Validation.Attributes;
+namespace Simplify.Web.Tests.Model.Validation.Attributes.MinAttributeTests;
 
 [TestFixture]
-public class MinAttributeTests : AttributesTestBase
+public class IntegerMinAttributeTests : AttributesTestBase
 {
 	public const int MinValue = 12;
 
@@ -43,9 +43,4 @@ public class MinAttributeTests : AttributesTestBase
 	public void Validate_DifferentTypes_ExceptionThrown() =>
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(12.5));
-
-	[Test]
-	public void Validate_ValueTypeNotInheritIComparable_ExceptionThrown() =>
-		// Act & Assert
-		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(new object()));
 }

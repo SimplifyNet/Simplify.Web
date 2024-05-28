@@ -1,10 +1,9 @@
+﻿using NUnit.Framework;
 using System;
-using NUnit.Framework;
 
-namespace Simplify.Web.Tests.Model.Validation.Attributes;
+namespace Simplify.Web.Tests.Model.Validation.Attributes.RangeAttributeTests;
 
-[TestFixture]
-public class RangeAttributeTests : AttributesTestBase
+public class IntegerRangeAttributeTests : AttributesTestBase
 {
 	public const int MinValue = 2;
 	public const int MaxValue = 12;
@@ -59,10 +58,5 @@ public class RangeAttributeTests : AttributesTestBase
 	[Test]
 	public void Validate_DifferentTypes_ExceptionThrown() =>
 		// Act & Assert
-		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(15.2));
-
-	[Test]
-	public void Validate_ValueTypeNotInheritIComparable_ExceptionThrown() =>
-		// Act & Assert
-		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(new object()));
+		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue((long)7));
 }
