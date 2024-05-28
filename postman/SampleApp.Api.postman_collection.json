@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "ea2e8dec-b706-4a6c-8f7d-ddec61dfb718",
+		"name": "SampleApp.Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8112525"
+	},
+	"item": [
+		{
+			"name": "Api",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "DifferentRouteParameters V1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/v1/different-route-parameters/hello-world/3/true/24,57",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"different-route-parameters",
+										"hello-world",
+										"3",
+										"true",
+										"24,57"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "v2",
+					"item": [
+						{
+							"name": "DifferentRouteParameters V2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/v2/different-route-parameters/hello-world/3/true/24,57",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"different-route-parameters",
+										"hello-world",
+										"3",
+										"true",
+										"24,57"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
