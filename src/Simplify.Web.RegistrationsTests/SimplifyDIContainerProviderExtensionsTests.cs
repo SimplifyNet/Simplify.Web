@@ -16,7 +16,7 @@ public class SimplifyDIContainerProviderExtensionsTests
 
 		var container = new DryIocDIProvider();
 
-		container.RegisterSimplifyWeb(x =>
+		container.RegisterSimplifyWeb(registrationsOverride: x =>
 		{
 			x.OverrideControllerResponseExecutor(r => r.Register<IControllerResponseExecutor, CustomControllerResponseExecutor>());
 		});

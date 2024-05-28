@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Simplify.DI;
 using Simplify.Web.Controllers.Meta.MetaStore;
+using Simplify.Web.Settings;
 using Simplify.Web.System;
 using Simplify.Web.Views.Meta;
 
@@ -13,28 +15,36 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	private IConfiguration? _configuration;
+
+	protected IConfiguration Configuration
+	{
+		get => _configuration ?? throw new InvalidOperationException("Configuration is null");
+		set => _configuration = value;
+	}
+
 	/// <summary>
 	/// Provides the `Simplify.Web` types to exclude from registrations.
 	/// </summary>
 	protected IEnumerable<Type> TypesToExclude { get; private set; } = [];
 
 	/// <summary>
-	/// Registers the DI container scope resolver
-	/// </summary>
-	public static void RegisterDIResolver() => BootstrapperFactory.ContainerProvider.Register(r => r);
-
-	/// <summary>
 	/// Registers the types in container.
 	/// </summary>
-	public void Register(IEnumerable<Type>? typesToExclude = null)
+	public void Register(IConfiguration? configuration = null, IEnumerable<Type>? typesToExclude = null)
 	{
 		if (typesToExclude != null)
 			TypesToExclude = typesToExclude;
 
-		RegisterDIResolver();
+		if (configuration != null)
+			Configuration = configuration;
+		else
+		{
+			Configuration = ConfigurationFactory.Create();
+			RegisterConfiguration(Configuration);
+		}
 
-		// Registering non Simplify.Web types
-		RegisterConfiguration();
+		var settings = new SimplifyWebSettings(Configuration);
 
 		// Registering Simplify.Web types
 
@@ -70,7 +80,7 @@ public partial class BaseBootstrapper
 		RegisterRouteMatcherResolverMatchers();
 		RegisterSecurityChecker();
 		RegisterSecurityRules();
-		RegisterSimplifyWebSettings();
+		RegisterSimplifyWebSettings(settings);
 		RegisterStaticFile();
 		RegisterStaticFileProcessingContextFactory();
 		RegisterStaticFileRequestHandlingPipeline();

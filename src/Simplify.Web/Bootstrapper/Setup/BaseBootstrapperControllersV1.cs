@@ -14,6 +14,6 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IController1Factory)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IController1Factory, Controller1Factory>();
+		BootstrapperFactory.ContainerProvider.Register<IController1Factory>(r => new Controller1Factory(r));
 	}
 }

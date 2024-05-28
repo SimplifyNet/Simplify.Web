@@ -1,10 +1,16 @@
-﻿using Simplify.Web;
-using Simplify.Web.Bootstrapper;
+﻿using SampleApp.Api.Setup;
+using Simplify.DI;
+using Simplify.DI.Provider.SimpleInjector;
+using Simplify.Web;
 
-var app = WebApplication.CreateBuilder(args).Build();
+var builder = WebApplication.CreateBuilder(args);
+
+(DIContainer.Current = new SimpleInjectorDIProvider())
+	.RegisterAll(builder.Services)
+	.Verify();
+
+var app = builder.Build();
 
 app.UseSimplifyWeb();
-
-BootstrapperFactory.ContainerProvider.Verify();
 
 app.Run();

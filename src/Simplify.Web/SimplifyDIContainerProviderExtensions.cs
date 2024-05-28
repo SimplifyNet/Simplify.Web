@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using Simplify.DI;
 using Simplify.Web.Bootstrapper;
 using Simplify.Web.Bootstrapper.SimplifyWebRegistrationsOverride;
@@ -14,20 +15,26 @@ public static class SimplifyDIContainerProviderExtensions
 	/// <summary>
 	/// Registers the `Simplify.Web` types and controllers and use this container as current for `Simplify.Web`.
 	/// </summary>
-	/// <param name="containerProvider">The container provider.</param>
-	/// <param name="registrationsOverride">The `Simplify.Web` types registrations override</param>
-	public static IDIContainerProvider RegisterSimplifyWeb(this IDIContainerProvider containerProvider,
-		Action<RegistrationsOverride>? registrationsOverride = null)
+	/// <param name="registrator">The registrator.</param>
+	/// <param name="configuration">The custom `IConfiguration`, internal `IConfiguration` registration will be overwritten.</param>
+	/// <param name="registrationsOverride">The `Simplify.Web` types registrations override.</param>
+	/// <param name="containerProvider">Overrides the internal `Simplify.Web` `IDIContainerProvider` with custom.</param>
+	public static IDIRegistrator RegisterSimplifyWeb(this IDIRegistrator registrator,
+		IConfiguration? configuration = null,
+		Action<RegistrationsOverride>? registrationsOverride = null,
+		IDIContainerProvider? containerProvider = null)
 	{
-		BootstrapperFactory.ContainerProvider = containerProvider;
+		if (containerProvider != null)
+			BootstrapperFactory.ContainerProvider = containerProvider;
 
 		BootstrapperFactory
 			.CreateBootstrapper()
-			.Register(registrationsOverride != null
-				? PerformTypesOverride(registrationsOverride)
-				: null);
+			.Register(configuration,
+				registrationsOverride != null
+					? PerformTypesOverride(registrationsOverride)
+					: null);
 
-		return containerProvider;
+		return registrator;
 	}
 
 	private static IEnumerable<Type> PerformTypesOverride(Action<RegistrationsOverride> registrationsOverride)

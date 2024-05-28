@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Simplify.Web\Simplify.Web.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Simplify.DI.Provider.SimpleInjector" Version="1.11.*" />
 	</ItemGroup>
 </Project>

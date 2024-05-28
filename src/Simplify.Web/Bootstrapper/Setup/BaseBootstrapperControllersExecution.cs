@@ -40,7 +40,7 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IControllerResponseExecutor)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IControllerResponseExecutor, ControllerResponseExecutor>();
+		BootstrapperFactory.ContainerProvider.Register<IControllerResponseExecutor>(r => new ControllerResponseExecutor(r));
 	}
 
 	/// <summary>

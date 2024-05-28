@@ -12,14 +12,16 @@ namespace Simplify.Web;
 public static class ApplicationBuilderExtensions
 {
 	/// <summary>
-	/// Performs the Simplify.Web bootstrapper registrations and adds Simplify.Web to ASP.NET Core pipeline as a terminal middleware.
+	/// Adds Simplify.Web to ASP.NET Core pipeline as a terminal middleware and optionally performs Simplify.Web bootstrapper registrations.
 	/// </summary>
 	/// <param name="builder">The application builder.</param>
-	public static IApplicationBuilder UseSimplifyWeb(this IApplicationBuilder builder)
+	/// <param name="autoRegisterSimplifyWebTypes">Determines whether SimplifyWeb types should be registered in IOC container automatically.</param>
+	public static IApplicationBuilder UseSimplifyWeb(this IApplicationBuilder builder, bool autoRegisterSimplifyWebTypes = false)
 	{
 		try
 		{
-			BootstrapperFactory.CreateBootstrapper().Register();
+			if (autoRegisterSimplifyWebTypes)
+				BootstrapperFactory.CreateBootstrapper().Register();
 
 			builder.RegisterAsTerminal();
 
@@ -34,55 +36,17 @@ public static class ApplicationBuilderExtensions
 	}
 
 	/// <summary>
-	/// Adds Simplify.Web to ASP.NET Core pipeline as a terminal middleware without bootstrapper registrations (useful when you want to control bootstrapper registrations manually).
+	/// Adds Simplify.Web to ASP.NET Core pipeline as a non-terminal middleware and optionally performs Simplify.Web bootstrapper registrations.
 	/// </summary>
 	/// <param name="builder">The application builder.</param>
-	public static IApplicationBuilder UseSimplifyWebWithoutRegistrations(this IApplicationBuilder builder)
+	/// <param name="autoRegisterSimplifyWebTypes">Determines whether SimplifyWeb types should be registered in IOC container automatically.</param>
+	public static IApplicationBuilder UseSimplifyWebNonTerminal(this IApplicationBuilder builder, bool autoRegisterSimplifyWebTypes = false)
 	{
 		try
 		{
-			builder.RegisterAsTerminal();
+			if (autoRegisterSimplifyWebTypes)
+				BootstrapperFactory.CreateBootstrapper().Register();
 
-			return builder;
-		}
-		catch (Exception e)
-		{
-			SimplifyWebRequestMiddleware.ProcessOnException(e);
-
-			throw;
-		}
-	}
-
-	/// <summary>
-	/// Performs the Simplify.Web bootstrapper registrations and adds Simplify.Web to ASP.NET Core pipeline as a non-terminal middleware.
-	/// </summary>
-	/// <param name="builder">The application builder.</param>
-	public static IApplicationBuilder UseSimplifyWebNonTerminal(this IApplicationBuilder builder)
-	{
-		try
-		{
-			BootstrapperFactory.CreateBootstrapper().Register();
-
-			builder.RegisterAsNonTerminal();
-
-			return builder;
-		}
-		catch (Exception e)
-		{
-			SimplifyWebRequestMiddleware.ProcessOnException(e);
-
-			throw;
-		}
-	}
-
-	/// <summary>
-	/// Adds Simplify.Web to ASP.NET Core pipeline as a non-terminal middleware without bootstrapper registrations.
-	/// </summary>
-	/// <param name="builder">The application builder.</param>
-	public static IApplicationBuilder UseSimplifyWebNonTerminalWithoutRegistrations(this IApplicationBuilder builder)
-	{
-		try
-		{
 			builder.RegisterAsNonTerminal();
 
 			return builder;

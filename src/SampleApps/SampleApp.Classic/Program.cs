@@ -26,7 +26,7 @@ if (!app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthRedirect("/login");
 
-app.UseSimplifyWeb();
+app.UseSimplifyWeb(true);
 
 BootstrapperFactory.ContainerProvider.Verify();
 

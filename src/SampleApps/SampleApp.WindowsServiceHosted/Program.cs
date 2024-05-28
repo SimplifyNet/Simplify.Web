@@ -17,7 +17,9 @@ internal static class Program
 
 		Args = args;
 
-		DIContainer.Current.RegisterAll().Verify();
+		DIContainer.Current
+			.RegisterAll()
+			.Verify();
 
 		using var handler = new BasicServiceHandler<WebApplicationStartup>();
 

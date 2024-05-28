@@ -33,7 +33,7 @@ if (!app.Environment.IsDevelopment())
 	app.UseSpaStaticFiles();
 }
 
-app.UseSimplifyWebNonTerminal();
+app.UseSimplifyWebNonTerminal(true);
 
 BootstrapperFactory.ContainerProvider.Verify();
 

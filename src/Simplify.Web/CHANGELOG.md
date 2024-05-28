@@ -2,6 +2,10 @@
 
 ## [5.0.0] - Unreleased
 
+### Breaking
+
+- Internal framework restructure and rewrite (http request and response handling related functionality, metadata rewritten from scratch). Can affect any customizations to related functionality
+
 ### Added
 
 - Version 2 controllers
@@ -10,13 +14,18 @@
 ### Removed
 
 - .NET Framework 4.8 explicit support
+- `UseSimplifyWebWithoutRegistrations` and  `UseSimplifyWebNonTerminalWithoutRegistrations` `IApplicationBuilder` methods
+- `ISimplifyWebSettings` override via `RegisterSimplifyWebSettings`
+- `IConfiguration` override via `OverrideConfiguration` or `RegisterConfiguration`
 
 ### Changed
 
-- Internal framework restructure and modules rewrite (http request and respose handing rewrite from scratch)
-- V1 controllers RouteParameters defaulted to empty ExpandoObject to exclude NRE
-- Environment split to Environment and DynamicEnvironment
-- SimplifyWebSettings loading thru binder
+- `UseSimplifyWeb` and `UseSimplifyWebNoNTerminal` now require passing `true` to automatically register it's own bootstrapper registrations
+- `RegisterSimplifyWeb` now extension method of`IDIRegistrator` instead of `IDIContainerProvider`, custom internal `IDIContainerProvider` can be passed via method parameter, if required
+- Internal `IConfiguration` registration override via `RegisterSimplifyWeb`
+- `Environment` split to `Environment` and `DynamicEnvironment`
+- V1 controllers RouteParameters defaulted to empty ExpandoObject to avoid NRE
+- `SimplifyWebSettings` loading thru binder
 - Controllers search on execution optimized
 
 ### Fixed
