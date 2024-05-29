@@ -16,7 +16,6 @@ public static class IocRegistrations
 		return provider;
 	}
 
-
 	private static IDIRegistrator RegisterCustomConfiguration(this IDIRegistrator registrator, Action<IConfiguration>? config = null)
 	{
 		var environmentName = Environment.GetEnvironmentVariable(ApplicationEnvironment.EnvironmentVariableName);
