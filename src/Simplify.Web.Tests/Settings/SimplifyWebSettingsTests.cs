@@ -25,7 +25,7 @@ public class SimplifyWebSettingsTests
 			{ "SimplifyWebSettings:DefaultTitleVariableName", "HelloSite" },
 			{ "SimplifyWebSettings:DefaultStyle", "Stl" },
 			{ "SimplifyWebSettings:DataPath", "SiteDt" },
-			{ "SimplifyWebSettings:StaticFilesEnabled", "false" },
+			{ "SimplifyWebSettings:StaticFilesEnabled", "true" },
 			{ "SimplifyWebSettings:StaticFilesPaths", "stl,img" },
 			{ "SimplifyWebSettings:StringTableFiles", "MyStr.xml" },
 			{ "SimplifyWebSettings:DisableAutomaticSiteTitleSet", "true" },
@@ -56,7 +56,7 @@ public class SimplifyWebSettingsTests
 		Assert.That(settings.DefaultTitleVariableName, Is.EqualTo("HelloSite"));
 		Assert.That(settings.DefaultStyle, Is.EqualTo("Stl"));
 		Assert.That(settings.DataPath, Is.EqualTo("SiteDt"));
-		Assert.That(settings.StaticFilesEnabled, Is.False);
+		Assert.That(settings.StaticFilesEnabled, Is.True);
 		Assert.That(settings.StaticFilesPaths.Count, Is.EqualTo(2));
 		Assert.That(settings.StaticFilesPaths[0], Is.EqualTo("stl"));
 		Assert.That(settings.StaticFilesPaths[1], Is.EqualTo("img"));

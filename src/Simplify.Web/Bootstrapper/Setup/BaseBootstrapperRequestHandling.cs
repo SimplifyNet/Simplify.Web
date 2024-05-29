@@ -8,6 +8,7 @@ using Simplify.Web.Modules.Redirection;
 using Simplify.Web.Page.Composition;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
+using Simplify.Web.RequestHandling.Wrapping;
 using Simplify.Web.StaticFiles;
 using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.IO;
@@ -33,16 +34,23 @@ public partial class BaseBootstrapper
 			return;
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IRequestHandler>>(r =>
-			[
-				new StaticFilesHandler(
-					r.Resolve<IStaticFileRequestHandlingPipeline>(),
-					r.Resolve<IStaticFileProcessingContextFactory>(),
-					r.Resolve<IStaticFile>()),
+		{
+			var handlers = new List<IRequestHandler>
+			{
 				new SetLoginUrlForUnauthorizedRequestHandler(r.Resolve<IRedirector>()),
 				new ControllersHandler(
 					r.Resolve<IExecutionWorkOrderBuildDirector>(),
 					r.Resolve<IControllersExecutor>()),
 				new PageGenerationHandler(r.Resolve<IPageComposer>(), r.Resolve<IResponseWriter>())
-			]);
+			};
+
+			if (Settings.StaticFilesEnabled)
+				handlers.Insert(0, new StaticFilesHandler(
+					r.Resolve<IStaticFileRequestHandlingPipeline>(),
+					r.Resolve<IStaticFileProcessingContextFactory>(),
+					r.Resolve<IStaticFile>()));
+
+			return handlers;
+		});
 	}
 }

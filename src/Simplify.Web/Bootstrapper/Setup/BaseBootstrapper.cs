@@ -84,10 +84,14 @@ public partial class BaseBootstrapper
 		RegisterSecurityChecker();
 		RegisterSecurityRules();
 		RegisterSimplifyWebSettings(Settings);
-		RegisterStaticFile();
-		RegisterStaticFileProcessingContextFactory();
-		RegisterStaticFileRequestHandlingPipeline();
-		RegisterStaticFileRequestHandlingPipelineHandlers();
+
+		if (Settings.StaticFilesEnabled)
+		{
+			RegisterStaticFile();
+			RegisterStaticFileProcessingContextFactory();
+			RegisterStaticFileRequestHandlingPipeline();
+			RegisterStaticFileRequestHandlingPipelineHandlers();
+		}
 
 		if (Settings.MeasurementsEnabled)
 			RegisterStopwatchProvider();

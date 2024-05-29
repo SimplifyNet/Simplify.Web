@@ -24,6 +24,7 @@
 - `UseSimplifyWeb` and `UseSimplifyWebNoNTerminal` now require passing `true` to automatically register it's own bootstrapper registrations
 - `RegisterSimplifyWeb` now extension method of`IDIRegistrator` instead of `IDIContainerProvider`, custom internal `IDIContainerProvider` can be passed via method parameter, if required
 - Internal `IConfiguration` registration override via `RegisterSimplifyWeb`
+- Static files disabled by default (when disabled, static files IOC container registrations will be skipped)
 - `Environment` split to `Environment` and `DynamicEnvironment`
 - V1 controllers RouteParameters defaulted to empty ExpandoObject to avoid NRE
 - `SimplifyWebSettings` loading thru binder

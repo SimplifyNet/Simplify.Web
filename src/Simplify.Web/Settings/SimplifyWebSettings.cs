@@ -52,7 +52,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	public string DataPath { get; private set; } = "App_Data";
 
-	public bool StaticFilesEnabled { get; private set; } = true;
+	public bool StaticFilesEnabled { get; private set; }
 
 	public IReadOnlyList<string> StaticFilesPaths { get; private set; } = ["styles", "scripts", "images", "content", "fonts"];
 
