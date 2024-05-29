@@ -6,7 +6,6 @@ namespace Simplify.Web.Benchmark;
 
 [MemoryDiagnoser]
 public class ExpandoObjectAndDictionaryBenchmarks
-
 {
 	[Params(1, 5, 20, 100, 300, 1000)]
 	public int NumValues;

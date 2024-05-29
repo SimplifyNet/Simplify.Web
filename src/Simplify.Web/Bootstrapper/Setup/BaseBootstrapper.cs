@@ -25,7 +25,6 @@ public partial class BaseBootstrapper
 
 	private ISimplifyWebSettings Settings { get; set; } = null!;
 
-
 	/// <summary>
 	/// Provides the `Simplify.Web` types to exclude from registrations.
 	/// </summary>

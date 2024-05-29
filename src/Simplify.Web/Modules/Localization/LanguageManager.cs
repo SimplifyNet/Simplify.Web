@@ -36,7 +36,7 @@ public class LanguageManager : ILanguageManager
 		if (settings.AcceptCookieLanguage && TrySetLanguageFromCookie(context))
 			return;
 
-		if (!settings.AcceptHeaderLanguage || settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context))
+		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))
 			if (!SetCurrentLanguage(settings.DefaultLanguage))
 				SetInvariantCulture();
 	}
