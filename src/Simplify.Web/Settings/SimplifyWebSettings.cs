@@ -70,6 +70,8 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	public bool DisableFileReaderCache { get; private set; }
 
+	public bool MeasurementsEnabled { get; private set; }
+
 	public bool ConsoleTracing { get; private set; }
 
 	private void LoadLanguageManagerSettings(IConfiguration config)
@@ -133,6 +135,9 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		DisableFileReaderCache = config.GetValue<bool>(nameof(DisableFileReaderCache));
 	}
 
-	private void LoadDiagnosticSettings(IConfiguration config) =>
+	private void LoadDiagnosticSettings(IConfiguration config)
+	{
+		MeasurementsEnabled = config.GetValue<bool>(nameof(MeasurementsEnabled));
 		ConsoleTracing = config.GetValue<bool>(nameof(ConsoleTracing));
+	}
 }

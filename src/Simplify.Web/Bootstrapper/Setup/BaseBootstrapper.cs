@@ -23,6 +23,9 @@ public partial class BaseBootstrapper
 		set => _configuration = value;
 	}
 
+	private ISimplifyWebSettings Settings { get; set; } = null!;
+
+
 	/// <summary>
 	/// Provides the `Simplify.Web` types to exclude from registrations.
 	/// </summary>
@@ -44,7 +47,7 @@ public partial class BaseBootstrapper
 			RegisterConfiguration(Configuration);
 		}
 
-		var settings = new SimplifyWebSettings(Configuration);
+		Settings = new SimplifyWebSettings(Configuration);
 
 		// Registering Simplify.Web types
 
@@ -80,12 +83,15 @@ public partial class BaseBootstrapper
 		RegisterRouteMatcherResolverMatchers();
 		RegisterSecurityChecker();
 		RegisterSecurityRules();
-		RegisterSimplifyWebSettings(settings);
+		RegisterSimplifyWebSettings(Settings);
 		RegisterStaticFile();
 		RegisterStaticFileProcessingContextFactory();
 		RegisterStaticFileRequestHandlingPipeline();
 		RegisterStaticFileRequestHandlingPipelineHandlers();
-		RegisterStopwatchProvider();
+
+		if (Settings.MeasurementsEnabled)
+			RegisterStopwatchProvider();
+
 		RegisterStringTable();
 		RegisterTemplateFactory();
 		RegisterViewFactory();

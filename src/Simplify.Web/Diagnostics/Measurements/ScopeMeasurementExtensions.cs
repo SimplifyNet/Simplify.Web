@@ -1,6 +1,7 @@
 ﻿using Simplify.DI;
+using Simplify.Web.Settings;
 
-namespace Simplify.Web.Diagnostics.Measurement;
+namespace Simplify.Web.Diagnostics.Measurements;
 
 /// <summary>
 /// Provides the measurement extensions.
@@ -13,6 +14,9 @@ public static class ScopeMeasurementExtensions
 	/// <param name="scope">The scope.</param>
 	public static ILifetimeScope StartMeasurements(this ILifetimeScope scope)
 	{
+		if (!scope.Resolver.Resolve<ISimplifyWebSettings>().MeasurementsEnabled)
+			return scope;
+
 		// Starts execution measurement
 		scope.Resolver.Resolve<IStopwatchProvider>().StartMeasurement();
 

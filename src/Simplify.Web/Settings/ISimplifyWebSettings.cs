@@ -103,6 +103,11 @@ public interface ISimplifyWebSettings
 	bool DisableFileReaderCache { get; }
 
 	/// <summary>
+	/// Gets the value indicating whether measurements is enabled.
+	/// </summary>
+	bool MeasurementsEnabled { get; }
+
+	/// <summary>
 	/// Gets the value indicating whether console tracing is enabled.
 	/// </summary>
 	bool ConsoleTracing { get; }

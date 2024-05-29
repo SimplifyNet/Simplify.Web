@@ -10,6 +10,7 @@
 
 - Version 2 controllers
 - Built-in Json response using System.Text.Json
+- Switchable measurements (StopwatchProvider), disabled by default
 
 ### Removed
 

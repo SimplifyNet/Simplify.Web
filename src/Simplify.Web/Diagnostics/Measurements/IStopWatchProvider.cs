@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simplify.Web.Diagnostics.Measurement;
+namespace Simplify.Web.Diagnostics.Measurements;
 
 /// <summary>
 /// Represent a stopwatch provider.

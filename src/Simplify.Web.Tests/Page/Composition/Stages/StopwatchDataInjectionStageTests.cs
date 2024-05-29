@@ -1,7 +1,7 @@
 using System;
 using Moq;
 using NUnit.Framework;
-using Simplify.Web.Diagnostics.Measurement;
+using Simplify.Web.Diagnostics.Measurements;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Page.Composition.Stages;
 

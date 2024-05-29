@@ -1,6 +1,6 @@
 using System;
 using Simplify.DI;
-using Simplify.Web.Diagnostics.Measurement;
+using Simplify.Web.Diagnostics.Measurements;
 
 namespace Simplify.Web.Bootstrapper.SimplifyWebRegistrationsOverride;
 
