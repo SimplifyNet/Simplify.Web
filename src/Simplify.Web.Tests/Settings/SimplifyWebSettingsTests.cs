@@ -34,6 +34,7 @@ public class SimplifyWebSettingsTests
 			{ "SimplifyWebSettings:TemplatesMemoryCache", "true" },
 			{ "SimplifyWebSettings:StringTableMemoryCache", "true" },
 			{ "SimplifyWebSettings:DisableFileReaderCache", "true" },
+			{ "SimplifyWebSettings:MeasurementsEnabled", "true" },
 			{ "SimplifyWebSettings:ConsoleTracing", "true" }
 		};
 
@@ -68,6 +69,7 @@ public class SimplifyWebSettingsTests
 		Assert.That(settings.TemplatesMemoryCache, Is.True);
 		Assert.That(settings.StringTableMemoryCache, Is.True);
 		Assert.That(settings.DisableFileReaderCache, Is.True);
+		Assert.That(settings.MeasurementsEnabled, Is.True);
 		Assert.That(settings.ConsoleTracing, Is.True);
 	}
 }
