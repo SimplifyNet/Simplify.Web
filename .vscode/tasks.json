@@ -56,7 +56,10 @@
 				"-f",
 				"net8.0",
 				"--filter",
-				"TestCategory!=\"Benchmark\""
+				"TestCategory!=\"Benchmark\"",
+				"/p:CollectCoverage=true",
+				"/p:CoverletOutputFormat=lcov",
+				"/p:CoverletOutput=./lcov.info"
 			],
 			"options": {
 				"cwd": "src"

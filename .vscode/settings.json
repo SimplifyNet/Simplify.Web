@@ -1,6 +1,4 @@
 {
-	"dotnet-test-explorer.testProjectPath": "src/**/*Tests.csproj",
-	"dotnet-test-explorer.testArguments": "/p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=./coverage/lcov.info",
 	"cSpell.words": [
 		"appsettings",
 		"ASPNETCORE",
@@ -18,5 +16,11 @@
 		"OWIN",
 		"Redirector",
 		"registrator"
-	]
+	],
+	"coverage-gutters.coverageFileNames": [
+		"lcov*.info"
+	],
+	"files.exclude": {
+		"**/lcov*": true
+	}
 }
