@@ -18,7 +18,7 @@ public static class SimplifyDIContainerProviderExtensions
 	/// <param name="registrator">The registrator.</param>
 	/// <param name="configuration">The custom `IConfiguration`, internal `IConfiguration` registration will be overwritten.</param>
 	/// <param name="registrationsOverride">The `Simplify.Web` types registrations override.</param>
-	/// <param name="containerProvider">Overrides the internal `Simplify.Web` `IDIContainerProvider` with custom.</param>
+	/// <param name="containerProvider">Overrides the internal `Simplify.Web` `IDIContainerProvider` with custom provider.</param>
 	public static IDIRegistrator RegisterSimplifyWeb(this IDIRegistrator registrator,
 		IConfiguration? configuration = null,
 		Action<RegistrationsOverride>? registrationsOverride = null,

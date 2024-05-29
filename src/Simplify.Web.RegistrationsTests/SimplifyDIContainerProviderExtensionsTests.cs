@@ -10,7 +10,7 @@ namespace Simplify.Web.RegistrationsTests;
 public class SimplifyDIContainerProviderExtensionsTests
 {
 	[Test]
-	public void RegisterSimplifyWeb_OverrideControllerResponseExecutor_TypeOverridden()
+	public void RegisterSimplifyWeb_OverrideControllerResponseExecutorAndCustomProvider_TypeOverriddenAndCustomProviderUsed()
 	{
 		// Arrange
 
@@ -19,7 +19,8 @@ public class SimplifyDIContainerProviderExtensionsTests
 		container.RegisterSimplifyWeb(registrationsOverride: x =>
 		{
 			x.OverrideControllerResponseExecutor(r => r.Register<IControllerResponseExecutor, CustomControllerResponseExecutor>());
-		});
+		},
+		containerProvider: container);
 
 		// Act
 
