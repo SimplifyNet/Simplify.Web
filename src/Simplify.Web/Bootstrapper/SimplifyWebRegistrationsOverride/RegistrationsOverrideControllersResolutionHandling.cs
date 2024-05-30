@@ -17,7 +17,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideCrsHandlingPipeline(Action<IDIRegistrator> action) => AddAction<ICrsHandlingPipeline>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<ICrsHandler>` registration.
+	/// Overrides the `IReadOnlyList&lt;ICrsHandler&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideCrsHandlers(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<ICrsHandler>>(action);

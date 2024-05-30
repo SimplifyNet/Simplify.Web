@@ -4,19 +4,15 @@ using Moq;
 using NUnit.Framework;
 using Simplify.DI;
 using Simplify.DI.Provider.DryIoc;
-using Simplify.Web.Controllers;
-using Simplify.Web.Controllers.V1.Metadata;
-using Simplify.Web.Controllers.V2.Execution;
 using Simplify.Web.Modules.ApplicationEnvironment;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Data;
 using Simplify.Web.Modules.Data.Html;
 using Simplify.Web.Modules.Localization;
-using Simplify.Web.Modules.Redirection;
 using Simplify.Web.Tests.Views.TestViews;
 using Simplify.Web.Views;
 
-namespace Simplify.Web.Tests.Controllers.V2.Execution;
+namespace Simplify.Web.Tests.Views;
 
 [TestFixture]
 public class ViewFactoryTests

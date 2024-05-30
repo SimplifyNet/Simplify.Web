@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Simplify.DI;
+using Simplify.Web.Bootstrapper.Configuration;
 using Simplify.Web.Controllers.Meta.MetaStore;
 using Simplify.Web.Settings;
 using Simplify.Web.System;
@@ -17,18 +18,25 @@ public partial class BaseBootstrapper
 {
 	private IConfiguration? _configuration;
 
+	/// <summary>
+	/// Gets or sets the configuration.
+	/// </summary>
+	/// <value>
+	/// The configuration.
+	/// </value>
+	/// <exception cref="InvalidOperationException">Configuration is null.</exception>
 	protected IConfiguration Configuration
 	{
-		get => _configuration ?? throw new InvalidOperationException("Configuration is null");
+		get => _configuration ?? throw new InvalidOperationException("Configuration is null.");
 		set => _configuration = value;
 	}
-
-	private ISimplifyWebSettings Settings { get; set; } = null!;
 
 	/// <summary>
 	/// Provides the `Simplify.Web` types to exclude from registrations.
 	/// </summary>
 	protected IEnumerable<Type> TypesToExclude { get; private set; } = [];
+
+	private ISimplifyWebSettings Settings { get; set; } = null!;
 
 	/// <summary>
 	/// Registers the types in container.

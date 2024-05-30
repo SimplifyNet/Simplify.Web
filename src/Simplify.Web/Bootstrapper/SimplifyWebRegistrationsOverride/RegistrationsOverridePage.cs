@@ -18,7 +18,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverridePageComposer(Action<IDIRegistrator> action) => AddAction<IPageComposer>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IPageCompositionStage>` registration.
+	/// Overrides the `IReadOnlyList&lt;IPageCompositionStage&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverridePageCompositionStages(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IPageCompositionStage>>(action);

@@ -5,7 +5,7 @@ using Simplify.Web.Http.ResponseWriting;
 namespace Simplify.Web.Bootstrapper.Setup;
 
 /// <summary>
-/// Provides the bootstrapper configuration registration.
+/// Provides the bootstrapper HTTP registration.
 /// </summary>
 public partial class BaseBootstrapper
 {

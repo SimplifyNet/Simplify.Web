@@ -8,7 +8,6 @@ using Simplify.Web.Modules.Redirection;
 using Simplify.Web.Page.Composition;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.RequestHandling.Handlers;
-using Simplify.Web.RequestHandling.Wrapping;
 using Simplify.Web.StaticFiles;
 using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.IO;
@@ -20,6 +19,9 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the request handling pipeline.
+	/// </summary>
 	public virtual void RegisterRequestHandlingPipeline()
 	{
 		if (TypesToExclude.Contains(typeof(IRequestHandlingPipeline)))
@@ -28,6 +30,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IRequestHandlingPipeline, RequestHandlingPipeline>();
 	}
 
+	/// <summary>
+	/// Registers the request handling pipeline handlers.
+	/// </summary>
 	public virtual void RegisterRequestHandlingPipelineHandlers()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IRequestHandler>)))

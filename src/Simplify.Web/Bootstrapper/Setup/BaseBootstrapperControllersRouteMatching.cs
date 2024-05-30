@@ -13,6 +13,9 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the route matcher resolver.
+	/// </summary>
 	public virtual void RegisterRouteMatcherResolver()
 	{
 		if (TypesToExclude.Contains(typeof(IRouteMatcherResolver)))
@@ -21,6 +24,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IRouteMatcherResolver, RouteMatcherResolver>(LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the route matcher resolver matchers.
+	/// </summary>
 	public virtual void RegisterRouteMatcherResolverMatchers()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IRouteMatcher>)))

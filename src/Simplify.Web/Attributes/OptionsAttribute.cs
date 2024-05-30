@@ -5,8 +5,9 @@ namespace Simplify.Web.Attributes;
 /// <summary>
 /// Sets the controller HTTP OPTIONS request route path.
 /// </summary>
+/// <seealso cref="ControllerRouteAttribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="OptionsAttribute"/> class.
+/// Initializes a new instance of the <see cref="OptionsAttribute" /> class.
 /// </remarks>
 /// <param name="route">The route.</param>
 [AttributeUsage(AttributeTargets.Class)]

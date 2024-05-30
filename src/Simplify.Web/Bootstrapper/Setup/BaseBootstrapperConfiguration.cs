@@ -11,6 +11,7 @@ public partial class BaseBootstrapper
 	/// <summary>
 	/// Registers the configuration.
 	/// </summary>
+	/// <param name="configuration">The configuration.</param>
 	private static void RegisterConfiguration(IConfiguration configuration) =>
 		BootstrapperFactory.ContainerProvider.Register(r => configuration, LifetimeType.Singleton);
 }

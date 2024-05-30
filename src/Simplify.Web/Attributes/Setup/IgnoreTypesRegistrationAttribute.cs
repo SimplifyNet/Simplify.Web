@@ -5,8 +5,9 @@ namespace Simplify.Web.Attributes.Setup;
 /// <summary>
 /// Specifies the controllers or views types which should be ignored from DI container registration.
 /// </summary>
+/// <seealso cref="Attribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="IgnoreTypesRegistrationAttribute"/> class.
+/// Initializes a new instance of the <see cref="IgnoreTypesRegistrationAttribute" /> class.
 /// </remarks>
 /// <param name="types">The Controller or view types which should be ignored from DI container registration</param>
 [AttributeUsage(AttributeTargets.Class)]

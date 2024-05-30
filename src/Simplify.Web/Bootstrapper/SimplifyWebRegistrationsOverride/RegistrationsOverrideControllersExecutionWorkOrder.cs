@@ -18,7 +18,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideExecutionWorkOrderBuildDirector(Action<IDIRegistrator> action) => AddAction<IExecutionWorkOrderBuildDirector>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IExecutionWorkOrderBuildStage>` registration.
+	/// Overrides the `IReadOnlyList&lt;IExecutionWorkOrderBuildStage&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideExecutionWorkOrderBuildDirectorStages(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IExecutionWorkOrderBuildStage>>(action);

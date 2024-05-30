@@ -4,12 +4,14 @@ using Simplify.Web.Modules.Redirection;
 using Simplify.Web.Responses;
 
 #nullable disable
+#pragma warning disable CA1822
 
 namespace Simplify.Web;
 
 /// <summary>
 /// Provides the controllers base class with response shortcuts.
 /// </summary>
+/// <seealso cref="ActionModulesAccessor" />
 public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 {
 	/// <summary>
@@ -24,7 +26,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	/// Initializes a new instance of the <see cref="Responses.Content" /> class.
 	/// </summary>
 	/// <param name="content">The string content.</param>
-	/// <param name="contentType">>The HTTP response status code.</param>
+	/// <param name="contentType">>Type of the content.</param>
 	/// <param name="statusCode">The status code.</param>
 	protected Content Content(string content, string contentType, int statusCode = 200) => new(content, contentType, statusCode);
 
@@ -42,12 +44,11 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	/// <param name="contentType">Type of the content.</param>
 	/// <param name="data">The data of the file.</param>
 	/// <param name="statusCode">The HTTP response status code.</param>
-	/// <exception cref="ArgumentNullException">
-	/// </exception>
+	/// <exception cref="ArgumentNullException"></exception>
 	protected File File(string outputFileName, string contentType, byte[] data, int statusCode = 200) => new(outputFileName, contentType, data, statusCode);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Responses.InlineTpl"/> class.
+	/// Initializes a new instance of the <see cref="Responses.InlineTpl" /> class.
 	/// </summary>
 	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 	/// <param name="template">The template.</param>
@@ -121,6 +122,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ViewModel{T}" /> class.
 	/// </summary>
+	/// <typeparam name="T">The model type</typeparam>
 	/// <param name="templateFileName">Name of the template file.</param>
 	/// <param name="viewModel">The view model.</param>
 	/// <param name="title">The title.</param>

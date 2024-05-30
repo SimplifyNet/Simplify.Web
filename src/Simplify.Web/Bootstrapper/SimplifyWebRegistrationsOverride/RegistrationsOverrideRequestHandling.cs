@@ -17,7 +17,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideRequestHandlingPipeline(Action<IDIRegistrator> action) => AddAction<IRequestHandlingPipeline>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IRequestHandler>` registration.
+	/// Overrides the `IReadOnlyList&lt;IRequestHandler&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideRequestHandlingPipelineHandlers(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IRequestHandler>>(action);

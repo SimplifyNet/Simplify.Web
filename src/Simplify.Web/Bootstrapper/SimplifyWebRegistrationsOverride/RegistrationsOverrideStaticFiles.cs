@@ -31,7 +31,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideStaticFileRequestHandlingPipeline(Action<IDIRegistrator> action) => AddAction<IStaticFileRequestHandlingPipeline>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IStaticFileRequestHandler>` registration.
+	/// Overrides the `IReadOnlyList&lt;IStaticFileRequestHandler&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideStaticFileRequestHandlingPipelineHandlers(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IStaticFileRequestHandler>>(action);

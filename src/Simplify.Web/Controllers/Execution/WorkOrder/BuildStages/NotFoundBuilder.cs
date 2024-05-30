@@ -4,8 +4,17 @@ using Simplify.Web.Controllers.Meta.MetaStore;
 
 namespace Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
 
+/// <summary>
+/// Provides the not found cases builder
+/// </summary>
+/// <seealso cref="IExecutionWorkOrderBuildStage" />
 public class NotFoundBuilder : IExecutionWorkOrderBuildStage
 {
+	/// <summary>
+	/// Executes the build stage.
+	/// </summary>
+	/// <param name="builder">The builder.</param>
+	/// <param name="context">The context.</param>
 	public void Execute(ExecutionWorkOrderBuilder builder, HttpContext context)
 	{
 		if (builder.HttpStatusCode != null)

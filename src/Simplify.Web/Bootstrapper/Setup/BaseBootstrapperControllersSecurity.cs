@@ -11,6 +11,9 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the security checker.
+	/// </summary>
 	public virtual void RegisterSecurityChecker()
 	{
 		if (TypesToExclude.Contains(typeof(ISecurityChecker)))
@@ -19,6 +22,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<ISecurityChecker, SecurityChecker>(LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the security rules.
+	/// </summary>
 	public virtual void RegisterSecurityRules()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<ISecurityRule>)))

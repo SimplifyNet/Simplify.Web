@@ -3,6 +3,7 @@
 /// <summary>
 /// Provides the synchronous controllers base class.
 /// </summary>
+/// <seealso cref="ControllerBase" />
 public abstract class SyncControllerBase : ControllerBase
 {
 	/// <summary>

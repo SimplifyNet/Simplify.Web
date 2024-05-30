@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Simplify.System;
 
-namespace Simplify.Web.Bootstrapper.Setup;
+namespace Simplify.Web.Bootstrapper.Configuration;
 
 /// <summary>
 /// Provides the `IConfiguration` factory.

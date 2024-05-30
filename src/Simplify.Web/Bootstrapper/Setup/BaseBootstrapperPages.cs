@@ -28,6 +28,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IPageGenerator, PageGenerator>();
 	}
 
+	/// <summary>
+	/// Registers the page composer.
+	/// </summary>
 	public virtual void RegisterPageComposer()
 	{
 		if (TypesToExclude.Contains(typeof(IPageComposer)))
@@ -36,6 +39,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IPageComposer, PageComposer>();
 	}
 
+	/// <summary>
+	/// Registers the page composition stages.
+	/// </summary>
 	public virtual void RegisterPageCompositionStages()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IPageCompositionStage>)))

@@ -11,11 +11,12 @@ public interface IControllerExecutor
 	/// <summary>
 	/// Determines whether this executor can execute controller.
 	/// </summary>
+	/// <param name="controllerMetadata">The controller metadata.</param>
 	bool CanHandle(IControllerMetadata controllerMetadata);
 
 	/// <summary>
 	/// Creates the actual controller and executes it.
 	/// </summary>
-	/// <param name="args">The matched controller.</param>
+	/// <param name="matchedController">The matched controller.</param>
 	Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController);
 }

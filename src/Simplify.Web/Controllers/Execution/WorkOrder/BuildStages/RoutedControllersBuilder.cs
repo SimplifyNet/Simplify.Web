@@ -5,9 +5,18 @@ using Simplify.Web.Controllers.Resolution.Handling;
 
 namespace Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
 
+/// <summary>
+/// Provides the routed controllers builder
+/// </summary>
+/// <seealso cref="IExecutionWorkOrderBuildStage" />
 public class RoutedControllersBuilder(IControllerResolutionPipeline resolutionPipeline,
   ICrsHandlingPipeline crsHandlingPipeline) : IExecutionWorkOrderBuildStage
 {
+	/// <summary>
+	/// Executes the build stage.
+	/// </summary>
+	/// <param name="builder">The builder.</param>
+	/// <param name="context">The context.</param>
 	public void Execute(ExecutionWorkOrderBuilder builder, HttpContext context)
 	{
 		foreach (var item in ControllersMetaStore.Current.RoutedControllers)

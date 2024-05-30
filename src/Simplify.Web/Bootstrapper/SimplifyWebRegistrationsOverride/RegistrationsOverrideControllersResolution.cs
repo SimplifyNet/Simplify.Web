@@ -17,7 +17,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideControllerResolutionPipeline(Action<IDIRegistrator> action) => AddAction<IControllerResolutionPipeline>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IControllerResolutionStage>` registration.
+	/// Overrides the `IReadOnlyList&lt;IControllerResolutionStage&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideControllerResolutionPipelineStages(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IControllerResolutionStage>>(action);

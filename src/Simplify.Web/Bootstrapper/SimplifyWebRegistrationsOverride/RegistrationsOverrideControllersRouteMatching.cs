@@ -18,7 +18,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideRouteMatcherResolver(Action<IDIRegistrator> action) => AddAction<IRouteMatcherResolver>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IRouteMatcher>` registration.
+	/// Overrides the `IReadOnlyList&lt;IRouteMatcher&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideRouteMatcherResolverMatchers(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IRouteMatcher>>(action);

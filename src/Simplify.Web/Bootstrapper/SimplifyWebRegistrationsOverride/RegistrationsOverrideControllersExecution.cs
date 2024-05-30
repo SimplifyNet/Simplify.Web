@@ -19,7 +19,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideControllerExecutorResolver(Action<IDIRegistrator> action) => AddAction<IControllerExecutorResolver>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<IControllerExecutor>` registration.
+	/// Overrides the `IReadOnlyList&lt;IControllerExecutor&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideControllerExecutorResolverExecutors(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<IControllerExecutor>>(action);

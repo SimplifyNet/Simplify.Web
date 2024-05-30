@@ -9,6 +9,9 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the controller v1 factory.
+	/// </summary>
 	public virtual void RegisterController1Factory()
 	{
 		if (TypesToExclude.Contains(typeof(IController1Factory)))

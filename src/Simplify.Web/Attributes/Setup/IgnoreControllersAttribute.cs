@@ -5,8 +5,9 @@ namespace Simplify.Web.Attributes.Setup;
 /// <summary>
 /// Specifies the controllers types which should be ignored by Simplify.Web.
 /// </summary>
+/// <seealso cref="Attribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="IgnoreControllersAttribute"/> class.
+/// Initializes a new instance of the <see cref="IgnoreControllersAttribute" /> class.
 /// </remarks>
 /// <param name="types">The controller types which should be ignored by Simplify.Web</param>
 [AttributeUsage(AttributeTargets.Class)]

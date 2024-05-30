@@ -5,8 +5,16 @@ using Simplify.Web.Controllers.Response;
 
 namespace Simplify.Web.Controllers.Execution;
 
+/// <summary>
+/// Provides a controllers executor
+/// </summary>
+/// <seealso cref="IControllersExecutor" />
 public class ControllersExecutor(IControllerExecutorResolver executorResolver, IControllerResponseExecutor responseExecutor) : IControllersExecutor
 {
+	/// <summary>
+	/// Executes the controllers asynchronously.
+	/// </summary>
+	/// <param name="controllers">The controllers.</param>
 	public async Task<ResponseBehavior> ExecuteAsync(IReadOnlyList<IMatchedController> controllers)
 	{
 		foreach (var controller in controllers)

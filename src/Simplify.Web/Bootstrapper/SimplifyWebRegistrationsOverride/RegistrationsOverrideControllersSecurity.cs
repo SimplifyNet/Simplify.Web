@@ -17,7 +17,7 @@ public partial class RegistrationsOverride
 	public RegistrationsOverride OverrideSecurityChecker(Action<IDIRegistrator> action) => AddAction<ISecurityChecker>(action);
 
 	/// <summary>
-	/// Overrides the `IReadOnlyList<ISecurityRule>` registration.
+	/// Overrides the `IReadOnlyList&lt;ISecurityRule&gt;` registration.
 	/// </summary>
 	/// <param name="action">The custom registration action.</param>
 	public RegistrationsOverride OverrideSecurityRules(Action<IDIRegistrator> action) => AddAction<IReadOnlyList<ISecurityRule>>(action);

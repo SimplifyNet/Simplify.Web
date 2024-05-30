@@ -22,6 +22,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<ICrsHandlingPipeline, CrsHandlingPipeline>(LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the CRS handlers.
+	/// </summary>
 	public virtual void RegisterCrsHandlers()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<ICrsHandler>)))

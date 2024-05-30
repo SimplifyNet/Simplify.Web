@@ -24,6 +24,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IControllerResolutionPipeline, ControllerResolutionPipeline>(LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the controller resolution pipeline stages.
+	/// </summary>
 	public virtual void RegisterControllerResolutionPipelineStages()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IControllerResolutionStage>)))

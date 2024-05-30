@@ -25,6 +25,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IExecutionWorkOrderBuildDirector, ExecutionWorkOrderBuildDirector>(LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the execution work order build director stages.
+	/// </summary>
 	public virtual void RegisterExecutionWorkOrderBuildDirectorStages()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IExecutionWorkOrderBuildStage>)))

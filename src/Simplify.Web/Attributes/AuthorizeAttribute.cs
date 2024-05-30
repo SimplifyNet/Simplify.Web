@@ -7,6 +7,7 @@ namespace Simplify.Web.Attributes;
 /// <summary>
 /// Indicates whether the controller requires user authorization.
 /// </summary>
+/// <seealso cref="Attribute" />
 [AttributeUsage(AttributeTargets.Class)]
 public class AuthorizeAttribute : Attribute
 {
@@ -20,7 +21,7 @@ public class AuthorizeAttribute : Attribute
 			: [];
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="AuthorizeAttribute"/> class.
+	/// Initializes a new instance of the <see cref="AuthorizeAttribute" /> class.
 	/// </summary>
 	/// <param name="requiredUserRoles">The required user roles.</param>
 	public AuthorizeAttribute(params string[] requiredUserRoles) => RequiredUserRoles = requiredUserRoles;

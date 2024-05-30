@@ -15,7 +15,7 @@ public abstract class ViewAccessor
 	/// <summary>
 	/// Gets a view instance.
 	/// </summary>
-	/// <typeparam name="T">View instance to get</typeparam>
+	/// <typeparam name="T">View type</typeparam>
 	public T GetView<T>()
 		where T : View =>
 		(T)ViewFactory.CreateView(typeof(T));

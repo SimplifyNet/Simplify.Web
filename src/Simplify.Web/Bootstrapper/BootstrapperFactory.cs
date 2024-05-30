@@ -15,6 +15,9 @@ public static class BootstrapperFactory
 	/// <summary>
 	/// Gets or sets the container provider used by Simplify.Web.
 	/// </summary>
+	/// <value>
+	/// The container provider.
+	/// </value>
 	/// <exception cref="ArgumentNullException">value</exception>
 	public static IDIContainerProvider ContainerProvider
 	{
@@ -25,6 +28,7 @@ public static class BootstrapperFactory
 	/// <summary>
 	/// Creates the bootstrapper.
 	/// </summary>
+	/// <exception cref="InvalidOperationException"></exception>
 	public static BaseBootstrapper CreateBootstrapper()
 	{
 		var userBootstrapperType = SimplifyWebTypesFinder.FindTypeDerivedFrom<BaseBootstrapper>();

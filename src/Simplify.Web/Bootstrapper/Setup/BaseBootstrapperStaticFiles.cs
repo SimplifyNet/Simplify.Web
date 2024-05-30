@@ -16,6 +16,9 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the static file.
+	/// </summary>
 	public virtual void RegisterStaticFile()
 	{
 		if (TypesToExclude.Contains(typeof(IStaticFile)))
@@ -28,6 +31,9 @@ public partial class BaseBootstrapper
 			LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the static file processing context factory.
+	/// </summary>
 	public virtual void RegisterStaticFileProcessingContextFactory()
 	{
 		if (TypesToExclude.Contains(typeof(IStaticFileProcessingContextFactory)))
@@ -37,6 +43,9 @@ public partial class BaseBootstrapper
 			LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the static file request handling pipeline.
+	/// </summary>
 	public virtual void RegisterStaticFileRequestHandlingPipeline()
 	{
 		if (TypesToExclude.Contains(typeof(IStaticFileRequestHandlingPipeline)))
@@ -46,6 +55,10 @@ public partial class BaseBootstrapper
 			LifetimeType.Singleton);
 	}
 
+	/// <summary>
+	/// Registers the static file request handling pipeline handlers.
+	/// </summary>
+	/// <returns></returns>
 	public virtual void RegisterStaticFileRequestHandlingPipelineHandlers()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IStaticFileRequestHandler>)))

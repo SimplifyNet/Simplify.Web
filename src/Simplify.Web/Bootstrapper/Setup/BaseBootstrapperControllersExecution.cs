@@ -15,6 +15,9 @@ namespace Simplify.Web.Bootstrapper.Setup;
 /// </summary>
 public partial class BaseBootstrapper
 {
+	/// <summary>
+	/// Registers the controller executor resolver.
+	/// </summary>
 	public virtual void RegisterControllerExecutorResolver()
 	{
 		if (TypesToExclude.Contains(typeof(IControllerExecutorResolver)))
@@ -23,6 +26,9 @@ public partial class BaseBootstrapper
 		BootstrapperFactory.ContainerProvider.Register<IControllerExecutorResolver, ControllerExecutorResolver>();
 	}
 
+	/// <summary>
+	/// Registers the controller executor resolver executors.
+	/// </summary>
 	public virtual void RegisterControllerExecutorResolverExecutors()
 	{
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IControllerExecutor>)))
@@ -35,6 +41,9 @@ public partial class BaseBootstrapper
 			]);
 	}
 
+	/// <summary>
+	/// Registers the controller response executor.
+	/// </summary>
 	public virtual void RegisterControllerResponseExecutor()
 	{
 		if (TypesToExclude.Contains(typeof(IControllerResponseExecutor)))

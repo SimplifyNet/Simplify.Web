@@ -5,6 +5,7 @@ namespace Simplify.Web;
 /// <summary>
 /// Provides the asynchronous controllers base class.
 /// </summary>
+/// <seealso cref="ControllerBase" />
 public abstract class AsyncControllerBase : ControllerBase
 {
 	/// <summary>
