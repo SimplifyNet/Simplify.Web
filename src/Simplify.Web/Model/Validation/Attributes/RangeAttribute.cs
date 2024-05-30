@@ -124,9 +124,6 @@ public class RangeAttribute : ValidationAttribute
 	{
 		if (comparableValue.GetType() != OperandType)
 			throw new ArgumentException("Type mismatch. The minimum value and property value should be of the same type.");
-
-		if (comparableValue.GetType() != OperandType)
-			throw new ArgumentException("Type mismatch. The maximum value and property value should be of the same type.");
 	}
 
 	private IComparable ConvertToOperandComparableType(object value)
