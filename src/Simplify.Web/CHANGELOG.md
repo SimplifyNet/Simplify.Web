@@ -19,6 +19,7 @@
 - `UseSimplifyWebWithoutRegistrations` and  `UseSimplifyWebNonTerminalWithoutRegistrations` `IApplicationBuilder` methods
 - `ISimplifyWebSettings` override via `RegisterSimplifyWebSettings`
 - `IConfiguration` override via `OverrideConfiguration` or `RegisterConfiguration`
+- 400 special controller attribute
 
 ### Changed
 
@@ -30,6 +31,7 @@
 - V1 controllers RouteParameters defaulted to empty ExpandoObject to avoid NRE
 - `SimplifyWebSettings` loading thru binder
 - Controllers search on execution optimized
+- XML comments revisited/updated
 
 ### Fixed
 
