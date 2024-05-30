@@ -17,6 +17,7 @@ public partial class BaseBootstrapper
 	/// </summary>
 	public virtual void RegisterDefaultModelBinders()
 	{
+		BootstrapperFactory.ContainerProvider.Register<JsonModelBinder>(LifetimeType.Singleton);
 		BootstrapperFactory.ContainerProvider.Register<HttpQueryModelBinder>(LifetimeType.Singleton);
 		BootstrapperFactory.ContainerProvider.Register<HttpFormModelBinder>(LifetimeType.Singleton);
 	}

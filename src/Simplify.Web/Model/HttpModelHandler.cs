@@ -28,8 +28,9 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	[
 		// Default model binders
 
-		typeof (HttpQueryModelBinder),
-		typeof (HttpFormModelBinder)
+		typeof(JsonModelBinder),
+		typeof(HttpQueryModelBinder),
+		typeof(HttpFormModelBinder)
 	];
 
 	/// <summary>
