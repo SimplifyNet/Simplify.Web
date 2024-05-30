@@ -7,9 +7,10 @@ namespace SampleApp.Api.Controllers.V1;
 public class DifferentRouteParametersController : Controller
 {
 	public override ControllerResponse Invoke() =>
-		Content($@"
-String param: {RouteParameters.StringParam}
-Integer param: {RouteParameters.IntParam}
-bool param: {RouteParameters.BoolParam},
-String array param: {string.Join(", ", RouteParameters.StringArrayParam)}");
+		Content($"""
+		         String param: {RouteParameters.StringParam}
+		         Integer param: {RouteParameters.IntParam}
+		         bool param: {RouteParameters.BoolParam},
+		         String array param: {string.Join(", ", RouteParameters.StringArrayParam)}
+		         """);
 }

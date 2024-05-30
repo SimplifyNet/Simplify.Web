@@ -62,6 +62,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Json Mode Test V2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"StringParam\": \"Foo\",\r\n    \"IntParam\": 1,\r\n    \"BoolParam\": true,\r\n    \"StringListParam\": \r\n    [\r\n        \"Foo\",\r\n        \"Bar\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/v2/json-model-test",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"json-model-test"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
