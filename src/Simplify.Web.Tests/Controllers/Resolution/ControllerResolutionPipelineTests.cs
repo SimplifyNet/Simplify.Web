@@ -12,9 +12,10 @@ namespace Simplify.Web.Tests.Controllers.Resolution;
 [TestFixture]
 public class ControllerResolutionPipelineTests
 {
-	private ControllerResolutionPipeline _pipeline = null!;
 	private readonly IControllerMetadata _initialController = Mock.Of<IController1Metadata>();
 	private readonly HttpContext _context = Mock.Of<HttpContext>();
+
+	private ControllerResolutionPipeline _pipeline = null!;
 
 	[Test]
 	public void Execute_TwoStage_BothExecuted()

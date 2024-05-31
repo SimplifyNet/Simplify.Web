@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
+
+using NUnit.Framework;
 
 namespace Simplify.Web.Tests.Model.Validation.Attributes.RangeAttributeTests;
 

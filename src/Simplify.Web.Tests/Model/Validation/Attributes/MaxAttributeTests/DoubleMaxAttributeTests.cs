@@ -1,6 +1,7 @@
+using System;
+
 using NUnit.Framework;
 using Simplify.Web.Model.Validation.Attributes;
-using System;
 
 namespace Simplify.Web.Tests.Model.Validation.Attributes.MaxAttributeTests;
 
