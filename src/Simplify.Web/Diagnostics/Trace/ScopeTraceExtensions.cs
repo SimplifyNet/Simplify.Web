@@ -18,7 +18,6 @@ public static class ScopeTraceExtensions
 	/// <param name="scope">The scope.</param>
 	/// <param name="context">The context.</param>
 	/// <param name="eventHandler">The event handler.</param>
-	/// <returns></returns>
 	public static ILifetimeScope Trace(this ILifetimeScope scope, HttpContext context, TraceEventHandler? eventHandler)
 	{
 		if (scope.Resolver.Resolve<ISimplifyWebSettings>().ConsoleTracing)

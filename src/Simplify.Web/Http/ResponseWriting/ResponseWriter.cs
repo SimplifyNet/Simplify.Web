@@ -6,6 +6,7 @@ namespace Simplify.Web.Http.ResponseWriting;
 /// <summary>
 /// Provides default HTTP response writer.
 /// </summary>
+/// <seealso cref="IResponseWriter" />
 public class ResponseWriter : IResponseWriter
 {
 	/// <summary>

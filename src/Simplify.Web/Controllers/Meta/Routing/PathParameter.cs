@@ -5,8 +5,9 @@ namespace Simplify.Web.Controllers.Meta.Routing;
 /// <summary>
 /// Provides the path parameter element.
 /// </summary>
+/// <seealso cref="PathItem" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="PathParameter"/> class.
+/// Initializes a new instance of the <see cref="PathParameter" /> class.
 /// </remarks>
 /// <param name="name">The name of the path parameter.</param>
 /// <param name="type">The type of the path parameter.</param>

@@ -13,8 +13,9 @@ namespace Simplify.Web.Model;
 /// <summary>
 /// Provides the model handling.
 /// </summary>
+/// <seealso cref="IModelHandler" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="HttpModelHandler"/> class.
+/// Initializes a new instance of the <see cref="HttpModelHandler" /> class.
 /// </remarks>
 /// <param name="context">The context.</param>
 public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IModelHandler
@@ -51,7 +52,7 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	/// <summary>
 	/// Adds the model binder into model binders list, this type should be registered in Simplify.DI container.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	public static void RegisterModelBinder<T>()
 		where T : IModelBinder =>
 		ModelBindersTypes.Add(typeof(T));
@@ -59,7 +60,7 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	/// <summary>
 	/// Adds the model validator into model validators list, this type should be registered in Simplify.DI container.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	public static void RegisterModelValidator<T>()
 		where T : IModelValidator =>
 		ModelValidatorsTypes.Add(typeof(T));
@@ -67,7 +68,7 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	/// <summary>
 	/// Parses model and validates it asynchronously
 	/// </summary>
-	/// <typeparam name="T">Model type</typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	public async Task ProcessAsync<T>()
 	{
 		var args = new ModelBinderEventArgs<T>(context);
@@ -93,7 +94,7 @@ public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IMode
 	/// <summary>
 	/// Gets the model.
 	/// </summary>
-	/// <typeparam name="T">The model</typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	/// <exception cref="InvalidOperationException">Error getting model, model should be processed via ProcessAsync&lt;T&gt; method first</exception>
 	public T GetModel<T>()
 	{

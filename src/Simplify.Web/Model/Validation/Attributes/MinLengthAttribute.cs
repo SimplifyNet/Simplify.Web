@@ -7,6 +7,7 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Sets the minimum required property length.
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="MinLengthAttribute" /> class.
 /// </remarks>

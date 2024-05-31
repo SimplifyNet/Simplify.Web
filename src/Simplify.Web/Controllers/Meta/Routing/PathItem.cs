@@ -4,7 +4,7 @@
 /// Provides the path item base class.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="PathItem"/> class.
+/// Initializes a new instance of the <see cref="PathItem" /> class.
 /// </remarks>
 /// <param name="name">The name of the path item.</param>
 public abstract class PathItem(string name)

@@ -8,12 +8,13 @@ namespace Simplify.Web.Model.Binding.Binders;
 /// <summary>
 /// Provides the HTTP form data to object (model) binding.
 /// </summary>
+/// <seealso cref="IModelBinder" />
 public class HttpFormModelBinder : IModelBinder
 {
 	/// <summary>
 	/// Binds the specified form data to model asynchronously.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	public async Task BindAsync<T>(ModelBinderEventArgs<T> args)
 	{
 		if (args.Context.Request.ContentType == null || !args.Context.Request.ContentType.Contains("application/x-www-form-urlencoded"))

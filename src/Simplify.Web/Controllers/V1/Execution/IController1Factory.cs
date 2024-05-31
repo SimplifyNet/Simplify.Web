@@ -8,7 +8,9 @@ public interface IController1Factory
 	/// <summary>
 	/// Creates the controller.
 	/// </summary>
-	/// <param name="args">The matched controller.</param>
-	/// <returns>The controller.</returns>
+	/// <param name="matchedController">The matched controller.</param>
+	/// <returns>
+	/// The controller.
+	/// </returns>
 	ControllerBase CreateController(IMatchedController matchedController);
 }

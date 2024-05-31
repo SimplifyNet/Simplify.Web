@@ -21,7 +21,7 @@ public class StopwatchProvider : IStopwatchProvider
 	}
 
 	/// <summary>
-	/// Stops the and get measurement.
+	/// Stops and get the measurement.
 	/// </summary>
 	public TimeSpan StopAndGetMeasurement()
 	{

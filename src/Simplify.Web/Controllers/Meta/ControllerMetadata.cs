@@ -10,6 +10,7 @@ namespace Simplify.Web.Controllers.Meta;
 /// <summary>
 /// Provides the controller base metadata information.
 /// </summary>
+/// <seealso cref="IControllerMetadata" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="ControllerMetadata" /> class.
 /// </remarks>
@@ -19,25 +20,45 @@ public abstract class ControllerMetadata(Type controllerType) : IControllerMetad
 	/// <summary>
 	/// Gets the type of the controller.
 	/// </summary>
+	/// <value>
+	/// The type of the controller.
+	/// </value>
 	public Type ControllerType { get; } = controllerType;
 
 	/// <summary>
 	/// Gets the controller execute parameters.
 	/// </summary>
+	/// <value>
+	/// The execute parameters.
+	/// </value>
 	public ControllerExecParameters? ExecParameters { get; protected set; }
 
 	/// <summary>
 	/// Gets the controller role information.
 	/// </summary>
+	/// <value>
+	/// The role.
+	/// </value>
 	public ControllerRole? Role { get; } = BuildControllerRole(controllerType);
 
 	/// <summary>
 	/// Gets the controller security information.
 	/// </summary>
+	/// <value>
+	/// The security.
+	/// </value>
 	public ControllerSecurity? Security { get; } = BuildControllerSecurity(controllerType);
 
+	/// <summary>
+	/// Builds the controller route.
+	/// </summary>
+	/// <param name="path">The path.</param>
 	protected abstract IControllerRoute BuildControllerRoute(string path);
 
+	/// <summary>
+	/// Builds the controller execute parameters.
+	/// </summary>
+	/// <param name="controllerType">Type of the controller.</param>
 	protected ControllerExecParameters? BuildControllerExecParameters(ICustomAttributeProvider controllerType)
 	{
 		var priority = 0;

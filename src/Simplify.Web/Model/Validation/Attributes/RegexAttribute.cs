@@ -8,6 +8,7 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Indicates that this property should match regular expression.
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="RegexAttribute" /> class.
 /// </remarks>

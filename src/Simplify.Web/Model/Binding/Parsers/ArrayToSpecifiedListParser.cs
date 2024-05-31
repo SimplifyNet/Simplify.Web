@@ -8,13 +8,12 @@ namespace Simplify.Web.Model.Binding.Parsers;
 /// <summary>
 /// Provides the string array to list parsing.
 /// </summary>
-public class ArrayToSpecifiedListParser
+public static class ArrayToSpecifiedListParser
 {
 	/// <summary>
 	/// Determines whether the specified type is valid for parsing.
 	/// </summary>
 	/// <param name="type">The type.</param>
-	/// <returns></returns>
 	/// <exception cref="ModelNotSupportedException">Exception throws in case of undefined list type</exception>
 	public static bool IsTypeValidForParsing(Type type)
 	{
@@ -35,7 +34,6 @@ public class ArrayToSpecifiedListParser
 	/// <param name="values">The values.</param>
 	/// <param name="type">The type to parse to.</param>
 	/// <param name="format">The format.</param>
-	/// <returns></returns>
 	/// <exception cref="ModelNotSupportedException"></exception>
 	public static object? ParseUndefined(string[] values, Type type, string? format = null)
 	{

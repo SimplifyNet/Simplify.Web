@@ -7,6 +7,7 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Sets the maximum required property length.
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="MaxLengthAttribute" /> class.
 /// </remarks>

@@ -3,6 +3,9 @@ using Simplify.Web.Controllers.Meta;
 
 namespace Simplify.Web.Controllers.Security;
 
+/// <summary>
+/// Represents a security checker.
+/// </summary>
 public interface ISecurityChecker
 {
 	/// <summary>

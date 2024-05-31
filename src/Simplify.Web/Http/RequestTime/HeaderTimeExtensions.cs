@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Http.RequestTime;
 
+/// <summary>
+/// Provides the header time extensions.
+/// </summary>
 public static class HeaderTimeExtensions
 {
 	/// <summary>

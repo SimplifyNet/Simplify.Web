@@ -15,12 +15,12 @@ public interface IModelHandler
 	/// <summary>
 	/// Parses the model and validates it asynchronously
 	/// </summary>
-	/// <typeparam name="T">Model type</typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	Task ProcessAsync<T>();
 
 	/// <summary>
 	/// Gets the model.
 	/// </summary>
-	/// <typeparam name="T">The model</typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	T GetModel<T>();
 }

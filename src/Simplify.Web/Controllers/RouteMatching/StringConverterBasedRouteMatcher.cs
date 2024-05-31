@@ -5,8 +5,16 @@ using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.RouteMatching;
 
+/// <summary>
+/// Provides the string converter based route matcher
+/// </summary>
 public static class StringConverterBasedRouteMatcher
 {
+	/// <summary>
+	/// Matches the specified current path.
+	/// </summary>
+	/// <param name="currentPath">The current path.</param>
+	/// <param name="controllerRoute">The controller route.</param>
 	public static IRouteMatchResult Match(IList<string> currentPath, IControllerRoute controllerRoute)
 	{
 		// Run on all pages route

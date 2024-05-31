@@ -8,8 +8,10 @@ namespace Simplify.Web.Model.Binding;
 /// <summary>
 /// Provides the model binder event arguments.
 /// </summary>
+/// <typeparam name="T">The model type.</typeparam>
+/// <seealso cref="EventArgs" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="ModelBinderEventArgs{T}"/> class.
+/// Initializes a new instance of the <see cref="ModelBinderEventArgs{T}" /> class.
 /// </remarks>
 /// <param name="context">The context.</param>
 public class ModelBinderEventArgs<T>(IWebContext context) : EventArgs

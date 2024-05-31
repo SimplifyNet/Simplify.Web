@@ -8,6 +8,10 @@ using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.Meta.Loader;
 
+/// <summary>
+/// Provides the metadata loader.
+/// </summary>
+/// <seealso cref="IMetadataLoader" />
 public class MetadataLoader(IControllerMetadataFactoryResolver resolver, IEnumerable<Type> controllersTypes) : IMetadataLoader
 {
 	private static readonly IList<IControllerMetadataFactory> DefaultControllersFactories =
@@ -29,6 +33,9 @@ public class MetadataLoader(IControllerMetadataFactoryResolver resolver, IEnumer
 		set => _loader = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
+	/// <summary>
+	/// Loads the controller metadata list.
+	/// </summary>
 	public IReadOnlyList<IControllerMetadata> Load() => LoadMetadata(SimplifyWebTypesFinder.FindTypesDerivedFrom(controllersTypes), SimplifyWebTypesFinder.GetControllerTypesToIgnore());
 
 	private IReadOnlyList<IControllerMetadata> LoadMetadata(IEnumerable<Type> types, IEnumerable<Type> typesToIgnore) =>

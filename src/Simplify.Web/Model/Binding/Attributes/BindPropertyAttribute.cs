@@ -5,8 +5,9 @@ namespace Simplify.Web.Model.Binding.Attributes;
 /// <summary>
 /// Sets the source field name this property binds to.
 /// </summary>
+/// <seealso cref="Attribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="BindPropertyAttribute"/> class.
+/// Initializes a new instance of the <see cref="BindPropertyAttribute" /> class.
 /// </remarks>
 /// <param name="fieldName">Name of the field.</param>
 [AttributeUsage(AttributeTargets.Property)]

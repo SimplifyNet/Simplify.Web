@@ -8,12 +8,13 @@ namespace Simplify.Web.Model.Binding.Binders;
 /// <summary>
 /// Provides the HTTP query to model binding.
 /// </summary>
+/// <seealso cref="IModelBinder" />
 public class HttpQueryModelBinder : IModelBinder
 {
 	/// <summary>
 	/// Binds the specified HTTP query to model asynchronously.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	public Task BindAsync<T>(ModelBinderEventArgs<T> args)
 	{
 		if (args.Context.Request.Method == "GET")

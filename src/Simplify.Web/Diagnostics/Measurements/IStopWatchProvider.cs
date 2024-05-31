@@ -13,7 +13,7 @@ public interface IStopwatchProvider
 	void StartMeasurement();
 
 	/// <summary>
-	/// Stops the and get measurement.
+	/// Stops and get the measurement.
 	/// </summary>
 	TimeSpan StopAndGetMeasurement();
 }

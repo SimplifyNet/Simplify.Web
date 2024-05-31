@@ -8,8 +8,9 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Sets the minimum required property value
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="MinAttribute"/> class.
+/// Initializes a new instance of the <see cref="MinAttribute" /> class.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Property)]
 public class MinAttribute : ValidationAttribute

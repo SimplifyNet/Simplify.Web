@@ -3,7 +3,7 @@ using System;
 namespace Simplify.Web.Controllers.Meta.Factory;
 
 /// <summary>
-/// Represents controller metadata factories resolver
+/// Represents a controller metadata factories resolver
 /// </summary>
 public interface IControllerMetadataFactoryResolver
 {

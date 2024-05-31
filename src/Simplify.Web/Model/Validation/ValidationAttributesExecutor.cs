@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Simplify.DI;
+using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Validation.Attributes;
 
 namespace Simplify.Web.Model.Validation;
@@ -10,10 +11,11 @@ namespace Simplify.Web.Model.Validation;
 /// <summary>
 /// Provides the object properties validator.
 /// </summary>
+/// <seealso cref="IModelValidator" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="ValidationAttributesExecutor"/> class.
+/// Initializes a new instance of the <see cref="ValidationAttributesExecutor" /> class.
 /// </remarks>
-/// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor"/> should validate nested and inherited properties.</param>
+/// <param name="nesting">if set to <c>true</c> then  <see cref="ValidationAttributesExecutor" /> should validate nested and inherited properties.</param>
 public class ValidationAttributesExecutor(bool nesting = true) : IModelValidator
 {
 	/// <summary>

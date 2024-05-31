@@ -6,6 +6,9 @@ using Simplify.Web.Controllers.Meta.Routing;
 
 namespace Simplify.Web.Controllers.V1.Routing;
 
+/// <summary>
+/// Provides the controller v1 path parser.
+/// </summary>
 public static class Controller1PathParser
 {
 	private const string RegexPattern = @"^{[a-zA-Z0-9:_\-\[\]]+}$";
@@ -15,10 +18,8 @@ public static class Controller1PathParser
 	/// Parses the specified controller path.
 	/// </summary>
 	/// <param name="controllerPath">The controller path.</param>
-	/// <exception cref="ControllerRouteException">
-	/// Bad controller path:  + controllerPath
-	/// or
-	/// </exception>
+	/// <exception cref="ControllerRouteException">Bad controller path:  + controllerPath
+	/// or</exception>
 	public static IList<PathItem> Parse(string controllerPath) =>
 		controllerPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
 			.Select(item =>

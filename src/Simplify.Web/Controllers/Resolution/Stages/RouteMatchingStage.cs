@@ -10,8 +10,19 @@ using Simplify.Web.Http.RequestPath;
 
 namespace Simplify.Web.Controllers.Resolution.Stages;
 
+/// <summary>
+/// Provides the route matching stage.
+/// </summary>
+/// <seealso cref="IControllerResolutionStage" />
 public class RouteMatchingStage(IRouteMatcherResolver routeMatcherResolver) : IControllerResolutionStage
 {
+	/// <summary>
+	/// Executes this stage.
+	/// </summary>
+	/// <param name="state">The state.</param>
+	/// <param name="context">The context.</param>
+	/// <param name="stopExecution">The action to stop execution.</param>
+	/// <exception cref="InvalidOperationException">Controller execution parameters should not be null, controller type: '{state.Controller.GetType().Name}'</exception>
 	public void Execute(IControllerResolutionState state, HttpContext context, Action stopExecution)
 	{
 		var execParameters = state.Controller.ExecParameters

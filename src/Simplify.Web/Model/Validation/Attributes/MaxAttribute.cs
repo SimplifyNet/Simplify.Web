@@ -8,8 +8,9 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Sets the maximum required property value
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="MaxAttribute"/> class.
+/// Initializes a new instance of the <see cref="MaxAttribute" /> class.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Property)]
 public class MaxAttribute : ValidationAttribute

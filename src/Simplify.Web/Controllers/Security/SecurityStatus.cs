@@ -6,7 +6,7 @@
 public enum SecurityStatus
 {
 	/// <summary>
-	/// OK status.
+	/// The OK status.
 	/// </summary>
 	Ok,
 

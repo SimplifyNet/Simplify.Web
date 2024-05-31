@@ -7,6 +7,9 @@ using Simplify.Web.System;
 
 namespace Simplify.Web.Controllers.V2.Routing;
 
+/// <summary>
+/// Provides the controller v2 path parser.
+/// </summary>
 public static class Controller2PathParser
 {
 	private const string RegexPattern = @"^{[a-zA-Z0-9_\-]+}$";

@@ -60,7 +60,6 @@ public class StringToSpecifiedObjectParser
 	/// Parses the string.
 	/// </summary>
 	/// <param name="value">The value.</param>
-	/// <returns></returns>
 	public static string? ParseString(string value) =>
 		string.IsNullOrEmpty(value)
 			? null

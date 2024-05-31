@@ -28,8 +28,16 @@ public static class SimplifyWebRequestMiddleware
 	/// </summary>
 	public static event TraceEventHandler? OnTrace;
 
+	/// <summary>
+	/// Invokes as terminal asynchronously.
+	/// </summary>
+	/// <param name="context">The context.</param>
 	public static Task InvokeAsTerminalAsync(HttpContext context) => InvokeAsync(context);
 
+	/// <summary>
+	/// Invokes as non-terminal asynchronously.
+	/// </summary>
+	/// <param name="context">The context.</param>
 	public static Task InvokeAsNonTerminalAsync(HttpContext context) => InvokeAsync(context);
 
 	/// <summary>

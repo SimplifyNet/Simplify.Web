@@ -9,13 +9,13 @@ namespace Simplify.Web.Controllers.Execution;
 public interface IControllerExecutor
 {
 	/// <summary>
-	/// Determines whether this executor can execute controller.
+	/// Determines whether this executor can execute the controller.
 	/// </summary>
 	/// <param name="controllerMetadata">The controller metadata.</param>
 	bool CanHandle(IControllerMetadata controllerMetadata);
 
 	/// <summary>
-	/// Creates the actual controller and executes it.
+	/// Creates an actual controller and executes it.
 	/// </summary>
 	/// <param name="matchedController">The matched controller.</param>
 	Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController);

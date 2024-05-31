@@ -13,12 +13,18 @@ namespace Simplify.Web.Model.Binding.Binders;
 /// </remarks>
 public class JsonModelBinder : IModelBinder
 {
+	/// <summary>
+	/// Gets or sets the options.
+	/// </summary>
+	/// <value>
+	/// The options.
+	/// </value>
 	public static JsonSerializerOptions? Options { get; set; }
 
 	/// <summary>
 	/// Binds the model asynchronously.
 	/// </summary>
-	/// <typeparam name="T">The model type</typeparam>
+	/// <typeparam name="T">The model type.</typeparam>
 	/// <param name="args">The <see cref="ModelBinderEventArgs{T}" /> instance containing the event data.</param>
 	/// <exception cref="ModelValidationException">
 	/// JSON request body is null or empty.

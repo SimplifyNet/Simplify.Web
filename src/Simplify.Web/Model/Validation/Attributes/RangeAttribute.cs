@@ -8,8 +8,9 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Sets a range constraint
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="RangeAttribute"/> class.
+/// Initializes a new instance of the <see cref="RangeAttribute" /> class.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Property)]
 public class RangeAttribute : ValidationAttribute

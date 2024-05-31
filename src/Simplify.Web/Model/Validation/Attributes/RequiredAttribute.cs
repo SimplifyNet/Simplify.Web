@@ -7,8 +7,9 @@ namespace Simplify.Web.Model.Validation.Attributes;
 /// <summary>
 /// Indicates that this property should be not null or empty.
 /// </summary>
+/// <seealso cref="ValidationAttribute" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="RequiredAttribute"/> class.
+/// Initializes a new instance of the <see cref="RequiredAttribute" /> class.
 /// </remarks>
 /// <param name="errorMessage">The custom error message, should contain string table item key if 'isMessageFromStringTable' is true.</param>
 /// <param name="isMessageFromStringTable">if set to <c>true</c> then indicates that errorMessage is containing string table item key instead of string error message.</param>

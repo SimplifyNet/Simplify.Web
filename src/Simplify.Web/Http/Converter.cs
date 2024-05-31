@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Simplify.Web.Http;
 
+/// <summary>
+/// Provides the converter
+/// </summary>
 public static class Converter
 {
 	/// <summary>

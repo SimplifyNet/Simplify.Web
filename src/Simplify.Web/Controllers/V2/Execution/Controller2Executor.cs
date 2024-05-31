@@ -9,13 +9,22 @@ using Simplify.Web.Controllers.V2.Metadata;
 namespace Simplify.Web.Controllers.V2.Execution;
 
 /// <summary>
-///  Provides v2 controller executor.
+/// Provides the v2 controller executor.
 /// </summary>
+/// <seealso cref="IControllerExecutor" />
 /// <param name="controllerFactory">The v2 controller factory.</param>
 public class Controller2Executor(IController2Factory controllerFactory) : IControllerExecutor
 {
+	/// <summary>
+	/// Determines whether this executor can execute the controller.
+	/// </summary>
+	/// <param name="controllerMetadata">The controller metadata.</param>
 	public bool CanHandle(IControllerMetadata controllerMetadata) => controllerMetadata is IController2Metadata;
 
+	/// <summary>
+	/// Creates an actual controller and executes it.
+	/// </summary>
+	/// <param name="matchedController">The matched controller.</param>
 	public Task<ControllerResponse?> ExecuteAsync(IMatchedController matchedController)
 	{
 		var controllerMetadata = (IController2Metadata)matchedController.Controller;
