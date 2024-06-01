@@ -14,6 +14,18 @@
 					"item": [
 						{
 							"name": "DifferentRouteParameters V1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"HTTP Code Test\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -42,6 +54,18 @@
 					"item": [
 						{
 							"name": "DifferentRouteParameters V2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"HTTP Code Test\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -65,6 +89,18 @@
 						},
 						{
 							"name": "Json Mode Test V2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"HTTP Code Test\"] = responseCode.code === 200;"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
