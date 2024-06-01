@@ -16,10 +16,16 @@ public interface IEnvironment
 	/// <summary>
 	/// Gets the data path.
 	/// </summary>
+	/// <value>
+	/// The data path.
+	/// </value>
 	string DataPath { get; }
 
 	/// <summary>
 	/// Gets the data physical path.
 	/// </summary>
+	/// <value>
+	/// The data physical path.
+	/// </value>
 	string DataPhysicalPath { get; }
 }

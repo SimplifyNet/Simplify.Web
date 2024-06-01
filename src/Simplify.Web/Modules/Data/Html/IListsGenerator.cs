@@ -116,5 +116,6 @@ public interface IListsGenerator
 	/// <summary>
 	/// Generates an HTML list default item.
 	/// </summary>
+	/// <param name="isSelected">if set to <c>true</c> then the item will be generated as selected.</param>
 	string GenerateDefaultListItem(bool isSelected = true);
 }

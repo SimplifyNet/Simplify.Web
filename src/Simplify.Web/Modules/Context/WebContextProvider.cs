@@ -5,6 +5,7 @@ namespace Simplify.Web.Modules.Context;
 /// <summary>
 /// Provides the web context provider.
 /// </summary>
+/// <seealso cref="IWebContextProvider" />
 public sealed class WebContextProvider : IWebContextProvider
 {
 	private IWebContext? _webContext;
