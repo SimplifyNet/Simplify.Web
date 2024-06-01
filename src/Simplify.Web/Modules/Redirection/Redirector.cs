@@ -6,16 +6,38 @@ using Simplify.Web.Modules.Context;
 
 namespace Simplify.Web.Modules.Redirection;
 
+/// <summary>
+/// Provides the redirector.
+/// </summary>
+/// <seealso cref="IRedirector" />
 public class Redirector(IWebContext context) : IRedirector
 {
+	/// <summary>
+	/// The previous page URL cookie field name
+	/// </summary>
 	public const string PreviousPageUrlCookieFieldName = "PreviousPageUrl";
 
+	/// <summary>
+	/// The redirect URL cookie field name
+	/// </summary>
 	public const string RedirectUrlCookieFieldName = "RedirectUrl";
 
+	/// <summary>
+	/// The login return URL cookie field name
+	/// </summary>
 	public const string LoginReturnUrlCookieFieldName = "LoginReturnUrl";
 
+	/// <summary>
+	/// The previous navigated URL cookie field name
+	/// </summary>
 	public const string PreviousNavigatedUrlCookieFieldName = "PreviousNavigatedUrl";
 
+	/// <summary>
+	/// Gets or sets the previous page url.
+	/// </summary>
+	/// <value>
+	/// The previous page URL.
+	/// </value>
 	public string? PreviousPageUrl
 	{
 		get => context.Request.Cookies[PreviousPageUrlCookieFieldName];
@@ -26,6 +48,12 @@ public class Redirector(IWebContext context) : IRedirector
 		});
 	}
 
+	/// <summary>
+	/// Gets or sets the redirect url.
+	/// </summary>
+	/// <value>
+	/// The redirect URL.
+	/// </value>
 	public string? RedirectUrl
 	{
 		get => context.Request.Cookies[RedirectUrlCookieFieldName];
@@ -36,6 +64,12 @@ public class Redirector(IWebContext context) : IRedirector
 		});
 	}
 
+	/// <summary>
+	/// Gets the login return URL.
+	/// </summary>
+	/// <value>
+	/// The login return URL.
+	/// </value>
 	public string? LoginReturnUrl
 	{
 		get => context.Request.Cookies[LoginReturnUrlCookieFieldName];
@@ -46,6 +80,12 @@ public class Redirector(IWebContext context) : IRedirector
 		});
 	}
 
+	/// <summary>
+	/// Gets or sets the previous navigated URL.
+	/// </summary>
+	/// <value>
+	/// The previous navigated URL.
+	/// </value>
 	public string? PreviousNavigatedUrl
 	{
 		get => context.Request.Cookies[PreviousNavigatedUrlCookieFieldName];
@@ -56,12 +96,27 @@ public class Redirector(IWebContext context) : IRedirector
 		});
 	}
 
+	/// <summary>
+	/// Sets the redirect url to current page.
+	/// </summary>
 	public void SetRedirectUrlToCurrentPage() => RedirectUrl = context.Request.GetEncodedUrl();
 
+	/// <summary>
+	/// Sets the login return URL from current URI.
+	/// </summary>
 	public void SetLoginReturnUrlFromCurrentUri() => LoginReturnUrl = context.Request.GetEncodedUrl();
 
+	/// <summary>
+	/// Sets the previous page URL to current page.
+	/// </summary>
 	public void SetPreviousPageUrlToCurrentPage() => PreviousPageUrl = context.Request.GetEncodedUrl();
 
+	/// <summary>
+	/// Navigates the client by specifying redirection type.
+	/// </summary>
+	/// <param name="redirectionType">Type of the redirection.</param>
+	/// <param name="bookmarkName">Name of the bookmark.</param>
+	/// <exception cref="ArgumentOutOfRangeException">redirectionType - null</exception>
 	public void Redirect(RedirectionType redirectionType, string? bookmarkName = null)
 	{
 		PreviousNavigatedUrl = context.Request.GetEncodedUrl();
@@ -97,6 +152,12 @@ public class Redirector(IWebContext context) : IRedirector
 		}
 	}
 
+	/// <summary>
+	/// Redirects the client to specified URL.
+	/// </summary>
+	/// <param name="url">The URL.</param>
+	/// <exception cref="ArgumentNullException">url</exception>
+	/// <exception cref="SecurityException">Redirection outside the website, redirection URL: " + url</exception>
 	public void Redirect(string? url)
 	{
 		if (string.IsNullOrEmpty(url))

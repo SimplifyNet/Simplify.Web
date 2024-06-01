@@ -6,6 +6,7 @@ namespace Simplify.Web.Modules.Localization;
 /// <summary>
 /// Provides the language manager provider.
 /// </summary>
+/// <seealso cref="ILanguageManagerProvider" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="LanguageManagerProvider" /> class.
 /// </remarks>

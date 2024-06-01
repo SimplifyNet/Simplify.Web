@@ -34,8 +34,18 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 
 	private ILanguageManager _languageManager = null!;
 
+	/// <summary>
+	/// Setups the template factory.
+	/// </summary>
 	public void Setup() => _languageManager = languageManagerProvider.Get();
 
+	/// <summary>
+	/// Loads s template from a file.
+	/// </summary>
+	/// <param name="fileName">Template file name.</param>
+	/// <returns>
+	/// Template class with loaded template.
+	/// </returns>
 	public ITemplate Load(string fileName)
 	{
 		var filePath = BuildFilePath(fileName);
@@ -65,6 +75,10 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 		}
 	}
 
+	/// <summary>
+	/// Loads a web-site template from a file asynchronously.
+	/// </summary>
+	/// <param name="fileName">The file name.</param>
 	public Task<ITemplate> LoadAsync(string fileName) => LoadAsyncInternal(fileName, Assembly.GetCallingAssembly());
 
 	private async Task<ITemplate> LoadAsyncInternal(string fileName, Assembly assembly)

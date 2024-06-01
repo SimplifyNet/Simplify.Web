@@ -8,6 +8,9 @@ public interface ILanguageManager
 	/// <summary>
 	/// Gets the application current language, for example: "en", "ru", "de" etc.
 	/// </summary>
+	/// <value>
+	/// The language.
+	/// </value>
 	string Language { get; }
 
 	/// <summary>

@@ -1,7 +1,7 @@
 ﻿namespace Simplify.Web.Modules.Redirection;
 
 /// <summary>
-/// Provides redirection types.
+/// Provides the redirection types.
 /// </summary>
 public enum RedirectionType
 {

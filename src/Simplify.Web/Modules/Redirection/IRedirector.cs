@@ -8,21 +8,33 @@ public interface IRedirector
 	/// <summary>
 	/// Gets or sets the previous page url.
 	/// </summary>
+	/// <value>
+	/// The previous page URL.
+	/// </value>
 	string? PreviousPageUrl { get; set; }
 
 	/// <summary>
 	/// Gets or sets the redirect url.
 	/// </summary>
+	/// <value>
+	/// The redirect URL.
+	/// </value>
 	string? RedirectUrl { get; set; }
 
 	/// <summary>
 	/// Gets the login return URL.
 	/// </summary>
+	/// <value>
+	/// The login return URL.
+	/// </value>
 	string? LoginReturnUrl { get; set; }
 
 	/// <summary>
 	/// Gets or sets the previous navigated URL.
 	/// </summary>
+	/// <value>
+	/// The previous navigated URL.
+	/// </value>
 	string? PreviousNavigatedUrl { get; set; }
 
 	/// <summary>

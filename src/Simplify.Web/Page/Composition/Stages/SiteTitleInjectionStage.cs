@@ -3,6 +3,10 @@ using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Page.Composition.Stages;
 
+/// <summary>
+/// Provides the site title injection stage.
+/// </summary>
+/// <seealso cref="IPageCompositionStage" />
 public class SiteTitleInjectionStage(IWebContextProvider webContextProvider, IStringTable stringTable) : IPageCompositionStage
 {
 	/// <summary>
@@ -10,6 +14,10 @@ public class SiteTitleInjectionStage(IWebContextProvider webContextProvider, ISt
 	/// </summary>
 	public const string SiteTitleStringTableVariableName = "SiteTitle";
 
+	/// <summary>
+	/// Executes this stage.
+	/// </summary>
+	/// <param name="dataCollector">The data collector.</param>
 	public void Execute(IDataCollector dataCollector)
 	{
 		var siteTitle = stringTable.GetItem(SiteTitleStringTableVariableName);

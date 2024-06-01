@@ -4,6 +4,10 @@ using Simplify.Web.Modules.Localization;
 
 namespace Simplify.Web.Page.Composition.Stages;
 
+/// <summary>
+/// Provides the language injection stage.
+/// </summary>
+/// <seealso cref="IPageCompositionStage" />
 public class LanguageInjectionStage(ILanguageManagerProvider languageManagerProvider) : IPageCompositionStage
 {
 	/// <summary>
@@ -26,6 +30,10 @@ public class LanguageInjectionStage(ILanguageManagerProvider languageManagerProv
 	/// </summary>
 	public const string VariableNameCurrentLanguageCultureNameExtension = "SV:LanguageCultureNameExt";
 
+	/// <summary>
+	/// Executes this stage.
+	/// </summary>
+	/// <param name="dataCollector">The data collector.</param>
 	public void Execute(IDataCollector dataCollector)
 	{
 		var languageManager = languageManagerProvider.Get();

@@ -3,6 +3,10 @@ using Simplify.Web.Modules.Data;
 
 namespace Simplify.Web.Page.Composition.Stages;
 
+/// <summary>
+/// Provides the context variables injection stage.
+/// </summary>
+/// <seealso cref="IPageCompositionStage" />
 public class ContextVariablesInjectionStage(IWebContextProvider webContextProvider) : IPageCompositionStage
 {
 	/// <summary>
@@ -15,6 +19,10 @@ public class ContextVariablesInjectionStage(IWebContextProvider webContextProvid
 	/// </summary>
 	public const string VariableNameSiteVirtualPath = "~";
 
+	/// <summary>
+	/// Executes this stage.
+	/// </summary>
+	/// <param name="dataCollector">The data collector.</param>
 	public void Execute(IDataCollector dataCollector)
 	{
 		var context = webContextProvider.Get();

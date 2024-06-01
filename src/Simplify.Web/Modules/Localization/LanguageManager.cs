@@ -10,6 +10,7 @@ namespace Simplify.Web.Modules.Localization;
 /// <summary>
 /// Provides the application language handler and information container.
 /// </summary>
+/// <seealso cref="ILanguageManager" />
 public class LanguageManager : ILanguageManager
 {
 	/// <summary>
