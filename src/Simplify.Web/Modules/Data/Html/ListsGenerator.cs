@@ -24,7 +24,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedNumber == null) : "";
 
 		for (var i = startNumber; i < startNumber + length; i++)
-			data += string.Format("<option value='{0}'{1}>{0}</option>", i, i == selectedNumber ? " selected='selected'" : "");
+			data += $"<option value='{i}'{(i == selectedNumber ? " selected='selected'" : "")}>{i}</option>";
 
 		return data;
 	}
@@ -39,7 +39,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedHour == -1) : "";
 
 		for (var i = 0; i < 24; i++)
-			data += string.Format("<option value='{0}'{2}>{1:00}</option>", i, i, i == selectedHour ? " selected='selected'" : "");
+			data += $"<option value='{i}'{(i == selectedHour ? " selected='selected'" : "")}>{i:00}</option>";
 
 		return data;
 	}
@@ -54,7 +54,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMinute == -1) : "";
 
 		for (var i = 0; i < 60; i++)
-			data += string.Format("<option value='{0}'{2}>{1:00}</option>", i, i, i == selectedMinute ? " selected='selected'" : "");
+			data += $"<option value='{i}'{(i == selectedMinute ? " selected='selected'" : "")}>{i:00}</option>";
 
 		return data;
 	}
@@ -69,7 +69,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedDay == -1) : "";
 
 		for (var i = 1; i < 32; i++)
-			data += string.Format("<option value='{0}' {2}>{1:00}</option>", i, i, i == selectedDay ? "selected='selected'" : "");
+			data += $"<option value='{i}' {(i == selectedDay ? "selected='selected'" : "")}>{i:00}</option>";
 
 		return data;
 	}
@@ -86,7 +86,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 		var month = Convert.ToDateTime("1/1/2010");
 
 		for (var i = 0; i < 12; i++)
-			data += string.Format("<option value='{0}' {2}>{1:MMMM}</option>", i, month.AddMonths(i), i == selectedMonth ? "selected='selected'" : "");
+			data += $"<option value='{i}' {(i == selectedMonth ? "selected='selected'" : "")}>{month.AddMonths(i):MMMM}</option>";
 
 		return data;
 	}
@@ -121,7 +121,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 		var year = currentYear ?? DateTime.Now.Year;
 
 		for (var i = year; i >= year - numberOfYears; i--)
-			data += string.Format("<option value='{0}' {2}>{1}</option>", i, i, i == selectedYear ? "selected='selected'" : "");
+			data += $"<option value='{i}' {(i == selectedYear ? "selected='selected'" : "")}>{i}</option>";
 
 		return data;
 	}
