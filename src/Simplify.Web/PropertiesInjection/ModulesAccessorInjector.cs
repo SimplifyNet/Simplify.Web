@@ -6,7 +6,7 @@ using Simplify.Web.Modules.Data.Html;
 namespace Simplify.Web.PropertiesInjection;
 
 /// <summary>
-/// Provides the builder for ModulesAccessor objects.
+/// Provides the modules accessor injector.
 /// </summary>
 public abstract class ModulesAccessorInjector(IDIResolver resolver) : ViewAccessorInjector(resolver)
 {

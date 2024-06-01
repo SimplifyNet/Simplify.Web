@@ -6,6 +6,7 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the template response (loads template and puts it to DataCollector).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="Tpl" /> class.
 /// </remarks>
@@ -31,7 +32,7 @@ public class StaticTpl(string templateFileName, string? title = null, int status
 	private string? Title { get; } = title;
 
 	/// <summary>
-	/// Processes this response.
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override Task<ResponseBehavior> ExecuteAsync()
 	{

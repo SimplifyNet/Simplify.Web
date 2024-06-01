@@ -7,7 +7,7 @@ using Simplify.Web.Modules.Redirection;
 namespace Simplify.Web.PropertiesInjection;
 
 /// <summary>
-/// Provides the builder for ActionModulesAccessor objects.
+/// Provides the action modules accessor injector.
 /// </summary>
 public abstract class ActionModulesAccessorInjector(IDIResolver resolver) : ModulesAccessorInjector(resolver)
 {

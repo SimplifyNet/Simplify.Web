@@ -28,8 +28,8 @@ public class StaticFileRequestHandlingPipelineTests
 
 		// Asset
 
-		handler1.Verify(x => x.Execute(It.IsAny<IStaticFileProcessingContext>(), It.IsAny<HttpResponse>()), Times.Never);
-		handler2.Verify(x => x.Execute(It.IsAny<IStaticFileProcessingContext>(), It.IsAny<HttpResponse>()));
-		handler3.Verify(x => x.Execute(It.IsAny<IStaticFileProcessingContext>(), It.IsAny<HttpResponse>()), Times.Never);
+		handler1.Verify(x => x.ExecuteAsync(It.IsAny<IStaticFileProcessingContext>(), It.IsAny<HttpResponse>()), Times.Never);
+		handler2.Verify(x => x.ExecuteAsync(It.IsAny<IStaticFileProcessingContext>(), It.IsAny<HttpResponse>()));
+		handler3.Verify(x => x.ExecuteAsync(It.IsAny<IStaticFileProcessingContext>(), It.IsAny<HttpResponse>()), Times.Never);
 	}
 }

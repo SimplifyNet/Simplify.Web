@@ -5,6 +5,7 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the controller response with exact status code and optional string data (send only specified string to response or empty body).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="StatusCode" /> class.
 /// </remarks>
@@ -32,7 +33,7 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 	public int Code { get; } = statusCode;
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override async Task<ResponseBehavior> ExecuteAsync()
 	{

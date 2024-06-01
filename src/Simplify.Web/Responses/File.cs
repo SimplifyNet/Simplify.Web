@@ -7,6 +7,7 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the HTTP file response (sends file to HTTP response).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="File" /> class.
 /// </remarks>
@@ -14,8 +15,7 @@ namespace Simplify.Web.Responses;
 /// <param name="contentType">Type of the content.</param>
 /// <param name="data">The data of the file.</param>
 /// <param name="statusCode">The HTTP response status code.</param>
-/// <exception cref="ArgumentNullException">
-/// </exception>
+/// <exception cref="ArgumentNullException"></exception>
 public class File(string outputFileName, string contentType, byte[] data, int statusCode = 200) : ControllerResponse
 {
 	/// <summary>
@@ -51,7 +51,7 @@ public class File(string outputFileName, string contentType, byte[] data, int st
 	public int StatusCode { get; set; } = statusCode;
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override async Task<ResponseBehavior> ExecuteAsync()
 	{

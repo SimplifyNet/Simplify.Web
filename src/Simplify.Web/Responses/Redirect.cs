@@ -6,6 +6,7 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the controller redirect response (redirects the client to specified URL.).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 public class Redirect : ControllerResponse
 {
 	/// <summary>
@@ -41,7 +42,7 @@ public class Redirect : ControllerResponse
 	public string? Url { get; }
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override Task<ResponseBehavior> ExecuteAsync()
 	{

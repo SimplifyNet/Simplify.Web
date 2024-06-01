@@ -9,7 +9,7 @@ namespace Simplify.Web.RequestHandling;
 public interface IRequestHandler
 {
 	/// <summary>
-	/// Handles the requests.
+	/// Handle the request.
 	/// </summary>
 	/// <param name="context">The context.</param>
 	/// <param name="next">The next handler in the chain.</param>

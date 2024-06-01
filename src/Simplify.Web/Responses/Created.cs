@@ -3,6 +3,7 @@
 /// <summary>
 /// Provides the controller string response with 201 HTTP Status Code.
 /// </summary>
+/// <seealso cref="Content" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="Created" /> class.
 /// </remarks>

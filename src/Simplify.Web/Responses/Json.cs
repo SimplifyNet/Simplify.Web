@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 namespace Simplify.Web.Responses;
 
 /// <summary>
-/// Provides controller JSON response using System.Text.Json (send only JSON string to response)
+/// Provides controller JSON response using System.Text.Json (send only JSON string to response).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="Json"/> class.
+/// Initializes a new instance of the <see cref="Json" /> class.
 /// </remarks>
 /// <param name="objectToConvert">The object to convert to JSON.</param>
 /// <param name="statusCode">The HTTP response status code.</param>
@@ -30,7 +31,7 @@ public class Json(object objectToConvert, int statusCode = 200) : ControllerResp
 	public static JsonSerializerOptions? DefaultOptions { get; set; } = null;
 
 	/// <summary>
-	/// Processes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override async Task<ResponseBehavior> ExecuteAsync()
 	{

@@ -7,10 +7,11 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the template response (puts the data to DataCollector).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 public class Tpl : ControllerResponse
 {
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Tpl"/> class.
+	/// Initializes a new instance of the <see cref="Tpl" /> class.
 	/// </summary>
 	/// <param name="data">The data for main content variable.</param>
 	/// <param name="title">The site title.</param>
@@ -28,6 +29,7 @@ public class Tpl : ControllerResponse
 	/// <param name="template">The template.</param>
 	/// <param name="title">The site title.</param>
 	/// <param name="statusCode">The HTTP response status code.</param>
+	/// <exception cref="ArgumentNullException">template</exception>
 	public Tpl(ITemplate template, string? title = null, int statusCode = 200)
 	{
 		if (template == null)
@@ -55,7 +57,7 @@ public class Tpl : ControllerResponse
 	public int StatusCode { get; }
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override Task<ResponseBehavior> ExecuteAsync()
 	{

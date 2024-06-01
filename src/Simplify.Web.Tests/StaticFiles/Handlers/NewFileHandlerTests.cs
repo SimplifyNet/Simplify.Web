@@ -47,7 +47,6 @@ public class NewFileHandlerTests
 		// Arrange
 
 		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached == false);
-		var handler = new NewFileHandler(null!, null!);
 
 		// Act
 		var result = _handler.CanHandle(context);
@@ -57,7 +56,7 @@ public class NewFileHandlerTests
 	}
 
 	[Test]
-	public async Task Execute_NewFile_FileSendToClientAndRespectiveResponsePropertiesAreSet()
+	public async Task ExecuteAsync_NewFile_FileSendToClientAndRespectiveResponsePropertiesAreSet()
 	{
 		// Arrange
 
@@ -76,7 +75,7 @@ public class NewFileHandlerTests
 		var response = Mock.Of<HttpResponse>(x => x.Headers == new HeaderDictionary());
 
 		// Act
-		await _handler.Execute(context, response);
+		await _handler.ExecuteAsync(context, response);
 
 		// Assert
 

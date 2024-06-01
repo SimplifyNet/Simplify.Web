@@ -46,7 +46,7 @@ public class CachedFileHandlerTests
 	}
 
 	[Test]
-	public async Task Execute_CachedFile_RespectiveResponsePropertiesAreSet()
+	public async Task ExecuteAsync_CachedFile_RespectiveResponsePropertiesAreSet()
 	{
 		// Arrange
 
@@ -60,7 +60,7 @@ public class CachedFileHandlerTests
 		var response = Mock.Of<HttpResponse>(x => x.Headers == new HeaderDictionary());
 
 		// Act
-		await _handler.Execute(context, response);
+		await _handler.ExecuteAsync(context, response);
 
 		// Assert
 

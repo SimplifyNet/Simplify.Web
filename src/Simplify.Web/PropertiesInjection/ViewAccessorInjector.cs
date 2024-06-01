@@ -4,7 +4,7 @@ using Simplify.Web.Views;
 namespace Simplify.Web.PropertiesInjection;
 
 /// <summary>
-/// Provides the builder for ViewAccessor objects construction.
+/// Provides the view accessor injector.
 /// </summary>
 public abstract class ViewAccessorInjector(IDIResolver resolver)
 {

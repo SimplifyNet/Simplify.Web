@@ -6,6 +6,8 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the view model response.
 /// </summary>
+/// <typeparam name="T">The type of the model.</typeparam>
+/// <seealso cref="ControllerResponse" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="ViewModel{T}" /> class.
 /// </remarks>
@@ -37,7 +39,7 @@ public class ViewModel<T>(string templateFileName, T viewModel, string? title = 
 	public int StatusCode { get; } = statusCode;
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override Task<ResponseBehavior> ExecuteAsync()
 	{

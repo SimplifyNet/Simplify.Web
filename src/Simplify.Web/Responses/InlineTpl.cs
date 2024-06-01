@@ -7,13 +7,15 @@ namespace Simplify.Web.Responses;
 /// <summary>
 /// Provides the template response (puts data to DataCollector specified variable).
 /// </summary>
+/// <seealso cref="ControllerResponse" />
 public class InlineTpl : ControllerResponse
 {
 	/// <summary>
-	/// Initializes a new instance of the <see cref="InlineTpl"/> class.
+	/// Initializes a new instance of the <see cref="InlineTpl" /> class.
 	/// </summary>
 	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 	/// <param name="template">The template.</param>
+	/// <exception cref="ArgumentNullException">dataCollectorVariableName</exception>
 	public InlineTpl(string? dataCollectorVariableName, ITemplate? template)
 	{
 		if (string.IsNullOrEmpty(dataCollectorVariableName))
@@ -26,10 +28,11 @@ public class InlineTpl : ControllerResponse
 	}
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="InlineTpl"/> class.
+	/// Initializes a new instance of the <see cref="InlineTpl" /> class.
 	/// </summary>
 	/// <param name="dataCollectorVariableName">Name of the data collector variable.</param>
 	/// <param name="data">The data.</param>
+	/// <exception cref="ArgumentNullException">dataCollectorVariableName</exception>
 	public InlineTpl(string? dataCollectorVariableName, string data)
 	{
 		if (string.IsNullOrEmpty(dataCollectorVariableName))
@@ -50,7 +53,7 @@ public class InlineTpl : ControllerResponse
 	public string? Data { get; }
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public override Task<ResponseBehavior> ExecuteAsync()
 	{

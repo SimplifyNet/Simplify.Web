@@ -18,7 +18,7 @@ public abstract class ControllerResponse : ActionModulesAccessor
 	public virtual IResponseWriter ResponseWriter { get; internal set; } = null!;
 
 	/// <summary>
-	/// Executes this response
+	/// Executes this response asynchronously.
 	/// </summary>
 	public abstract Task<ResponseBehavior> ExecuteAsync();
 }
