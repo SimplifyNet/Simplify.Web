@@ -8,10 +8,10 @@ public static class IocRegistrations
 {
 	private static IConfiguration Configuration { get; set; } = null!;
 
-	public static IDIContainerProvider RegisterAll(this IDIContainerProvider provider, IServiceCollection services)
+	public static IDIContainerProvider RegisterAll(this IDIContainerProvider provider)
 	{
 		provider.RegisterCustomConfiguration(config => Configuration = config)
-		.RegisterSimplifyWeb(Configuration);
+			.RegisterSimplifyWeb(Configuration);
 
 		return provider;
 	}

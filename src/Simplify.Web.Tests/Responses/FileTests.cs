@@ -20,7 +20,7 @@ public class FileTests
 	{
 		_context = new Mock<IWebContext>();
 		_responseWriter = new Mock<IResponseWriter>();
-		_headerDictionary = new HeaderDictionary();
+		_headerDictionary = [];
 
 		_context.SetupGet(x => x.Response.Headers).Returns(_headerDictionary);
 		_context.Setup(x => x.Response.Body.Write(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -31,7 +31,7 @@ public class FileTests
 	{
 		// Arrange
 
-		var data = new byte[] { 13 };
+		var data = "\r"u8.ToArray();
 		var file = new Mock<File>("Foo.txt", "application/example", data, 200) { CallBase = true };
 
 		file.SetupGet(x => x.Context).Returns(_context.Object);

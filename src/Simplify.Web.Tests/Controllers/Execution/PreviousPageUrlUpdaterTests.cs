@@ -11,7 +11,7 @@ namespace Simplify.Web.Tests.Controllers.Execution;
 [TestFixture]
 public class PreviousPageUrlUpdaterTests
 {
-	private readonly IReadOnlyList<IMatchedController> _controllers = new List<IMatchedController>();
+	private readonly IReadOnlyList<IMatchedController> _controllers = [];
 
 	private PreviousPageUrlUpdater _updater = null!;
 

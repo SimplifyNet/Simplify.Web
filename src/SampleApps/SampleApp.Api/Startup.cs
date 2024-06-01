@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 DIContainer.Current = new SimpleInjectorDIProvider();
 
 DIContainer.Current
-	.RegisterAll(builder.Services)
+	.RegisterAll()
 	.Verify();
 
 var app = builder.Build();

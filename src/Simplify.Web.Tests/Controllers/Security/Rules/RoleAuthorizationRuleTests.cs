@@ -22,11 +22,11 @@ public class RoleAuthorizationRuleTests
 	{
 		// Arrange
 
-		var security = new ControllerSecurity(true, new List<string>
-		{
+		var security = new ControllerSecurity(true,
+		[
 			"Admin",
 			"User"
-		});
+		]);
 
 		var claims = new List<Claim>
 		{
@@ -48,10 +48,10 @@ public class RoleAuthorizationRuleTests
 	{
 		// Arrange
 
-		var security = new ControllerSecurity(true, new List<string>
-		{
+		var security = new ControllerSecurity(true,
+		[
 			"Admin"
-		});
+		]);
 
 		var claims = new List<Claim>
 		{
@@ -74,11 +74,11 @@ public class RoleAuthorizationRuleTests
 	{
 		// Arrange
 
-		var security = new ControllerSecurity(true, new List<string>
-		{
+		var security = new ControllerSecurity(true,
+		[
 			"Admin",
 			"User"
-		});
+		]);
 
 		var claims = new List<Claim>
 		{

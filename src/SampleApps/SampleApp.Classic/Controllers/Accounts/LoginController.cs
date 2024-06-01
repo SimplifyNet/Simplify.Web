@@ -26,7 +26,7 @@ public class LoginController : LoggableController<LoginViewModel>
 		{
 			var claims = new List<Claim>
 			{
-				new Claim(ClaimTypes.Name, Model.UserName)
+				new(ClaimTypes.Name, Model.UserName)
 			};
 
 			var id = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

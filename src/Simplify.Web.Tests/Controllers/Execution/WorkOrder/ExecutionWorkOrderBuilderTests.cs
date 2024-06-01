@@ -41,6 +41,6 @@ public class ExecutionWorkOrderBuilderTests
 		Assert.That(result.Controllers[4].Controller.ExecParameters!.RunPriority, Is.EqualTo(5));
 	}
 
-	private IMatchedController CreateController(int priority) =>
+	private static IMatchedController CreateController(int priority) =>
 		Mock.Of<IMatchedController>(x => x.Controller.ExecParameters == new ControllerExecParameters(null, priority));
 }

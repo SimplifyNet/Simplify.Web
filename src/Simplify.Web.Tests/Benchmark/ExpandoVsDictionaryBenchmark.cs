@@ -95,7 +95,7 @@ public class ExpandoVsDictionaryBenchmark
 		return expando;
 	}
 
-	private void TestDynamic(dynamic list, int numValues)
+	private static void TestDynamic(dynamic list, int numValues)
 	{
 		for (var i = 0; i < numValues; i++)
 		{
@@ -104,7 +104,7 @@ public class ExpandoVsDictionaryBenchmark
 		}
 	}
 
-	private void TestDictionary(IDictionary<string, object> list, int numValues)
+	private static void TestDictionary(IDictionary<string, object> list, int numValues)
 	{
 		for (var i = 0; i < numValues; i++)
 		{
@@ -113,7 +113,7 @@ public class ExpandoVsDictionaryBenchmark
 		}
 	}
 
-	private IDictionary<string, object> CreateAndFillExpando(int numValues)
+	private static IDictionary<string, object> CreateAndFillExpando(int numValues)
 	{
 		var expandoDict = (IDictionary<string, object>)new ExpandoObject();
 
@@ -123,7 +123,7 @@ public class ExpandoVsDictionaryBenchmark
 		return expandoDict;
 	}
 
-	private IDictionary<string, object> CreateAndFillDictionary(int numValues)
+	private static Dictionary<string, object> CreateAndFillDictionary(int numValues)
 	{
 		var dictionary = new Dictionary<string, object>();
 

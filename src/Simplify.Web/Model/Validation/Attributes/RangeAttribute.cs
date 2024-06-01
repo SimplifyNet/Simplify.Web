@@ -121,6 +121,14 @@ public class RangeAttribute : ValidationAttribute
 				$"The value is out of range. The range constraint - {MinValue} - {MaxValue}, actual value: {value}");
 	}
 
+	private static IComparable ConvertToIComparable(object value)
+	{
+		if (value is not IComparable comparableValue)
+			throw new ArgumentException($"The type of object value must be inherited from {typeof(IComparable)}");
+
+		return comparableValue;
+	}
+
 	private void ValidateTypesMatching(IComparable comparableValue)
 	{
 		if (comparableValue.GetType() != OperandType)
@@ -132,13 +140,5 @@ public class RangeAttribute : ValidationAttribute
 		var convertedValue = Convert.ChangeType(value!, OperandType, CultureInfo.InvariantCulture);
 
 		return ConvertToIComparable(convertedValue);
-	}
-
-	private IComparable ConvertToIComparable(object value)
-	{
-		if (value is not IComparable comparableValue)
-			throw new ArgumentException($"The type of object value must be inherited from {typeof(IComparable)}");
-
-		return comparableValue;
 	}
 }
