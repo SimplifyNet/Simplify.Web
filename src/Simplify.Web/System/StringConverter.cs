@@ -4,10 +4,16 @@ using System.Linq;
 
 namespace Simplify.Web.System;
 
+/// <summary>
+/// Provides the string converter.
+/// </summary>
 public static class StringConverter
 {
+	/// <summary>
+	/// Provides the value converters list
+	/// </summary>
 	public static readonly IReadOnlyDictionary<Type, Func<string, object?>> ValueConverters =
-		new Dictionary<Type, Func<string, object?>>()
+		new Dictionary<Type, Func<string, object?>>
 		{
 			{ typeof(string), sourceValue => sourceValue },
 			{ typeof(int), GetIntParameterValue },
@@ -22,6 +28,11 @@ public static class StringConverter
 			{ typeof(bool[]), GetBoolArrayParameterValue }
 		};
 
+	/// <summary>
+	/// Tries the convert the string to the object of specified type.
+	/// </summary>
+	/// <param name="destinationType">Type of the destination.</param>
+	/// <param name="sourceValue">The source value.</param>
 	public static object? TryConvert(Type destinationType, string sourceValue) =>
 		ValueConverters.TryGetValue(destinationType, out var converter)
 			? converter(sourceValue)

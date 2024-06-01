@@ -11,5 +11,8 @@ public interface IViewsMetaStore
 	/// <summary>
 	/// Gets the current domain views types
 	/// </summary>
+	/// <value>
+	/// The views types list.
+	/// </value>
 	IList<Type> ViewsTypes { get; }
 }

@@ -6,7 +6,7 @@ using System.Reflection;
 namespace Simplify.Web.System;
 
 /// <summary>
-/// Provides the Assembly filter extensions
+/// Provides the <see cref="Assembly" /> filter extensions.
 /// </summary>
 public static class AssembliesFilterExtensions
 {

@@ -5,7 +5,7 @@ using System.Linq;
 namespace Simplify.Web.System;
 
 /// <summary>
-/// Provides the Type extensions
+/// Provides the <see cref="Type" /> extensions.
 /// </summary>
 public static class TypeExtensions
 {
@@ -27,8 +27,24 @@ public static class TypeExtensions
 		}
 	}
 
+	/// <summary>
+	/// Determines whether the type is derived from one of the specified types.
+	/// </summary>
+	/// <param name="t">The t.</param>
+	/// <param name="types">The types.</param>
+	/// <returns>
+	///   <c>true</c> if  the type is derived from one of the specified types; otherwise, <c>false</c>.
+	/// </returns>
 	public static bool IsDerivedFrom(this Type t, params Type[] types) => types.Any(t.IsDerivedFrom);
 
+	/// <summary>
+	/// Determines whether the type is derived from other type.
+	/// </summary>
+	/// <param name="t">The t.</param>
+	/// <param name="type">The type.</param>
+	/// <returns>
+	///   <c>true</c> if the type is derived from other type; otherwise, <c>false</c>.
+	/// </returns>
 	public static bool IsDerivedFrom(this Type t, Type type)
 	{
 		if (t.IsAbstract)
@@ -49,5 +65,9 @@ public static class TypeExtensions
 		return false;
 	}
 
+	/// <summary>
+	/// Gets the type names as string.
+	/// </summary>
+	/// <param name="types">The types.</param>
 	public static string GetTypeNamesAsString(this IEnumerable<Type> types) => string.Join(", ", types.Select(type => type.Name));
 }

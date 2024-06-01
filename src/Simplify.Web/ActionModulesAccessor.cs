@@ -8,6 +8,7 @@ namespace Simplify.Web;
 /// <summary>
 /// Provides the action modules accessor base class.
 /// </summary>
+/// <seealso cref="ModulesAccessor" />
 public abstract class ActionModulesAccessor : ModulesAccessor
 {
 	/// <summary>

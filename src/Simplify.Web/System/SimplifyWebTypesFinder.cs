@@ -50,12 +50,20 @@ public static class SimplifyWebTypesFinder
 	/// <summary>
 	/// Finds the all types derived from specified type in the current domain assemblies.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The type.</typeparam>
 	public static IEnumerable<Type> FindTypesDerivedFrom<T>() => FindTypesDerivedFrom(typeof(T));
 
+	/// <summary>
+	/// Finds the types derived from.
+	/// </summary>
+	/// <param name="types">The types.</param>
 	public static IEnumerable<Type> FindTypesDerivedFrom(IEnumerable<Type> types) => types
 		.SelectMany(FindTypesDerivedFrom);
 
+	/// <summary>
+	/// Finds the types derived from.
+	/// </summary>
+	/// <param name="types">The types.</param>
 	public static IEnumerable<Type> FindTypesDerivedFrom(params Type[] types) => types
 		.SelectMany(FindTypesDerivedFrom);
 
@@ -100,7 +108,7 @@ public static class SimplifyWebTypesFinder
 	}
 
 	/// <summary>
-	/// Clean up the loaded information about assemblies and types
+	/// Clean up the loaded information about assemblies and types.
 	/// </summary>
 	public static void CleanLoadedTypesAndAssembliesInfo()
 	{

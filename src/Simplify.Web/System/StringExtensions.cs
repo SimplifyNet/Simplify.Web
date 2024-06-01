@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Simplify.Web.System;
 
 /// <summary>
-/// Provides String extensions
+/// Provides the <see cref="string" /> extensions.
 /// </summary>
 public static class StringExtensions
 {

@@ -10,6 +10,8 @@ namespace Simplify.Web.Views;
 /// <summary>
 /// Provides the view factory.
 /// </summary>
+/// <seealso cref="ModulesAccessorInjector" />
+/// <seealso cref="IViewFactory" />
 public class ViewFactory(IDIResolver resolver) : ModulesAccessorInjector(resolver), IViewFactory
 {
 	private readonly IDIResolver _resolver = resolver;
