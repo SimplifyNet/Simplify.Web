@@ -11,6 +11,7 @@ namespace Simplify.Web.Modules.Data;
 /// <summary>
 /// Provides the localizable text items string table.
 /// </summary>
+/// <seealso cref="IStringTable" />
 /// <param name="stringTableFiles">The string table files.</param>
 /// <param name="defaultLanguage">The default language.</param>
 /// <param name="languageManagerProvider">The language manager provider.</param>
@@ -27,8 +28,17 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 
 	private ILanguageManager _languageManager = null!;
 
+	/// <summary>
+	/// Gets StringTable items.
+	/// </summary>
+	/// <value>
+	/// The items.
+	/// </value>
 	public IDictionary<string, object?> Items { get; private set; } = null!;
 
+	/// <summary>
+	/// Setups this string table.
+	/// </summary>
 	public void Setup()
 	{
 		_languageManager = languageManagerProvider.Get();
@@ -36,6 +46,14 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 		TryLoad();
 	}
 
+	/// <summary>
+	/// Gets an enum associated value from string table by enum type + enum element name.
+	/// </summary>
+	/// <typeparam name="T">Enum.</typeparam>
+	/// <param name="enumValue">Enum value.</param>
+	/// <returns>
+	/// Associated value.
+	/// </returns>
 	public string? GetAssociatedValue<T>(T enumValue) where T : struct
 	{
 		var currentItems = (IDictionary<string, object>)Items;
@@ -46,6 +64,10 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 			: null;
 	}
 
+	/// <summary>
+	/// Gets an item from string table.
+	/// </summary>
+	/// <param name="itemName">Name of the item.</param>
 	public string? GetItem(string itemName)
 	{
 		var currentItems = (IDictionary<string, object>)Items;

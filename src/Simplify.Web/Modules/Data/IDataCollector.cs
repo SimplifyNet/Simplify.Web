@@ -11,21 +11,30 @@ public interface IDataCollector
 	/// <summary>
 	/// Gets the name of the title variable.
 	/// </summary>
+	/// <value>
+	/// The name of the title variable.
+	/// </value>
 	string TitleVariableName { get; }
 
 	/// <summary>
 	/// Gets a data collector items which will be inserted into master template file.
 	/// </summary>
+	/// <value>
+	/// The items.
+	/// </value>
 	IDictionary<string, string> Items { get; }
 
 	/// <summary>
 	/// List of a data collector items.
 	/// </summary>
+	/// <value>
+	/// The <see cref="string"/>.
+	/// </value>
 	/// <param name="key">Item name.</param>
 	string this[string key] { get; }
 
 	/// <summary>
-	///  Set the template variable value (all occurrences will be replaced).
+	/// Set the template variable value (all occurrences will be replaced).
 	/// </summary>
 	/// <param name="variableName">Variable name in master template file.</param>
 	/// <param name="value">Value to set.</param>
@@ -59,8 +68,8 @@ public interface IDataCollector
 	/// <summary>
 	/// Set the template variable value from StringTable (all occurrences will be replaced).
 	/// </summary>
-	/// <param name="stringTableKey">StringTable key.</param>
 	/// <param name="variableName">Variable name in master template file.</param>
+	/// <param name="stringTableKey">StringTable key.</param>
 	void AddSt(string variableName, string stringTableKey);
 
 	/// <summary>
@@ -79,5 +88,8 @@ public interface IDataCollector
 	/// Checking if some variable data is already exist in a data collector.
 	/// </summary>
 	/// <param name="variableName">Variable name.</param>
+	/// <returns>
+	///   <c>true</c> if the variable name exists; otherwise, <c>false</c>.
+	/// </returns>
 	bool IsDataExist(string variableName);
 }

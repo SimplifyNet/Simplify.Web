@@ -10,6 +10,9 @@ public interface IStringTable
 	/// <summary>
 	/// Gets StringTable items.
 	/// </summary>
+	/// <value>
+	/// The items.
+	/// </value>
 	IDictionary<string, object?> Items { get; }
 
 	/// <summary>
@@ -22,7 +25,9 @@ public interface IStringTable
 	/// </summary>
 	/// <typeparam name="T">Enum.</typeparam>
 	/// <param name="enumValue">Enum value.</param>
-	/// <returns>Associated value.</returns>
+	/// <returns>
+	/// Associated value.
+	/// </returns>
 	string? GetAssociatedValue<T>(T enumValue) where T : struct;
 
 	/// <summary>

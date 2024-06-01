@@ -10,6 +10,7 @@ namespace Simplify.Web.Modules.Data;
 /// <summary>
 /// Provides the localizable files reader, reads the files from data folder.
 /// </summary>
+/// <seealso cref="IFileReader" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="FileReader" /> class.
 /// </remarks>
@@ -49,8 +50,22 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 
 	#region Paths
 
+	/// <summary>
+	/// Gets the file path.
+	/// </summary>
+	/// <param name="fileName">Name of the file.</param>
 	public string GetFilePath(string fileName) => GetFilePath(fileName, _languageManager.Language);
 
+	/// <summary>
+	/// Gets the file path.
+	/// </summary>
+	/// <param name="fileName">Name of the file.</param>
+	/// <param name="language">The language.</param>
+	/// <exception cref="ArgumentNullException">
+	/// fileName
+	/// or
+	/// language
+	/// </exception>
 	public string GetFilePath(string? fileName, string? language)
 	{
 		if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException(nameof(fileName));
@@ -71,8 +86,20 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 
 	#region Text
 
+	/// <summary>
+	/// Loads a text from a file located in data folder.
+	/// </summary>
+	/// <param name="fileName">File name.</param>
+	/// <param name="memoryCache">Load file from memory cache if possible.</param>
 	public string? LoadTextDocument(string fileName, bool memoryCache = false) => LoadTextDocument(fileName, _languageManager.Language, memoryCache);
 
+	/// <summary>
+	/// Load a text from a file with specific language located in data folder.
+	/// </summary>
+	/// <param name="fileName">File name.</param>
+	/// <param name="language">File language.</param>
+	/// <param name="memoryCache">Load file from memory cache if possible.</param>
+	/// <exception cref="ArgumentNullException">fileName</exception>
 	public string? LoadTextDocument(string fileName, string language, bool memoryCache = false)
 	{
 		if (string.IsNullOrEmpty(fileName))
@@ -102,8 +129,20 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 
 	#region XML
 
+	/// <summary>
+	/// Loads a xml document from a file located in data folder.
+	/// </summary>
+	/// <param name="fileName">File name.</param>
+	/// <param name="memoryCache">Load file from memory cache if possible.</param>
 	public XDocument? LoadXDocument(string fileName, bool memoryCache = false) => LoadXDocument(fileName, _languageManager.Language, memoryCache);
 
+	/// <summary>
+	/// Loads a xml document from a file with specific language located in data folder.
+	/// </summary>
+	/// <param name="fileName">File name.</param>
+	/// <param name="language">File language.</param>
+	/// <param name="memoryCache">Load file from memory cache if possible.</param>
+	/// <exception cref="ArgumentNullException">fileName</exception>
 	public XDocument? LoadXDocument(string fileName, string language, bool memoryCache = false)
 	{
 		if (string.IsNullOrEmpty(fileName))
