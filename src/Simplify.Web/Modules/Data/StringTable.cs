@@ -56,11 +56,10 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 	/// </returns>
 	public string? GetAssociatedValue<T>(T enumValue) where T : struct
 	{
-		var currentItems = (IDictionary<string, object>)Items;
 		var enumItemName = enumValue.GetType().Name + "." + Enum.GetName(typeof(T), enumValue);
 
-		return currentItems.ContainsKey(enumItemName)
-			? currentItems[enumItemName] as string
+		return Items.TryGetValue(enumItemName, out var item)
+			? item as string
 			: null;
 	}
 
@@ -70,10 +69,8 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 	/// <param name="itemName">Name of the item.</param>
 	public string? GetItem(string itemName)
 	{
-		var currentItems = (IDictionary<string, object>)Items;
-
-		if (currentItems.ContainsKey(itemName))
-			return currentItems[itemName] as string;
+		if (Items.TryGetValue(itemName, out var item))
+			return item as string;
 
 		return null;
 	}
@@ -135,17 +132,17 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 
 	private bool TryGetStringTableFromCache()
 	{
-		if (!Cache.ContainsKey(_languageManager.Language))
+		if (!Cache.TryGetValue(_languageManager.Language, out var value))
 			return false;
 
-		Items = Cache[_languageManager.Language];
+		Items = value;
 
 		return true;
 	}
 
 	private IDictionary<string, object?> Load()
 	{
-		IDictionary<string, object?> currentItems = new ExpandoObject()!;
+		IDictionary<string, object?> currentItems = new ExpandoObject();
 
 		foreach (var file in stringTableFiles)
 			Load(file, defaultLanguage, _languageManager.Language, fileReader, currentItems);
