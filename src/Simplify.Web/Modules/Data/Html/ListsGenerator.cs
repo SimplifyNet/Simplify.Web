@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Simplify.Web.Modules.Data.Html;
 
@@ -21,12 +22,14 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	public string GenerateNumbersList(int length, int? selectedNumber = 0, int startNumber = 0, bool displayNotSelectedMessage = false)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedNumber == null) : "";
+		var builder = new StringBuilder();
+
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedNumber == null) : "");
 
 		for (var i = startNumber; i < startNumber + length; i++)
-			data += $"<option value='{i}'{(i == selectedNumber ? " selected='selected'" : "")}>{i}</option>";
+			builder.Append($"<option value='{i}'{(i == selectedNumber ? " selected='selected'" : "")}>{i}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -36,12 +39,14 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	public string GenerateHoursList(int selectedHour = -1, bool displayNotSelectedMessage = false)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedHour == -1) : "";
+		var builder = new StringBuilder();
+
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedHour == -1) : "");
 
 		for (var i = 0; i < 24; i++)
-			data += $"<option value='{i}'{(i == selectedHour ? " selected='selected'" : "")}>{i:00}</option>";
+			builder.Append($"<option value='{i}'{(i == selectedHour ? " selected='selected'" : "")}>{i:00}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -51,12 +56,14 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	public string GenerateMinutesList(int selectedMinute = -1, bool displayNotSelectedMessage = false)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMinute == -1) : "";
+		var builder = new StringBuilder();
+
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedMinute == -1) : "");
 
 		for (var i = 0; i < 60; i++)
-			data += $"<option value='{i}'{(i == selectedMinute ? " selected='selected'" : "")}>{i:00}</option>";
+			builder.Append($"<option value='{i}'{(i == selectedMinute ? " selected='selected'" : "")}>{i:00}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -66,12 +73,14 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	public string GenerateDaysList(int selectedDay = -1, bool displayNotSelectedMessage = true)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedDay == -1) : "";
+		var builder = new StringBuilder();
+
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedDay == -1) : "");
 
 		for (var i = 1; i < 32; i++)
-			data += $"<option value='{i}' {(i == selectedDay ? "selected='selected'" : "")}>{i:00}</option>";
+			builder.Append($"<option value='{i}' {(i == selectedDay ? "selected='selected'" : "")}>{i:00}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -81,14 +90,16 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	public string GenerateMonthsList(int selectedMonth = -1, bool displayNotSelectedMessage = true)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMonth == -1) : "";
+		var builder = new StringBuilder();
+
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedMonth == -1) : "");
 
 		var month = Convert.ToDateTime("1/1/2010");
 
 		for (var i = 0; i < 12; i++)
-			data += $"<option value='{i}' {(i == selectedMonth ? "selected='selected'" : "")}>{month.AddMonths(i):MMMM}</option>";
+			builder.Append($"<option value='{i}' {(i == selectedMonth ? "selected='selected'" : "")}>{month.AddMonths(i):MMMM}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -98,14 +109,16 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
 	public string GenerateMonthsListFrom1(int selectedMonth = -1, bool displayNotSelectedMessage = true)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedMonth == -1) : "";
+		var builder = new StringBuilder();
+
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedMonth == -1) : "");
 
 		var month = Convert.ToDateTime("1/1/2010");
 
 		for (var i = 0; i < 12; i++)
-			data += $"<option value='{i + 1}' {(i + 1 == selectedMonth ? "selected='selected'" : "")}>{month.AddMonths(i):MMMM}</option>";
+			builder.Append($"<option value='{i + 1}' {(i + 1 == selectedMonth ? "selected='selected'" : "")}>{month.AddMonths(i):MMMM}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -117,13 +130,15 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="currentYear">The current year.</param>
 	public string GenerateYearsListToPast(int numberOfYears, int selectedYear = -1, bool displayNotSelectedMessage = true, int? currentYear = null)
 	{
-		var data = displayNotSelectedMessage ? GenerateDefaultListItem(selectedYear == -1) : "";
+		var builder = new StringBuilder();
 		var year = currentYear ?? DateTime.Now.Year;
 
-		for (var i = year; i >= year - numberOfYears; i--)
-			data += $"<option value='{i}' {(i == selectedYear ? "selected='selected'" : "")}>{i}</option>";
+		builder.Append(displayNotSelectedMessage ? GenerateDefaultListItem(selectedYear == -1) : "");
 
-		return data;
+		for (var i = year; i >= year - numberOfYears; i--)
+			builder.Append($"<option value='{i}' {(i == selectedYear ? "selected='selected'" : "")}>{i}</option>");
+
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -133,13 +148,13 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <param name="currentYear">The current year.</param>
 	public string GenerateYearsListToFuture(int numberOfYears, int? currentYear = null)
 	{
-		var data = "";
+		var builder = new StringBuilder();
 		var year = currentYear ?? DateTime.Now.Year;
 
 		for (var i = year; i <= year + numberOfYears; i++)
-			data += $"<option value='{i}'>{i}</option>";
+			builder.Append($"<option value='{i}'>{i}</option>");
 
-		return data;
+		return builder.ToString();
 	}
 
 	/// <summary>
@@ -169,7 +184,10 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <typeparam name="T">Enum type.</typeparam>
 	/// <param name="selectedItem">Selected enum item.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
+#pragma warning disable S1006 // Method overrides should not change parameter defaults
+
 	public string GenerateListFromEnum<T>(T selectedItem = default, bool displayNotSelectedMessage = true)
+#pragma warning restore S1006 // Method overrides should not change parameter defaults
 		where T : struct
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(false) : "";
