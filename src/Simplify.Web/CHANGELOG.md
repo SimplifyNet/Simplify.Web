@@ -4,7 +4,7 @@
 
 ### Breaking
 
-- Internal framework restructure and rewrite (http request and response handling related functionality, metadata rewritten from scratch). Can affect any customizations to related functionality
+- Internal framework restructure and rewrite (http request and response handling related functionality and metadata rewritten from scratch). Can affect any customizations to related functionality
 
 ### Added
 
@@ -36,7 +36,7 @@
 ### Fixed
 
 - Multiple one route controllers handling
-- Multiple middlewares same IsTerminal status
+- Multiple middlewares having same `IsTerminal` status
 
 ### Dependencies
 
