@@ -13,10 +13,12 @@ namespace Simplify.Web.Model;
 /// <summary>
 /// Provides the model handling.
 /// </summary>
-/// <seealso cref="IModelHandler" />
+/// <seealso cref="Simplify.Web.Model.IModelHandler" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="HttpModelHandler" /> class.
 /// </remarks>
+/// <seealso cref="IModelHandler" />
+/// <param name="resolver">The resolver.</param>
 /// <param name="context">The context.</param>
 public class HttpModelHandler(IDIResolver resolver, IWebContext context) : IModelHandler
 {

@@ -31,6 +31,10 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 			.Any(_ => File.Exists(sitePhysicalPath + relativeFilePath));
 	}
 
+	/// <summary>
+	/// Gets the file last modification time.
+	/// </summary>
+	/// <param name="relativeFilePath">The relative file path.</param>
 	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(sitePhysicalPath + relativeFilePath).TrimMilliseconds();
 
 	/// <summary>
