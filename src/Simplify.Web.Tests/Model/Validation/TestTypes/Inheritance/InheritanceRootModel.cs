@@ -1,5 +1,5 @@
-﻿namespace Simplify.Web.Tests.Model.Validation.TestTypes.Inheritance;
+﻿#pragma warning disable S2094
 
-public class InheritanceRootModel : BaseModel
-{
-}
+namespace Simplify.Web.Tests.Model.Validation.TestTypes.Inheritance;
+
+public class InheritanceRootModel : BaseModel;

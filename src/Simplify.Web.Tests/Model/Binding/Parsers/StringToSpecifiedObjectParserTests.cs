@@ -57,7 +57,7 @@ public class StringToSpecifiedObjectParserTests
 
 	[Test]
 	public void IsTypeValidForParsing_Enum_True() =>
-		Assert.That(StringToSpecifiedObjectParser.IsTypeValidForParsing(typeof(TestEnum)), Is.True);
+		Assert.That(StringToSpecifiedObjectParser.IsTypeValidForParsing(typeof(Test)), Is.True);
 
 	[Test]
 	public void IsTypeValidForParsing_Array_False() =>
@@ -177,11 +177,11 @@ public class StringToSpecifiedObjectParserTests
 
 	[Test]
 	public void ParseUndefined_DateTime_Parsed() =>
-		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("2014-03-15T00:00:00.0000000", typeof(DateTime)), Is.EqualTo(new DateTime(2014, 03, 15)));
+		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("2014-03-15T00:00:00.0000000", typeof(DateTime)), Is.EqualTo(new DateTime(2014, 03, 15, 0, 0, 0, DateTimeKind.Utc)));
 
 	[Test]
 	public void ParseUndefined_DateTimeWithFormat_Parsed() =>
-		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("15.03.2014", typeof(DateTime), "dd.MM.yyyy"), Is.EqualTo(new DateTime(2014, 03, 15)));
+		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("15.03.2014", typeof(DateTime), "dd.MM.yyyy"), Is.EqualTo(new DateTime(2014, 03, 15, 0, 0, 0, DateTimeKind.Utc)));
 
 	[Test]
 	public void ParseUndefined_DateTimeNull_DefaultDateTime() =>
@@ -201,11 +201,13 @@ public class StringToSpecifiedObjectParserTests
 
 	[Test]
 	public void ParseUndefined_NullableDateTime_Parsed() =>
-		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("2014-03-15T00:00:00.0000000", typeof(DateTime?)), Is.EqualTo((DateTime?)new DateTime(2014, 03, 15)));
+		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("2014-03-15T00:00:00.0000000", typeof(DateTime?)),
+			Is.EqualTo((DateTime?)new DateTime(2014, 03, 15, 0, 0, 0, DateTimeKind.Utc)));
 
 	[Test]
 	public void ParseUndefined_NullableDateTimeWithFormat_Parsed() =>
-		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("15.03.2014", typeof(DateTime?), "dd.MM.yyyy"), Is.EqualTo((DateTime?)new DateTime(2014, 03, 15)));
+		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("15.03.2014", typeof(DateTime?), "dd.MM.yyyy"),
+			Is.EqualTo((DateTime?)new DateTime(2014, 03, 15, 0, 0, 0, DateTimeKind.Utc)));
 
 	[Test]
 	public void ParseUndefined_NullableDateTimeNull_DefaultDateTime() =>
@@ -225,7 +227,7 @@ public class StringToSpecifiedObjectParserTests
 
 	[Test]
 	public void ParseUndefined_Enum_Parsed() =>
-		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("1", typeof(TestEnum)), Is.EqualTo(TestEnum.Value1));
+		Assert.That(StringToSpecifiedObjectParser.ParseUndefined("1", typeof(Test)), Is.EqualTo(Test.Value1));
 
 	[Test]
 	public void ParseUndefined_UndefinedType_ExceptionThrown() =>

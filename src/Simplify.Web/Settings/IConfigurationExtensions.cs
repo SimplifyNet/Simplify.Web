@@ -8,12 +8,12 @@ namespace Simplify.Web.Settings;
 public static class ConfigurationExtensions
 {
 	/// <summary>
-	/// Tries the get not null or empty string.
+	/// Gets the value from configuration by the key, if value is null or empty then returns the default value.
 	/// </summary>
 	/// <param name="config">The configuration.</param>
 	/// <param name="key">The key.</param>
 	/// <param name="defaultValue">The default value.</param>
-	public static string TryGetNotNullOrEmptyString(this IConfiguration config, string key, string defaultValue)
+	public static string GetValueOrDefaultValue(this IConfiguration config, string key, string defaultValue)
 	{
 		var value = config[key];
 

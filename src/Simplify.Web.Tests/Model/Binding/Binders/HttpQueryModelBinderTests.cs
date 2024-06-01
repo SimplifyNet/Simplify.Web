@@ -9,9 +9,9 @@ using Simplify.Web.Model.Binding.Binders;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Tests.Model.Binding.Binders.TestTypes;
 
-namespace Simplify.Web.Tests.Model.Binding.Binders;
-
 #if NET8_0_OR_GREATER
+
+namespace Simplify.Web.Tests.Model.Binding.Binders;
 
 [TestFixture]
 public class HttpQueryModelBinderTests

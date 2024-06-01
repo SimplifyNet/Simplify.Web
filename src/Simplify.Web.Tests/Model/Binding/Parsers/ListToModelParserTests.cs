@@ -70,8 +70,8 @@ public class ListToModelParserTests
 
 		// Assert
 
-		Assert.That(obj.Prop1, Is.EqualTo(new DateTime(2014, 03, 15)));
-		Assert.That(obj.Prop2, Is.EqualTo(new DateTime(2014, 03, 16)));
+		Assert.That(obj.Prop1, Is.EqualTo(new DateTime(2014, 03, 15, 0, 0, 0, DateTimeKind.Utc)));
+		Assert.That(obj.Prop2, Is.EqualTo(new DateTime(2014, 03, 16, 0, 0, 0, DateTimeKind.Utc)));
 	}
 
 	[Test]

@@ -44,6 +44,8 @@ public class ExpandoVsDictionaryBenchmark
 		Console.WriteLine($"Dynamic Read Time: {dynamicReadStopwatch.ElapsedMilliseconds} ms");
 		Console.WriteLine($"IDictionary<string, object> Read Time: {dictionaryReadStopwatch.ElapsedMilliseconds} ms");
 		Console.WriteLine($"Overall Performance Time: {overallStopwatch.ElapsedMilliseconds} ms");
+
+		Assert.Pass();
 	}
 
 	[TestCase(1)]
@@ -78,6 +80,8 @@ public class ExpandoVsDictionaryBenchmark
 		Console.WriteLine($"Dynamic Read Time: {dynamicReadStopwatch.ElapsedMilliseconds} ms");
 		Console.WriteLine($"IDictionary<string, object> Read Time: {dictionaryReadStopwatch.ElapsedMilliseconds} ms");
 		Console.WriteLine($"Overall Performance Time: {overallStopwatch.ElapsedMilliseconds} ms");
+
+		Assert.Pass();
 	}
 
 	private static ExpandoObject ToExpando(IDictionary<string, object> dictionary)

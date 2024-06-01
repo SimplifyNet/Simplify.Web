@@ -1,6 +1,6 @@
 namespace Simplify.Web.Tests.Modules.Data.TestTypes;
 
-public enum FooEnum
+public enum Foo
 {
 	FooItem1,
 	FooItem2

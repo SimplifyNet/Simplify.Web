@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Settings;
@@ -37,9 +36,9 @@ public class LanguageManager : ILanguageManager
 		if (settings.AcceptCookieLanguage && TrySetLanguageFromCookie(context))
 			return;
 
-		if (!settings.AcceptHeaderLanguage || (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context)))
-			if (!SetCurrentLanguage(settings.DefaultLanguage))
-				SetInvariantCulture();
+		if ((!settings.AcceptHeaderLanguage ||
+			 (settings.AcceptHeaderLanguage && !TrySetLanguageFromRequestHeader(context))) && !SetCurrentLanguage(settings.DefaultLanguage))
+			SetInvariantCulture();
 	}
 
 	/// <summary>
@@ -72,11 +71,11 @@ public class LanguageManager : ILanguageManager
 	{
 		try
 		{
-#if NET6_0
-			CultureInfo.GetCultureInfo(language, true);
-#else
+#if NETSTANDARD2_0 || NETSTANDARD2_1
 			if (!CultureExists(language))
 				return false;
+#else
+			CultureInfo.GetCultureInfo(language, true);
 #endif
 		}
 		catch
@@ -92,9 +91,10 @@ public class LanguageManager : ILanguageManager
 		return true;
 	}
 
+#if NETSTANDARD2_0 || NETSTANDARD2_1
 	private static bool CultureExists(string name) =>
-		CultureInfo.GetCultures(CultureTypes.AllCultures)
-			.Any(culture => culture.Name.Equals(name));
+		Array.Exists(CultureInfo.GetCultures(CultureTypes.AllCultures), culture => culture.Name.Equals(name));
+#endif
 
 	private void SetInvariantCulture()
 	{

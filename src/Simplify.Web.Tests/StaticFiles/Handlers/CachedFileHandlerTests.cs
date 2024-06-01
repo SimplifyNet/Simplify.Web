@@ -21,7 +21,7 @@ public class CachedFileHandlerTests
 	public void CanHandle_CanBeCached_True()
 	{
 		// Arrange
-		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached == true);
+		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached);
 
 		// Act
 		var result = _handler.CanHandle(context);
@@ -35,8 +35,7 @@ public class CachedFileHandlerTests
 	{
 		// Arrange
 
-		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached == false);
-		var handler = new NewFileHandler(null!, null!);
+		var context = Mock.Of<IStaticFileProcessingContext>(x => !x.CanBeCached);
 
 		// Act
 		var result = _handler.CanHandle(context);
@@ -50,8 +49,8 @@ public class CachedFileHandlerTests
 	{
 		// Arrange
 
-		var filePath = "Foo.txt";
-		var lastModificationTime = new DateTime(2013, 4, 5);
+		const string filePath = "Foo.txt";
+		var lastModificationTime = new DateTime(2013, 4, 5, 0, 0, 0, DateTimeKind.Utc);
 
 		var context = Mock.Of<IStaticFileProcessingContext>(x =>
 			x.RelativeFilePath == filePath &&

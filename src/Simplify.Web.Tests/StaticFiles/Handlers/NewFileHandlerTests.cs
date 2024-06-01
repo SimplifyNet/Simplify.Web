@@ -32,7 +32,7 @@ public class NewFileHandlerTests
 	public void CanHandle_CanBeCached_False()
 	{
 		// Arrange
-		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached == true);
+		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached);
 
 		// Act
 		var result = _handler.CanHandle(context);
@@ -46,7 +46,7 @@ public class NewFileHandlerTests
 	{
 		// Arrange
 
-		var context = Mock.Of<IStaticFileProcessingContext>(x => x.CanBeCached == false);
+		var context = Mock.Of<IStaticFileProcessingContext>(x => !x.CanBeCached);
 
 		// Act
 		var result = _handler.CanHandle(context);
@@ -61,14 +61,14 @@ public class NewFileHandlerTests
 		// Arrange
 
 		var filePath = "Foo.txt";
-		var lastModificationTime = new DateTime(2013, 4, 5);
+		var lastModificationTime = new DateTime(2013, 4, 5, 0, 0, 0, DateTimeKind.Utc);
 		var data = new byte[1] { 255 };
 
 		var context = Mock.Of<IStaticFileProcessingContext>(x =>
 			x.RelativeFilePath == filePath &&
 			x.LastModificationTime == lastModificationTime);
 
-		TimeProvider.Current = Mock.Of<ITimeProvider>(x => x.Now == new DateTime(2013, 1, 1));
+		TimeProvider.Current = Mock.Of<ITimeProvider>(x => x.Now == new DateTime(2013, 1, 1, 0, 0, 0, DateTimeKind.Utc));
 
 		_staticFile.Setup(x => x.GetDataAsync(It.Is<string>(s => s == filePath))).Returns(Task.FromResult(data));
 
@@ -81,7 +81,7 @@ public class NewFileHandlerTests
 
 		Assert.That(response.ContentType, Is.EqualTo("text/plain"));
 		Assert.That(response.Headers["Last-Modified"], Is.EqualTo(lastModificationTime.ToString("r")));
-		Assert.That(response.Headers["Expires"], Is.EqualTo(new DateTimeOffset(new DateTime(2014, 1, 1)).ToString("R")));
+		Assert.That(response.Headers["Expires"], Is.EqualTo(new DateTimeOffset(new DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)).ToString("R")));
 
 		_responseWriter.Verify(x => x.WriteAsync(It.Is<HttpResponse>(r => r == response), It.Is<byte[]>(b => b == data)));
 	}

@@ -41,4 +41,4 @@ BootstrapperFactory.ContainerProvider.Verify();
 if (!app.Environment.IsDevelopment())
 	app.UseSpa(spa => spa.Options.SourcePath = "ClientApp");
 
-app.Run();
+await app.RunAsync();

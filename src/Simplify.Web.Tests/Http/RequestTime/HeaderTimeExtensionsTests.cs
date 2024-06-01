@@ -14,7 +14,7 @@ public class HeaderTimeExtensionsTests
 	{
 		// Arrange
 
-		var time = new DateTime(2016, 03, 04);
+		var time = new DateTime(2016, 03, 04, 0, 0, 0, DateTimeKind.Utc);
 		var headers = new Mock<IHeaderDictionary>();
 		headers.SetupGet(x => x[It.Is<string>(p => p == "If-Modified-Since")]).Returns(time.ToString("r"));
 		headers.Setup(x => x.ContainsKey(It.Is<string>(p => p == "If-Modified-Since"))).Returns(true);

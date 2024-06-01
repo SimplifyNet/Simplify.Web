@@ -14,7 +14,7 @@ public class RequestCacheExtensionsTests
 	{
 		// Arrange
 
-		var lastModificationTime = new DateTime(2015, 10, 21, 07, 27, 0);
+		var lastModificationTime = new DateTime(2015, 10, 21, 07, 27, 0, DateTimeKind.Utc);
 
 		var request = Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary
 		{
@@ -33,7 +33,7 @@ public class RequestCacheExtensionsTests
 	{
 		// Arrange
 
-		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 0);
+		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 0, DateTimeKind.Utc);
 
 		var request = Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary
 		{
@@ -52,7 +52,7 @@ public class RequestCacheExtensionsTests
 	{
 		// Arrange
 
-		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 1);
+		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 1, DateTimeKind.Utc);
 
 		var request = Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary
 		{
@@ -71,11 +71,9 @@ public class RequestCacheExtensionsTests
 	{
 		// Arrange
 
-		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 1);
+		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 1, DateTimeKind.Utc);
 
-		var request = Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary
-		{
-		});
+		var request = Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary());
 
 		// Act
 		var result = request.IsFileCanBeUsedFromCache(lastModificationTime);
@@ -89,7 +87,7 @@ public class RequestCacheExtensionsTests
 	{
 		// Arrange
 
-		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 0);
+		var lastModificationTime = new DateTime(2015, 10, 21, 07, 28, 0, DateTimeKind.Utc);
 
 		var request = Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary
 		{

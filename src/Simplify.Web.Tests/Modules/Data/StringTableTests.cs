@@ -13,7 +13,7 @@ public class StringTableTests
 {
 	private const string DefaultLanguage = "en";
 
-	private readonly IReadOnlyList<string> _stringTableFiles = new[] { "StringTable.xml" };
+	private readonly IReadOnlyList<string> _stringTableFiles = ["StringTable.xml"];
 
 	private StringTable? _stringTable;
 
@@ -118,7 +118,7 @@ public class StringTableTests
 	{
 		// Arrange
 
-		_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"FooEnum.FooItem1\" value=\"Foo\" /></items>"));
+		_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"Foo.FooItem1\" value=\"Foo\" /></items>"));
 		_stringTable = new StringTable(_stringTableFiles, DefaultLanguage, _languageManagerProvider.Object, _fileReader.Object);
 
 		// Act
@@ -126,8 +126,8 @@ public class StringTableTests
 
 		// Act & Assert
 
-		Assert.That(_stringTable.GetAssociatedValue(FooEnum.FooItem1), Is.EqualTo("Foo"));
-		Assert.That(_stringTable.GetAssociatedValue(FooEnum.FooItem2), Is.Null);
+		Assert.That(_stringTable.GetAssociatedValue(Foo.FooItem1), Is.EqualTo("Foo"));
+		Assert.That(_stringTable.GetAssociatedValue(Foo.FooItem2), Is.Null);
 	}
 
 	[Test]
@@ -135,14 +135,14 @@ public class StringTableTests
 	{
 		// Arrange
 
-		_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"FooEnum.FooItem1\" value=\"Foo\" /></items>"));
+		_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"Foo.FooItem1\" value=\"Foo\" /></items>"));
 		_stringTable = new StringTable(_stringTableFiles, DefaultLanguage, _languageManagerProvider.Object, _fileReader.Object);
 
 		// Act
 		_stringTable.Setup();
 
 		// Act & Assert
-		Assert.That(_stringTable.GetItem("FooEnum.FooItem1"), Is.EqualTo("Foo"));
+		Assert.That(_stringTable.GetItem("Foo.FooItem1"), Is.EqualTo("Foo"));
 	}
 
 	[Test]
@@ -150,7 +150,7 @@ public class StringTableTests
 	{
 		// Arrange
 
-		_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"FooEnum.FooItem1\" value=\"Foo\" /></items>"));
+		_fileReader.Setup(x => x.LoadXDocument(It.IsAny<string>(), It.IsAny<bool>())).Returns(XDocument.Parse("<?xml version=\"1.0\" encoding=\"utf-8\" ?><items><item name=\"Foo.FooItem1\" value=\"Foo\" /></items>"));
 		_stringTable = new StringTable(_stringTableFiles, DefaultLanguage, _languageManagerProvider.Object, _fileReader.Object);
 
 		// Act

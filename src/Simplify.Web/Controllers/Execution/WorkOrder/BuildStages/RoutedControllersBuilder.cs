@@ -3,6 +3,8 @@ using Simplify.Web.Controllers.Meta.MetaStore;
 using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.Resolution.Handling;
 
+#pragma warning disable S3267
+
 namespace Simplify.Web.Controllers.Execution.WorkOrder.BuildStages;
 
 /// <summary>

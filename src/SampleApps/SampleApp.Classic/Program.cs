@@ -30,4 +30,4 @@ app.UseSimplifyWeb(true);
 
 BootstrapperFactory.ContainerProvider.Verify();
 
-app.Run();
+await app.RunAsync();

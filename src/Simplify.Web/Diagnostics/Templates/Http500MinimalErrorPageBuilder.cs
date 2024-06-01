@@ -5,7 +5,7 @@ namespace Simplify.Web.Diagnostics.Templates;
 /// <summary>
 /// Provides the HTTP 500 minimal error page builder.
 /// </summary>
-public class Http500MinimalErrorPageBuilder
+public static class Http500MinimalErrorPageBuilder
 {
 	/// <summary>
 	/// Builds the error page.

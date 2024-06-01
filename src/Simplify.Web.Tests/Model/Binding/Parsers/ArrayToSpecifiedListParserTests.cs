@@ -15,7 +15,7 @@ public class ArrayToSpecifiedListParserTests
 
 	[Test]
 	public void IsTypeValidForParsing_EnumList_True() =>
-		Assert.That(ArrayToSpecifiedListParser.IsTypeValidForParsing(typeof(IList<TestEnum>)), Is.True);
+		Assert.That(ArrayToSpecifiedListParser.IsTypeValidForParsing(typeof(IList<Test>)), Is.True);
 
 	[Test]
 	public void IsTypeValidForParsing_UndefinedType_False() =>
@@ -33,12 +33,12 @@ public class ArrayToSpecifiedListParserTests
 	public void ParseUndefined_EnumList_ParsedCorrectly()
 	{
 		// Act
-		var result = (IList<TestEnum>)ArrayToSpecifiedListParser.ParseUndefined(["2", "1"], typeof(IList<TestEnum>))!;
+		var result = (IList<Test>)ArrayToSpecifiedListParser.ParseUndefined(["2", "1"], typeof(IList<Test>))!;
 
 		// Assert
 
-		Assert.That(result[0], Is.EqualTo(TestEnum.Value2));
-		Assert.That(result[1], Is.EqualTo(TestEnum.Value1));
+		Assert.That(result[0], Is.EqualTo(Test.Value2));
+		Assert.That(result[1], Is.EqualTo(Test.Value1));
 	}
 
 	[Test]

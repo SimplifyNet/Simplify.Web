@@ -7,12 +7,12 @@ namespace Simplify.Web.Http;
 /// <summary>
 /// Provides the types relations container.
 /// </summary>
-public class Relations
+public static class Relations
 {
 	/// <summary>
 	/// Provides the HTTP method to HTTP method attribute relations
 	/// </summary>
-	public static readonly Dictionary<HttpMethod, Type> HttpMethodToHttpMethodAttributeRelation = new()
+	public static readonly IReadOnlyDictionary<HttpMethod, Type> HttpMethodToHttpMethodAttributeRelation = new Dictionary<HttpMethod, Type>
 	{
 		{ HttpMethod.Get, typeof(GetAttribute) },
 		{ HttpMethod.Post, typeof(PostAttribute) },
@@ -25,7 +25,7 @@ public class Relations
 	/// <summary>
 	/// Provides the HTTP method to HTTP method string attribute relations
 	/// </summary>
-	public static readonly Dictionary<HttpMethod, string> HttpMethodToToHttpMethodStringRelation = new()
+	public static readonly IReadOnlyDictionary<HttpMethod, string> HttpMethodToToHttpMethodStringRelation = new Dictionary<HttpMethod, string>
 	{
 		{ HttpMethod.Get, "GET" },
 		{ HttpMethod.Post, "POST" },

@@ -20,7 +20,7 @@ public class ListsGeneratorTests
 		var st = new Mock<IStringTable>();
 
 		st.Setup(x => x.GetItem(It.Is<string>(c => c == "HtmlListDefaultItemLabel"))).Returns("Default label");
-		st.Setup(x => x.GetAssociatedValue(It.Is<FooEnum>(c => c == FooEnum.FooItem1))).Returns("Foo item text");
+		st.Setup(x => x.GetAssociatedValue(It.Is<Foo>(c => c == Foo.FooItem1))).Returns("Foo item text");
 
 		var lg = new ListsGenerator(st.Object);
 
@@ -36,11 +36,11 @@ public class ListsGeneratorTests
 		Assert.That(lg.GenerateYearsListToPast(2, -1, true, 2013), Is.EqualTo("<option value='' selected='selected'>Default label</option><option value='2013' >2013</option><option value='2012' >2012</option><option value='2011' >2011</option>"));
 		Assert.That(lg.GenerateYearsListToFuture(2, 2013), Is.EqualTo("<option value='2013'>2013</option><option value='2014'>2014</option><option value='2015'>2015</option>"));
 
-		Assert.That(lg.GenerateListFromEnum(FooEnum.FooItem1), Is.EqualTo("<option value=''>Default label</option><option value='0' selected='selected'>Foo item text</option><option value='1'></option>"));
-		Assert.That(lg.GenerateListFromEnum(FooEnum.FooItem1, false), Is.EqualTo("<option value='0' selected='selected'>Foo item text</option><option value='1'></option>"));
-		Assert.That(lg.GenerateListFromEnum<FooEnum>(true), Is.EqualTo("<option value='' selected='selected'>Default label</option><option value='0'>Foo item text</option><option value='1'></option>"));
-		Assert.That(lg.GenerateListFromEnum<FooEnum>(true, false), Is.EqualTo("<option value=''>Default label</option><option value='0'>Foo item text</option><option value='1'></option>"));
-		Assert.That(lg.GenerateListFromEnum<FooEnum>(false), Is.EqualTo("<option value='0'>Foo item text</option><option value='1'></option>"));
+		Assert.That(lg.GenerateListFromEnum(Foo.FooItem1), Is.EqualTo("<option value=''>Default label</option><option value='0' selected='selected'>Foo item text</option><option value='1'></option>"));
+		Assert.That(lg.GenerateListFromEnum(Foo.FooItem1, false), Is.EqualTo("<option value='0' selected='selected'>Foo item text</option><option value='1'></option>"));
+		Assert.That(lg.GenerateListFromEnum<Foo>(true), Is.EqualTo("<option value='' selected='selected'>Default label</option><option value='0'>Foo item text</option><option value='1'></option>"));
+		Assert.That(lg.GenerateListFromEnum<Foo>(true, false), Is.EqualTo("<option value=''>Default label</option><option value='0'>Foo item text</option><option value='1'></option>"));
+		Assert.That(lg.GenerateListFromEnum<Foo>(false), Is.EqualTo("<option value='0'>Foo item text</option><option value='1'></option>"));
 
 		Assert.That(lg.GenerateEmptyListItem(), Is.EqualTo("<option value=''>&nbsp;</option>"));
 

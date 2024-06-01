@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Globalization;
 
+#pragma warning disable S6580
+
 namespace Simplify.Web.Model.Binding.Parsers;
 
 /// <summary>
 /// Provides the string to specified type parsing.
 /// </summary>
-public class StringToSpecifiedObjectParser
+public static class StringToSpecifiedObjectParser
 {
 	/// <summary>
 	/// Determine the variable type and parses it from string.

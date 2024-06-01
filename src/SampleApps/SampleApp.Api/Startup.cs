@@ -5,7 +5,9 @@ using Simplify.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-(DIContainer.Current = new SimpleInjectorDIProvider())
+DIContainer.Current = new SimpleInjectorDIProvider();
+
+DIContainer.Current
 	.RegisterAll(builder.Services)
 	.Verify();
 
@@ -13,4 +15,4 @@ var app = builder.Build();
 
 app.UseSimplifyWeb();
 
-app.Run();
+await app.RunAsync();

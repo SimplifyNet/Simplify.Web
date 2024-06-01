@@ -203,38 +203,40 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	private void LoadLanguageManagerSettings(IConfiguration config)
 	{
-		DefaultLanguage = config.TryGetNotNullOrEmptyString(nameof(DefaultLanguage), DefaultLanguage);
+		DefaultLanguage = config.GetValueOrDefaultValue(nameof(DefaultLanguage), DefaultLanguage);
 		AcceptCookieLanguage = config.GetValue<bool>(nameof(AcceptCookieLanguage));
 		AcceptHeaderLanguage = config.GetValue<bool>(nameof(AcceptHeaderLanguage));
 	}
 
 	private void LoadTemplatesSettings(IConfiguration config)
 	{
-		DefaultTemplatesPath = config.TryGetNotNullOrEmptyString(nameof(DefaultTemplatesPath), DefaultTemplatesPath);
+		DefaultTemplatesPath = config.GetValueOrDefaultValue(nameof(DefaultTemplatesPath), DefaultTemplatesPath);
 		LoadTemplatesFromAssembly = config.GetValue<bool>(nameof(LoadTemplatesFromAssembly));
-		DefaultMasterTemplateFileName = config.TryGetNotNullOrEmptyString(nameof(DefaultMasterTemplateFileName), DefaultMasterTemplateFileName);
+		DefaultMasterTemplateFileName = config.GetValueOrDefaultValue(nameof(DefaultMasterTemplateFileName), DefaultMasterTemplateFileName);
 	}
 
 	private void LoadDataCollectorSettings(IConfiguration config)
 	{
-		DefaultMainContentVariableName = config.TryGetNotNullOrEmptyString(nameof(DefaultMainContentVariableName), DefaultMainContentVariableName);
-		DefaultTitleVariableName = config.TryGetNotNullOrEmptyString(nameof(DefaultTitleVariableName), DefaultTitleVariableName);
+		DefaultMainContentVariableName = config.GetValueOrDefaultValue(nameof(DefaultMainContentVariableName), DefaultMainContentVariableName);
+		DefaultTitleVariableName = config.GetValueOrDefaultValue(nameof(DefaultTitleVariableName), DefaultTitleVariableName);
 	}
 
 	private void LoadDataSettings(IConfiguration config)
 	{
-		DataPath = config.TryGetNotNullOrEmptyString(nameof(DataPath), DataPath);
+		DataPath = config.GetValueOrDefaultValue(nameof(DataPath), DataPath);
 
 		var stringTableFiles = config[nameof(StringTableFiles)];
 
 		if (string.IsNullOrEmpty(stringTableFiles))
 			return;
 
-		StringTableFiles = stringTableFiles!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+		StringTableFiles = [.. stringTableFiles!
+			.Replace(" ", "")
+			.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)];
 	}
 
 	private void LoadStyleSettings(IConfiguration config) =>
-		DefaultStyle = config.TryGetNotNullOrEmptyString(nameof(DefaultStyle), DefaultStyle);
+		DefaultStyle = config.GetValueOrDefaultValue(nameof(DefaultStyle), DefaultStyle);
 
 	private void LoadStaticFilesSettings(IConfiguration config)
 	{
@@ -245,7 +247,9 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		if (string.IsNullOrEmpty(staticFilesPaths))
 			return;
 
-		StaticFilesPaths = staticFilesPaths!.Replace(" ", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+		StaticFilesPaths = [.. staticFilesPaths!
+			.Replace(" ", "")
+			.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)];
 	}
 
 	private void LoadEngineBehaviorSettings(IConfiguration config)

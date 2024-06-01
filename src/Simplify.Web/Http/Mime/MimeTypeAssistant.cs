@@ -701,12 +701,22 @@ public static class MimeTypeAssistant
 		if (string.IsNullOrEmpty(fileExtension))
 			throw new ArgumentException("Value cannot be null or empty.", nameof(fileExtension));
 
+#if NETSTANDARD2_0
 		if (!fileExtension.StartsWith("."))
+
+#else
+		if (!fileExtension.StartsWith('.'))
+
+#endif
 			fileExtension = "." + fileExtension;
 
+#if NETSTANDARD2_0
 		return ExtensionsToMimeTypesRelation.TryGetValue(fileExtension, out var mime)
 			? mime
 			: "application/octet-stream";
+#else
+		return ExtensionsToMimeTypesRelation.GetValueOrDefault(fileExtension, "application/octet-stream");
+#endif
 	}
 
 	/// <summary>
@@ -738,7 +748,11 @@ public static class MimeTypeAssistant
 		if (string.IsNullOrEmpty(mimeType))
 			throw new ArgumentException("Value cannot be null or empty.", nameof(mimeType));
 
+#if NETSTANDARD2_0
 		if (mimeType.StartsWith("."))
+#else
+		if (mimeType.StartsWith('.'))
+#endif
 			throw new ArgumentException("Requested mime type is not valid: " + mimeType);
 
 		if (MimeTypesToExtensionsRelation.TryGetValue(mimeType, out var extension))

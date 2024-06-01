@@ -1,6 +1,7 @@
-using System.Diagnostics;
 using System.Dynamic;
 using BenchmarkDotNet.Attributes;
+
+#pragma warning disable S1104
 
 namespace Simplify.Web.Benchmark;
 
@@ -73,19 +74,19 @@ public class ExpandoObjectAndDictionaryBenchmarks
 
 	private void TestDynamic(dynamic list)
 	{
-		for (int i = 0; i < NumValues; i++)
+		for (var i = 0; i < NumValues; i++)
 		{
-			string value = list.Key0;
-			Trace.WriteLine(value);
+			var value = list.Key0;
+			Console.WriteLine(value);
 		}
 	}
 
 	private void TestDictionary(IDictionary<string, object> list)
 	{
-		for (int i = 0; i < NumValues; i++)
+		for (var i = 0; i < NumValues; i++)
 		{
-			string value = list[$"Key{i}"].ToString();
-			Trace.WriteLine(value);
+			var value = list[$"Key{i}"].ToString();
+			Console.WriteLine(value);
 		}
 	}
 
@@ -93,7 +94,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 	{
 		var expandoDict = (IDictionary<string, object>)new ExpandoObject();
 
-		for (int i = 0; i < NumValues; i++)
+		for (var i = 0; i < NumValues; i++)
 			expandoDict[$"Key{i}"] = $"Value{i}";
 
 		return expandoDict;
@@ -103,7 +104,7 @@ public class ExpandoObjectAndDictionaryBenchmarks
 	{
 		var dictionary = new Dictionary<string, object>();
 
-		for (int i = 0; i < NumValues; i++)
+		for (var i = 0; i < NumValues; i++)
 			dictionary[$"Key{i}"] = $"Value{i}";
 
 		return dictionary;

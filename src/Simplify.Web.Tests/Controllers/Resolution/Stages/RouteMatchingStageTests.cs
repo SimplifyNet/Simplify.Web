@@ -75,8 +75,7 @@ public class RouteMatchingStageTests
 		_routeMatcherResolver.Setup(x => x.Resolve(It.IsAny<IControllerMetadata>())).Returns(routeMatcher.Object);
 
 		routeMatcher.Setup(x => x.Match(It.IsAny<IList<string>>(), It.Is<IControllerRoute>(r => r == controllerRoute)))
-			.Returns(Mock.Of<IRouteMatchResult>(x =>
-				x.Success == false));
+			.Returns(Mock.Of<IRouteMatchResult>(x => !x.Success));
 
 		// Act
 		_stage.Execute(state, context, stopExecution.Object);
@@ -122,7 +121,7 @@ public class RouteMatchingStageTests
 
 		routeMatcher.Setup(x => x.Match(It.IsAny<IList<string>>(), It.Is<IControllerRoute>(s => s == controllerRoute)))
 			.Returns(Mock.Of<IRouteMatchResult>(x =>
-				x.Success == true &&
+				x.Success &&
 			 	x.RouteParameters == new Dictionary<string, object>()));
 
 		// Act

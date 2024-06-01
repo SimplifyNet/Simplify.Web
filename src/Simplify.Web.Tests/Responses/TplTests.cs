@@ -51,7 +51,7 @@ public class TplTests
 	{
 		// Arrange
 
-		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), null!, 200) { CallBase = true };
+		var tplData = new Mock<Tpl>(await TemplateBuilder.FromString("test").BuildAsync(), null!, 200) { CallBase = true };
 
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
@@ -68,7 +68,7 @@ public class TplTests
 	{
 		// Arrange
 
-		var tplData = new Mock<Tpl>(TemplateBuilder.FromString("test").Build(), "foo title", 200) { CallBase = true };
+		var tplData = new Mock<Tpl>(await TemplateBuilder.FromString("test").BuildAsync(), "foo title", 200) { CallBase = true };
 		tplData.SetupGet(x => x.DataCollector).Returns(_dataCollector.Object);
 		tplData.SetupGet(x => x.Context).Returns(_context.Object);
 

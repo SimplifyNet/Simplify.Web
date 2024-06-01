@@ -17,7 +17,11 @@ public sealed class Environment : IEnvironment
 	{
 		appPhysicalPath = appPhysicalPath.Replace("\\", "/");
 
+#if NETSTANDARD2_0
 		if (!appPhysicalPath.EndsWith("/"))
+#else
+		if (!appPhysicalPath.EndsWith('/'))
+#endif
 			appPhysicalPath += "/";
 
 		AppPhysicalPath = appPhysicalPath;

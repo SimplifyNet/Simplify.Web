@@ -56,9 +56,11 @@ public class ValidationAttributesExecutor(bool nesting = true) : IModelValidator
 		if (IsGenericList(type))
 			return;
 
-		if (Nesting)
-			if (type.BaseType != null && type.BaseType != typeof(object) && !IsSystemType(type.BaseType))
-				Validate(type.BaseType, value, resolver);
+		if (Nesting &&
+			type.BaseType != null &&
+			type.BaseType != typeof(object) &&
+			!IsSystemType(type.BaseType))
+			Validate(type.BaseType, value, resolver);
 
 		foreach (var item in type.GetProperties())
 		{

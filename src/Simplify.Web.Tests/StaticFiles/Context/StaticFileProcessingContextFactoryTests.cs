@@ -27,7 +27,7 @@ public class StaticFileProcessingContextFactoryTests
 		// Arrange
 
 		var filePath = "foo";
-		var lastModificationTime = new DateTime(2023, 5, 2, 15, 14, 0);
+		var lastModificationTime = new DateTime(2023, 5, 2, 15, 14, 0, DateTimeKind.Utc);
 		var httpContext = Mock.Of<HttpContext>(x => x.Request == Mock.Of<HttpRequest>(r => r.Headers == new HeaderDictionary()));
 
 		_file.Setup(x => x.GetLastModificationTime(It.Is<string>(x => x == filePath))).Returns(lastModificationTime);

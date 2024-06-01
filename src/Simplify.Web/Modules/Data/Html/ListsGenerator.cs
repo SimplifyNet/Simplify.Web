@@ -169,7 +169,7 @@ public sealed class ListsGenerator(IStringTable stringTable) : IListsGenerator
 	/// <typeparam name="T">Enum type.</typeparam>
 	/// <param name="selectedItem">Selected enum item.</param>
 	/// <param name="displayNotSelectedMessage">Display not selected message in list or not.</param>
-	public string GenerateListFromEnum<T>(T selectedItem = default(T), bool displayNotSelectedMessage = true)
+	public string GenerateListFromEnum<T>(T selectedItem = default, bool displayNotSelectedMessage = true)
 		where T : struct
 	{
 		var data = displayNotSelectedMessage ? GenerateDefaultListItem(false) : "";

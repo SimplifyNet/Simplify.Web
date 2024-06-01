@@ -35,7 +35,7 @@ public static class TypeExtensions
 	/// <returns>
 	///   <c>true</c> if  the type is derived from one of the specified types; otherwise, <c>false</c>.
 	/// </returns>
-	public static bool IsDerivedFrom(this Type t, params Type[] types) => types.Any(t.IsDerivedFrom);
+	public static bool IsDerivedFrom(this Type t, params Type[] types) => Array.Exists(types, t.IsDerivedFrom);
 
 	/// <summary>
 	/// Determines whether the type is derived from other type.
