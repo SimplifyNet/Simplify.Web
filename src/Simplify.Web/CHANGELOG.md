@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0] - Unreleased
+## [5.0.0] - 2024-06-05
 
 ### Breaking
 
