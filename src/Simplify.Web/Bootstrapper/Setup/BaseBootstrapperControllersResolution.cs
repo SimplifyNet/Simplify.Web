@@ -3,8 +3,6 @@ using System.Linq;
 using Simplify.DI;
 using Simplify.Web.Controllers.Resolution;
 using Simplify.Web.Controllers.Resolution.Stages;
-using Simplify.Web.Controllers.RouteMatching.Resolver;
-using Simplify.Web.Controllers.Security;
 
 namespace Simplify.Web.Bootstrapper.Setup;
 
@@ -21,7 +19,29 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IControllerResolutionPipeline)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IControllerResolutionPipeline, ControllerResolutionPipeline>(LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<IControllerResolutionPipeline, ControllerResolutionPipeline>();
+	}
+
+	/// <summary>
+	/// Registers the controller resolution pipeline route matching stage.
+	/// </summary>
+	public virtual void RegisterControllerResolutionPipelineRouteMatchingStage()
+	{
+		if (TypesToExclude.Contains(typeof(RouteMatchingStage)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<RouteMatchingStage>();
+	}
+
+	/// <summary>
+	/// Registers the controller resolution pipeline security check stage.
+	/// </summary>
+	public virtual void RegisterControllerResolutionPipelineSecurityCheckStage()
+	{
+		if (TypesToExclude.Contains(typeof(SecurityCheckStage)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<SecurityCheckStage>();
 	}
 
 	/// <summary>
@@ -34,10 +54,8 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IControllerResolutionStage>>(r =>
 			[
-				new RouteMatchingStage(
-					r.Resolve<IRouteMatcherResolver>()),
-				new SecurityCheckStage(
-					r.Resolve<ISecurityChecker>())
-			], LifetimeType.Singleton);
+				r.Resolve<RouteMatchingStage>(),
+				r.Resolve<SecurityCheckStage>()
+			]);
 	}
 }

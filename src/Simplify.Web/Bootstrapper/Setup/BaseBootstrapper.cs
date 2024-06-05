@@ -64,6 +64,8 @@ public partial class BaseBootstrapper
 		RegisterControllerExecutorResolverExecutors();
 		RegisterControllersExecutor();
 		RegisterControllerResolutionPipeline();
+		RegisterControllerResolutionPipelineRouteMatchingStage();
+		RegisterControllerResolutionPipelineSecurityCheckStage();
 		RegisterControllerResolutionPipelineStages();
 		RegisterControllerResponseExecutor();
 		RegisterCrsHandlers();
@@ -74,7 +76,10 @@ public partial class BaseBootstrapper
 		RegisterDynamicEnvironment();
 		RegisterEnvironment();
 		RegisterExecutionWorkOrderBuildDirector();
-		RegisterExecutionWorkOrderBuildDirectorStages();
+		RegisterExecutionWorkOrderBuildDirectorGlobalControllersBuilder();
+		RegisterExecutionWorkOrderBuildDirectorNotFoundBuilder();
+		RegisterExecutionWorkOrderBuildDirectorRoutedControllersBuilder();
+		RegisterExecutionWorkOrderBuildStages();
 		RegisterFileReader();
 		RegisterLanguageManagerProvider();
 		RegisterListsGenerator();
@@ -90,6 +95,8 @@ public partial class BaseBootstrapper
 		RegisterRouteMatcherResolverMatchers();
 		RegisterSecurityChecker();
 		RegisterSecurityRules();
+		RegisterSecurityRulesUnauthorizedRule();
+		RegisterSecurityRulesRoleAuthorizationRule();
 		RegisterSimplifyWebSettings(Settings);
 
 		if (Settings.StaticFilesEnabled)

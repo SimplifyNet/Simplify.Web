@@ -19,7 +19,29 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(ISecurityChecker)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<ISecurityChecker, SecurityChecker>(LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register<ISecurityChecker, SecurityChecker>();
+	}
+
+	/// <summary>
+	/// Registers the security rules unauthorized rule.
+	/// </summary>
+	public virtual void RegisterSecurityRulesUnauthorizedRule()
+	{
+		if (TypesToExclude.Contains(typeof(UnauthorizedRule)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<UnauthorizedRule>();
+	}
+
+	/// <summary>
+	/// Registers the security rules authorization rule.
+	/// </summary>
+	public virtual void RegisterSecurityRulesRoleAuthorizationRule()
+	{
+		if (TypesToExclude.Contains(typeof(RoleAuthorizationRule)))
+			return;
+
+		BootstrapperFactory.ContainerProvider.Register<RoleAuthorizationRule>();
 	}
 
 	/// <summary>
@@ -32,8 +54,8 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<ISecurityRule>>(r =>
 			[
-				new UnauthorizedRule(),
-				new RoleAuthorizationRule()
-			], LifetimeType.Singleton);
+				r.Resolve<UnauthorizedRule>(),
+				r.Resolve<RoleAuthorizationRule>()
+			]);
 	}
 }
