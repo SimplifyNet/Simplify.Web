@@ -8,10 +8,10 @@ using Simplify.Web.StaticFiles.Context;
 namespace Simplify.Web.StaticFiles.Handlers;
 
 /// <summary>
-/// Provides the cached file handler.
+/// Provides the cached on client side files handler.
 /// </summary>
 /// <seealso cref="IStaticFileRequestHandler" />
-public class CachedFileHandler : IStaticFileRequestHandler
+public class ClientCachedFileHandler : IStaticFileRequestHandler
 {
 	/// <summary>
 	/// Determines whether this handler can handle the file requested.

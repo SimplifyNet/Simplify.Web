@@ -66,7 +66,7 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IStaticFileRequestHandler>>(r =>
 			[
-				new CachedFileHandler(),
+				new ClientCachedFileHandler(),
 				new NewFileHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>())
 			], LifetimeType.Singleton);
 	}
