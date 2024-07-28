@@ -64,10 +64,19 @@ public partial class BaseBootstrapper
 		if (TypesToExclude.Contains(typeof(IReadOnlyList<IStaticFileRequestHandler>)))
 			return;
 
-		BootstrapperFactory.ContainerProvider.Register<IReadOnlyList<IStaticFileRequestHandler>>(r =>
-			[
-				new CachedFileHandler(),
-				new NewFileHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>())
-			], LifetimeType.Singleton);
+		BootstrapperFactory.ContainerProvider.Register(r =>
+		{
+			IList<IStaticFileRequestHandler> handlers =
+				[
+					new ClientCachedFileHandler()
+				];
+
+			if (r.Resolve<ISimplifyWebSettings>().StaticFilesMemoryCache)
+				handlers.Add(new InMemoryFilesCacheHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>()));
+			else
+				handlers.Add(new NewFileHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>()));
+
+			return (IReadOnlyList<IStaticFileRequestHandler>)handlers;
+		}, LifetimeType.Singleton);
 	}
 }
