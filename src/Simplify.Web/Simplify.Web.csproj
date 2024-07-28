@@ -9,7 +9,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-		<Version>5.0</Version>
+		<Version>5.1</Version>
 
 		<Authors>Simplify community</Authors>
 		<Product>Simplify</Product>
