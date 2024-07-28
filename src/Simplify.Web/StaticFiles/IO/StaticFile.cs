@@ -38,7 +38,7 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(sitePhysicalPath + relativeFilePath).TrimMilliseconds();
 
 	/// <summary>
-	/// Gets the file data.
+	/// Gets the file data asynchronously.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
 	public async Task<byte[]> GetDataAsync(string relativeFilePath)
@@ -59,4 +59,10 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 
 		return result;
 	}
+
+	/// <summary>
+	/// Gets the file data.
+	/// </summary>
+	/// <param name="relativeFilePath">The relative file path.</param>
+	public byte[] GetData(string relativeFilePath) => File.ReadAllBytes(relativeFilePath);
 }

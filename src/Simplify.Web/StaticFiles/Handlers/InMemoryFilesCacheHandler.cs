@@ -1,16 +1,17 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Simplify.Web.Http.ResponseWriting;
+using Simplify.Web.StaticFiles.Cache;
 using Simplify.Web.StaticFiles.Context;
 using Simplify.Web.StaticFiles.IO;
 
 namespace Simplify.Web.StaticFiles.Handlers;
 
 /// <summary>
-/// Provides the new file handler.
+/// Provides the in-memory files cache.
 /// </summary>
 /// <seealso cref="IStaticFileRequestHandler" />
-public class NewFileHandler(IResponseWriter responseWriter, IStaticFile staticFile) : IStaticFileRequestHandler
+public class InMemoryFilesCacheHandler(IResponseWriter responseWriter, IStaticFile staticFile) : IStaticFileRequestHandler
 {
 	/// <summary>
 	/// Determines whether this handler can handle the file requested.
@@ -30,6 +31,6 @@ public class NewFileHandler(IResponseWriter responseWriter, IStaticFile staticFi
 	{
 		response.SetNewReturningFileAttributes(context);
 
-		await responseWriter.WriteAsync(response, await staticFile.GetDataAsync(context.RelativeFilePath));
+		await responseWriter.WriteAsync(response, FilesInMemoryCache.Items.GetOrAdd(context.RelativeFilePath, staticFile.GetData));
 	}
 }
