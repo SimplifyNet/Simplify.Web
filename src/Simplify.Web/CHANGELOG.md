@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.1.0] - 2024-07-28
+
+### Added
+
+- Static files in-memory cache (#267)
+
+### Fixed
+
+- Web context is not available on WriteErrorResponseAsync causing NRE
+
 ## [5.0.0] - 2024-06-05
 
 ### Breaking

@@ -21,9 +21,14 @@ public interface IStaticFile
 	DateTime GetLastModificationTime(string relativeFilePath);
 
 	/// <summary>
+	/// Gets the file data asynchronously.
+	/// </summary>
+	/// <param name="relativeFilePath">The relative file path.</param>
+	Task<byte[]> GetDataAsync(string relativeFilePath);
+
+	/// <summary>
 	/// Gets the file data.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
-	/// <returns></returns>
-	Task<byte[]> GetDataAsync(string relativeFilePath);
+	byte[] GetData(string relativeFilePath);
 }

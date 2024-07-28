@@ -152,6 +152,14 @@ public interface ISimplifyWebSettings
 	bool StringTableMemoryCache { get; }
 
 	/// <summary>
+	/// Gets the value indicating whether static files memory cache enabled or disabled.
+	/// </summary>
+	/// <value>
+	///   <c>true</c> if static files memory cache is enabled; otherwise, <c>false</c>.
+	/// </value>
+	bool StaticFilesMemoryCache { get; }
+
+	/// <summary>
 	/// Gets the value indicating whether file reader caching should be disabled.
 	/// </summary>
 	/// <value>
