@@ -3,7 +3,7 @@
 ## Pre-Requisites
 
 * .NET 7 or higher
-* Node JS 16.13.0 or higher
+* Node JS 18.13.0 or higher
 
 ## Debug Launch options
 
