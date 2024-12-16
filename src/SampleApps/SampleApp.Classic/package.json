@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"description": "",
 	"devDependencies": {
-		"bootstrap": "^3.4.1",
-		"jquery": "^3.6.0"
+		"bootstrap": "^5.3.3",
+		"jquery": "^3.7.1"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"

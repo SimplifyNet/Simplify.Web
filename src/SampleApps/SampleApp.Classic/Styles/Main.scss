@@ -4,10 +4,19 @@
 @import "Panels";
 @import "MessageBox";
 
+html {
+	font-size: 10px;
+}
+
 body {
 	background: $back-color !important;
 	color: $primary-text-color !important;
-	font: 1.6em "Segoe UI", tahoma, arial, helvetica, sans-serif !important;
+	font:
+		1.6em "Segoe UI",
+		tahoma,
+		arial,
+		helvetica,
+		sans-serif !important;
 	margin: 1em !important;
 	padding: 0 !important;
 }

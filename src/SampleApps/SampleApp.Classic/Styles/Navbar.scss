@@ -1,4 +1,4 @@
-@import 'Variables';
+@import "Variables";
 
 .navbar {
 	background: $primary-color;
@@ -6,12 +6,21 @@
 	border: 0;
 	border-radius: 0;
 	box-shadow: $no-box-shadow;
+	padding: 0;
 
-	a, .navbar-text {
+	a,
+	.navbar-text,
+	.navbar-brand {
+		display: block;
 		color: $primary-color-opposite !important;
+		padding: 15px 15px;
+		text-decoration: none;
+		margin: 0;
 	}
 
-	a:hover, .navbar-toggle:hover, .navbar:focus {
+	a:hover,
+	.navbar-toggle:hover,
+	.navbar:focus {
 		background-color: $primary-color-active !important;
 	}
 
