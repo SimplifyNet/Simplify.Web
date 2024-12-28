@@ -1,4 +1,5 @@
 ﻿@import "Header";
+@import "Footer";
 @import "Navbar";
 @import "Forms";
 @import "Panels";
@@ -21,20 +22,6 @@ body {
 	padding: 0 !important;
 }
 
-.ExecutionTimeFooter {
-	position: block;
-
-	border-top: $primary-border;
-	text-align: center;
-	margin-top: 1em;
-	padding-top: 0.3em;
-}
-
-div.Http404MessageBox {
-	color: $primary-color-colorized-text;
-	padding: 4em 2em;
-}
-
 a {
 	color: $primary-color;
 	text-decoration: none;
@@ -46,4 +33,18 @@ a:hover {
 
 .text-center {
 	text-align: center;
+}
+
+h3 {
+	margin-top: 20px;
+	margin-bottom: 10px;
+
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 1.1;
+}
+
+ul {
+	margin-top: 0;
+	margin-bottom: 10px;
 }

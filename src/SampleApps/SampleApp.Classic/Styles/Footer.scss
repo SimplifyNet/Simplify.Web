@@ -1,0 +1,10 @@
+@import "Variables";
+
+.ExecutionTimeFooter {
+	position: block;
+
+	border-top: $primary-border;
+	text-align: center;
+	margin-top: 1em;
+	padding-top: 0.3em;
+}
