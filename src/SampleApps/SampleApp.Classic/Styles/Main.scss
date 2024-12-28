@@ -4,15 +4,26 @@
 @import "Panels";
 @import "MessageBox";
 
+html {
+	font-size: 10px;
+}
+
 body {
 	background: $back-color !important;
 	color: $primary-text-color !important;
-	font: 1.6em "Segoe UI", tahoma, arial, helvetica, sans-serif !important;
+	font:
+		1.6em "Segoe UI",
+		tahoma,
+		arial,
+		helvetica,
+		sans-serif !important;
 	margin: 1em !important;
 	padding: 0 !important;
 }
 
 .ExecutionTimeFooter {
+	position: block;
+
 	border-top: $primary-border;
 	text-align: center;
 	margin-top: 1em;
@@ -26,8 +37,13 @@ div.Http404MessageBox {
 
 a {
 	color: $primary-color;
+	text-decoration: none;
 }
 
 a:hover {
 	color: $primary-color-active;
+}
+
+.text-center {
+	text-align: center;
 }

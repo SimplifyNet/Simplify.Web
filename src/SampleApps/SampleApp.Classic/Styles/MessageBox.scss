@@ -11,6 +11,6 @@ div.inline-message-box {
 }
 
 div.inline-error-message-box {
-	@extend div.inline-message-box;
-	color: #FF4753;
+	@extend .inline-message-box;
+	color: #ff4753;
 }

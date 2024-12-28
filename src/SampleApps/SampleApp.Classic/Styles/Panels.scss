@@ -1,6 +1,35 @@
 @import "Variables";
 
+.panels-container {
+}
+
+.panel {
+	float: left;
+	width: 50%;
+}
+
+.clear {
+	clear: both;
+}
+
+.panel-content {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.panel-heading {
+	padding: 10px 15px;
+}
+
+.list-group {
+	margin-bottom: 20px;
+	padding-left: 0;
+}
+
 .list-group-item {
+	padding: 10px 15px;
+	margin-bottom: -1px;
+
 	background-color: $secondary-color;
 	border: $primary-border;
 }
