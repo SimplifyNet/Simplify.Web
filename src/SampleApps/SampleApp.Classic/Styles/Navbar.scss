@@ -15,7 +15,6 @@ div.navbar {
 	ul {
 		margin: 0;
 		padding: 0;
-		// list-style: none;
 
 		li {
 			display: block;
@@ -41,5 +40,15 @@ div.navbar {
 
 	ul.navbar-right {
 		float: right;
+	}
+
+	.navbar-text {
+		display: block;
+		position: relative;
+
+		margin: 0;
+		padding: 15px 15px;
+
+		line-height: 20px;
 	}
 }
