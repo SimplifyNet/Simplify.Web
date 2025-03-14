@@ -6,7 +6,7 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Angular Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net8.0/SampleApp.Angular.dll",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net9.0/SampleApp.Angular.dll",
 			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {
@@ -23,7 +23,7 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Angular Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net8.0/SampleApp.Angular.dll",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net9.0/SampleApp.Angular.dll",
 			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {

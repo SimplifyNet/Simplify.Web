@@ -11,12 +11,12 @@
 
 1. Run debug of `SampleApp.Angular` profile in VS Code (or VS Codium)
 2. Launch front end separately via `npm run start` from `ClientApp`
-3. Go to <http://localhost:4200> URL
+3. Go to <https://localhost:10900> URL
 
 ### Via Microsoft Visual Studio
 
 1. Run debug of `SampleApp.Angular` profile in Microsoft Visual Studio
-2. <http://localhost:5000> URL will be opened in prowser, wait some time and user will be redirected to <http://localhost:4200> URL
+2. <http://localhost:5000> URL will be opened in prowser, wait some time and user will be redirected to <https://localhost:10900> URL
 
 #### Commands sequence
 
