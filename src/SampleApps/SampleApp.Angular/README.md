@@ -16,7 +16,7 @@
 ### Via Microsoft Visual Studio
 
 1. Run debug of `SampleApp.Angular` profile in Microsoft Visual Studio
-2. <http://localhost:5000> URL will be opened in prowser, wait some time and user will be redirected to <https://localhost:10900> URL
+2. <http://localhost:5000> URL will be opened in browser, wait some time and user will be redirected to <https://localhost:10900> URL
 
 #### Commands sequence
 
