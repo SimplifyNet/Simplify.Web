@@ -80,7 +80,7 @@ public class SampleDataController : Controller2
     {
         try
         {
-            return Json(items);
+            return Json(Summaries);
         }
         catch (Exception e)
         {
