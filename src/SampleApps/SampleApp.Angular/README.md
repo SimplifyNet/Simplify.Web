@@ -16,11 +16,11 @@
 ### Via Microsoft Visual Studio
 
 1. Run debug of `SampleApp.Angular` profile in Microsoft Visual Studio
-2. <http://localhost:5000> URL will be opened in browser, wait some time and user will be redirected to <https://localhost:10900> URL
+2. <http://localhost:5000> URL will be opened in browser. Wait until the Angular front end is ready; you will then be redirected to <https://localhost:10900>.
 
 #### Commands sequence
 
 1. Visual Studio will open <http://localhost:5000> URL
 2. SPA backend will execute `npm install` command
-2. SPA backend will execute `npm run start` which will trigger `ng build` and `ng serve` commands
-4. After successful launch of Angular front end application user will be redirected to <http://localhost:5000> URL
+3. SPA backend will execute `npm run start`, which will trigger `ng build` and `ng serve` commands
+4. After successful launch of the Angular front end application, you will be redirected to <https://localhost:10900> URL

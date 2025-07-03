@@ -11,30 +11,30 @@
 ![Platform](https://img.shields.io/badge/platform-.NET%206.0%20%7C%20.NET%20Standard%202.1%20%7C%20.NET%20Standard%202.0-lightgrey)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](http://makeapullrequest.com)
 
-Simplify.Web is an open-source, lightweight, fast and highly customizable server-side .NET web-framework based on ASP.NET Core for building HTTP based web-applications, RESTful APIs etc.
+Simplify.Web is an open-source, lightweight, fast, and highly customizable server-side .NET web framework based on ASP.NET Core for building HTTP-based web applications, RESTful APIs, etc.
 
-Framework can be used as:
+The framework can be used as:
 
 - An API backend framework
-- As a mix of API backend + some SPA front end like Angular
-- As an old way backend generated web-site
+- A mix of API backend + SPA front end (e.g., Angular)
+- A traditional backend-generated website
 
 Can be hosted:
 
-- The same way as an ApsNetCore MVC application (On IIS, or as a console application)
-- Inside a windows service
+- The same way as an ASP.NET Core MVC application (on IIS or as a console application)
+- Inside a Windows service
 
 ## Main features
 
 - Comes as Microsoft.AspNetCore middleware
 - Can be used as an API backend only with front-end frameworks
 - Based on MVC and MVVM patterns
-- Lightweight & Fast
-- Uses switchable IOC container for itself and controllers, views constructor injection ([Simplify.DI](https://github.com/SimplifyNet/Simplify/wiki/Simplify.DI))
-- Support async controllers
-- Supports controllers which can be run on any request
-- Localization-friendly (supports templates, strings and data files localization by default)
-- Uses fast templates engine ([Simplify.Templates](https://github.com/SimplifyNet/Simplify/wiki/Simplify.Templates))
+- Lightweight & fast
+- Uses a switchable IoC container for itself and controllers, views constructor injection ([Simplify.DI](https://github.com/SimplifyNet/Simplify/wiki/Simplify.DI))
+- Supports async controllers
+- Supports controllers which can run on any request
+- Localization-friendly (supports templates, strings, and data files localization by default)
+- Uses a fast template engine ([Simplify.Templates](https://github.com/SimplifyNet/Simplify/wiki/Simplify.Templates))
 - Mocking-friendly
 - Mono-friendly
 
@@ -42,7 +42,7 @@ Can be hosted:
 
 There is a [templates package](https://github.com/SimplifyNet/Simplify.Web.Templates) available at nuget.org for Simplify.Web. It contains a couple of templates which can be a good starting point for your application.
 
-Installing a templates package:
+Install the templates package:
 
 ```console
 dotnet new -i Simplify.Web.Templates
@@ -51,17 +51,17 @@ dotnet new -i Simplify.Web.Templates
 | Template                            | Short Name              |
 | :---------------------------------- | :---------------------- |
 | Angular template                    | sweb.angular            |
-| Api template                        | sweb.api                |
+| API template                        | sweb.api                |
 | Minimal template                    | sweb.minimal            |
-| Windows service hosted api template | sweb.api.windowsservice |
+| Windows service hosted API template | sweb.api.windowsservice |
 
-Use the short name to create a project based on selected template:
+Use the short name to create a project based on the selected template:
 
 ```console
 dotnet new sweb.angular -n HelloWorldApplication
 ```
 
-Then just run project via F5 (it will download all required nuget and npm packages at first build).
+Then just run the project via F5 (it will download all required NuGet and npm packages at the first build).
 
 ## [Detailed documentation](https://github.com/SimplifyNet/Simplify.Web/wiki)
 
@@ -126,7 +126,7 @@ public class SampleModel
 }
 ```
 
-### Some simple HTML generation controllers example
+### Simple HTML generation controllers example
 
 #### Static page controller v1 example
 
@@ -145,7 +145,7 @@ public class AboutController : Controller
 
 #### Any page controller v1 with high run priority example
 
-Runs on any request and adds login panel to a pages
+Runs on any request and adds a login panel to pages.
 
 ```csharp
 // Controller will be executed on any request and will be launched before other controllers (because they have Priority = 0 by default)
@@ -186,11 +186,11 @@ public class LoggedUserPanelView : View
 Below is the list of sample applications showing different variations of Simplify.Web usage:
 
 - [Only as an API backend with Angular + Bootstrap UI SPA](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Angular)
-- [Kestrel-based Application with backend HTML generation, localization, authentication](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Classic)
+- [Kestrel-based application with backend HTML generation, localization, authentication](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.Classic)
 
 ![Simplify](https://raw.githubusercontent.com/SimplifyNet/Simplify.Web/master/images/screenshots/sample-app-classic.png)
 
-- [Simple Kestrel-based Application hosted as windows-service](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.WindowsServiceHosted)
+- [Simple Kestrel-based application hosted as a Windows service](https://github.com/SimplifyNet/Simplify.Web/tree/master/src/SampleApps/SampleApp.WindowsServiceHosted)
 
 ## Contributing
 
@@ -213,9 +213,9 @@ Additional extensions to Simplify.Web live in their own repositories on GitHub. 
 - [Simplify.Web.Postman](https://github.com/SimplifyNet/Simplify.Web.Postman) - Postman collection and environment generation
 - [Simplify.Web.Swagger](https://github.com/SimplifyNet/Simplify.Web.Swagger) - Swagger generation for controllers
 - [Simplify.Web.Multipart](https://github.com/SimplifyNet/Simplify.Web.Multipart) - multipart form model binder
-- [Simplify.Web.MessageBox](https://github.com/SimplifyNet/Simplify.Web.MessageBox) - non-interactive server side message box
-- [Simplify.Web.Templates](https://github.com/SimplifyNet/Simplify.Web.Templates) - .NET projects templates
+- [Simplify.Web.MessageBox](https://github.com/SimplifyNet/Simplify.Web.MessageBox) - non-interactive server-side message box
+- [Simplify.Web.Templates](https://github.com/SimplifyNet/Simplify.Web.Templates) - .NET project templates
 
 ## License
 
-Licensed under the GNU LESSER GENERAL PUBLIC LICENSE
+Licensed under the GNU LESSER GENERAL PUBLIC LICENSE.
