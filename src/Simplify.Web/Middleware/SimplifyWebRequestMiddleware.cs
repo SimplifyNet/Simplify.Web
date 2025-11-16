@@ -18,7 +18,7 @@ namespace Simplify.Web.Middleware;
 public static class SimplifyWebRequestMiddleware
 {
 	/// <summary>
-	/// Occurs when exception occurred and catched by framework.
+	/// Occurs when exception occurred and caught by framework.
 	/// </summary>
 	public static event ExceptionEventHandler? OnException;
 
