@@ -44,7 +44,7 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 	public async Task<byte[]> GetDataAsync(string relativeFilePath)
 	{
 #if NETSTANDARD2_0
-		using var stream = File.Open(relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+		using var stream = File.Open(sitePhysicalPath + relativeFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
 		var result = new byte[stream.Length];
 
@@ -64,5 +64,5 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 	/// Gets the file data.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
-	public byte[] GetData(string relativeFilePath) => File.ReadAllBytes(relativeFilePath);
+	public byte[] GetData(string relativeFilePath) => File.ReadAllBytes(sitePhysicalPath + relativeFilePath);
 }
