@@ -54,7 +54,7 @@
 			"args": [
 				"test",
 				"-f",
-				"net8.0",
+				"net9.0",
 				"--filter",
 				"TestCategory!=\"Benchmark\"",
 				"/p:CollectCoverage=true",

@@ -178,6 +178,14 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	public bool StringTableMemoryCache { get; private set; }
 
 	/// <summary>
+	/// Gets the value indicating whether static files memory cache enabled or disabled.
+	/// </summary>
+	/// <value>
+	///   <c>true</c> if static files memory cache is enabled; otherwise, <c>false</c>.
+	/// </value>
+	public bool StaticFilesMemoryCache { get; private set; }
+
+	/// <summary>
 	/// Gets the value indicating whether file reader caching should be disabled.
 	/// </summary>
 	/// <value>
@@ -263,6 +271,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	{
 		TemplatesMemoryCache = config.GetValue<bool>(nameof(TemplatesMemoryCache));
 		StringTableMemoryCache = config.GetValue<bool>(nameof(StringTableMemoryCache));
+		StaticFilesMemoryCache = config.GetValue<bool>(nameof(StaticFilesMemoryCache));
 		DisableFileReaderCache = config.GetValue<bool>(nameof(DisableFileReaderCache));
 	}
 

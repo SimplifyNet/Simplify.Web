@@ -7,7 +7,6 @@ using Simplify.Web.Diagnostics;
 using Simplify.Web.Diagnostics.Measurements;
 using Simplify.Web.Diagnostics.Trace;
 using Simplify.Web.Modules;
-using Simplify.Web.Modules.Context;
 using Simplify.Web.RequestHandling;
 using Simplify.Web.Settings;
 
@@ -19,7 +18,7 @@ namespace Simplify.Web.Middleware;
 public static class SimplifyWebRequestMiddleware
 {
 	/// <summary>
-	/// Occurs when exception occurred and catched by framework.
+	/// Occurs when exception occurred and caught by framework.
 	/// </summary>
 	public static event ExceptionEventHandler? OnException;
 
@@ -86,12 +85,12 @@ public static class SimplifyWebRequestMiddleware
 
 	private static async Task WriteErrorResponseAsync(this HttpContext context, ILifetimeScope scope, Exception e)
 	{
-		var webContext = scope.Resolver.Resolve<IWebContextProvider>().Get();
+		var isAjax = context.Request.Headers.ContainsKey("X-Requested-With");
 
-		if (webContext.IsAjax)
+		if (isAjax)
 			context.Response.ContentType = "text/plain";
 
-		await context.Response.WriteAsync(scope.GenerateErrorResponse(e, webContext.IsAjax));
+		await context.Response.WriteAsync(scope.GenerateErrorResponse(e, isAjax));
 	}
 
 	private static string GenerateErrorResponse(this ILifetimeScope scope, Exception e, bool minimalStyle)

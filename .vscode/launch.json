@@ -6,7 +6,7 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Angular Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net8.0/SampleApp.Angular.dll",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net9.0/SampleApp.Angular.dll",
 			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {
@@ -23,7 +23,7 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Angular Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net8.0/SampleApp.Angular.dll",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/bin/Debug/net9.0/SampleApp.Angular.dll",
 			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Angular/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {
@@ -41,8 +41,8 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Api Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net8.0/SampleApp.Api.dll",
-			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net8.0/",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net9.0/SampleApp.Api.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Api/bin/Debug/net9.0/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {
 				"action": "openExternally",
@@ -58,8 +58,8 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build Classic Example",
-			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net8.0/SampleApp.Classic.dll",
-			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net8.0/",
+			"program": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net9.0/SampleApp.Classic.dll",
+			"cwd": "${workspaceFolder}/src/SampleApps/SampleApp.Classic/bin/Debug/net9.0/",
 			"internalConsoleOptions": "openOnSessionStart",
 			"serverReadyAction": {
 				"action": "openExternally",
@@ -75,8 +75,8 @@
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "Build",
-			"program": "${workspaceFolder}/src/Simplify.Web.Benchmark/bin/Debug/net8.0/Simplify.Web.Benchmark.dll",
-			"cwd": "${workspaceFolder}/src/Simplify.Web.Benchmark/bin/Debug/net8.0/",
+			"program": "${workspaceFolder}/src/Simplify.Web.Benchmark/bin/Debug/net9.0/Simplify.Web.Benchmark.dll",
+			"cwd": "${workspaceFolder}/src/Simplify.Web.Benchmark/bin/Debug/net9.0/",
 			"internalConsoleOptions": "openOnSessionStart"
 		},
 	]

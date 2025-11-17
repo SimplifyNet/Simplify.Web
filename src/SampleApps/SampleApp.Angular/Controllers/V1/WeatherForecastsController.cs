@@ -4,7 +4,7 @@ using Simplify.Web.Attributes;
 
 namespace SampleApp.Angular.Controllers.V1;
 
-[Get("api/v1/weatherForecasts")]
+[Get("api/v1/weather-forecasts")]
 public class WeatherForecastsController : Controller
 {
 	private static readonly string[] Summaries =

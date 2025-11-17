@@ -10,12 +10,12 @@ using Simplify.Web.StaticFiles.Handlers;
 namespace Simplify.Web.Tests.StaticFiles.Handlers;
 
 [TestFixture]
-public class CachedFileHandlerTests
+public class ClientCachedFileHandlerTests
 {
-	private CachedFileHandler _handler = null!;
+	private ClientCachedFileHandler _handler = null!;
 
 	[SetUp]
-	public void Initialize() => _handler = new CachedFileHandler();
+	public void Initialize() => _handler = new ClientCachedFileHandler();
 
 	[Test]
 	public void CanHandle_CanBeCached_True()

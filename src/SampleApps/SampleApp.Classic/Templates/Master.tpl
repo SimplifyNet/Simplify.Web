@@ -5,8 +5,6 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{Title}</title>
-	<link rel="stylesheet" type="text/css" href="{~}/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="{~}/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="{~}/Styles/Main.min.css" />
 
 	<link rel="shortcut icon" href="{~}/Images/favicon.ico" type="image/x-icon" />

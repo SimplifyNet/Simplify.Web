@@ -1,25 +1,54 @@
-@import 'Variables';
+@import "Variables";
 
-.navbar {
-	background: $primary-color;
-	color: $primary-color-opposite;
+div.navbar {
+	min-height: 50px;
+	margin-bottom: 20px;
+
 	border: 0;
 	border-radius: 0;
+
+	background: $primary-color;
+	color: $primary-color-opposite;
+
 	box-shadow: $no-box-shadow;
 
-	a, .navbar-text {
+	ul {
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: block;
+			position: relative;
+			float: left;
+		}
+	}
+
+	a {
+		display: block;
+		position: relative;
+
+		padding: 15px;
+
+		line-height: 20px;
+
 		color: $primary-color-opposite !important;
 	}
 
-	a:hover, .navbar-toggle:hover, .navbar:focus {
+	a:hover {
 		background-color: $primary-color-active !important;
 	}
 
-	.navbar-toggle {
-		background-color: $primary-color !important;
+	ul.navbar-right {
+		float: right;
 	}
 
-	.icon-bar {
-		background-color: $primary-color-opposite !important;
+	.navbar-text {
+		display: block;
+		position: relative;
+
+		margin: 0;
+		padding: 15px;
+
+		line-height: 20px;
 	}
 }

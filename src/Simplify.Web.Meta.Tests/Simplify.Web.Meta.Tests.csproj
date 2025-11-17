@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net48</TargetFrameworks>
+		<TargetFrameworks>net9.0;net48</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
@@ -14,9 +14,9 @@
 		<ProjectReference Include="..\Simplify.Web\Simplify.Web.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.*" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.*" />
 		<PackageReference Include="Moq" Version="4.20.*" />
-		<PackageReference Include="NUnit" Version="4.1.*" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.5.*" />
+		<PackageReference Include="NUnit" Version="4.3.*" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.6.*" />
 	</ItemGroup>
 </Project>
