@@ -11,9 +11,9 @@
 
 		<Version>5.1</Version>
 
-		<Authors>Simplify community</Authors>
-		<Product>Simplify</Product>
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
+		<Product>Simplify</Product>
+		<Authors>Simplify community</Authors>
 		<Copyright>Licensed under LGPL</Copyright>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageProjectUrl>https://web.simplifynet.dev</PackageProjectUrl>

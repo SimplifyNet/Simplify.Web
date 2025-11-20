@@ -22,5 +22,8 @@
 	],
 	"files.exclude": {
 		"**/lcov*": true
-	}
+	},
+	"dotrush.roslyn.projectOrSolutionFiles": [
+		"./src/Simplify.Web.sln"
+	]
 }
