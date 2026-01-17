@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 interface WeatherForecast {
   date: string;
@@ -15,23 +15,24 @@ interface WeatherForecast {
   standalone: false
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  public forecasts: WeatherForecast[] | undefined;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getForecasts();
   }
 
   getForecasts() {
-    this.http.get<WeatherForecast[]>('/api/v1/weather-forecasts').subscribe(
-      (result) => {
+    this.http.get<WeatherForecast[]>('/api/v1/weather-forecasts').subscribe({
+      next: (result) => {
         this.forecasts = result;
+        this.cdr.detectChanges();
       },
-      (error) => {
+      error: (error) => {
         console.error(error);
       }
-    );
+    });
   }
 
   title = 'sampleapp.angular';
