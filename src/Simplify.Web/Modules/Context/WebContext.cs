@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -10,13 +11,14 @@ namespace Simplify.Web.Modules.Context;
 /// Provides the web context.
 /// </summary>
 /// <seealso cref="IWebContext" />
-public sealed class WebContext : IWebContext
+public sealed class WebContext : IWebContext, IDisposable
 {
 	private readonly SemaphoreSlim _formReadSemaphore = new(1, 1);
 	private readonly SemaphoreSlim _requestBodyReadSemaphore = new(1, 1);
 
 	private IFormCollection? _form;
 	private string? _requestBody;
+	private bool _disposed;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WebContext" /> class.
@@ -164,6 +166,9 @@ public sealed class WebContext : IWebContext
 
 		try
 		{
+			if (_form != null)
+				return;
+
 			_form = await Context.Request.ReadFormAsync();
 		}
 		finally
@@ -184,7 +189,16 @@ public sealed class WebContext : IWebContext
 
 		try
 		{
-			using var reader = new StreamReader(Context.Request.Body);
+			if (_requestBody != null)
+				return;
+
+			// Keep the underlying request stream open so that other middleware /
+			// model binders downstream can still consume the body if it is buffered.
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+			using var reader = new StreamReader(Context.Request.Body, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, bufferSize: 1024, leaveOpen: true);
+#else
+			using var reader = new StreamReader(Context.Request.Body, leaveOpen: true);
+#endif
 
 			_requestBody = await reader.ReadToEndAsync();
 		}
@@ -192,5 +206,20 @@ public sealed class WebContext : IWebContext
 		{
 			_requestBodyReadSemaphore.Release();
 		}
+	}
+
+	/// <summary>
+	/// Releases unmanaged resources held by the web context (the semaphores used to
+	/// serialize body / form reads).
+	/// </summary>
+	public void Dispose()
+	{
+		if (_disposed)
+			return;
+
+		_disposed = true;
+
+		_formReadSemaphore.Dispose();
+		_requestBodyReadSemaphore.Dispose();
 	}
 }

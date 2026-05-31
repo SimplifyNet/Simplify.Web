@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -57,10 +58,8 @@ public class RedirectorTests
 		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.RedirectUrlCookieFieldName)]).Returns("foo");
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.RedirectUrlCookieFieldName)]).Returns("http://localhost/my-website/foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
-
-		_context.SetupGet(x => x.SiteUrl).Returns("foo");
 
 		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>())).Callback<string, string>((key, value) =>
 		{
@@ -72,7 +71,7 @@ public class RedirectorTests
 		_redirector.Redirect(RedirectionType.RedirectUrl);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "foo")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/foo")), Times.Once);
 	}
 
 	[Test]
@@ -101,16 +100,14 @@ public class RedirectorTests
 		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.LoginReturnUrlCookieFieldName)]).Returns("loginFoo");
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.LoginReturnUrlCookieFieldName)]).Returns("http://localhost/my-website/loginFoo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
-
-		_context.SetupGet(x => x.SiteUrl).Returns("loginFoo");
 
 		// Act
 		_redirector.Redirect(RedirectionType.LoginReturnUrl);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "loginFoo")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/loginFoo")), Times.Once);
 	}
 
 	[Test]
@@ -119,16 +116,14 @@ public class RedirectorTests
 		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("http://localhost/my-website/foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
-
-		_context.SetupGet(x => x.SiteUrl).Returns("foo");
 
 		// Act
 		_redirector.Redirect(RedirectionType.PreviousPage);
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "foo")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/foo")), Times.Once);
 	}
 
 	[Test]
@@ -137,16 +132,14 @@ public class RedirectorTests
 		// Arrange
 
 		var cookieCollection = new Mock<IRequestCookieCollection>();
-		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("foo");
+		cookieCollection.SetupGet(x => x[It.Is<string>(s => s == Redirector.PreviousPageUrlCookieFieldName)]).Returns("http://localhost/my-website/foo");
 		_context.SetupGet(x => x.Request.Cookies).Returns(cookieCollection.Object);
-
-		_context.SetupGet(x => x.SiteUrl).Returns("foo");
 
 		// Act
 		_redirector.Redirect(RedirectionType.PreviousPageWithBookmark, "bar");
 
 		// Assert
-		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "foo#bar")), Times.Once);
+		_context.Verify(x => x.Response.Redirect(It.Is<string>(c => c == "http://localhost/my-website/foo#bar")), Times.Once);
 	}
 
 	[Test]
@@ -238,5 +231,48 @@ public class RedirectorTests
 
 		// Act & Assert
 		_redirector.PreviousPageUrl = "foo";
+	}
+
+	[Test]
+	public void Redirect_ProtocolRelativeUrl_ThrowsSecurityException() =>
+		Assert.Throws<SecurityException>(() => _redirector.Redirect("//evil.com/path"));
+
+	[Test]
+	public void Redirect_BackslashSchemeSpoof_ThrowsSecurityException() =>
+		Assert.Throws<SecurityException>(() => _redirector.Redirect("/\\evil.com"));
+
+	[Test]
+	public void Redirect_HostPrefixCollision_ThrowsSecurityException()
+	{
+		// The old StartsWith-based check would have accepted "http://localhost.attacker.com/"
+		// because it shared the "http://localhost" prefix when SiteUrl lacked a trailing slash.
+		_context.SetupGet(x => x.SiteUrl).Returns("http://localhost");
+
+		Assert.Throws<SecurityException>(() => _redirector.Redirect("http://localhost.attacker.com/path"));
+	}
+
+	[Test]
+	public void Redirect_RelativePath_Allowed()
+	{
+		_redirector.Redirect("/some/internal/path");
+
+		_context.Verify(x => x.Response.Redirect("/some/internal/path"), Times.Once);
+	}
+
+	[Test]
+	public void SetPreviousPageUrl_AppendedCookieIsHttpOnlyAndLax()
+	{
+		CookieOptions? captured = null;
+
+		_context.SetupGet(x => x.Response.Cookies).Returns(_responseCookies.Object);
+		_responseCookies.Setup(x => x.Append(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CookieOptions>()))
+			.Callback<string, string, CookieOptions>((_, _, opts) => captured = opts);
+
+		_redirector.PreviousPageUrl = "anything";
+
+		Assert.That(captured, Is.Not.Null);
+		Assert.That(captured!.HttpOnly, Is.True);
+		Assert.That(captured.SameSite, Is.EqualTo(SameSiteMode.Lax));
+		Assert.That(captured.Secure, Is.True);
 	}
 }

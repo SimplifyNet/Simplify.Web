@@ -32,6 +32,13 @@ public class Redirector(IWebContext context) : IRedirector
 	/// </summary>
 	public const string PreviousNavigatedUrlCookieFieldName = "PreviousNavigatedUrl";
 
+	private static CookieOptions BuildSecureRedirectCookieOptions() => new()
+	{
+		HttpOnly = true,
+		SameSite = SameSiteMode.Lax,
+		Secure = true
+	};
+
 	/// <summary>
 	/// Gets or sets the previous page url.
 	/// </summary>
@@ -41,11 +48,7 @@ public class Redirector(IWebContext context) : IRedirector
 	public string? PreviousPageUrl
 	{
 		get => context.Request.Cookies[PreviousPageUrlCookieFieldName];
-		set => context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value ?? "", new CookieOptions
-		{
-			SameSite = SameSiteMode.None,
-			Secure = true
-		});
+		set => context.Response.Cookies.Append(PreviousPageUrlCookieFieldName, value ?? "", BuildSecureRedirectCookieOptions());
 	}
 
 	/// <summary>
@@ -57,11 +60,7 @@ public class Redirector(IWebContext context) : IRedirector
 	public string? RedirectUrl
 	{
 		get => context.Request.Cookies[RedirectUrlCookieFieldName];
-		set => context.Response.Cookies.Append(RedirectUrlCookieFieldName, value ?? "", new CookieOptions
-		{
-			SameSite = SameSiteMode.None,
-			Secure = true
-		});
+		set => context.Response.Cookies.Append(RedirectUrlCookieFieldName, value ?? "", BuildSecureRedirectCookieOptions());
 	}
 
 	/// <summary>
@@ -73,11 +72,7 @@ public class Redirector(IWebContext context) : IRedirector
 	public string? LoginReturnUrl
 	{
 		get => context.Request.Cookies[LoginReturnUrlCookieFieldName];
-		set => context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value ?? "", new CookieOptions
-		{
-			SameSite = SameSiteMode.None,
-			Secure = true
-		});
+		set => context.Response.Cookies.Append(LoginReturnUrlCookieFieldName, value ?? "", BuildSecureRedirectCookieOptions());
 	}
 
 	/// <summary>
@@ -89,11 +84,7 @@ public class Redirector(IWebContext context) : IRedirector
 	public string? PreviousNavigatedUrl
 	{
 		get => context.Request.Cookies[PreviousNavigatedUrlCookieFieldName];
-		set => context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value ?? "", new CookieOptions
-		{
-			SameSite = SameSiteMode.None,
-			Secure = true
-		});
+		set => context.Response.Cookies.Append(PreviousNavigatedUrlCookieFieldName, value ?? "", BuildSecureRedirectCookieOptions());
 	}
 
 	/// <summary>
@@ -163,9 +154,30 @@ public class Redirector(IWebContext context) : IRedirector
 		if (string.IsNullOrEmpty(url))
 			throw new ArgumentNullException(nameof(url));
 
-		if (!url!.StartsWith(context.SiteUrl))
+		if (!IsSameSiteUrl(url!))
 			throw new SecurityException("Redirection outside of the website, redirection URL: " + url);
 
-		context.Response.Redirect(url);
+		context.Response.Redirect(url!);
+	}
+
+	private bool IsSameSiteUrl(string url)
+	{
+		// Allow only same-origin relative paths ("/path") and reject protocol-relative
+		// ("//evil.com") or backslash-prefixed ("/\\evil.com") variants that browsers
+		// treat as absolute.
+		if (url.Length > 1 && url[0] == '/' && url[1] != '/' && url[1] != '\\')
+			return true;
+
+		if (!Uri.TryCreate(url, UriKind.Absolute, out var target))
+			return false;
+
+		if (!Uri.TryCreate(context.SiteUrl, UriKind.Absolute, out var site))
+			return url.StartsWith(context.SiteUrl, StringComparison.Ordinal);
+
+		// Match scheme + host + port to avoid being fooled by substring tricks such as
+		// "http://localhost.attacker.com/" sharing a SiteUrl prefix.
+		return string.Equals(target.Scheme, site.Scheme, StringComparison.OrdinalIgnoreCase)
+			&& string.Equals(target.Host, site.Host, StringComparison.OrdinalIgnoreCase)
+			&& target.Port == site.Port;
 	}
 }

@@ -100,7 +100,7 @@ public abstract class ControllerMetadata(Type controllerType) : IControllerMetad
 		var isAuthorizationRequired = false;
 		IEnumerable<string>? requiredUserRoles = null;
 
-		var attributes = controllerType.GetCustomAttributes(typeof(AuthorizeAttribute), false);
+		var attributes = controllerType.GetCustomAttributes(typeof(AuthorizeAttribute), true);
 
 		if (attributes.Length > 0)
 		{

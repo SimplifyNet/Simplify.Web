@@ -1,7 +1,7 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +28,7 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 	bool templatesMemoryCache = false,
 	bool loadTemplatesFromAssembly = false) : ITemplateFactory
 {
-	private static readonly IDictionary<KeyValuePair<string, string>, string> Cache = new Dictionary<KeyValuePair<string, string>, string>();
-	private static readonly object Locker = new();
+	private static readonly ConcurrentDictionary<KeyValuePair<string, string>, string> Cache = new();
 	private readonly SemaphoreSlim _cacheSemaphore = new(1, 1);
 
 	private ILanguageManager _languageManager = null!;
@@ -58,7 +57,11 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 		if (tpl != null)
 			return tpl;
 
-		lock (Locker)
+		// Coordinate sync and async callers with the same primitive to avoid
+		// duplicate construction / dictionary corruption races.
+		_cacheSemaphore.Wait();
+
+		try
 		{
 			tpl = TryLoadFromCache(filePath);
 
@@ -69,9 +72,13 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 				? LoadFromFile(filePath)
 				: LoadFromAssembly(filePath, Assembly.GetCallingAssembly());
 
-			Cache.Add(new KeyValuePair<string, string>(filePath, _languageManager.Language), tpl.Get());
+			Cache[new KeyValuePair<string, string>(filePath, _languageManager.Language)] = tpl.Get();
 
 			return tpl;
+		}
+		finally
+		{
+			_cacheSemaphore.Release();
 		}
 	}
 
@@ -106,7 +113,7 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 				? await LoadFromFileAsync(filePath)
 				: await LoadFromAssemblyAsync(filePath, assembly);
 
-			Cache.Add(new KeyValuePair<string, string>(filePath, _languageManager.Language), tpl.Get());
+			Cache[new KeyValuePair<string, string>(filePath, _languageManager.Language)] = tpl.Get();
 
 			return tpl;
 		}
@@ -147,12 +154,8 @@ public sealed class TemplateFactory(IDynamicEnvironment environment,
 			.Localizable(_languageManager.Language, defaultLanguage)
 			.BuildAsync();
 
-	private ITemplate? TryLoadFromCache(string filePath)
-	{
-		var existingItem = Cache.FirstOrDefault(x => x.Key.Key == filePath && x.Key.Value == _languageManager.Language);
-
-		return !existingItem.Equals(default(KeyValuePair<KeyValuePair<string, string>, string>))
-			? TemplateBuilder.FromString(existingItem.Value).Build()
+	private ITemplate? TryLoadFromCache(string filePath) =>
+		Cache.TryGetValue(new KeyValuePair<string, string>(filePath, _languageManager.Language), out var existing)
+			? TemplateBuilder.FromString(existing).Build()
 			: null;
-	}
 }

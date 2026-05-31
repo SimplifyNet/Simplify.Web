@@ -17,7 +17,10 @@ public static class AuthRedirectExtensions
 		{
 			await next();
 
-			if (context.Response.StatusCode == 401)
+			// Guard against InvalidOperationException ("StatusCode cannot be set, response
+			// has already started") that occurs when an upstream authentication handler
+			// already flushed a 401 challenge response body.
+			if (context.Response.StatusCode == 401 && !context.Response.HasStarted)
 				context.Response.Redirect(redirectUrl);
 		});
 }

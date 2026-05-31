@@ -1,7 +1,7 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 using Simplify.Web.Modules.Localization;
 
@@ -21,13 +21,9 @@ namespace Simplify.Web.Modules.Data;
 public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, ILanguageManagerProvider languageManagerProvider,
 	bool disableCache = false) : IFileReader
 {
-	private static readonly IDictionary<KeyValuePair<string, string>, XDocument?> XmlCache =
-		new Dictionary<KeyValuePair<string, string>, XDocument?>();
+	private static readonly ConcurrentDictionary<KeyValuePair<string, string>, XDocument?> XmlCache = new();
 
-	private static readonly IDictionary<KeyValuePair<string, string>, string?> TextCache =
-		new Dictionary<KeyValuePair<string, string>, string?>();
-
-	private static readonly object Locker = new();
+	private static readonly ConcurrentDictionary<KeyValuePair<string, string>, string?> TextCache = new();
 
 	private ILanguageManager _languageManager = null!;
 
@@ -36,11 +32,8 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 	/// </summary>
 	public static void ClearCache()
 	{
-		lock (Locker)
-		{
-			XmlCache.Clear();
-			TextCache.Clear();
-		}
+		XmlCache.Clear();
+		TextCache.Clear();
 	}
 
 	/// <summary>
@@ -173,33 +166,11 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 
 	#endregion XML
 
-	private static bool TryToLoadTextFileFromCache(string fileName, string language, out string? data)
-	{
-		data = null;
+	private static bool TryToLoadTextFileFromCache(string fileName, string language, out string? data) =>
+		TextCache.TryGetValue(new KeyValuePair<string, string>(fileName, language), out data);
 
-		var cacheItem = TextCache.FirstOrDefault(x => x.Key.Key == fileName && x.Key.Value == language);
-
-		if (cacheItem.Equals(default(KeyValuePair<KeyValuePair<string, string>, string>)))
-			return false;
-
-		data = cacheItem.Value;
-
-		return true;
-	}
-
-	private static bool TryToLoadXDocumentFromCache(string fileName, string language, out XDocument? data)
-	{
-		data = null;
-
-		var cacheItem = XmlCache.FirstOrDefault(x => x.Key.Key == fileName && x.Key.Value == language);
-
-		if (cacheItem.Equals(default(KeyValuePair<KeyValuePair<string, string>, XDocument>)))
-			return false;
-
-		data = cacheItem.Value;
-
-		return true;
-	}
+	private static bool TryToLoadXDocumentFromCache(string fileName, string language, out XDocument? data) =>
+		XmlCache.TryGetValue(new KeyValuePair<string, string>(fileName, language), out data);
 
 	private bool LoadTextFileFromFileSystem(string fileName, string language, out string? data)
 	{
@@ -220,18 +191,12 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 		if (TryToLoadTextFileFromCache(fileName, language, out data))
 			return true;
 
-		lock (Locker)
-		{
-			if (TryToLoadTextFileFromCache(fileName, language, out data))
-				return true;
+		if (!LoadTextFileFromFileSystem(fileName, language, out data))
+			return false;
 
-			if (!LoadTextFileFromFileSystem(fileName, language, out data))
-				return false;
+		TextCache.TryAdd(new KeyValuePair<string, string>(fileName, language), data);
 
-			TextCache.Add(new KeyValuePair<string, string>(fileName, language), data);
-
-			return true;
-		}
+		return true;
 	}
 
 	private bool LoadXDocumentFromFileSystem(string fileName, string language, out XDocument? data)
@@ -251,17 +216,11 @@ public sealed class FileReader(string dataPhysicalPath, string defaultLanguage, 
 		if (TryToLoadXDocumentFromCache(fileName, language, out data))
 			return true;
 
-		lock (Locker)
-		{
-			if (TryToLoadXDocumentFromCache(fileName, language, out data))
-				return true;
+		if (!LoadXDocumentFromFileSystem(fileName, language, out data))
+			return false;
 
-			if (!LoadXDocumentFromFileSystem(fileName, language, out data))
-				return false;
+		XmlCache.TryAdd(new KeyValuePair<string, string>(fileName, language), data);
 
-			XmlCache.Add(new KeyValuePair<string, string>(fileName, language), data);
-
-			return true;
-		}
+		return true;
 	}
 }

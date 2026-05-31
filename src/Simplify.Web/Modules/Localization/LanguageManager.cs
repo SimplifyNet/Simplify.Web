@@ -58,7 +58,7 @@ public class LanguageManager : ILanguageManager
 		_responseCookies.Append(CookieLanguageFieldName, language, new CookieOptions
 		{
 			Expires = DateTime.Now.AddYears(5),
-			SameSite = SameSiteMode.None,
+			SameSite = SameSiteMode.Lax,
 			Secure = true
 		});
 	}

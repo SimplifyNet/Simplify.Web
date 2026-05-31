@@ -31,6 +31,23 @@ public class InMemoryFilesCacheHandler(IResponseWriter responseWriter, IStaticFi
 	{
 		response.SetNewReturningFileAttributes(context);
 
-		await responseWriter.WriteAsync(response, FilesInMemoryCache.Items.GetOrAdd(context.RelativeFilePath, staticFile.GetData));
+		await responseWriter.WriteAsync(response, GetOrLoad(context));
+	}
+
+	private byte[] GetOrLoad(IStaticFileProcessingContext context)
+	{
+		var key = context.RelativeFilePath;
+
+		if (FilesInMemoryCache.Items.TryGetValue(key, out var cached)
+			&& cached.LastModificationTime == context.LastModificationTime)
+			return cached.Data;
+
+		var data = staticFile.GetData(context.RelativeFilePath);
+
+		// Cap entries to avoid unbounded growth (e.g. case-variant path DoS).
+		if (FilesInMemoryCache.Items.Count < FilesInMemoryCache.MaxItems)
+			FilesInMemoryCache.Items[key] = new FilesInMemoryCache.CachedFile(data, context.LastModificationTime);
+
+		return data;
 	}
 }

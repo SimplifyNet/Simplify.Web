@@ -74,6 +74,31 @@ public class StaticFileTests
 	}
 
 	[Test]
+	public void IsValidPath_ParentDirectoryTraversal_False()
+	{
+		// Act
+		var result = _staticFile.IsValidPath("staticfiles/../StaticFiles/IO/TestFiles/TestStaticFile.html");
+
+		// Assert
+		Assert.That(result, Is.False);
+	}
+
+	[Test]
+	public void IsValidPath_EncodedTraversalLooking_False()
+	{
+		// Act — ASP.NET Core decodes %2e%2e before this layer, so the raw '..' check fires.
+		var result = _staticFile.IsValidPath("staticfiles/../../../etc/passwd");
+
+		// Assert
+		Assert.That(result, Is.False);
+	}
+
+	[Test]
+	public void GetDataAsync_TraversalPath_Throws() =>
+		Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
+			await _staticFile.GetDataAsync("staticfiles/../StaticFiles/IO/TestFiles/TestStaticFile.html"));
+
+	[Test]
 	public async Task GetDataAsync_ValidFile_DataReturned()
 	{
 		// Act

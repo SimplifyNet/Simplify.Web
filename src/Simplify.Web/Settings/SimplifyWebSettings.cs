@@ -147,11 +147,13 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 
 	/// <summary>
 	/// Gets the value indicating whether exception details on Simplify.Web HTTP 500 error page should be hidden when some unhandled exception occurred.
+	/// Defaults to <c>true</c> so that stack traces and exception messages are not leaked to anonymous users in production;
+	/// set the configuration value to <c>false</c> explicitly in non-production environments to surface diagnostics.
 	/// </summary>
 	/// <value>
 	///   <c>true</c> if exception details on Simplify.Web HTTP 500 error page should be hidden when some unhandled exception occurred; otherwise, <c>false</c>.
 	/// </value>
-	public bool HideExceptionDetails { get; private set; }
+	public bool HideExceptionDetails { get; private set; } = true;
 
 	/// <summary>
 	/// Gets the value indicating whether Simplify.Web HTTP 500 error page should be displayed in dark style.
@@ -263,7 +265,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	private void LoadEngineBehaviorSettings(IConfiguration config)
 	{
 		DisableAutomaticSiteTitleSet = config.GetValue<bool>(nameof(DisableAutomaticSiteTitleSet));
-		HideExceptionDetails = config.GetValue<bool>(nameof(HideExceptionDetails));
+		HideExceptionDetails = config.GetValue<bool?>(nameof(HideExceptionDetails)) ?? HideExceptionDetails;
 		ErrorPageDarkStyle = config.GetValue<bool>(nameof(ErrorPageDarkStyle));
 	}
 
