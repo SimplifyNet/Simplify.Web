@@ -38,10 +38,27 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+	<!--
+		Cross-platform node/npm invocation.
+		On Windows, MSBuild inherits PATH from the OS (where the Node installer
+		usually places node), so we call the executables directly.
+		On Unix (Linux/macOS), version managers like nvm / fnm / volta only inject
+		node into PATH inside interactive shells (.zshrc / .bashrc). MSBuild spawns
+		a non-interactive process, so we route the command through the user's
+		default $SHELL with -i -l -c to source those rc files.
+	-->
+	<PropertyGroup>
+		<_NodeShellPrefix Condition=" '$(OS)' != 'Windows_NT' ">"$SHELL" -ilc </_NodeShellPrefix>
+		<_NodeVersionCommand Condition=" '$(OS)' == 'Windows_NT' ">node --version</_NodeVersionCommand>
+		<_NodeVersionCommand Condition=" '$(OS)' != 'Windows_NT' ">$(_NodeShellPrefix)"node --version"</_NodeVersionCommand>
+		<_NpmInstallCommand Condition=" '$(OS)' == 'Windows_NT' ">npm install</_NpmInstallCommand>
+		<_NpmInstallCommand Condition=" '$(OS)' != 'Windows_NT' ">$(_NodeShellPrefix)"npm install"</_NpmInstallCommand>
+	</PropertyGroup>
+
 	<Target Name="RestoreNodePackages" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('node_modules') ">
 		<Message Importance="high" Text="Current node version:" />
 
-		<Exec Command="node --version" ContinueOnError="true">
+		<Exec Command="$(_NodeVersionCommand)" ContinueOnError="true">
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
 		</Exec>
 
@@ -49,6 +66,6 @@
 
 		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
 
-		<Exec Command="npm install" />
+		<Exec Command="$(_NpmInstallCommand)" />
 	</Target>
 </Project>
