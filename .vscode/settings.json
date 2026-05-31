@@ -25,6 +25,6 @@
 		"**/lcov*": true
 	},
 	"dotrush.roslyn.projectOrSolutionFiles": [
-		"./src/Simplify.Web.sln"
+		"./src/Simplify.Web.slnx"
 	]
 }

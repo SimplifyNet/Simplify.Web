@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/SampleApps/">
+    <Project Path="SampleApps/SampleApp.Angular/SampleApp.Angular.csproj" />
+    <Project Path="SampleApps/SampleApp.Api/SampleApp.Api.csproj" />
+    <Project Path="SampleApps/SampleApp.Classic.Tests/SampleApp.Classic.Tests.csproj" />
+    <Project Path="SampleApps/SampleApp.Classic/SampleApp.Classic.csproj" />
+    <Project Path="SampleApps/SampleApp.WindowsServiceHosted/SampleApp.WindowsServiceHosted.csproj" />
+  </Folder>
+  <Project Path="Simplify.Web.Benchmark/Simplify.Web.Benchmark.csproj" />
+  <Project Path="Simplify.Web.Meta.Tests/Simplify.Web.Meta.Tests.csproj" />
+  <Project Path="Simplify.Web.RegistrationsTests/Simplify.Web.RegistrationsTests.csproj" />
+  <Project Path="Simplify.Web.Tests/Simplify.Web.Tests.csproj" />
+  <Project Path="Simplify.Web/Simplify.Web.csproj" />
+</Solution>
