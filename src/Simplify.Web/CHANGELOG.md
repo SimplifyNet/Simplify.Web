@@ -46,6 +46,11 @@
   a ConcurrentDictionary cache and unify sync/async paths on a single
   SemaphoreSlim to avoid duplicate-add races.
 
+## Dependencies
+
+- Microsoft.Extensions.Configuration.Binder bump to 8.0.2
+- Simplify.DI bump to 4.2.11
+
 ## [5.1.0] - 2024-07-28
 
 ### Added
