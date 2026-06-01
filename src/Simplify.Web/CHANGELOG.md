@@ -1,5 +1,51 @@
 # Changelog
 
+## [5.2.0] - Unreleased
+
+## Security
+
+- StaticFiles: prevent path traversal by normalizing the resolved path with
+  Path.GetFullPath, rejecting '..' / NUL sequences, and verifying containment
+  inside the configured site root (case-insensitive on Windows/macOS).
+  Both IsValidPath() and the data-reading methods now use the safe resolver.
+
+- FilesInMemoryCache / InMemoryFilesCacheHandler: bound the in-memory cache
+  (MaxItems, default 1024), normalize keys case-insensitively to defeat
+  path case-variant OOM DoS, and invalidate stale entries based on the
+  file's last-modification timestamp.
+
+- Redirector: harden Redirect(string) - accept same-origin relative paths
+  only when they start with '/' (rejecting '//' and '/' scheme-spoofs)
+  and compare absolute URLs by scheme+host+port instead of substring
+  StartsWith. All redirect/login/previous-page cookies are now HttpOnly,
+  SameSite=Lax, Secure.
+
+- SimplifyWebSettings: default HideExceptionDetails to true so unhandled
+  exception stack traces are no longer leaked to anonymous users by default.
+
+- LanguageManager: language cookie switched from SameSite=None to Lax.
+
+## Fixed
+
+- WebContext: pass leaveOpen:true to the StreamReader used to consume the
+  request body so subsequent middleware/model binders can still read it;
+  add double-check inside semaphore-guarded sections; implement IDisposable
+  so per-scope semaphores release their kernel handles.
+
+- ControllerMetadata: detect [Authorize] on base controllers (inherit:true)
+  so derived controllers don't silently become anonymous.
+
+- AuthRedirectExtensions: only issue the 401->redirect when the response
+  has not started, avoiding InvalidOperationException 500s when upstream
+  authentication middleware already flushed a challenge.
+
+- FileReader: replace static Dictionary caches guarded by an external lock
+  with ConcurrentDictionary to eliminate read-while-write corruption.
+
+- TemplateFactory: replace Dictionary + dual lock/semaphore primitives with
+  a ConcurrentDictionary cache and unify sync/async paths on a single
+  SemaphoreSlim to avoid duplicate-add races.
+
 ## [5.1.0] - 2024-07-28
 
 ### Added
