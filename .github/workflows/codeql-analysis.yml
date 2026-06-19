@@ -56,7 +56,7 @@ jobs:
           dotnet-version: 9.0.x
 
       # Build
-      - run: dotnet build src/Simplify.Web.sln -v minimal
+      - run: dotnet build src/Simplify.Web.slnx -v minimal
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
