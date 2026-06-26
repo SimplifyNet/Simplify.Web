@@ -44,6 +44,24 @@ public class SetLoginUrlForUnauthorizedRequestHandlerTests
 	}
 
 	[Test]
+	public async Task HandleAsync_UnauthorizedButResponseAlreadyStarted_SetLoginReturnUrlFromCurrentUriNotCalled()
+	{
+		// Arrange
+
+		var httpContext = Mock.Of<HttpContext>(x =>
+			x.Response.StatusCode == (int)HttpStatusCode.Unauthorized && x.Response.HasStarted == true);
+		var next = new Mock<RequestHandlerAsync>();
+
+		// Act
+		await _handler.HandleAsync(httpContext, next.Object);
+
+		// Assert
+
+		next.Verify(x => x.Invoke());
+		_redirector.Verify(x => x.SetLoginReturnUrlFromCurrentUri(), Times.Never);
+	}
+
+	[Test]
 	public async Task HandleAsync_StatusCodeIsNoUnauthorized_SetLoginReturnUrlFromCurrentUriNotCalled()
 	{
 		// Arrange

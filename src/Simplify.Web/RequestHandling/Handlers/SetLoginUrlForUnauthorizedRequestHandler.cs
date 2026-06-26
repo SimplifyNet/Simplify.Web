@@ -20,7 +20,10 @@ public class SetLoginUrlForUnauthorizedRequestHandler(IRedirector redirector) : 
 	{
 		await next();
 
-		if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+		// The login return URL is stored in a Set-Cookie header, which cannot be added once the
+		// response has started (e.g. a controller that returned 401 together with a body). Skip it
+		// in that case instead of throwing "response has already started".
+		if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized && !context.Response.HasStarted)
 			redirector.SetLoginReturnUrlFromCurrentUri();
 	}
 }
