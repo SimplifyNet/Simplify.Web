@@ -8,7 +8,7 @@
 [![Build Package](https://github.com/SimplifyNet/Simplify.Web/actions/workflows/build.yml/badge.svg)](https://github.com/SimplifyNet/Simplify.Web/actions/workflows/build.yml)
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/nuget/Simplify.Web)](https://libraries.io/nuget/Simplify.Web)
 [![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/SimplifyNet/Simplify.Web)](https://www.codefactor.io/repository/github/simplifynet/simplify.web)
-![Platform](https://img.shields.io/badge/platform-.NET%206.0%20%7C%20.NET%20Standard%202.1%20%7C%20.NET%20Standard%202.0-lightgrey)
+![Platform](https://img.shields.io/badge/platform-.NET%2010.0%20%7C%20.NET%20Standard%202.1%20%7C%20.NET%20Standard%202.0-lightgrey)
 
 Simplify.Web is an open-source, lightweight, fast, and highly customizable server-side .NET web framework based on ASP.NET Core for building HTTP-based web applications, RESTful APIs, etc.
 
