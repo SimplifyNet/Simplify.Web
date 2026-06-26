@@ -4,11 +4,17 @@
 
 ### Added
 
+- File Response with Stream (#327)
 - Explicit .NET 10 Support
 
-### Added
+### Removed
 
-- Removed .NET 6 Support
+- Explicit .NET 6 Support
+
+### Fixed
+
+- StatusCode cannot be set because the response has already started (#288)
+- Skip error page write when response has already started in SimplifyWebRequestMiddleware
 
 ### Changed
 
