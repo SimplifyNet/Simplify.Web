@@ -15,14 +15,6 @@ namespace Simplify.Web.Responses;
 public class Json(object objectToConvert, int statusCode = 200) : ControllerResponse
 {
 	/// <summary>
-	/// Gets the HTTP response status code.
-	/// </summary>
-	/// <value>
-	/// The HTTP response status code.
-	/// </value>
-	private readonly int _statusCode = statusCode;
-
-	/// <summary>
 	/// Gets or sets the default JsonSerializerOptions
 	/// </summary>
 	/// <value>
@@ -36,7 +28,7 @@ public class Json(object objectToConvert, int statusCode = 200) : ControllerResp
 	public override async Task<ResponseBehavior> ExecuteAsync()
 	{
 		Context.Response.ContentType = "application/json";
-		Context.Response.StatusCode = _statusCode;
+		Context.Response.StatusCode = statusCode;
 
 		await ResponseWriter.WriteAsync(Context.Response, JsonSerializer.Serialize(objectToConvert, DefaultOptions));
 
