@@ -12,11 +12,13 @@
 		"Krylkov",
 		"localizable",
 		"Loggable",
+		"msbuild",
 		"mscorlib",
 		"NETSTANDARD",
 		"OWIN",
 		"Redirector",
-		"registrator"
+		"registrator",
+		"snupkg"
 	],
 	"coverage-gutters.coverageFileNames": [
 		"lcov*.info"

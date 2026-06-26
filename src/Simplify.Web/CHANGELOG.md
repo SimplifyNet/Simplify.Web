@@ -1,8 +1,28 @@
 # Changelog
 
+## [5.3.0] - 2026-06-26
+
+### Added
+
+- Explicit .NET 10 Support
+
+### Added
+
+- Removed .NET 6 Support
+
+### Dependencies
+
+- Microsoft.Extensions.Configuration.Binder bump to 10.0.9
+- Microsoft.Extensions.Configuration.Json bump to 10.0.9
+- Simplify.DI bump to 4.3
+- Simplify.Templates to 2.0.3
+- Simplify.System bump to 1.6.3
+- Simplify.String.Sources internal bump to 1.2.3
+- Simplify.Xml.Sources internal bump to 1.4.1
+
 ## [5.2.0] - 2026-06-01
 
-## Security
+### Security
 
 - StaticFiles: prevent path traversal by normalizing the resolved path with
   Path.GetFullPath, rejecting '..' / NUL sequences, and verifying containment
@@ -25,7 +45,7 @@
 
 - LanguageManager: language cookie switched from SameSite=None to Lax.
 
-## Fixed
+### Fixed
 
 - WebContext: pass leaveOpen:true to the StreamReader used to consume the
   request body so subsequent middleware/model binders can still read it;
@@ -46,7 +66,7 @@
   a ConcurrentDictionary cache and unify sync/async paths on a single
   SemaphoreSlim to avoid duplicate-add races.
 
-## Dependencies
+### Dependencies
 
 - Microsoft.Extensions.Configuration.Binder bump to 8.0.2
 - Simplify.DI bump to 4.2.11

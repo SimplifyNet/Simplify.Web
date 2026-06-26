@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net10.0;netstandard2.1;netstandard2.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
@@ -9,7 +9,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-		<Version>5.2</Version>
+		<Version>5.3</Version>
 
 		<Description>Lightweight and fast .NET web-framework based on MVC and OWIN</Description>
 		<Product>Simplify</Product>
@@ -33,19 +33,19 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-		<PackageReference Include="Simplify.DI" Version="4.2.11" />
-		<PackageReference Include="Simplify.Templates" Version="2.0.2" />
-		<PackageReference Include="Simplify.String.Sources" Version="1.2.2" PrivateAssets="All" />
-		<PackageReference Include="Simplify.System" Version="1.6.2" />
-		<PackageReference Include="Simplify.Xml.Sources" Version="1.4.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.9" />
+		<PackageReference Include="Simplify.DI" Version="4.3.0" />
+		<PackageReference Include="Simplify.Templates" Version="2.0.3" />
+		<PackageReference Include="Simplify.String.Sources" Version="1.2.3" PrivateAssets="All" />
+		<PackageReference Include="Simplify.System" Version="1.6.3" />
+		<PackageReference Include="Simplify.Xml.Sources" Version="1.4.1" PrivateAssets="All" />
 	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net48' ">
-		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.11" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\images\icon.png" Pack="true" Visible="false" PackagePath="" />

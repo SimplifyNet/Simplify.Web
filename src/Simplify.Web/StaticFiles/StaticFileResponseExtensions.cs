@@ -1,6 +1,5 @@
 using System;
 using Microsoft.AspNetCore.Http;
-using Simplify.System;
 using Simplify.Web.Http.Mime;
 using Simplify.Web.Http.ResponseTime;
 using Simplify.Web.StaticFiles.Context;
@@ -21,6 +20,6 @@ public static class StaticFileResponseExtensions
 	{
 		response.SetContentMimeType(context.RelativeFilePath);
 		response.SetLastModifiedTime(context.LastModificationTime);
-		response.Headers["Expires"] = new DateTimeOffset(TimeProvider.Current.Now.AddYears(1)).ToString("R");
+		response.Headers["Expires"] = new DateTimeOffset(Simplify.System.TimeProvider.Current.Now.AddYears(1)).ToString("R");
 	}
 }
