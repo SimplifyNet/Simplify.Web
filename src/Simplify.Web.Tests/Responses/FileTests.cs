@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Responses;
+using Stream = System.IO.Stream;
 
 namespace Simplify.Web.Tests.Responses;
 
@@ -48,5 +49,59 @@ public class FileTests
 
 		_context.VerifySet(x => x.Response.ContentType = "application/example");
 		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<byte[]>(d => d == data)));
+	}
+
+	[Test]
+	public async Task Process_InlineBytesWithCachingHeaders_HeadersSetAndBytesSent()
+	{
+		// Arrange
+
+		var data = "\r"u8.ToArray();
+		var file = new Mock<File>(data, "application/example", "Foo.txt",
+			ContentDispositionType.Inline, "public, max-age=31536000, immutable", "\"ABC123\"", 200)
+		{ CallBase = true };
+
+		file.SetupGet(x => x.Context).Returns(_context.Object);
+		file.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
+
+		// Act
+		var result = await file.Object.ExecuteAsync();
+
+		// Assert
+
+		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
+		Assert.That(_headerDictionary["Content-Disposition"], Is.EqualTo("inline; filename=\"Foo.txt\""));
+		Assert.That(_headerDictionary["Cache-Control"], Is.EqualTo("public, max-age=31536000, immutable"));
+		Assert.That(_headerDictionary["ETag"], Is.EqualTo("\"ABC123\""));
+
+		_context.VerifySet(x => x.Response.ContentType = "application/example");
+		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<byte[]>(d => d == data)));
+	}
+
+	[Test]
+	public async Task Process_Stream_StreamSentAndDisposed()
+	{
+		// Arrange
+
+		var stream = new Mock<Stream> { CallBase = false };
+		stream.SetupGet(x => x.CanRead).Returns(true);
+
+		var file = new Mock<File>(stream.Object, "application/example", null!,
+			ContentDispositionType.Inline, null!, null!, 200)
+		{ CallBase = true };
+
+		file.SetupGet(x => x.Context).Returns(_context.Object);
+		file.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
+
+		// Act
+		var result = await file.Object.ExecuteAsync();
+
+		// Assert
+
+		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
+		Assert.That(_headerDictionary["Content-Disposition"], Is.EqualTo("inline"));
+
+		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<Stream>(s => s == stream.Object)));
+		stream.Verify(x => x.Close());
 	}
 }

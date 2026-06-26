@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Simplify.Web.Http.ResponseWriting;
@@ -21,4 +22,11 @@ public interface IResponseWriter
 	/// <param name="response">The response.</param>
 	/// <param name="data">The data.</param>
 	Task WriteAsync(HttpResponse response, byte[] data);
+
+	/// <summary>
+	/// Writes the specified stream to the response body asynchronously (copied from its current position).
+	/// </summary>
+	/// <param name="response">The response.</param>
+	/// <param name="data">The data stream.</param>
+	Task WriteAsync(HttpResponse response, Stream data);
 }

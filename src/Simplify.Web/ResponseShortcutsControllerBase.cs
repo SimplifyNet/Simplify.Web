@@ -38,7 +38,7 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	protected Created Created(string content, string contentType = "text/plain") => new(content, contentType);
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="File" /> class.
+	/// Initializes a new instance of the <see cref="Responses.File" /> class which sends the specified bytes as a downloadable attachment.
 	/// </summary>
 	/// <param name="outputFileName">The name of the file.</param>
 	/// <param name="contentType">Type of the content.</param>
@@ -46,6 +46,39 @@ public abstract class ResponseShortcutsControllerBase : ActionModulesAccessor
 	/// <param name="statusCode">The HTTP response status code.</param>
 	/// <exception cref="ArgumentNullException"></exception>
 	protected File File(string outputFileName, string contentType, byte[] data, int statusCode = 200) => new(outputFileName, contentType, data, statusCode);
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Responses.File" /> class which sends the specified bytes with full control over disposition and caching.
+	/// </summary>
+	/// <param name="data">The data of the file.</param>
+	/// <param name="contentType">Type of the content.</param>
+	/// <param name="outputFileName">The name of the file (appended to the <c>Content-Disposition</c> header when specified).</param>
+	/// <param name="disposition">The <c>Content-Disposition</c> type.</param>
+	/// <param name="cacheControl">The <c>Cache-Control</c> header value (not sent when <see langword="null" />).</param>
+	/// <param name="eTag">The <c>ETag</c> header value (not sent when <see langword="null" />).</param>
+	/// <param name="statusCode">The HTTP response status code.</param>
+	/// <exception cref="ArgumentNullException"></exception>
+	protected File File(byte[] data, string contentType, string outputFileName = null,
+		ContentDispositionType disposition = ContentDispositionType.Inline,
+		string cacheControl = null, string eTag = null, int statusCode = 200) =>
+		new(data, contentType, outputFileName, disposition, cacheControl, eTag, statusCode);
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Responses.File" /> class which streams the specified stream with full control over disposition and caching.
+	/// The <paramref name="dataStream" /> is disposed once it has been written to the response.
+	/// </summary>
+	/// <param name="dataStream">The stream of the file.</param>
+	/// <param name="contentType">Type of the content.</param>
+	/// <param name="outputFileName">The name of the file (appended to the <c>Content-Disposition</c> header when specified).</param>
+	/// <param name="disposition">The <c>Content-Disposition</c> type.</param>
+	/// <param name="cacheControl">The <c>Cache-Control</c> header value (not sent when <see langword="null" />).</param>
+	/// <param name="eTag">The <c>ETag</c> header value (not sent when <see langword="null" />).</param>
+	/// <param name="statusCode">The HTTP response status code.</param>
+	/// <exception cref="ArgumentNullException"></exception>
+	protected File File(global::System.IO.Stream dataStream, string contentType, string outputFileName = null,
+		ContentDispositionType disposition = ContentDispositionType.Inline,
+		string cacheControl = null, string eTag = null, int statusCode = 200) =>
+		new(dataStream, contentType, outputFileName, disposition, cacheControl, eTag, statusCode);
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Responses.InlineTpl" /> class.
