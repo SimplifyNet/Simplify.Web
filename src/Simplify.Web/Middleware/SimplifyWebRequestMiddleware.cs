@@ -58,14 +58,21 @@ public static class SimplifyWebRequestMiddleware
 		{
 			try
 			{
-				context.Response.StatusCode = 500;
-
 				ProcessOnException(e);
 			}
 			catch (Exception exception)
 			{
 				e = exception;
 			}
+
+			// Once the response has started the headers are already sent — we can neither set the
+			// status code nor write a clean error page. Rethrow so the original exception surfaces
+			// with its stack trace instead of being masked by a secondary "response has already
+			// started" error, and to avoid appending the error page onto a partially-sent body.
+			if (context.Response.HasStarted)
+				throw;
+
+			context.Response.StatusCode = 500;
 
 			await context.WriteErrorResponseAsync(scope, e);
 		}
