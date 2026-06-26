@@ -10,6 +10,10 @@
 
 - Removed .NET 6 Support
 
+### Changed
+
+- Handle partial reads in StaticFile.GetDataAsync and add NET7_0_OR_GREATER branch using ReadExactlyAsync
+
 ### Dependencies
 
 - Microsoft.Extensions.Configuration.Binder bump to 10.0.9

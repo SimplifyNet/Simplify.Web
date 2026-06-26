@@ -58,12 +58,21 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 		var result = new byte[stream.Length];
 
 		await stream.ReadAsync(result, 0, (int)stream.Length);
-#else
+
+#elif NET7_0_OR_GREATER
 		await using var stream = File.Open(fullPath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
 		var result = new byte[stream.Length];
 
-		await stream.ReadAsync(result.AsMemory(0, (int)stream.Length));
+		await stream.ReadExactlyAsync(result);
+#else
+		await using var stream = File.Open(fullPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+		var result = new byte[stream.Length];
+		var totalBytesRead = 0;
+
+		while (totalBytesRead < result.Length)
+			totalBytesRead += await stream.ReadAsync(result.AsMemory(totalBytesRead, result.Length - totalBytesRead));
 #endif
 
 		return result;
