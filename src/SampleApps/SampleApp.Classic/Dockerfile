@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine as build
 
 # Build
 
@@ -14,7 +14,7 @@ RUN dotnet publish SampleApp.Classic.csproj -c release -o out
 
 # Run
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine
 
 WORKDIR /usr/src/app
 
