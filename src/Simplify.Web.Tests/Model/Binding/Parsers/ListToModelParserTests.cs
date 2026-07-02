@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using NUnit.Framework;
 using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Binding.Parsers;
@@ -123,6 +125,36 @@ public class ListToModelParserTests
 
 		// Assert
 		Assert.That(obj.Prop1, Is.Null);
+	}
+
+	[Test]
+	public void Parse_IdPropertyUnderTurkishCulture_Bound()
+	{
+		// Arrange
+
+		// Under tr-TR, "Id".ToLower() yields "ıd" (dotless i), which no longer matches the
+		// lowercase request key "id" if ToLower() (culture-sensitive) is used instead of
+		// ToLowerInvariant().
+		var originalCulture = Thread.CurrentThread.CurrentCulture;
+		Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR");
+
+		try
+		{
+			var coll = new List<KeyValuePair<string, string[]>>
+			{
+				new("id", ["5"])
+			};
+
+			// Act
+			var obj = ListToModelParser.Parse<TestModelWithIdProperty>(coll);
+
+			// Assert
+			Assert.That(obj.Id, Is.EqualTo(5));
+		}
+		finally
+		{
+			Thread.CurrentThread.CurrentCulture = originalCulture;
+		}
 	}
 
 	[Test]

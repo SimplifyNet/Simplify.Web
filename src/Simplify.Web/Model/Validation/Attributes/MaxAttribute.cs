@@ -98,11 +98,13 @@ public class MaxAttribute : ValidationAttribute
 
 		ValidateTypesMatching(value);
 
+		if (comparableValue.CompareTo(maxValue) <= 0)
+			return;
+
 		TryThrowCustomOrStringTableException(resolver);
 
-		if (comparableValue.CompareTo(maxValue) > 0)
-			throw new ModelValidationException(
-				$"Property '{propertyInfo.Name}' required maximum value is {MaxValue}, actual value: {value}");
+		throw new ModelValidationException(
+			$"Property '{propertyInfo.Name}' required maximum value is {MaxValue}, actual value: {value}");
 	}
 
 	private static IComparable ConvertToIComparable(object value)

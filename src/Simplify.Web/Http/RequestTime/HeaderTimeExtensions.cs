@@ -15,12 +15,11 @@ public static class HeaderTimeExtensions
 	/// <param name="headers">The HTTP headers.</param>
 	public static DateTime? GetIfModifiedSinceTime(this IHeaderDictionary headers)
 	{
-		DateTime? ifModifiedSinceTime = null;
+		if (headers.ContainsKey("If-Modified-Since") &&
+			DateTime.TryParseExact(headers["If-Modified-Since"], "r", CultureInfo.InvariantCulture, DateTimeStyles.None,
+				out var ifModifiedSinceTime))
+			return ifModifiedSinceTime;
 
-		if (headers.ContainsKey("If-Modified-Since"))
-			ifModifiedSinceTime = DateTime.ParseExact(headers["If-Modified-Since"]!, "r",
-				CultureInfo.InvariantCulture);
-
-		return ifModifiedSinceTime;
+		return null;
 	}
 }

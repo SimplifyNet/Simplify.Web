@@ -117,7 +117,7 @@ public static class StringToSpecifiedObjectParser
 		if (string.IsNullOrEmpty(value))
 			return default;
 
-		if (int.TryParse(value, out var buffer))
+		if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to int parsing failed, value: '{value}'");
@@ -133,7 +133,7 @@ public static class StringToSpecifiedObjectParser
 		if (string.IsNullOrEmpty(value))
 			return null;
 
-		if (int.TryParse(value, out var buffer))
+		if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to nullable int parsing failed, value: '{value}'");
@@ -150,7 +150,7 @@ public static class StringToSpecifiedObjectParser
 		if (string.IsNullOrEmpty(value))
 			return default;
 
-		if (decimal.TryParse(value, out var buffer))
+		if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to decimal parsing failed, value: '{value}'");
@@ -167,7 +167,7 @@ public static class StringToSpecifiedObjectParser
 		if (string.IsNullOrEmpty(value))
 			return null;
 
-		if (decimal.TryParse(value, out var buffer))
+		if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to nullable decimal parsing failed, value: '{value}'");
@@ -183,7 +183,7 @@ public static class StringToSpecifiedObjectParser
 		if (string.IsNullOrEmpty(value))
 			return default;
 
-		if (long.TryParse(value, out var buffer))
+		if (long.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to long parsing failed, value: '{value}'");
@@ -199,7 +199,7 @@ public static class StringToSpecifiedObjectParser
 		if (string.IsNullOrEmpty(value))
 			return null;
 
-		if (long.TryParse(value, out var buffer))
+		if (long.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to nullable long parsing failed, value: '{value}'");
@@ -227,7 +227,7 @@ public static class StringToSpecifiedObjectParser
 				$"String to DateTime parsing failed, required format is '{format}', value: '{value}'");
 		}
 
-		if (DateTime.TryParse(value, out buffer))
+		if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to DateTime parsing failed, value: '{value}'");
@@ -255,7 +255,7 @@ public static class StringToSpecifiedObjectParser
 				$"String to nullable DateTime parsing failed, required format is '{format}', value: '{value}'");
 		}
 
-		if (DateTime.TryParse(value, out buffer))
+		if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out buffer))
 			return buffer;
 
 		throw new ModelBindingException($"String to nullable DateTime parsing failed, value: '{value}'");

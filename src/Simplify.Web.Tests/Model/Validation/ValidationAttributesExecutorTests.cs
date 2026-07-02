@@ -108,4 +108,22 @@ public class ValidationAttributesExecutorTests
 		// Act
 		_validator.Validate(model, null!);
 	}
+
+	[Test]
+	public void Validate_ClosedGenericList_NoExceptions()
+	{
+		// Arrange
+
+		// Statically typed as List<TestModel> (not IList<TestModel>) so the generic type
+		// definition resolved via reflection is List<>, not IList<> - this is the case that
+		// used to slip past IsGenericList and crash reflecting over the compiler-generated
+		// indexer property.
+		var model = new List<TestModel>
+		{
+			new() { Prop1 = "test" }
+		};
+
+		// Act
+		_validator.Validate(model, null!);
+	}
 }

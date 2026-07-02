@@ -242,6 +242,13 @@ public class RedirectorTests
 		Assert.Throws<SecurityException>(() => _redirector.Redirect("/\\evil.com"));
 
 	[Test]
+	public void Redirect_TabControlCharSchemeSpoof_ThrowsSecurityException() =>
+		// Browsers strip control characters like tab when resolving a Location header, so
+		// "/\t/evil.com" would otherwise pass the leading-slash check and then be resolved
+		// by the browser as the protocol-relative "//evil.com".
+		Assert.Throws<SecurityException>(() => _redirector.Redirect("/\t/evil.com"));
+
+	[Test]
 	public void Redirect_HostPrefixCollision_ThrowsSecurityException()
 	{
 		// The old StartsWith-based check would have accepted "http://localhost.attacker.com/"

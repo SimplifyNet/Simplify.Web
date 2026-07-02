@@ -43,4 +43,24 @@ public class IntegerMaxAttributeTests : AttributesTestBase
 	public void Validate_DifferentTypes_ExceptionThrown() =>
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue((long)15.2));
+
+	[Test]
+	public void Validate_BelowMaxValueWithCustomMessage_NoExceptionThrown()
+	{
+		// Arrange
+		var attribute = new MaxAttribute(MaxValue, "custom message", false);
+
+		// Act & Assert
+		attribute.Validate(10, PropertyInfo, Resolver!);
+	}
+
+	[Test]
+	public void Validate_AboveMaxValueWithCustomMessage_CustomExceptionThrown()
+	{
+		// Arrange
+		var attribute = new MaxAttribute(MaxValue, "custom message", false);
+
+		// Act & Assert
+		TestAttribute(15, "custom message", attribute);
+	}
 }

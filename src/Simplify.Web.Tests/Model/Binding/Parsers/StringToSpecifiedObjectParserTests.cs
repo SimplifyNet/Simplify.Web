@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using NUnit.Framework;
 using Simplify.Web.Model.Binding;
 using Simplify.Web.Model.Binding.Parsers;
@@ -150,6 +152,30 @@ public class StringToSpecifiedObjectParserTests
 	[Test]
 	public void ParseUndefined_NullableDecimalBadValue_ExceptionThrown() =>
 		Assert.Throws<ModelBindingException>(() => StringToSpecifiedObjectParser.ParseUndefined("test", typeof(decimal?)));
+
+	[Test]
+	public void ParseDecimal_DeCultureThousandsSeparatorLookingValue_InvariantCultureParsed()
+	{
+		// Arrange
+
+		// Under de-DE, "." is a thousands separator, so a culture-sensitive parse would
+		// silently misread "1.234" as 1234 instead of failing or reading it as invariant.
+		var originalCulture = Thread.CurrentThread.CurrentCulture;
+		Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
+
+		try
+		{
+			// Act
+			var result = StringToSpecifiedObjectParser.ParseDecimal("1.234");
+
+			// Assert
+			Assert.That(result, Is.EqualTo(1.234m));
+		}
+		finally
+		{
+			Thread.CurrentThread.CurrentCulture = originalCulture;
+		}
+	}
 
 	[Test]
 	public void ParseUndefined_Long_Parsed() =>

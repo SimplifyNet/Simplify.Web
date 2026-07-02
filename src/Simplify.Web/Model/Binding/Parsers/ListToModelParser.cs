@@ -39,10 +39,10 @@ public static class ListToModelParser
 	}
 
 	private static IList<KeyValuePair<string, string[]>> LowerCaseRequest(IEnumerable<KeyValuePair<string, string[]>> source) =>
-		source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLower(), x.Value)).ToList();
+		source.Select(x => new KeyValuePair<string, string[]>(x.Key?.ToLowerInvariant(), x.Value)).ToList();
 
 	private static string GetPropertyName(MemberInfo propertyInfo) =>
-		(GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLower();
+		(GetBindPropertyName(propertyInfo) ?? propertyInfo.Name).ToLowerInvariant();
 
 	private static string GetBindPropertyName(ICustomAttributeProvider propertyInfo)
 	{

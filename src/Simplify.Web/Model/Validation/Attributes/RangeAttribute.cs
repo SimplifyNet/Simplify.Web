@@ -114,11 +114,13 @@ public class RangeAttribute : ValidationAttribute
 
 		ValidateTypesMatching(comparableValue);
 
+		if (comparableValue.CompareTo(minValue) >= 0 && comparableValue.CompareTo(maxValue) <= 0)
+			return;
+
 		TryThrowCustomOrStringTableException(resolver);
 
-		if (comparableValue.CompareTo(minValue) < 0 || comparableValue.CompareTo(maxValue) > 0)
-			throw new ModelValidationException(
-				$"The value is out of range. The range constraint - {MinValue} - {MaxValue}, actual value: {value}");
+		throw new ModelValidationException(
+			$"The value is out of range. The range constraint - {MinValue} - {MaxValue}, actual value: {value}");
 	}
 
 	private static IComparable ConvertToIComparable(object value)

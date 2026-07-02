@@ -1,5 +1,36 @@
 # Changelog
 
+## [5.3.1] - Unreleased
+
+### Security
+
+- Redirector: reject relative redirect URLs containing control characters (e.g. tab) in
+  IsSameSiteUrl, closing a bypass where browsers strip such characters when resolving a
+  Location header, turning "/\t/evil.com" into a protocol-relative "//evil.com".
+
+### Fixed
+
+- MaxAttribute / MinAttribute / RangeAttribute: only throw the custom/string-table error
+  message after the bounds check actually fails, instead of unconditionally whenever a
+  custom message was configured.
+- ValidationAttributesExecutor: IsGenericList now detects closed generic lists (e.g.
+  List<string>), not just IList<T> itself, avoiding a TargetParameterCountException when
+  validating models with populated List<T> properties.
+- HeaderTimeExtensions: use DateTime.TryParseExact instead of ParseExact for the
+  If-Modified-Since header so a malformed value is treated as absent instead of throwing
+  an unhandled FormatException on static file requests.
+- Controller2Executor: fall back to an empty route parameter set instead of a
+  null-forgiving RouteParameters, turning a NullReferenceException into a clear
+  InvalidOperationException for parameterized V2 controllers used as Global/Forbidden/NotFound
+  handlers.
+- StringToSpecifiedObjectParser: parse int/long/decimal/DateTime with
+  CultureInfo.InvariantCulture to prevent silent data corruption under non-invariant server
+  cultures (e.g. "1.234" misread as 1234 under de-DE).
+- ListToModelParser: use ToLowerInvariant instead of ToLower for property/key matching to
+  avoid the Turkish-I bug breaking form/query binding under tr-TR/az server culture.
+- StringTable: replace the plain Dictionary-backed cache with ConcurrentDictionary to
+  eliminate a read-while-write race when StringTableMemoryCache is enabled.
+
 ## [5.3.0] - 2026-06-26
 
 ### Added

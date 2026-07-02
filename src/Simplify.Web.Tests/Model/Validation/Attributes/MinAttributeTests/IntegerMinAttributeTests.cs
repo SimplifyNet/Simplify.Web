@@ -44,4 +44,24 @@ public class IntegerMinAttributeTests : AttributesTestBase
 	public void Validate_DifferentTypes_ExceptionThrown() =>
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue(12.5));
+
+	[Test]
+	public void Validate_AboveMinValueWithCustomMessage_NoExceptionThrown()
+	{
+		// Arrange
+		var attribute = new MinAttribute(MinValue, "custom message", false);
+
+		// Act & Assert
+		attribute.Validate(15, PropertyInfo, Resolver!);
+	}
+
+	[Test]
+	public void Validate_BelowMinValueWithCustomMessage_CustomExceptionThrown()
+	{
+		// Arrange
+		var attribute = new MinAttribute(MinValue, "custom message", false);
+
+		// Act & Assert
+		TestAttribute(8, "custom message", attribute);
+	}
 }

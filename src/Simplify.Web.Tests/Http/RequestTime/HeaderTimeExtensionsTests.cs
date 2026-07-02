@@ -42,4 +42,21 @@ public class HeaderTimeExtensionsTests
 		// Assert
 		Assert.That(result, Is.Null);
 	}
+
+	[Test]
+	public void GetIfModifiedSinceTime_MalformedValue_NullInsteadOfException()
+	{
+		// Arrange
+
+		// Not exact RFC1123 format (e.g. a non-GMT-suffixed or obsolete date some
+		// proxies/clients send) - this used to throw an unhandled FormatException.
+		var headers = new Mock<IHeaderDictionary>();
+		headers.SetupGet(x => x[It.Is<string>(p => p == "If-Modified-Since")]).Returns("not-a-valid-date");
+		headers.Setup(x => x.ContainsKey(It.Is<string>(p => p == "If-Modified-Since"))).Returns(true);
+
+		// Act & Assert
+		DateTime? result = null;
+		Assert.DoesNotThrow(() => result = headers.Object.GetIfModifiedSinceTime());
+		Assert.That(result, Is.Null);
+	}
 }

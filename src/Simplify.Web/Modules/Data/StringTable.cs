@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -23,7 +24,7 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 	IFileReader fileReader,
 	bool memoryCache = false) : IStringTable
 {
-	private static readonly IDictionary<string, IDictionary<string, object?>> Cache = new Dictionary<string, IDictionary<string, object?>>();
+	private static readonly ConcurrentDictionary<string, IDictionary<string, object?>> Cache = new();
 	private static readonly object Locker = new();
 
 	private ILanguageManager _languageManager = null!;
@@ -125,7 +126,7 @@ public sealed class StringTable(IReadOnlyList<string> stringTableFiles,
 				return;
 
 			var currentItems = Load();
-			Cache.Add(_languageManager.Language, currentItems);
+			Cache.TryAdd(_languageManager.Language, currentItems);
 			Items = currentItems;
 		}
 	}

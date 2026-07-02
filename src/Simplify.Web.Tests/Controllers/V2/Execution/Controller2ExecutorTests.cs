@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -244,5 +245,23 @@ public class Controller2ExecutorTests
 		Assert.That(controller.DecimalArrayParam[1], Is.EqualTo(7.1m));
 
 		_controllerFactory.Verify(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)));
+	}
+
+	[Test]
+	public void ExecuteAsync_ParameterizedControllerWithNullRouteParameters_InvalidOperationExceptionNotNullReferenceException()
+	{
+		// Arrange
+
+		// RouteParameters is null for Global/Forbidden/NotFound V2 handlers (they never go
+		// through route matching), so a parameterized Invoke used to throw NullReferenceException.
+		var md = new Controller2Metadata(typeof(AllParamsController));
+		var mc = new MatchedController(md);
+		var controller = new AllParamsController();
+
+		_controllerFactory.Setup(x => x.CreateController(It.Is<IMatchedController>(c => c == mc)))
+			.Returns(controller);
+
+		// Act & Assert
+		Assert.ThrowsAsync<InvalidOperationException>(async () => await _executor.ExecuteAsync(mc));
 	}
 }

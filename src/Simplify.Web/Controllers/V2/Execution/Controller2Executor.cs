@@ -15,6 +15,8 @@ namespace Simplify.Web.Controllers.V2.Execution;
 /// <param name="controllerFactory">The v2 controller factory.</param>
 public class Controller2Executor(IController2Factory controllerFactory) : IControllerExecutor
 {
+	private static readonly IReadOnlyDictionary<string, object> EmptyRouteParameters = new Dictionary<string, object>();
+
 	/// <summary>
 	/// Determines whether this executor can execute the controller.
 	/// </summary>
@@ -29,7 +31,8 @@ public class Controller2Executor(IController2Factory controllerFactory) : IContr
 	{
 		var controllerMetadata = (IController2Metadata)matchedController.Controller;
 		var controller = controllerFactory.CreateController(matchedController);
-		var methodParams = ConstructMethodParams(controllerMetadata.InvokeMethodParameters, matchedController.RouteParameters!);
+		var methodParams = ConstructMethodParams(controllerMetadata.InvokeMethodParameters,
+			matchedController.RouteParameters ?? EmptyRouteParameters);
 
 		return InvokeAsync(controllerMetadata.InvokeMethodInfo, methodParams, controller);
 	}

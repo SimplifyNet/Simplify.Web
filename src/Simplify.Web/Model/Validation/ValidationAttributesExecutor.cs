@@ -49,7 +49,10 @@ public class ValidationAttributesExecutor(bool nesting = true) : IModelValidator
 
 	private static bool IsSystemType(Type type) => type.Namespace?.StartsWith("System") ?? false;
 
-	private static bool IsGenericList(Type type) => type.IsGenericType && typeof(IList<>).IsAssignableFrom(type.GetGenericTypeDefinition());
+	private static bool IsGenericList(Type type) =>
+		type.IsGenericType &&
+		(type.GetGenericTypeDefinition() == typeof(IList<>) ||
+		 type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)));
 
 	private void Validate(Type type, object? value, IDIResolver resolver)
 	{

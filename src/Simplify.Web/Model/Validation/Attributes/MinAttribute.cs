@@ -98,11 +98,13 @@ public class MinAttribute : ValidationAttribute
 
 		ValidateTypesMatching(value);
 
+		if (comparableValue.CompareTo(minValue) >= 0)
+			return;
+
 		TryThrowCustomOrStringTableException(resolver);
 
-		if (comparableValue.CompareTo(minValue) < 0)
-			throw new ModelValidationException(
-				$"Property '{propertyInfo.Name}' required minimum value is {MinValue}, actual value: {value}");
+		throw new ModelValidationException(
+			$"Property '{propertyInfo.Name}' required minimum value is {MinValue}, actual value: {value}");
 	}
 
 	private static IComparable ConvertToIComparable(object value)

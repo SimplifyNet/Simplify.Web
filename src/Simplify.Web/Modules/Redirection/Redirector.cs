@@ -162,6 +162,12 @@ public class Redirector(IWebContext context) : IRedirector
 
 	private bool IsSameSiteUrl(string url)
 	{
+		// Browsers strip ASCII control characters (e.g. tab) when resolving a Location
+		// header, which can turn a seemingly safe relative path like "/\t/evil.com" into
+		// a protocol-relative URL ("//evil.com") after parsing. Reject such URLs outright.
+		if (ContainsControlCharacter(url))
+			return false;
+
 		// Allow only same-origin relative paths ("/path") and reject protocol-relative
 		// ("//evil.com") or backslash-prefixed ("/\\evil.com") variants that browsers
 		// treat as absolute.
@@ -179,5 +185,14 @@ public class Redirector(IWebContext context) : IRedirector
 		return string.Equals(target.Scheme, site.Scheme, StringComparison.OrdinalIgnoreCase)
 			&& string.Equals(target.Host, site.Host, StringComparison.OrdinalIgnoreCase)
 			&& target.Port == site.Port;
+	}
+
+	private static bool ContainsControlCharacter(string url)
+	{
+		foreach (var c in url)
+			if (char.IsControl(c))
+				return true;
+
+		return false;
 	}
 }

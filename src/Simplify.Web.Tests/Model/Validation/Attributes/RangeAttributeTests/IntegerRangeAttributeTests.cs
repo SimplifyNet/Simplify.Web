@@ -60,4 +60,24 @@ public class IntegerRangeAttributeTests : AttributesTestBase
 	public void Validate_DifferentTypes_ExceptionThrown() =>
 		// Act & Assert
 		Assert.Throws<ArgumentException>(() => TestAttributeForValidValue((long)7));
+
+	[Test]
+	public void Validate_ValueInRangeWithCustomMessage_NoExceptionThrown()
+	{
+		// Arrange
+		var attribute = new Web.Model.Validation.Attributes.RangeAttribute(MinValue, MaxValue, "custom message", false);
+
+		// Act & Assert
+		attribute.Validate(10, PropertyInfo, Resolver!);
+	}
+
+	[Test]
+	public void Validate_OutOfRangeWithCustomMessage_CustomExceptionThrown()
+	{
+		// Arrange
+		var attribute = new Web.Model.Validation.Attributes.RangeAttribute(MinValue, MaxValue, "custom message", false);
+
+		// Act & Assert
+		TestAttribute(13, "custom message", attribute);
+	}
 }
