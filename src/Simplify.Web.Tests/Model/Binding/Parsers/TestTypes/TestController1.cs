@@ -9,6 +9,7 @@ namespace Simplify.Web.Tests.Model.Binding.Parsers.TestTypes;
 [Patch("/testaction3")]
 [Delete("/testaction4")]
 [Options("/testaction5")]
+[Query("/testaction6")]
 [Http403]
 [Http404]
 [Priority(1)]

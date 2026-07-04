@@ -38,5 +38,10 @@ public enum HttpMethod
 	/// <summary>
 	/// The OPTIONS HTTP method.
 	/// </summary>
-	Options
+	Options,
+
+	/// <summary>
+	/// The QUERY HTTP method.
+	/// </summary>
+	Query
 }

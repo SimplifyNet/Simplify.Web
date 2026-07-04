@@ -9,6 +9,7 @@ namespace Simplify.Web.Tests.Controllers.V1.Metadata.MetadataFactoryTests.TestTy
 [Patch("/test-action3")]
 [Delete("/test-action4")]
 [Options("/test-action5")]
+[Query("/test-action6")]
 [Http403]
 [Http404]
 [Priority(1)]

@@ -42,7 +42,7 @@ public class Controller1MetadataFactoryTests
 		Assert.That(metaData.ExecParameters, Is.Not.Null);
 		Assert.That(metaData.ExecParameters!.RunPriority, Is.EqualTo(1));
 
-		Assert.That(metaData.ExecParameters.Routes.Count, Is.EqualTo(6));
+		Assert.That(metaData.ExecParameters.Routes.Count, Is.EqualTo(7));
 
 		var firstControllerRoute = metaData.ExecParameters.Routes.First(x => x.Key == HttpMethod.Get);
 
@@ -60,5 +60,6 @@ public class Controller1MetadataFactoryTests
 		Assert.That(execParameters.Routes[HttpMethod.Patch].Path, Is.EqualTo("/test-action3"));
 		Assert.That(execParameters.Routes[HttpMethod.Delete].Path, Is.EqualTo("/test-action4"));
 		Assert.That(execParameters.Routes[HttpMethod.Options].Path, Is.EqualTo("/test-action5"));
+		Assert.That(execParameters.Routes[HttpMethod.Query].Path, Is.EqualTo("/test-action6"));
 	}
 }

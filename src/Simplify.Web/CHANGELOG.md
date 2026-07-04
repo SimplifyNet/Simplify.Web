@@ -2,6 +2,10 @@
 
 ## [5.3.1] - Unreleased
 
+### Added
+
+- HTTP QUERY method support via HttpMethod.Query and the [Query] controller route attribute.
+
 ### Security
 
 - Redirector: reject relative redirect URLs containing control characters (e.g. tab) in

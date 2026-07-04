@@ -51,6 +51,7 @@ public class RouteMatchingStageTests
 	[TestCase(HttpMethod.Patch)]
 	[TestCase(HttpMethod.Delete)]
 	[TestCase(HttpMethod.Options)]
+	[TestCase(HttpMethod.Query)]
 	public void Execute_MatchedMethodButNotMatchedRoute_ExecutionStoppedAndIsMatchedSetAndNoRouteParametersSet(HttpMethod httpMethod)
 	{
 		// Arrange
@@ -96,6 +97,7 @@ public class RouteMatchingStageTests
 	[TestCase(HttpMethod.Patch)]
 	[TestCase(HttpMethod.Delete)]
 	[TestCase(HttpMethod.Options)]
+	[TestCase(HttpMethod.Query)]
 	public void Execute_MatchedMethodAndMatchedRoute_IsMatchedAndRouteParametersAreSet(HttpMethod httpMethod)
 	{
 		// Arrange

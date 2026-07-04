@@ -19,7 +19,8 @@ public static class Relations
 		{ HttpMethod.Put, typeof(PutAttribute) },
 		{ HttpMethod.Patch, typeof(PatchAttribute) },
 		{ HttpMethod.Delete, typeof(DeleteAttribute) },
-		{ HttpMethod.Options, typeof(OptionsAttribute) }
+		{ HttpMethod.Options, typeof(OptionsAttribute) },
+		{ HttpMethod.Query, typeof(QueryAttribute) }
 	};
 
 	/// <summary>
@@ -32,6 +33,7 @@ public static class Relations
 		{ HttpMethod.Put, "PUT" },
 		{ HttpMethod.Patch, "PATCH" },
 		{ HttpMethod.Delete, "DELETE" },
-		{ HttpMethod.Options, "OPTIONS" }
+		{ HttpMethod.Options, "OPTIONS" },
+		{ HttpMethod.Query, "QUERY" }
 	};
 }
