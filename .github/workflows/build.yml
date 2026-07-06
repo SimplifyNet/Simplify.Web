@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-2025-vs2026]
+        os: [ubuntu-latest, windows-latest]
         include:
           - os: ubuntu-latest
             test-framework-command: --framework net10.0
@@ -41,7 +41,7 @@ jobs:
         run: dotnet pack Simplify.Web/Simplify.Web.csproj --no-build -c Release -o ./publish
 
       - name: Create packages artifact
-        if: ${{ matrix.os == 'windows-2025-vs2026' }}
+        if: ${{ matrix.os == 'windows-latest' }}
         uses: actions/upload-artifact@v7
         with:
           name: Packages
