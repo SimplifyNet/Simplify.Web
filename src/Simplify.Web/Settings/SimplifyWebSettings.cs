@@ -211,6 +211,11 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	/// </value>
 	public bool ConsoleTracing { get; private set; }
 
+	/// <summary>
+	/// Gets the maximum request body size in bytes for model binding (default: 100 MB).
+	/// </summary>
+	public long MaxRequestBodySize { get; private set; } = 104857600;
+
 	private void LoadLanguageManagerSettings(IConfiguration config)
 	{
 		DefaultLanguage = config.GetValueOrDefaultValue(nameof(DefaultLanguage), DefaultLanguage);
@@ -267,6 +272,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		DisableAutomaticSiteTitleSet = config.GetValue<bool>(nameof(DisableAutomaticSiteTitleSet));
 		HideExceptionDetails = config.GetValue<bool?>(nameof(HideExceptionDetails)) ?? HideExceptionDetails;
 		ErrorPageDarkStyle = config.GetValue<bool>(nameof(ErrorPageDarkStyle));
+		MaxRequestBodySize = config.GetValue<long?>(nameof(MaxRequestBodySize)) ?? MaxRequestBodySize;
 	}
 
 	private void LoadCacheSettings(IConfiguration config)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Simplify.Web.System;
 
 namespace Simplify.Web.Attributes;
@@ -16,15 +17,16 @@ public class AuthorizeAttribute : Attribute
 	/// </summary>
 	/// <param name="requiredUserRoles">Required user roles.</param>
 	public AuthorizeAttribute(string? requiredUserRoles = null) =>
-		RequiredUserRoles = requiredUserRoles != null
-			? requiredUserRoles.ParseCommaSeparatedList()
+		RequiredUserRoles = !string.IsNullOrEmpty(requiredUserRoles)
+			? requiredUserRoles!.ParseCommaSeparatedList()
 			: [];
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AuthorizeAttribute" /> class.
 	/// </summary>
 	/// <param name="requiredUserRoles">The required user roles.</param>
-	public AuthorizeAttribute(params string[] requiredUserRoles) => RequiredUserRoles = requiredUserRoles;
+	public AuthorizeAttribute(params string[] requiredUserRoles) =>
+		RequiredUserRoles = requiredUserRoles.Where(r => !string.IsNullOrEmpty(r));
 
 	/// <summary>
 	/// Gets the required user roles.

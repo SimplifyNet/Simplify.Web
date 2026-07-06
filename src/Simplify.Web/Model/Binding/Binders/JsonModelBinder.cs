@@ -34,7 +34,7 @@ public class JsonModelBinder : IModelBinder
 	/// <exception cref="InvalidOperationException">Deserialized model is null.</exception>
 	public async Task BindAsync<T>(ModelBinderEventArgs<T> args)
 	{
-		if (args.Context.Request.ContentType == null || !args.Context.Request.ContentType.Contains("application/json"))
+		if (args.Context.Request.ContentType == null || !args.Context.Request.ContentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
 			return;
 
 		await args.Context.ReadRequestBodyAsync();

@@ -1,5 +1,42 @@
 # Changelog
 
+## [5.5.0] - 2026-07-06
+
+### Added
+
+- MaxRequestBodySize setting (default: 100 MB) to cap request body reads during
+  model binding, preventing memory-exhaustion DoS. Configurable via
+  `SimplifyWebSettings:MaxRequestBodySize` in appsettings.json.
+
+### Security
+
+- Http500ErrorPageBuilder: HTML-encode exception text before rendering it in the
+  error page, closing an XSS vector when HideExceptionDetails is false.
+
+### Fixed
+
+- StringToSpecifiedObjectParser: wrap Enum.Parse in a try/catch with a clear
+  ModelBindingException message and pass ignoreCase: true so route parameter casing
+  does not cause spurious binding failures.
+- File response: use `await using` for the data stream so it is disposed correctly
+  under all target frameworks.
+- SimplifyWebRequestMiddleware: preserve the original exception when the OnException
+  handler itself throws, instead of replacing it with the handler's exception.
+- RequestPathExtensions: normalize multiple leading slashes in the request path
+  to prevent path-traversal probes via "//" prefixed URLs.
+- AuthorizeAttribute: treat empty or whitespace-only role strings as absent so that
+  `[Authorize("")]` does not bypass authorization entirely.
+- JsonModelBinder: use StartsWith (ordinal, ignore-case) instead of Contains for the
+  Content-Type check to avoid matching unrelated media types.
+
+### Changed
+
+- StaticFile: add CopyToAsync(Stream, string) that streams file content directly to
+  the target stream without loading it into memory first. NewFileHandler now uses
+  this streaming path, reducing memory pressure for large static files.
+- InMemoryFilesCacheHandler: use TryAdd instead of the indexer to avoid a race
+  condition when multiple threads cache the same file concurrently.
+
 ## [5.4.0] - 2026-07-04
 
 ### Added

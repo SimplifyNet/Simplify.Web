@@ -84,6 +84,25 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 	/// <param name="relativeFilePath">The relative file path.</param>
 	public byte[] GetData(string relativeFilePath) => File.ReadAllBytes(ResolveSafePath(relativeFilePath));
 
+	/// <summary>
+	/// Copies the file content to the specified target stream asynchronously.
+	/// Avoids loading the entire file into memory by streaming directly from disk.
+	/// </summary>
+	/// <param name="target">The target stream to write to.</param>
+	/// <param name="relativeFilePath">The relative file path.</param>
+	public async Task CopyToAsync(Stream target, string relativeFilePath)
+	{
+		var fullPath = ResolveSafePath(relativeFilePath);
+
+#if NETSTANDARD2_0
+		using var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
+#else
+		await using var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
+#endif
+
+		await fileStream.CopyToAsync(target);
+	}
+
 	private static string NormalizeRoot(string root)
 	{
 		var full = Path.GetFullPath(root);

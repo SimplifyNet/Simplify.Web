@@ -266,7 +266,17 @@ public static class StringToSpecifiedObjectParser
 	/// </summary>
 	/// <param name="value">The value.</param>
 	/// <param name="enumType">Type of the enum.</param>
-	public static object ParseEnum(string value, Type enumType) => Enum.Parse(enumType, value);
+	public static object ParseEnum(string value, Type enumType)
+	{
+		try
+		{
+			return Enum.Parse(enumType, value, ignoreCase: true);
+		}
+		catch (ArgumentException ex)
+		{
+			throw new ModelBindingException($"String to enum parsing failed, value: '{value}', type: '{enumType.Name}'", ex);
+		}
+	}
 
 	/// <summary>
 	/// Determines whether specified type is valid for parsing.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Simplify.Web.StaticFiles.IO;
@@ -31,4 +32,12 @@ public interface IStaticFile
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>
 	byte[] GetData(string relativeFilePath);
+
+	/// <summary>
+	/// Copies the file content to the specified target stream asynchronously.
+	/// Avoids loading the entire file into memory.
+	/// </summary>
+	/// <param name="target">The target stream to write to.</param>
+	/// <param name="relativeFilePath">The relative file path.</param>
+	Task CopyToAsync(Stream target, string relativeFilePath);
 }

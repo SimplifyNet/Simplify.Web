@@ -74,7 +74,7 @@ public partial class BaseBootstrapper
 			if (r.Resolve<ISimplifyWebSettings>().StaticFilesMemoryCache)
 				handlers.Add(new InMemoryFilesCacheHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>()));
 			else
-				handlers.Add(new NewFileHandler(r.Resolve<IResponseWriter>(), r.Resolve<IStaticFile>()));
+				handlers.Add(new NewFileHandler(r.Resolve<IStaticFile>()));
 
 			return (IReadOnlyList<IStaticFileRequestHandler>)handlers;
 		}, LifetimeType.Singleton);

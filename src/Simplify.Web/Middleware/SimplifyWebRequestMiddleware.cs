@@ -47,6 +47,8 @@ public static class SimplifyWebRequestMiddleware
 	{
 		using var scope = BootstrapperFactory.ContainerProvider.BeginLifetimeScope();
 
+		Exception? caughtException = null;
+
 		try
 		{
 			await scope.StartMeasurements()
@@ -56,13 +58,15 @@ public static class SimplifyWebRequestMiddleware
 		}
 		catch (Exception e)
 		{
+			caughtException = e;
+
 			try
 			{
 				ProcessOnException(e);
 			}
-			catch (Exception exception)
+			catch
 			{
-				e = exception;
+				// OnException handler failure is non-fatal; keep the original exception.
 			}
 
 			// Once the response has started the headers are already sent — we can neither set the
@@ -74,7 +78,7 @@ public static class SimplifyWebRequestMiddleware
 
 			context.Response.StatusCode = 500;
 
-			await context.WriteErrorResponseAsync(scope, e);
+			await context.WriteErrorResponseAsync(scope, caughtException);
 		}
 	}
 

@@ -18,10 +18,22 @@ public static class RequestPathExtensions
 		if (string.IsNullOrEmpty(request.Path.Value))
 			return "";
 
+		var path = request.Path.Value;
+
+		// Normalize multiple leading slashes (e.g. "//etc/passwd" -> "/etc/passwd")
+		// to prevent path traversal attempts through URL encoding tricks.
+		var startIndex = 0;
+
+		while (startIndex < path.Length && path[startIndex] == '/')
+			startIndex++;
+
+		if (startIndex >= path.Length)
+			return "";
+
 #if NETSTANDARD2_0
-		return request.Path.Value.Substring(1);
+		return path.Substring(startIndex);
 #else
-		return request.Path.Value[1..];
+		return path[startIndex..];
 #endif
 	}
 

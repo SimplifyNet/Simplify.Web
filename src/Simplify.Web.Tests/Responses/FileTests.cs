@@ -102,6 +102,10 @@ public class FileTests
 		Assert.That(_headerDictionary["Content-Disposition"], Is.EqualTo("inline"));
 
 		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<Stream>(s => s == stream.Object)));
-		stream.Verify(x => x.Close());
+#if NETFRAMEWORK
+		stream.Verify(x => x.Dispose());
+#else
+		stream.Verify(x => x.DisposeAsync());
+#endif
 	}
 }

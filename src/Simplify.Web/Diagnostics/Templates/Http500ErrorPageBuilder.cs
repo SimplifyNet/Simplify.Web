@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Net;
+using System.Reflection;
 using Simplify.System;
 using Simplify.Templates;
 
@@ -27,7 +28,7 @@ public static class Http500ErrorPageBuilder
 			? ""
 			: TemplateBuilder.FromCurrentAssembly("Diagnostics.Templates.Http500ErrorPageExceptionInfo.html")
 				.Build()
-				.Set("ExceptionText", exceptionText)
+				.Set("ExceptionText", WebUtility.HtmlEncode(exceptionText))
 				.Get());
 
 	private static ITemplate SetStyle(this ITemplate tpl, bool darkStyle) =>

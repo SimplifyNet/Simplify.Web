@@ -13,6 +13,9 @@ namespace Simplify.Web.Modules.Context;
 /// <seealso cref="IWebContext" />
 public sealed class WebContext : IWebContext, IDisposable
 {
+	private const long DefaultMaxRequestBodySize = 104857600; // 100 MB
+
+	private readonly long _maxRequestBodySize;
 	private readonly SemaphoreSlim _formReadSemaphore = new(1, 1);
 	private readonly SemaphoreSlim _requestBodyReadSemaphore = new(1, 1);
 
@@ -24,8 +27,10 @@ public sealed class WebContext : IWebContext, IDisposable
 	/// Initializes a new instance of the <see cref="WebContext" /> class.
 	/// </summary>
 	/// <param name="context">The HTTP context.</param>
-	public WebContext(HttpContext context)
+	/// <param name="maxRequestBodySize">Maximum request body size in bytes (default: 100 MB).</param>
+	public WebContext(HttpContext context, long? maxRequestBodySize = null)
 	{
+		_maxRequestBodySize = maxRequestBodySize ?? DefaultMaxRequestBodySize;
 		Context = context;
 		Request = context.Request;
 		Response = context.Response;
@@ -192,8 +197,9 @@ public sealed class WebContext : IWebContext, IDisposable
 			if (_requestBody != null)
 				return;
 
-			// Keep the underlying request stream open so that other middleware /
-			// model binders downstream can still consume the body if it is buffered.
+			if (Context.Request.ContentLength > _maxRequestBodySize)
+				throw new InvalidOperationException($"Request body exceeds the maximum allowed size of {_maxRequestBodySize / (1024 * 1024)} MB.");
+
 #if NETSTANDARD2_0 || NETSTANDARD2_1
 			using var reader = new StreamReader(Context.Request.Body, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, bufferSize: 1024, leaveOpen: true);
 #else

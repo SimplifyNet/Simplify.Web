@@ -46,7 +46,7 @@ public class InMemoryFilesCacheHandler(IResponseWriter responseWriter, IStaticFi
 
 		// Cap entries to avoid unbounded growth (e.g. case-variant path DoS).
 		if (FilesInMemoryCache.Items.Count < FilesInMemoryCache.MaxItems)
-			FilesInMemoryCache.Items[key] = new FilesInMemoryCache.CachedFile(data, context.LastModificationTime);
+			FilesInMemoryCache.Items.TryAdd(key, new FilesInMemoryCache.CachedFile(data, context.LastModificationTime));
 
 		return data;
 	}

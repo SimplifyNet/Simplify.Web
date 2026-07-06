@@ -182,4 +182,10 @@ public interface ISimplifyWebSettings
 	///   <c>true</c> if console tracing is enabled; otherwise, <c>false</c>.
 	/// </value>
 	bool ConsoleTracing { get; }
+
+	/// <summary>
+	/// Gets the maximum request body size in bytes for model binding (default: 100 MB).
+	/// Requests with a Content-Length exceeding this value will be rejected.
+	/// </summary>
+	long MaxRequestBodySize { get; }
 }

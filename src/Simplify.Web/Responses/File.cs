@@ -133,18 +133,18 @@ public class File : ControllerResponse
 
 		if (DataStream != null)
 		{
-			try
+#if NETSTANDARD2_0
+			using (DataStream)
+#else
+			await using (DataStream)
+#endif
 			{
 				await ResponseWriter.WriteAsync(Context.Response, DataStream);
 			}
-			finally
-			{
-				DataStream.Dispose();
-			}
 		}
-		else
+		else if (Data != null)
 		{
-			await ResponseWriter.WriteAsync(Context.Response, Data!);
+			await ResponseWriter.WriteAsync(Context.Response, Data);
 		}
 
 		return ResponseBehavior.RawOutput;
