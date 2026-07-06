@@ -115,7 +115,7 @@ public class FileTests
 			base.Dispose(disposing);
 		}
 
-#if !NETSTANDARD2_0
+#if !(NETSTANDARD2_0 || NETFRAMEWORK)
 		public override async ValueTask DisposeAsync()
 		{
 			Disposed = true;
