@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Http.ResponseWriting;
 using Simplify.Web.Modules.Context;
 using Simplify.Web.Responses;
-using Stream = System.IO.Stream;
+using File = Simplify.Web.Responses.File;
 
 namespace Simplify.Web.Tests.Responses;
 
@@ -83,10 +84,9 @@ public class FileTests
 	{
 		// Arrange
 
-		var stream = new Mock<Stream> { CallBase = false };
-		stream.SetupGet(x => x.CanRead).Returns(true);
+		var stream = new DisposableMemoryStream();
 
-		var file = new Mock<File>(stream.Object, "application/example", null!,
+		var file = new Mock<File>(stream, "application/example", null!,
 			ContentDispositionType.Inline, null!, null!, 200)
 		{ CallBase = true };
 
@@ -101,11 +101,26 @@ public class FileTests
 		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
 		Assert.That(_headerDictionary["Content-Disposition"], Is.EqualTo("inline"));
 
-		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<Stream>(s => s == stream.Object)));
-#if NETFRAMEWORK
-		stream.Verify(x => x.Dispose());
-#else
-		stream.Verify(x => x.DisposeAsync());
+		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<Stream>(s => s == stream)));
+		Assert.That(stream.Disposed, Is.True);
+	}
+
+	private class DisposableMemoryStream : MemoryStream
+	{
+		public bool Disposed { get; private set; }
+
+		protected override void Dispose(bool disposing)
+		{
+			Disposed = true;
+			base.Dispose(disposing);
+		}
+
+#if !NETSTANDARD2_0
+		public override async ValueTask DisposeAsync()
+		{
+			Disposed = true;
+			await base.DisposeAsync();
+		}
 #endif
 	}
 }
