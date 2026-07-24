@@ -68,7 +68,7 @@ public partial class BaseBootstrapper
 				new PreviousPageUrlUpdater(
 					r.Resolve<ControllersExecutor>(),
 					r.Resolve<IRedirector>(),
-					r.Resolve<IWebContext>()));
+					r.Resolve<IWebContextProvider>()));
 		else
 			BootstrapperFactory.ContainerProvider.Register<IControllersExecutor>(r => r.Resolve<ControllersExecutor>());
 	}

@@ -19,6 +19,7 @@ public class PreviousPageUrlUpdaterTests
 
 	private Mock<IControllersExecutor> _baseExecutor = null!;
 	private Mock<IRedirector> _redirector = null!;
+	private Mock<IWebContextProvider> _webContextProvider = null!;
 	private Mock<IWebContext> _webContext = null!;
 
 	[SetUp]
@@ -26,11 +27,13 @@ public class PreviousPageUrlUpdaterTests
 	{
 		_baseExecutor = new Mock<IControllersExecutor>();
 		_redirector = new Mock<IRedirector>();
+		_webContextProvider = new Mock<IWebContextProvider>();
 		_webContext = new Mock<IWebContext>();
 
 		_webContext.SetupGet(x => x.Response).Returns(new Mock<HttpResponse>().Object);
+		_webContextProvider.Setup(x => x.Get()).Returns(_webContext.Object);
 
-		_updater = new PreviousPageUrlUpdater(_baseExecutor.Object, _redirector.Object, _webContext.Object);
+		_updater = new PreviousPageUrlUpdater(_baseExecutor.Object, _redirector.Object, _webContextProvider.Object);
 	}
 
 	[Test]

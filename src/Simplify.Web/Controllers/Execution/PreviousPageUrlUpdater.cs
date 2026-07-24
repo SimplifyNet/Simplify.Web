@@ -9,7 +9,7 @@ namespace Simplify.Web.Controllers.Execution;
 /// Provides the previous page URL updater
 /// </summary>
 /// <seealso cref="IControllersExecutor" />
-public class PreviousPageUrlUpdater(IControllersExecutor baseExecutor, IRedirector redirector, IWebContext webContext) : IControllersExecutor
+public class PreviousPageUrlUpdater(IControllersExecutor baseExecutor, IRedirector redirector, IWebContextProvider webContextProvider) : IControllersExecutor
 {
 	/// <summary>
 	/// Executes the controllers asynchronously.
@@ -19,7 +19,7 @@ public class PreviousPageUrlUpdater(IControllersExecutor baseExecutor, IRedirect
 	{
 		var result = await baseExecutor.ExecuteAsync(controllers);
 
-		if (result == ResponseBehavior.Default && !webContext.Response.HasStarted)
+		if (result == ResponseBehavior.Default && !webContextProvider.Get().Response.HasStarted)
 			redirector.SetPreviousPageUrlToCurrentPage();
 
 		return result;

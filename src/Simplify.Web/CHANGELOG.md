@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.7.1] - 2026-07-24
+
+### Fixed
+
+- `PreviousPageUrlUpdater`: use `IWebContextProvider` instead of resolving
+  `IWebContext` directly from the container, fixing a resolution failure
+  (`Error.UnableToResolveUnknownService`) at startup.
+
 ## [5.7.0] - 2026-07-24
 
 ### Added
