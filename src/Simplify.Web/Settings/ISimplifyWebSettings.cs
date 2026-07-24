@@ -188,4 +188,14 @@ public interface ISimplifyWebSettings
 	/// Requests with a Content-Length exceeding this value will be rejected.
 	/// </summary>
 	long MaxRequestBodySize { get; }
+
+	/// <summary>
+	/// Gets the value indicating whether the automatic previous page URL update
+	/// (via cookie) after each request should be disabled.
+	/// When enabled, Simplify.Web automatically stores the current page URL as the
+	/// "previous page" URL after each successful request.
+	/// Disable this if you do not need this functionality or if it conflicts with
+	/// responses that start writing before the URL can be stored (e.g. <c>StatusCode</c> responses).
+	/// </summary>
+	bool DisablePreviousPageUrlUpdate { get; }
 }

@@ -37,9 +37,10 @@ public class StatusCode(int statusCode, string? responseData = null, string? con
 	/// </summary>
 	public override async Task<ResponseBehavior> ExecuteAsync()
 	{
-		Context.Response.StatusCode = Code;
+		if (!Context.Response.HasStarted)
+			Context.Response.StatusCode = Code;
 
-		if (ContentType != null)
+		if (ContentType != null && !Context.Response.HasStarted)
 			Context.Response.ContentType = ContentType;
 
 		if (ResponseData != null)

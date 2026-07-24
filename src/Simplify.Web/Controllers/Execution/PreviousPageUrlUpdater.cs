@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Redirection;
 
 namespace Simplify.Web.Controllers.Execution;
@@ -8,7 +9,7 @@ namespace Simplify.Web.Controllers.Execution;
 /// Provides the previous page URL updater
 /// </summary>
 /// <seealso cref="IControllersExecutor" />
-public class PreviousPageUrlUpdater(IControllersExecutor baseExecutor, IRedirector redirector) : IControllersExecutor
+public class PreviousPageUrlUpdater(IControllersExecutor baseExecutor, IRedirector redirector, IWebContext webContext) : IControllersExecutor
 {
 	/// <summary>
 	/// Executes the controllers asynchronously.
@@ -18,7 +19,7 @@ public class PreviousPageUrlUpdater(IControllersExecutor baseExecutor, IRedirect
 	{
 		var result = await baseExecutor.ExecuteAsync(controllers);
 
-		if (result == ResponseBehavior.Default)
+		if (result == ResponseBehavior.Default && !webContext.Response.HasStarted)
 			redirector.SetPreviousPageUrlToCurrentPage();
 
 		return result;

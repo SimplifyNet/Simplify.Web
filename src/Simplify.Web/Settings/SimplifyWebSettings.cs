@@ -216,6 +216,11 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 	/// </summary>
 	public long MaxRequestBodySize { get; private set; } = 104857600;
 
+	/// <summary>
+	/// Gets the value indicating whether the automatic previous page URL update (via cookie) after each request should be disabled.
+	/// </summary>
+	public bool DisablePreviousPageUrlUpdate { get; private set; } = true;
+
 	private void LoadLanguageManagerSettings(IConfiguration config)
 	{
 		DefaultLanguage = config.GetValueOrDefaultValue(nameof(DefaultLanguage), DefaultLanguage);
@@ -273,6 +278,7 @@ public sealed class SimplifyWebSettings : ISimplifyWebSettings
 		HideExceptionDetails = config.GetValue<bool?>(nameof(HideExceptionDetails)) ?? HideExceptionDetails;
 		ErrorPageDarkStyle = config.GetValue<bool>(nameof(ErrorPageDarkStyle));
 		MaxRequestBodySize = config.GetValue<long?>(nameof(MaxRequestBodySize)) ?? MaxRequestBodySize;
+		DisablePreviousPageUrlUpdate = config.GetValue<bool?>(nameof(DisablePreviousPageUrlUpdate)) ?? DisablePreviousPageUrlUpdate;
 	}
 
 	private void LoadCacheSettings(IConfiguration config)

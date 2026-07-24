@@ -6,6 +6,7 @@ using Simplify.Web.Controllers.Execution.Resolver;
 using Simplify.Web.Controllers.Response;
 using Simplify.Web.Controllers.V1.Execution;
 using Simplify.Web.Controllers.V2.Execution;
+using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Redirection;
 
 namespace Simplify.Web.Bootstrapper.Setup;
@@ -62,9 +63,13 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<ControllersExecutor>();
 
-		BootstrapperFactory.ContainerProvider.Register<IControllersExecutor>(r =>
-			new PreviousPageUrlUpdater(
+		if (!Settings.DisablePreviousPageUrlUpdate)
+			BootstrapperFactory.ContainerProvider.Register<IControllersExecutor>(r =>
+				new PreviousPageUrlUpdater(
 					r.Resolve<ControllersExecutor>(),
-				r.Resolve<IRedirector>()));
+					r.Resolve<IRedirector>(),
+					r.Resolve<IWebContext>()));
+		else
+			BootstrapperFactory.ContainerProvider.Register<IControllersExecutor>(r => r.Resolve<ControllersExecutor>());
 	}
 }

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using Simplify.Web.Controllers;
 using Simplify.Web.Controllers.Execution;
+using Simplify.Web.Modules.Context;
 using Simplify.Web.Modules.Redirection;
 
 namespace Simplify.Web.Tests.Controllers.Execution;
@@ -17,13 +19,18 @@ public class PreviousPageUrlUpdaterTests
 
 	private Mock<IControllersExecutor> _baseExecutor = null!;
 	private Mock<IRedirector> _redirector = null!;
+	private Mock<IWebContext> _webContext = null!;
 
 	[SetUp]
 	public void Initialize()
 	{
 		_baseExecutor = new Mock<IControllersExecutor>();
 		_redirector = new Mock<IRedirector>();
-		_updater = new PreviousPageUrlUpdater(_baseExecutor.Object, _redirector.Object);
+		_webContext = new Mock<IWebContext>();
+
+		_webContext.SetupGet(x => x.Response).Returns(new Mock<HttpResponse>().Object);
+
+		_updater = new PreviousPageUrlUpdater(_baseExecutor.Object, _redirector.Object, _webContext.Object);
 	}
 
 	[Test]
