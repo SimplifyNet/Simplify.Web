@@ -191,11 +191,12 @@ public interface ISimplifyWebSettings
 
 	/// <summary>
 	/// Gets the value indicating whether the automatic previous page URL update
-	/// (via cookie) after each request should be disabled.
-	/// When enabled, Simplify.Web automatically stores the current page URL as the
-	/// "previous page" URL after each successful request.
-	/// Disable this if you do not need this functionality or if it conflicts with
-	/// responses that start writing before the URL can be stored (e.g. <c>StatusCode</c> responses).
+	/// (via cookie) after each request is enabled.
+	/// When enabled (default: false), Simplify.Web stores the current page URL as
+	/// the "previous page" URL after each normal page request.
+	/// Enable this if you use "back to previous page" redirect functionality.
+	/// Disabled by default to avoid conflicts with responses that start writing
+	/// before the URL can be stored (e.g. <c>StatusCode</c> responses).
 	/// </summary>
-	bool DisablePreviousPageUrlUpdate { get; }
+	bool EnablePreviousPageUrlUpdate { get; }
 }

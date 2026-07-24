@@ -63,7 +63,7 @@ public partial class BaseBootstrapper
 
 		BootstrapperFactory.ContainerProvider.Register<ControllersExecutor>();
 
-		if (!Settings.DisablePreviousPageUrlUpdate)
+		if (Settings.EnablePreviousPageUrlUpdate)
 			BootstrapperFactory.ContainerProvider.Register<IControllersExecutor>(r =>
 				new PreviousPageUrlUpdater(
 					r.Resolve<ControllersExecutor>(),

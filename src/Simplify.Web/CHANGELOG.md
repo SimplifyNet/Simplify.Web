@@ -1,15 +1,15 @@
 # Changelog
 
-## [5.6.0] - 2026-07-24
+## [5.7.0] - 2026-07-24
 
 ### Added
 
-- `DisablePreviousPageUrlUpdate` setting (default: `true`) to control automatic
-  previous-page URL cookie tracking. The feature is now disabled by default — the
+- `EnablePreviousPageUrlUpdate` setting (default: `false`) to control automatic
+  previous-page URL cookie tracking. The feature is disabled by default — the
   `PreviousPageUrlUpdater` decorator is not registered, eliminating both the cookie
   write and its entry in the controller-execution call stack.
-  Set to `false` in `SimplifyWebSettings` to re-enable the previous-page tracking.
-  Configure via `SimplifyWebSettings:DisablePreviousPageUrlUpdate` in appsettings.json.
+  Set to `true` in `SimplifyWebSettings` to enable the previous-page tracking.
+  Configure via `SimplifyWebSettings:EnablePreviousPageUrlUpdate` in appsettings.json.
 
 ### Fixed
 
@@ -18,6 +18,14 @@
   has already started (e.g. because an earlier middleware wrote to it).
 - `PreviousPageUrlUpdater`: skip cookie setting when `Response.HasStarted` is true,
   preventing a crash when the response stream is already being written.
+
+## [5.6.0] - 2026-07-06
+
+### ⚠️ Bad Release — Do Not Use
+
+This release introduced a `DisablePreviousPageUrlUpdate` setting with inverted
+(default: off) semantics. The property was renamed to `EnablePreviousPageUrlUpdate`
+and corrected in 5.7.0. See the 5.7.0 entry above.
 
 ## [5.5.0] - 2026-07-06
 
