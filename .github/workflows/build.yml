@@ -59,7 +59,7 @@ jobs:
       - name: Extract changelog entry
         run: |
           awk '/^## \[/{if(f) exit; f=1; next} f' \
-            src/Simplify.Web/CHANGELOG.md \
+            Simplify.Web/CHANGELOG.md \
             > /tmp/release_notes.md
 
       - name: Create release
