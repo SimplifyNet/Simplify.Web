@@ -28,6 +28,7 @@ public class NewFileHandler(IStaticFile staticFile) : IStaticFileRequestHandler
 	public async Task ExecuteAsync(IStaticFileProcessingContext context, HttpResponse response)
 	{
 		response.SetNewReturningFileAttributes(context);
+		response.ContentLength = staticFile.GetSize(context.RelativeFilePath);
 
 		await staticFile.CopyToAsync(response.Body, context.RelativeFilePath);
 	}

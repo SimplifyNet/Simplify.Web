@@ -49,6 +49,7 @@ public class FileTests
 		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
 
 		_context.VerifySet(x => x.Response.ContentType = "application/example");
+		_context.VerifySet(x => x.Response.ContentLength = data.Length);
 		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<byte[]>(d => d == data)));
 	}
 
@@ -86,6 +87,9 @@ public class FileTests
 
 		var stream = new DisposableMemoryStream();
 
+		stream.Write("\r\n"u8.ToArray(), 0, 2);
+		stream.Position = 0;
+
 		var file = new Mock<File>(stream, "application/example", null!,
 			ContentDispositionType.Inline, null!, null!, 200)
 		{ CallBase = true };
@@ -101,8 +105,59 @@ public class FileTests
 		Assert.That(result, Is.EqualTo(ResponseBehavior.RawOutput));
 		Assert.That(_headerDictionary["Content-Disposition"], Is.EqualTo("inline"));
 
+		_context.VerifySet(x => x.Response.ContentLength = 2);
 		_responseWriter.Verify(x => x.WriteAsync(It.IsAny<HttpResponse>(), It.Is<Stream>(s => s == stream)));
 		Assert.That(stream.Disposed, Is.True);
+	}
+
+	[Test]
+	public async Task Process_SeekableStreamAtNonZeroPosition_ContentLengthIsRemainingBytes()
+	{
+		// Arrange
+
+		var stream = new DisposableMemoryStream();
+
+		stream.Write("12345"u8.ToArray(), 0, 5);
+		stream.Position = 2;
+
+		var file = new Mock<File>(stream, "application/example", null!,
+			ContentDispositionType.Inline, null!, null!, 200)
+		{ CallBase = true };
+
+		file.SetupGet(x => x.Context).Returns(_context.Object);
+		file.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
+
+		// Act
+		await file.Object.ExecuteAsync();
+
+		// Assert
+		_context.VerifySet(x => x.Response.ContentLength = 3);
+	}
+
+	[Test]
+	public async Task Process_NonSeekableStream_ContentLengthNotSet()
+	{
+		// Arrange
+
+		var stream = new NonSeekableStream();
+
+		var file = new Mock<File>(stream, "application/example", null!,
+			ContentDispositionType.Inline, null!, null!, 200)
+		{ CallBase = true };
+
+		file.SetupGet(x => x.Context).Returns(_context.Object);
+		file.SetupGet(x => x.ResponseWriter).Returns(_responseWriter.Object);
+
+		// Act
+		await file.Object.ExecuteAsync();
+
+		// Assert
+		_context.VerifySet(x => x.Response.ContentLength = It.IsAny<long?>(), Times.Never);
+	}
+
+	private class NonSeekableStream : MemoryStream
+	{
+		public override bool CanSeek => false;
 	}
 
 	private class DisposableMemoryStream : MemoryStream

@@ -125,6 +125,8 @@ public class File : ControllerResponse
 		Context.Response.ContentType = ContentType;
 		Context.Response.Headers["Content-Disposition"] = BuildContentDisposition();
 
+		SetContentLength();
+
 		if (CacheControl != null)
 			Context.Response.Headers["Cache-Control"] = CacheControl;
 
@@ -148,6 +150,24 @@ public class File : ControllerResponse
 		}
 
 		return ResponseBehavior.RawOutput;
+	}
+
+	/// <summary>
+	/// Sets the <c>Content-Length</c> header when the payload size is known.
+	/// A non-seekable stream has an unknown length, so the header is omitted
+	/// and the response falls back to chunked transfer encoding.
+	/// </summary>
+	private void SetContentLength()
+	{
+		if (DataStream != null)
+		{
+			if (DataStream.CanSeek)
+				Context.Response.ContentLength = DataStream.Length - DataStream.Position;
+		}
+		else if (Data != null)
+		{
+			Context.Response.ContentLength = Data.Length;
+		}
 	}
 
 	private string BuildContentDisposition()

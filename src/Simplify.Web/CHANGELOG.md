@@ -1,5 +1,26 @@
 # Changelog
 
+## [5.8.0] - 2026-09-23
+
+### Added
+
+- `Content-Length` response header for file responses. Previously the header was
+  never set, so Kestrel fell back to `Transfer-Encoding: chunked`, which prevents
+  clients from showing download progress, adds per-write framing overhead and
+  blocks intermediaries from validating the payload size.
+  - `Responses.File`: the header is set from the byte array length, or, for the
+    stream-based constructor, from `Length - Position` when the stream is seekable.
+    Non-seekable streams have an unknown size, so the header is omitted and chunked
+    encoding still applies.
+  - `StaticFiles.Handlers.NewFileHandler` and
+    `StaticFiles.Handlers.InMemoryFilesCacheHandler` now set the header for served
+    static files. `ClientCachedFileHandler` is intentionally left unchanged, since a
+    `304 Not Modified` response must not carry a body length.
+- `IStaticFile.GetSize` returning the file size in bytes.
+
+- `IStaticFile` gained the `GetSize` member. Custom implementations of this
+  interface must be updated.
+
 ## [5.7.1] - 2026-07-24
 
 ### Fixed

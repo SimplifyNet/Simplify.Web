@@ -107,4 +107,19 @@ public class StaticFileTests
 		// Assert
 		Assert.That(result, Is.EqualTo("Foo"u8.ToArray()));
 	}
+
+	[Test]
+	public void GetSize_ValidFile_SizeReturned()
+	{
+		// Act
+		var result = _staticFile.GetSize(ValidRelativeFilePath);
+
+		// Assert
+		Assert.That(result, Is.EqualTo(3));
+	}
+
+	[Test]
+	public void GetSize_TraversalPath_Throws() =>
+		Assert.Throws<UnauthorizedAccessException>(() =>
+			_staticFile.GetSize("staticfiles/../StaticFiles/IO/TestFiles/TestStaticFile.html"));
 }

@@ -45,6 +45,12 @@ public class StaticFile(IReadOnlyList<string> staticFilesPaths, string sitePhysi
 	public DateTime GetLastModificationTime(string relativeFilePath) => File.GetLastWriteTimeUtc(ResolveSafePath(relativeFilePath)).TrimMilliseconds();
 
 	/// <summary>
+	/// Gets the file size in bytes.
+	/// </summary>
+	/// <param name="relativeFilePath">The relative file path.</param>
+	public long GetSize(string relativeFilePath) => new FileInfo(ResolveSafePath(relativeFilePath)).Length;
+
+	/// <summary>
 	/// Gets the file data asynchronously.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>

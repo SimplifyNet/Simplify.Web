@@ -31,7 +31,11 @@ public class InMemoryFilesCacheHandler(IResponseWriter responseWriter, IStaticFi
 	{
 		response.SetNewReturningFileAttributes(context);
 
-		await responseWriter.WriteAsync(response, GetOrLoad(context));
+		var data = GetOrLoad(context);
+
+		response.ContentLength = data.Length;
+
+		await responseWriter.WriteAsync(response, data);
 	}
 
 	private byte[] GetOrLoad(IStaticFileProcessingContext context)

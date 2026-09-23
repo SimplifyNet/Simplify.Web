@@ -18,6 +18,7 @@
 		"OWIN",
 		"Redirector",
 		"registrator",
+		"seekable",
 		"snupkg"
 	],
 	"coverage-gutters.coverageFileNames": [

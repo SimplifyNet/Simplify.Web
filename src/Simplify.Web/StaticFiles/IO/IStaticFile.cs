@@ -22,6 +22,12 @@ public interface IStaticFile
 	DateTime GetLastModificationTime(string relativeFilePath);
 
 	/// <summary>
+	/// Gets the file size in bytes.
+	/// </summary>
+	/// <param name="relativeFilePath">The relative file path.</param>
+	long GetSize(string relativeFilePath);
+
+	/// <summary>
 	/// Gets the file data asynchronously.
 	/// </summary>
 	/// <param name="relativeFilePath">The relative file path.</param>

@@ -75,6 +75,8 @@ public class NewFileHandlerTests
 			.Returns(Task.CompletedTask)
 			.Verifiable();
 
+		_staticFile.Setup(x => x.GetSize(It.Is<string>(s => s == filePath))).Returns(125);
+
 		// Act
 		await _handler.ExecuteAsync(context, response);
 
@@ -83,6 +85,8 @@ public class NewFileHandlerTests
 		Assert.That(response.ContentType, Is.EqualTo("text/plain"));
 		Assert.That(response.Headers["Last-Modified"], Is.EqualTo(lastModificationTime.ToString("r")));
 		Assert.That(response.Headers["Expires"], Is.EqualTo(new DateTimeOffset(new DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)).ToString("R")));
+
+		Mock.Get(response).VerifySet(x => x.ContentLength = 125);
 
 		_staticFile.Verify();
 	}
